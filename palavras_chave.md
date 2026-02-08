@@ -1,0 +1,69 @@
+# Palavras‑chave do curso (ordenadas por frequência)
+
+- ia (89) Allan
+- rag (32) Arthur Bivtor
+- ml (28) Breno Luis
+- prompt (24) Bruno Alexuys
+- streamlit (24) Felipe Gabriel
+- target (20) Gabrryel dos Santos
+- assistant (19) Guilherme di Lucca
+- evidência (17)
+- contexto (16) Guilherme Ramon
+- openai (16) Italo Luiz
+- genai (15) Joao Victor
+- system (15) Kauan
+- dados (14) 
+- dataset (14 ) marcos vinicius
+- métricas (14) Gabryel
+- pandas (14) Luan Santos
+- pipeline (13) 
+- split (13)
+- teste (13) Matheus Douglas 
+- numpy (12) Thiago Jose
+- recall (10)
+- user (9) Tulio da Silva 
+- overfitting (8)
+- segurança (8)
+- accuracy (7)
+- classificação (7) Maria Isasmin 
+- notebook (7) Pedro Henrique 
+- nulos (7)
+- regressão (7)
+- ia tradicional (6) Maria roberta 
+- matriz de confusão (6)
+- precision (6)
+- base.md (5)
+- baseline (5)
+- custo (5)
+- etl (5)
+- treino/teste (5) Victor Andrey
+- chunking (4)
+- duplicadas (4)
+- guard-rail (4)
+- ia generativa (4) Thiago Fernando
+- one-hot (4)
+- rate limit (4)
+- dados tabulares (3)
+- embeddings (3)
+- features (3)
+- top-k (3)
+- validação (3)
+- avaliação (2)
+- dataset sintético (2)
+- logging (2)
+- prompt injection (2)
+- regressão linear (2) Pedro Julio 
+- scikit-learn (2)
+- features (1) Thiago Fernandes 
+- observabilidade (1)
+- random_state (1)
+- regressão logística (1) Wagner
+- similaridade de cosseno (1)
+- test_size (1)
+- tokens (1) Severino
+- alucinação (0) Wallison
+- machine learning (0) Sostenes
+- tf-idf (0)
+- treinamento (0) Wemerson
+- underfitting (0)
+- variável alvo (0) Willian

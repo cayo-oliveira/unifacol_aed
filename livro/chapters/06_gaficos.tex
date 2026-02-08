@@ -1,0 +1,55 @@
+
+
+% --------------------------------------------
+
+\chapter{Tipos de Gráficos e Escolhas Adequadas} % Capítulo 6
+
+\section{Princípios de Visualização}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Correspondência gráfico–variável}: nominal/ordinal $\rightarrow$ barras; contínua $\rightarrow$ hist/linha; relação $\rightarrow$ dispersão.
+  \item \textbf{Escalas e eixos}: zero em eixos de barras; usar log quando necessário.
+  \item \textbf{Cor e contraste}: paletas perceptualmente uniformes; evitar excesso de categorias coloridas.
+\end{itemize}
+
+\section{Univariados}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Barras}: contagens/categorias.
+  \item \textbf{Histograma \& KDE}: distribuição contínua; escolha de \textit{bins}.
+  \item \textbf{Boxplot/Violin}: mediana, quartis, outliers.
+\end{itemize}
+
+\section{Bivariados e Multivariados}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Dispersão (scatter)} com cor/tamanho por terceira variável.
+  \item \textbf{Mapa de calor (heatmap)} para correlações ou matrizes.
+  \item \textbf{Line + Bar (dual-axis)}: tendências com volume (atenção ao \textit{scale sync}).
+  \item \textbf{Tree Map \& Sunburst}: composição; cuidado com interpretações de área.
+\end{itemize}
+
+\section{Mapas e Geocodificação}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Geo-roles}: País/Estado/Cidade; correção de ambiguidades.
+  \item \textbf{Camadas}: pontos, polígonos, densidade.
+  \item \textbf{Performance}: agregação por nível de zoom; filtros de contexto geográficos.
+\end{itemize}
+
+\section{Customização e Performance Visual}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Parâmetros}: alternar métricas, metas, categorizações.
+  \item \textbf{Cálculos de Tabela}: \% do total, \textit{running sum}, difs.
+  \item \textbf{LOD}: métricas por cliente/produto independentes da exibição.
+\end{itemize}
+
+\section{Exercício Resolvido — \textit{Dashboard} Comparativo (��)}
+\begin{SolvedBox}
+\textbf{Problema:} Construir um \textit{dashboard} que compare crescimento de vendas por Categoria e Subcategoria no tempo, com seletor de métrica (Vendas, Lucro, \%Lucro).
+
+\textbf{Solução:}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Parâmetro} \texttt{p\_métrica} + \textbf{Campo} \texttt{m\_din = CASE [p\_métrica] ... END}.
+  \item \textbf{Sheet 1}: Linha temporal por Categoria; \textbf{Sheet 2}: Barras por Subcategoria; \textbf{Filtros} sincronizados.
+  \item \textbf{Ações}: filtrar Subcategoria ao clicar na Categoria (interação).
+  \item \textbf{Performance}: extrato, filtro de contexto por ano, limitar Subcategorias top-N (parâmetro).
+\end{enumerate}
+\textbf{Comentário}: separa visão macro (Categoria) e micro (Subcategoria) mantendo consistência de métrica com parâmetro único.
+\end{SolvedBox}

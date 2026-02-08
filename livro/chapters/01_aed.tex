@@ -1,0 +1,354 @@
+\chapter{O que é AED?}
+
+A \textbf{Análise Exploratória de Dados (AED)} surgiu como um marco na estatística moderna graças a John W. Tukey, em seu artigo clássico \textit{Exploratory Data Analysis} publicado em 1977. Tukey defendia que, antes de qualquer modelagem estatística ou preditiva, o pesquisador deveria “deixar os dados falarem”, ou seja, explorar padrões, tendências e anomalias sem pressupor um modelo rígido. Essa mudança de paradigma mostrou que a estatística não era apenas confirmatória (testar hipóteses), mas também exploratória, voltada à descoberta.
+
+\section{Importância no Mercado de Trabalho e na Pesquisa}
+
+No contexto atual de ciência de dados e inteligência artificial, a AED tornou-se uma etapa obrigatória em pipelines de análise. Empresas de todos os setores — tecnologia, finanças, saúde, varejo e governo — reconhecem que análises mal preparadas levam a modelos enviesados e decisões equivocadas. Uma AED bem feita garante qualidade, transparência e confiabilidade. 
+
+Além do mercado corporativo, a AED é igualmente fundamental em \textbf{pesquisas empresariais, acadêmicas e científicas}. Pesquisadores utilizam AED para:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Gerar bases de dados para estudos}, a partir de coleta em questionários, sensores, bases públicas ou experimentos.
+  \item \textbf{Verificar hipóteses preliminares}, testando padrões antes da aplicação de métodos confirmatórios.
+  \item \textbf{Construir reprodutibilidade}, documentando os passos de preparação, limpeza e análise para garantir que outros pesquisadores possam validar os resultados.
+\end{itemize}
+
+\textbf{Quem pede e quem faz a AED?}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Solicitantes}: 
+    \begin{itemize}
+      \item No setor corporativo: gestores de negócio, áreas de produto, marketing, finanças ou líderes técnicos, que precisam de respostas claras para apoiar decisões estratégicas.
+      \item No meio acadêmico: orientadores de pesquisa, grupos de estudo e órgãos de fomento que demandam análises preliminares de dados coletados.
+    \end{itemize}
+  \item \textbf{Executores}: 
+    \begin{itemize}
+      \item No setor corporativo: analistas de dados, cientistas de dados, engenheiros de dados e engenheiros de analytics, que possuem habilidades estatísticas, de programação e de comunicação.
+      \item No meio acadêmico: estudantes de graduação e pós-graduação, professores e pesquisadores com formação quantitativa.
+    \end{itemize}
+\end{itemize}
+
+Assim, a AED funciona como elo entre \textbf{quem define a pergunta} (negócio ou pesquisa) e \textbf{quem manipula os dados} (técnicos ou acadêmicos), garantindo que a resposta seja confiável, interpretável e útil.
+
+
+\section{Fluxo Principal da AED}
+O processo da AED pode ser descrito em quatro grandes etapas interligadas:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+
+\node (A) [startstop] {Leitura da Base};
+\node (B) [startstop, below of=A] {Transformação de Dados};
+\node (C) [startstop, below of=B] {Geração de Informação};
+\node (D) [startstop, below of=C] {Insight};
+
+\draw [arrow] (A) -- (B);
+\draw [arrow] (B) -- (C);
+\draw [arrow] (C) -- (D);
+
+\end{tikzpicture}
+\caption{Fluxo principal da Análise Exploratória de Dados (AED).}
+\end{figure}
+
+\subsection*{1. Leitura da base}
+Consiste em importar os dados de suas fontes originais:
+\begin{itemize}[leftmargin=*]
+  \item Bancos de dados relacionais (SQL, PostgreSQL, MySQL).
+  \item Arquivos tabulares (\texttt{CSV}, Excel).
+  \item Estruturas semi-estruturadas (\texttt{JSON}, XML).
+  \item APIs, logs de sistemas ou planilhas corporativas.
+\end{itemize}
+Nessa fase, o analista garante que a base foi carregada corretamente e que a estrutura de linhas e colunas é consistente.
+
+\subsection*{2. Transformação de dados}
+É a etapa de preparar a base para análise, também chamada de \textit{data wrangling}. Inclui:
+\begin{itemize}[leftmargin=*]
+  \item Tratamento de valores nulos e ausentes (remoção, substituição, imputação).
+  \item Eliminação de duplicidades.
+  \item Padronização de formatos (datas, moedas, códigos).
+  \item Criação de variáveis derivadas (ex.: idade a partir de data de nascimento).
+  \item Normalização e escalonamento de variáveis numéricas.
+\end{itemize}
+O objetivo é obter um conjunto de dados limpo, coerente e pronto para a geração de informação.
+
+\subsection*{3. Geração de informação}
+Nessa fase, aplicam-se métodos estatísticos e gráficos para compreender os dados:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Análise univariada}: estudo de uma variável isolada (médias, medianas, histogramas, boxplots).
+  \item \textbf{Análise bivariada}: relação entre duas variáveis (correlação, covariância, gráficos de dispersão, tabelas de contingência).
+  \item \textbf{Análise multivariada}: estudo conjunto de várias variáveis (\textit{odds ratio}, matriz de correlação, regressão múltipla, análise de clusters, PCA).
+\end{itemize}
+Essa etapa transforma dados brutos em informações interpretáveis.
+
+\subsection*{4. Insight}
+
+O \textbf{insight} é a etapa final da Análise Exploratória de Dados, onde os achados estatísticos e visuais são traduzidos em mensagens de valor. Ele representa a ponte entre os \textit{números} e as \textit{decisões}. 
+
+Um insight é mais do que apresentar uma métrica ou gráfico: é a capacidade de interpretar o que aquela informação significa em um contexto prático e de sugerir caminhos de ação. Essa etapa exige não apenas conhecimento técnico, mas também compreensão do domínio do problema (negócios, saúde, educação, finanças, etc.).
+
+\paragraph{Características de um bom insight:}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Clareza}: deve ser simples e compreensível para públicos não técnicos.
+  \item \textbf{Relevância}: deve responder a uma pergunta real do negócio ou da pesquisa.
+  \item \textbf{Acionabilidade}: precisa apontar um caminho prático, uma ação possível.
+  \item \textbf{Evidência}: deve estar embasado em dados e análises confiáveis.
+\end{itemize}
+
+\paragraph{Insight em contextos diferentes:}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Negócios}: orientar campanhas de marketing, prever comportamento de clientes ou reduzir custos.
+  \item \textbf{Educação}: identificar padrões de desempenho e sugerir estratégias de ensino personalizadas.
+  \item \textbf{Saúde}: apontar fatores de risco em pacientes e apoiar protocolos de prevenção.
+  \item \textbf{Pesquisa científica}: validar hipóteses preliminares e direcionar futuras investigações.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Exemplo de Insight:}  
+Em uma empresa de educação, a AED mostrou que alunos com mais de 7 horas de estudo semanal tinham o dobro de chances de alcançar nota acima de 8. Esse resultado pode orientar políticas de incentivo, criação de trilhas de estudo e comunicação personalizada para melhorar o desempenho médio da turma.
+
+\medskip
+
+\textbf{Exemplo em Negócios:}  
+Uma rede de supermercados identificou, por meio da AED, que clientes que compravam frutas frescas semanalmente também tinham alta probabilidade de adquirir produtos de panificação. O insight gerou a decisão de posicionar pães e bolos próximos ao setor de hortifrúti, aumentando as vendas cruzadas em 15\%.
+\end{NoteBox}
+
+O insight é o momento em que os dados “ganham voz”. É quando a AED deixa de ser apenas uma análise técnica e passa a influenciar diretamente decisões estratégicas, acadêmicas ou operacionais.
+
+
+\section{Visão Geral da AED}
+
+A Análise Exploratória de Dados pode ser entendida como um conjunto de práticas que conectam três dimensões principais:  
+(i) \textit{estatística descritiva}, para resumir e organizar os dados;  
+(ii) \textit{geração de insights}, para apoiar decisões práticas;  
+(iii) \textit{preparação para modelos preditivos e inteligência artificial}, garantindo que os algoritmos recebam dados consistentes e representativos.
+
+\subsection*{Análises e Escopos}
+De forma geral, podemos dividir a geração de informação da AED em três níveis de análise, que serão explorados em detalhe nos próximos capítulos, mas que já merecem uma introdução:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Análise Univariada}: estuda uma variável isoladamente. Exemplos de gráficos: histogramas, boxplots e barras. Principais medidas: média, mediana, moda, variância e desvio-padrão.
+  
+  \item \textbf{Análise Bivariada}: avalia a relação entre duas variáveis, que podem ser quantitativas ou qualitativas. Exemplos de gráficos: dispersão (scatterplot), gráficos de barras agrupadas e tabelas de contingência. Principais medidas: covariância e correlação de Pearson.
+  
+  \item \textbf{Análise Multivariada}: considera três ou mais variáveis em conjunto, explorando interações mais complexas. Exemplos: \textit{odds ratio}, matriz de correlação, análise de clusters, regressão múltipla, PCA (análise de componentes principais). Medidas comuns incluem correlações múltiplas e medidas de associação.
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Resumo de medidas-chave (amostra):}\\[4pt]
+Média: $\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$;\quad
+Mediana: valor central dos dados ordenados;\\[4pt]
+Variância: $s^2=\frac{1}{n-1}\sum (x_i-\bar{x})^2$;\quad
+Desvio-padrão: $s=\sqrt{s^2}$.\\[4pt]
+Covariância: $\mathrm{Cov}(X,Y)=\frac{1}{n-1}\sum (x_i-\bar{x})(y_i-\bar{y})$;\\[4pt]
+Correlação de Pearson: $r=\dfrac{\mathrm{Cov}(X,Y)}{s_X s_Y}\in[-1,1]$.\\[4pt]
+Odds: $\mathrm{Odds}(A)=\frac{P(A)}{1-P(A)}$;\quad
+Odds Ratio (A vs. B): $\mathrm{OR}=\frac{\mathrm{Odds}_A}{\mathrm{Odds}_B}$.
+\end{FormulaBox}
+
+Nesta visão geral, o objetivo não é aprofundar cálculos, mas apresentar o \textbf{vocabulário essencial da AED} — medidas, fórmulas e tipos de gráfico mais comuns. Nos próximos capítulos, cada tipo de análise será detalhado com exemplos, interpretações e problemas resolvidos.
+
+\section{Ferramentas Modernas}
+
+A prática da Análise Exploratória de Dados conta hoje com um ecossistema robusto de ferramentas, que vão desde linguagens de programação até softwares de visualização interativa. Cada escolha depende do perfil da equipe, do volume de dados e do objetivo da análise. 
+
+\subsection*{Linguagens e Bibliotecas}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Python}: linguagem mais difundida em ciência de dados. As bibliotecas \texttt{pandas} (manipulação de tabelas), \texttt{matplotlib} e \texttt{plotly} (visualização estática e interativa) tornam o fluxo da AED ágil e reprodutível.
+  \item \textbf{R}: muito usada no meio acadêmico, com pacotes como \texttt{ggplot2} (visualização) e \texttt{dplyr} (transformação de dados).
+  \item \textbf{SQL}: essencial para extrair dados diretamente de bancos relacionais (MySQL, PostgreSQL, SQL Server), sendo a primeira etapa de muitas AEDs corporativas.
+\end{itemize}
+
+\subsection*{Ferramentas de Visualização e BI}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tableau} e \textbf{Power BI}: permitem criar dashboards interativos, explorando univariada, bivariada e multivariada de forma visual.
+  \item \textbf{Amazon QuickSight}: solução de BI em nuvem, integrada a serviços AWS, usada em contextos corporativos de larga escala.
+  \item \textbf{Google Looker Studio}: alternativa gratuita para integração rápida de dados e relatórios.
+\end{itemize}
+
+\subsection*{Contextos de Uso}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Empresas}: Python/SQL para limpeza, BI para comunicação rápida com gestores.
+  \item \textbf{Academia}: R/Python para geração de bases e análises reprodutíveis.
+  \item \textbf{Mercado de dados em nuvem}: integração com BigQuery, Redshift ou Snowflake, conectados a ferramentas de BI.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Boas práticas:}  
+\begin{enumerate}[leftmargin=*]
+  \item Versionar notebooks e scripts (Git/GitHub ou GitLab).  
+  \item Separar dados brutos, processados e finais em diretórios distintos.  
+  \item Documentar cada transformação aplicada (log ou README).  
+  \item Preferir visualizações interativas sempre que possível para explorar diferentes perspectivas.  
+\end{enumerate}
+\end{NoteBox}
+
+
+
+\section{Problema Resolvido — Questão 1 (conceitos)}
+\begin{SolvedBox}
+\textbf{Solicitação (resumo)}: definir AED, análise univariada, bivariada e multivariada.\\[4pt]
+\textbf{Resposta curta}:\\
+AED: etapa exploratória para entender dados antes de modelar.\\
+Univariada: uma variável por vez (médias, histogramas, boxplots).\\
+Bivariada: relação entre duas variáveis (scatter, tabela de contingência, correlação).\\
+Multivariada: três ou mais variáveis (matriz de correlação, PCA, regressão múltipla, clusters).
+\end{SolvedBox}
+
+\section*{Problemas Sugeridos}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Problema 1:} Dê três exemplos práticos (do mercado ou da academia) onde a Análise Univariada é suficiente para gerar um insight útil. Explique por que não seria necessário avançar para análises bivariadas ou multivariadas nesses casos.
+  
+  \item \textbf{Problema 2:} Imagine que você recebeu uma base de dados de clientes contendo idade, renda e gasto mensal. Descreva como faria uma análise univariada, depois bivariada e, por fim, multivariada desses dados. Indique quais gráficos e medidas utilizaria em cada etapa.
+\end{enumerate}
+
+
+
+
+\begin{appendices}
+
+\chapter*{Apêndice do Capítulo 1 — Mini-Guia de Python e SQL para AED}
+\addcontentsline{toc}{chapter}{Apêndice do Capítulo 1 — Mini-Guia de Python e SQL para AED}
+
+Este apêndice funciona como um guia rápido das principais operações usadas em Análise Exploratória de Dados (AED).  
+Ele reúne exemplos práticos em \textbf{Python (pandas)} e \textbf{SQL}, focados em tarefas recorrentes de leitura, transformação, limpeza e preparação dos dados.
+
+\section*{Conceito Estatístico Importante}
+\begin{ProofBox}
+\textbf{Por que usar $n-1$ na variância amostral?}\\[4pt]
+O uso de $n-1$ corrige o viés do estimador, tornando $s^2$ um estimador não-viesado de $\sigma^2$ sob hipóteses clássicas (correção de Bessel).
+\end{ProofBox}
+
+\section{Mini-Guia em Python (pandas)}
+
+\subsection*{Leitura e Escrita}
+\begin{lstlisting}[language=Python,caption={Carregar e salvar dados}]
+import pandas as pd
+
+# Ler arquivos
+df_csv = pd.read_csv("dados.csv")
+df_excel = pd.read_excel("dados.xlsx")
+df_json = pd.read_json("dados.json")
+
+# Salvar dados
+df_csv.to_csv("saida.csv", index=False)
+df_excel.to_excel("saida.xlsx", index=False)
+\end{lstlisting}
+
+\subsection*{Exploração Inicial}
+\begin{lstlisting}[language=Python,caption={Inspeção rápida de dados}]
+df.head()        # primeiras linhas
+df.info()        # tipos de dados e nulos
+df.describe()    # estatísticas descritivas
+df.shape         # linhas x colunas
+df.columns       # nomes das colunas
+\end{lstlisting}
+
+\subsection*{Limpeza e Transformação}
+\begin{lstlisting}[language=Python,caption={Tratamento básico de dados}]
+# Remover duplicatas
+df = df.drop_duplicates()
+
+# Tratar valores nulos
+df["idade"].fillna(df["idade"].median(), inplace=True)
+
+# Renomear colunas
+df.rename(columns={"nome_antigo": "nome_novo"}, inplace=True)
+
+# Alterar tipos
+df = df.astype({"idade": "Int64"})
+
+# Criar coluna derivada
+df["idade_categoria"] = pd.cut(df["idade"], bins=[0,18,30,60,100],
+                               labels=["jovem","adulto","meia-idade","idoso"])
+\end{lstlisting}
+
+\subsection*{Filtros e Seleção}
+\begin{lstlisting}[language=Python,caption={Selecionar e filtrar dados}]
+# Seleção de colunas
+df[["nome", "idade"]]
+
+# Filtro por condição
+df_maiores = df[df["idade"] >= 18]
+
+# Query estilo SQL
+df.query("salario > 5000 and cidade == 'Recife'")
+\end{lstlisting}
+
+\subsection*{Agrupamento e Resumos}
+\begin{lstlisting}[language=Python,caption={Agrupar e sumarizar}]
+# Média de idade por cidade
+df.groupby("cidade")["idade"].mean()
+
+# Contagem por categoria
+df["cidade"].value_counts()
+\end{lstlisting}
+
+---
+
+\section{Mini-Guia em SQL (ANSI)}
+
+\subsection*{Leitura e Criação}
+\begin{lstlisting}[language=SQL,caption={Criar e importar tabelas}]
+-- Criar tabela simples
+CREATE TABLE alunos (
+  id INT PRIMARY KEY,
+  nome VARCHAR(100),
+  idade INT,
+  cidade VARCHAR(50)
+);
+
+-- Inserir dados
+INSERT INTO alunos (id, nome, idade, cidade)
+VALUES (1, 'Maria', 22, 'Recife');
+\end{lstlisting}
+
+\subsection*{Seleção e Filtros}
+\begin{lstlisting}[language=SQL,caption={Consultas básicas}]
+-- Selecionar colunas
+SELECT nome, idade FROM alunos;
+
+-- Filtro com condições
+SELECT * FROM alunos
+WHERE idade >= 18 AND cidade = 'Recife';
+
+-- Ordenação
+SELECT * FROM alunos
+ORDER BY idade DESC;
+\end{lstlisting}
+
+\subsection*{Transformação e Tratamento}
+\begin{lstlisting}[language=SQL,caption={Limpeza e transformação}]
+-- Remover duplicatas usando CTE
+WITH cte AS (
+  SELECT *, ROW_NUMBER() OVER (PARTITION BY nome ORDER BY id) AS rn
+  FROM alunos
+)
+DELETE FROM cte WHERE rn > 1;
+
+-- Substituir valores nulos
+UPDATE alunos SET cidade = COALESCE(cidade, 'Indefinida');
+\end{lstlisting}
+
+\subsection*{Agregações e Agrupamentos}
+\begin{lstlisting}[language=SQL,caption={Estatísticas descritivas}]
+-- Média de idade por cidade
+SELECT cidade, AVG(idade) AS media_idade
+FROM alunos
+GROUP BY cidade;
+
+-- Contagem por categoria
+SELECT cidade, COUNT(*) AS qtd
+FROM alunos
+GROUP BY cidade;
+\end{lstlisting}
+
+\subsection*{Integração e Visualização}
+\begin{lstlisting}[language=SQL,caption={Junções entre tabelas}]
+-- Join entre duas tabelas
+SELECT a.nome, a.idade, c.curso
+FROM alunos a
+JOIN cursos c ON a.id = c.aluno_id;
+\end{lstlisting}
+\end{appendices}
+
+

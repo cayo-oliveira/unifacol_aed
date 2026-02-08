@@ -1,0 +1,45 @@
+
+% --------------------------------------------
+
+\chapter{Storytelling e Criação de Dashboards/Stories} % Capítulo 8
+
+\section{Fundamentos de Storytelling com Dados}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Estrutura}: contexto $\rightarrow$ conflito $\rightarrow$ conclusão (modelo DataStory).
+  \item \textbf{POV (ponto de vista)}: público-alvo, pergunta orientadora, \textit{call to action}.
+\end{itemize}
+
+\section{Design de Dashboards}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Layout}: grade, hierarquia visual, alinhamento, tipografia mínima.
+  \item \textbf{Objetos}: contêineres (horizontal/vertical), \textit{legends}, filtros, \textit{highlights}.
+  \item \textbf{Ações}: \textit{highlight}, \textit{filter}, \textit{URL}, navegação \textit{go-to-sheet}.
+\end{itemize}
+
+\section{Criando Stories}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Story points}: sequenciamento de mensagens.
+  \item \textbf{Templates}: comparativo, evolução temporal, antes/depois.
+\end{itemize}
+
+\section{Publicação e Performance}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Otimização}: extratos, LODs fixas para métricas base, filtros de contexto, evitar \textit{blends}.
+  \item \textbf{Publicação no Tableau Public}: título, descrição, \textit{tags}, atualização de dados.
+  \item \textbf{Privacidade}: anonimização, agregação mínima, remoção de PII.
+\end{itemize}
+
+\section{Exercício Resolvido — Storyboard Interativo (��)}
+\begin{SolvedBox}
+\textbf{Problema:} Construir um \textit{story} sobre desempenho acadêmico, partindo de visão geral (turma) até alunos em risco.
+
+\textbf{Solução:}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Slide 1}: KPI geral de média e dispersão (boxplot).
+  \item \textbf{Slide 2}: heatmap por disciplina$\times$bimestre.
+  \item \textbf{Slide 3}: lista de alunos com \texttt{Parâmetro de Risco} (LOD FIXED por aluno).
+  \item \textbf{Ações}: filtros encadeados; \textit{tooltip} narrativo (o porquê do risco).
+\end{enumerate}
+\textbf{Performance}: consolidar métricas por aluno/tempo em tabela derivada para reduzir custo na renderização.
+\end{SolvedBox}
+

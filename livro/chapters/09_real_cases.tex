@@ -1,0 +1,49 @@
+% ============================
+% PARTE II — VISUALIZAÇÃO E STORYTELLING COM TABLEAU
+% ============================
+
+
+% --------------------------------------------
+
+\chapter{Projeto Final: Tableau Public Challenge} % Capítulo 9
+
+\section{Objetivo e Entregáveis}
+Cada grupo publicará um projeto no \textbf{Tableau Public} com \textit{dashboard} + \textit{story} contendo:
+\begin{itemize}[leftmargin=*]
+  \item Tema (sorteado): educação, finanças, saúde, tecnologia ou esportes.
+  \item Fonte de dados real (aberta) ou base disponibilizada pela disciplina.
+  \item \textbf{Integração com Python} para pré-processamento/insights.
+  \item Documento curto (README) com hipóteses, decisões de design e limitações.
+\end{itemize}
+
+\section{Etapas e Cronograma}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Curadoria de dados} (qualidade, dicionário de dados, ética).
+  \item \textbf{EDA em Python} (limpeza, métricas, \textit{features} e arquivos derivados).
+  \item \textbf{Modelagem no Tableau} (joins/relacionamentos, LODs base).
+  \item \textbf{Dashboards/Stories} (narrativa e ações).
+  \item \textbf{Publicação} (link público + README).
+\end{enumerate}
+
+\section{Rubrica de Avaliação}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Clareza e relevância dos insights} (25\%).
+  \item \textbf{Qualidade visual e narrativa} (25\%).
+  \item \textbf{Correção técnica e performance} (25\%).
+  \item \textbf{Originalidade e curadoria de dados} (10\%).
+  \item \textbf{Publicação e documentação} (15\%).
+\end{itemize}
+
+\section{Exercício Resolvido — Exemplo-Guia de Projeto (��)}
+\begin{SolvedBox}
+\textbf{Problema:} Construir um projeto sobre evasão escolar com base pública (INEP/IBGE), integrando Python e Tableau.
+
+\textbf{Solução (guia):}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Python}: limpeza, indicadores (taxa de evasão, reprovação, distorção idade-série), exportar \texttt{indicadores\_municipio\_ano.csv}.
+  \item \textbf{Tableau}: relacionar \texttt{Município/UF} e Ano; mapas (choropleth) + linha temporal + tabela detalhada.
+  \item \textbf{Story}: contexto nacional $\rightarrow$ estados críticos $\rightarrow$ municípios-alvo $\rightarrow$ recomendações.
+  \item \textbf{Performance}: extrato por ano; filtros de contexto; LOD FIXED para KPIs municipais; evitar blends.
+\end{enumerate}
+\textbf{Publicação}: \textit{Tableau Public} com título, resumo e \textit{tags}; link entregue no repositório da disciplina.
+\end{SolvedBox}

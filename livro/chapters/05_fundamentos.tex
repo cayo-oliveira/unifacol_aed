@@ -1,0 +1,1614 @@
+\chapter{Fundamentos do Tableau e Conexão com Dados} % Capítulo 5
+
+% =========================================================
+% 5.0 — Contexto: AED, Visualização e a escolha de ferramentas
+% =========================================================
+
+\section{Onde estamos no processo de AED?}
+
+A \textbf{Análise Exploratória de Dados (AED)} organiza-se em quatro macroetapas interdependentes, que formam o ciclo contínuo de exploração, entendimento e comunicação dos dados. 
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Ingestão e Leitura de Dados} — etapa inicial de coleta e importação das informações a partir de diferentes fontes (arquivos CSV, bancos de dados relacionais, planilhas, APIs, entre outros). O foco é garantir que os dados estejam acessíveis, íntegros e compreendidos em sua estrutura original (linhas, colunas, tipos, dicionário de variáveis).
+
+  \item \textbf{Preparo e Transformação (\textit{Data Wrangling})} — fase em que os dados são tratados e modelados para análise: remoção de duplicatas, tratamento de nulos, padronização de formatos, criação de variáveis derivadas e normalização. É aqui que o analista transforma dados brutos em uma base coerente, limpa e pronta para exploração.
+
+  \item \textbf{Análise Descritiva e Diagnóstica} — aplicação de métodos estatísticos e visuais para compreender padrões, tendências e relações entre variáveis. Envolve análises univariadas, bivariadas e multivariadas, apoiadas por gráficos e medidas resumo. Nesta fase, a visualização tem papel central na \textit{descoberta} de comportamentos ocultos, outliers e correlações.
+
+  \item \textbf{Comunicação de Achados e Geração de Insights} — etapa final, responsável por traduzir os resultados analíticos em informações compreensíveis e acionáveis. Envolve a construção de \textit{dashboards}, \textit{stories} e relatórios interativos, nos quais a visualização serve para \textit{explicar} e \textit{convencer}, conectando análise e decisão.
+\end{enumerate}
+
+Este capítulo inaugura a \textbf{Parte II do livro}, onde a visualização passa de apoio pontual para \textbf{protagonista} do processo: aprenderemos a escolher gráficos adequados, construir painéis, elaborar narrativas e publicar resultados de forma profissional.
+
+
+
+
+\begin{NoteBox}
+\textbf{Crítica}: muitos projetos pulam da coleta para um \textit{dashboard} final. 
+Sem exploração visual \textit{para descobrir} (prototipagem, testes de hipóteses), a narrativa fica frágil. 
+A boa prática é iterar: explorar \(\rightarrow\) formular \(\rightarrow\) refinar \(\rightarrow\) comunicar.
+\end{NoteBox}
+
+\section{O que é uma ferramenta de visualização?}
+
+Uma \textbf{ferramenta de visualização} é um software que transforma dados em representações gráficas, como gráficos de barras, linhas, mapas ou diagramas. O objetivo é permitir que o usuário \textbf{veja padrões, tendências e relações} que seriam difíceis de perceber apenas observando números em uma tabela. Essas ferramentas fazem a ponte entre a \textit{camada de dados} e a \textit{percepção humana}, traduzindo valores em formas visuais compreensíveis e interativas.
+
+Em essência, ferramentas de visualização realizam um processo de \textbf{mapeamento visual}: elas pegam atributos dos dados (valores, categorias, tempo, localização) e os associam a propriedades gráficas (posição, cor, tamanho, forma, textura). Assim, o usuário pode explorar os dados visualmente e tomar decisões baseadas em evidências.
+
+Uma ferramenta adequada para Análise Exploratória de Dados (AED) deve apresentar as seguintes capacidades:
+
+\begin{itemize}[leftmargin=*]
+
+  \item \textbf{Conectar múltiplas fontes de dados:}  
+  As boas ferramentas conseguem se conectar a diferentes origens — arquivos locais (\texttt{.csv}, \texttt{.xlsx}), bancos de dados relacionais (MySQL, PostgreSQL, SQL Server), ou até APIs e serviços em nuvem. Essa capacidade de integração permite unir dados dispersos em um único ambiente analítico, sem necessidade de codificação complexa.
+
+  \item \textbf{Modelar e agregar corretamente:}  
+  Antes da visualização, os dados precisam ser modelados. Isso inclui:
+  \begin{itemize}
+    \item \textbf{Relacionamentos:} conectar tabelas por chaves comuns (ex.: \texttt{cliente\_id});
+    \item \textbf{Joins:} combinar dados de diferentes fontes, como uma tabela de vendas com outra de produtos;
+    \item \textbf{Camada semântica:} é a camada que organiza os dados de forma lógica e compreensível para o usuário final.  
+    Em vez de enxergar apenas nomes de colunas técnicas, o analista visualiza conceitos do negócio, como “Faturamento”, “Quantidade Vendida” ou “Lucro”.  
+    Essa camada também define medidas (métricas numéricas que podem ser somadas ou calculadas) e dimensões (categorias usadas para agrupar, como “Região” ou “Mês”).
+  \end{itemize}
+  O objetivo dessa etapa é garantir que o dado mostrado em um gráfico realmente represente uma agregação coerente (por exemplo, soma de vendas por mês ou média de nota por curso).
+
+  \item \textbf{Expressar encodings visuais:}  
+  O termo \textit{encoding} (codificação visual) se refere à forma como o dado é traduzido para a tela. Por exemplo:
+  \begin{itemize}
+    \item Posição no eixo X e Y para representar variáveis;
+    \item Tamanho para indicar magnitude;
+    \item Cor e forma para diferenciar categorias.
+  \end{itemize}
+  Aqui entram dois conceitos fundamentais:
+  \begin{itemize}
+    \item \textbf{Escala:} é a relação entre o valor do dado e sua representação visual.  
+    Uma escala pode ser linear (0 a 100 em uma linha contínua), logarítmica (quando há grandes variações de magnitude) ou categórica (para valores discretos como “Masculino/Feminino”).  
+    Escalas bem definidas garantem proporcionalidade e precisão na interpretação dos gráficos.
+    \item \textbf{Paleta:} é o conjunto de cores usado para representar valores.  
+    Uma boa paleta respeita princípios de contraste e acessibilidade, permitindo que todas as categorias sejam distinguíveis — inclusive por pessoas com daltonismo.  
+    Ferramentas como Tableau e Power BI oferecem paletas contínuas (do claro ao escuro) e categóricas (cores distintas para grupos diferentes), que ajudam a reforçar a narrativa visual.
+  \end{itemize}
+  Além disso, os encodings visuais são complementados por \textit{tooltips} — pequenas janelas que aparecem ao passar o mouse sobre um ponto, exibindo detalhes numéricos ou contextuais do dado.
+
+  \item \textbf{Interagir com o usuário:}  
+  Uma visualização moderna não é estática: ela responde à interação.  
+  Isso inclui:
+  \begin{itemize}
+    \item Filtros (selecionar apenas determinados períodos, regiões ou produtos);
+    \item Destaques (realçar pontos específicos ao clicar ou passar o cursor);
+    \item Parâmetros (valores dinâmicos que alteram cálculos ou visualizações);
+    \item Ações entre painéis (clicar em um gráfico e ver outro se atualizar com base na seleção).  
+  \end{itemize}
+  Essa interatividade transforma dashboards em ferramentas exploratórias, onde o usuário conduz sua própria investigação.
+
+  \item \textbf{Publicar e compartilhar com governança:}  
+  Uma boa ferramenta de visualização permite publicar painéis e compartilhá-los de forma controlada.  
+  Isso envolve versionamento (guardar histórico de alterações), permissões de acesso e integração com portais ou sistemas corporativos.  
+  No contexto acadêmico, é o equivalente a permitir que outros pesquisadores repliquem e validem suas análises.
+
+  \item \textbf{Escalar o desempenho:}  
+  Visualizações sobre grandes volumes de dados exigem otimização.  
+  Algumas ferramentas utilizam:
+  \begin{itemize}
+    \item \textit{Cache}: guarda resultados de consultas recentes para exibição mais rápida;
+    \item \textit{Extracts} (como o formato \texttt{.hyper} do Tableau): criam cópias otimizadas dos dados para análise offline;
+    \item Processamento \textit{in-memory}: carrega os dados na memória RAM, reduzindo o tempo de resposta de consultas complexas.
+  \end{itemize}
+  Essas estratégias são fundamentais para garantir que dashboards e análises funcionem bem mesmo com milhões de registros.
+\end{itemize}
+
+Em resumo, uma ferramenta de visualização ideal é aquela que \textbf{integra dados, modela significados, traduz números em formas visuais compreensíveis e possibilita a exploração interativa}.  
+Ela atua como o elo entre o dado bruto e o insight — a descoberta significativa que guia decisões, pesquisas ou ações.
+
+
+\section{Uma breve história crítica da visualização de dados}
+
+A visualização de dados, como campo de estudo e prática, combina arte, ciência e tecnologia. Seu propósito central é transformar números e observações em formas visuais capazes de revelar padrões e significados. Embora hoje pareça natural construir gráficos interativos em poucos cliques, essa trajetória tem mais de dois séculos de evolução conceitual e técnica.
+
+\begin{itemize}[leftmargin=*]
+
+  \item \textbf{Séculos XVIII–XIX — As origens gráficas:}  
+  A história da visualização de dados começa com o escocês \textbf{William Playfair} (1759–1823), considerado o “pai da estatística gráfica”. Ele introduziu os primeiros \textit{gráficos de barras}, \textit{gráficos de linhas} e \textit{gráficos de setores}, defendendo que a visão humana compreende relações numéricas de forma mais rápida quando representadas visualmente.  
+  Poucas décadas depois, \textbf{Florence Nightingale} (1820–1910) utilizou diagramas em forma de roseta para demonstrar o impacto das más condições sanitárias na mortalidade hospitalar durante a Guerra da Crimeia. Seu trabalho foi pioneiro ao unir \textbf{visualização e argumentação científica}, utilizando gráficos como ferramenta de persuasão e política pública.  
+  Nessa fase, o objetivo principal era \textbf{comunicar evidências} a públicos leigos e influenciar decisões — uma prática que antecipou o atual papel do \textit{data storytelling}.
+
+  \item \textbf{Século XX — A formalização e o pensamento estatístico:}  
+  No século XX, a visualização se torna um campo científico autônomo. O francês \textbf{Jacques Bertin} (1918–2010), em sua obra \textit{Semiologia Gráfica} (1967), definiu as \textbf{variáveis visuais fundamentais} — posição, tamanho, forma, cor, orientação e textura — que até hoje sustentam as bases do design de gráficos.  
+  Paralelamente, o estatístico norte-americano \textbf{John Tukey} (1915–2000) propôs a \textbf{Análise Exploratória de Dados (AED)} em 1977, defendendo o uso intensivo de gráficos como ferramenta para compreender os dados antes de aplicar testes formais. Tukey introduziu o conceito de gráficos exploratórios, como boxplots e stem-and-leaf, focando na \textbf{descoberta de anomalias, padrões e hipóteses}.  
+  Já \textbf{Edward Tufte}, com obras como \textit{The Visual Display of Quantitative Information} (1983), estabeleceu princípios de clareza, precisão e integridade visual, enfatizando que “\textit{gráficos ruins podem distorcer tanto quanto dados errados}”.  
+  Essa fase marcou a transição da visualização como arte ilustrativa para uma \textbf{ciência da comunicação quantitativa}.
+
+  \item \textbf{Final do século XX / início do XXI — O código e a gramática dos gráficos:}  
+  Com o advento dos computadores, a visualização entrou na era digital. Linguagens como \textbf{S}, \textbf{R} e \textbf{Python} introduziram bibliotecas de geração de gráficos programáveis (\texttt{matplotlib}, \texttt{ggplot2}, \texttt{seaborn}), tornando possível criar visualizações complexas de forma reprodutível e automatizada.  
+  Nesse contexto, o estatístico \textbf{Leland Wilkinson} publicou em 1999 o livro \textit{The Grammar of Graphics}, que propôs uma estrutura formal para construir gráficos a partir de uma \textbf{gramática visual}. Essa ideia inspirou diretamente o pacote \texttt{ggplot2} (de Hadley Wickham, 2005) e influenciou profundamente as ferramentas modernas de visualização, como Tableau e Power BI.  
+  Ao mesmo tempo, a web trouxe a visualização interativa, com bibliotecas como \texttt{D3.js} permitindo manipular elementos gráficos dinamicamente.  
+  O foco passou da representação estática para a \textbf{exploração dinâmica e interativa}, permitindo ao usuário manipular dados, aplicar filtros e observar padrões em tempo real.
+
+  \item \textbf{Anos 2010+ — A era do \textit{Business Intelligence (BI)} e do \textit{self-service analytics}:}  
+  Na década de 2010, a visualização de dados se consolidou como pilar do ecossistema de BI (Business Intelligence). Ferramentas como \textbf{Tableau}, \textbf{Power BI}, \textbf{Qlik Sense}, \textbf{Looker} e \textbf{Amazon QuickSight} democratizaram o acesso à análise visual, permitindo que usuários de negócio explorassem dados sem precisar programar.  
+  Cada ferramenta trouxe uma inovação técnica:
+  \begin{itemize}
+    \item \textbf{Tableau:} introduziu o motor \textit{VizQL} (Visual Query Language), que traduz automaticamente interações visuais em consultas SQL, tornando o processo de análise intuitivo e rápido.
+    \item \textbf{Power BI:} incorporou o modelo tabular do Excel com a linguagem DAX e o Power Query, criando uma ponte entre planilhas e modelagem analítica.
+    \item \textbf{Qlik:} inovou com seu \textbf{motor associativo}, que permite descobrir relações entre dados de forma não linear, oferecendo liberdade exploratória.
+    \item \textbf{Looker:} estruturou a camada semântica de dados via \textit{LookML}, aproximando desenvolvedores e analistas.
+    \item \textbf{Amazon QuickSight:} trouxe o conceito de \textit{cloud-native analytics}, integrando visualizações diretamente com fontes em nuvem (S3, Athena, Redshift) e reduzindo custos de infraestrutura.
+  \end{itemize}
+  Essa geração marcou a passagem do gráfico isolado para o \textbf{produto de dados completo}: painéis interativos, narrativas visuais e publicação colaborativa com governança.  
+  O analista moderno deixa de ser apenas um “criador de gráficos” e passa a ser um \textbf{curador de percepções}, utilizando ferramentas visuais como meio de comunicação estratégica.
+
+  \item \textbf{A era atual — Inteligência aumentada e automação visual:}  
+  Hoje, a visualização se integra a algoritmos de \textit{machine learning}, sistemas de recomendação e assistentes inteligentes. Ferramentas modernas sugerem automaticamente tipos de gráficos adequados, detectam outliers e geram narrativas visuais.  
+  Plataformas como Power BI Copilot, Tableau Pulse e Looker AI incorporam \textbf{IA generativa} para traduzir perguntas em linguagem natural (“quais produtos venderam mais em 2024?”) em dashboards prontos.  
+  Assim, a fronteira entre análise exploratória e automação analítica se torna cada vez mais tênue — e o papel humano passa a ser interpretar e contextualizar o insight.
+\end{itemize}
+
+\bigskip
+
+Em resumo, a visualização de dados evoluiu da arte manual de Playfair e Nightingale para a ciência computacional e interativa dos dias atuais.  
+O que antes era feito com régua e tinta, hoje é construído sobre bases estatísticas, linguagens formais e sistemas de BI em nuvem.  
+Essa trajetória reflete uma constante: a busca por \textbf{ver para compreender}, tornando os dados acessíveis, confiáveis e visualmente significativos.
+
+
+% =========================================================
+% 5.1 — Panorama de ferramentas (comparativo legível)
+% =========================================================
+
+\section{Ferramentas principais antes do Tableau}
+
+Antes do surgimento de plataformas modernas de visualização como o Tableau, Power BI e Looker, a análise de dados era conduzida principalmente por meio de \textbf{planilhas eletrônicas} e \textbf{bibliotecas estatísticas programáveis}. Essas ferramentas foram — e ainda são — a base da alfabetização analítica de milhões de profissionais no mundo.
+
+\subsection*{Planilhas e bibliotecas}
+
+\begin{itemize}[leftmargin=*]
+
+  \item \textbf{Excel: o clássico que se recusa a morrer}  
+  Lançado pela Microsoft em 1985, o Excel se tornou a ferramenta mais difundida da história da computação empresarial. Ele é onipresente porque une simplicidade e poder: com poucas fórmulas, o usuário pode organizar dados, calcular métricas e gerar gráficos em minutos.  
+
+  O Excel evoluiu muito além de uma simples planilha. Suas \textbf{tabelas dinâmicas} (pivot tables) permitem resumir grandes volumes de dados de forma interativa, enquanto os gráficos incorporados possibilitam análises visuais imediatas. Além disso, o recurso de \textit{Power Query} trouxe capacidade de integração com diversas fontes externas (CSV, SQL, APIs, etc.), aproximando o Excel das ferramentas de BI.  
+
+  Embora tenha limitações — como a ausência de controle de versão robusto, problemas de desempenho com grandes bases e dificuldade de governança —, o Excel se mantém relevante por três motivos principais:
+  \begin{enumerate}
+    \item \textbf{Baixa barreira de entrada:} qualquer pessoa com noções básicas consegue aprender rapidamente.
+    \item \textbf{Flexibilidade:} pode ser usado tanto para cálculos simples quanto para modelos financeiros complexos.
+    \item \textbf{Evolução inteligente:} a chegada do \textbf{Copilot} (IA da Microsoft) e da integração com o \textbf{ChatGPT} trouxeram uma nova camada de automação. Agora é possível criar gráficos, fórmulas e análises descritivas em linguagem natural — por exemplo: “explique a variação das vendas por mês” ou “crie um gráfico com os produtos mais vendidos”.  
+  \end{enumerate}
+
+  Essa fusão entre IA generativa e planilhas tradicionais revitalizou o Excel, tornando-o um \textbf{ambiente híbrido de análise e explicação}. Ele continua sendo o ponto de partida de inúmeros profissionais antes de migrarem para plataformas mais robustas de visualização.
+
+  \item \textbf{Google Sheets + Looker Studio: colaboração e nuvem}  
+  O Google Sheets popularizou a ideia de planilhas colaborativas, permitindo que várias pessoas trabalhassem no mesmo arquivo simultaneamente. Embora possua recursos mais limitados de modelagem e visualização do que o Excel, ele se destaca pela \textbf{integração direta com o ecossistema Google} (Forms, Drive, BigQuery).  
+  Em conjunto com o Looker Studio (antigo Data Studio), o Sheets permite criar relatórios e dashboards simples para publicação web. É uma solução leve e acessível, ideal para contextos educacionais e análises rápidas em grupo.
+
+  \item \textbf{Python e R (Plotly, Matplotlib, ggplot2): o poder do código}  
+  Para usuários mais técnicos, as linguagens Python e R representaram um avanço enorme na visualização científica.  
+  Com bibliotecas como \texttt{Matplotlib}, \texttt{Plotly} e \texttt{ggplot2}, tornou-se possível criar gráficos personalizados, interativos e reprodutíveis — algo essencial na pesquisa acadêmica e no desenvolvimento de produtos de dados.  
+  O ponto forte é o \textbf{controle total sobre o visual e a lógica dos gráficos}. O ponto fraco é que o compartilhamento dessas visualizações exige alguma infraestrutura (por exemplo, o uso de Streamlit, Shiny ou Jupyter Notebook), o que ainda restringe o acesso de usuários não técnicos.
+\end{itemize}
+
+\subsection*{Plataformas de BI}
+
+A evolução das planilhas e linguagens analíticas levou ao surgimento das ferramentas de \textbf{Business Intelligence (BI)} — plataformas que unem modelagem de dados, visualização interativa e governança em um único ambiente. Essas soluções começaram a se popularizar entre 2010 e 2015, acompanhando o crescimento do \textit{Big Data} e da computação em nuvem.
+
+\begin{itemize}[leftmargin=*]
+
+  \item \textbf{Power BI: democratização da análise corporativa}  
+  Desenvolvido pela Microsoft, o Power BI trouxe o modelo tabular e a linguagem \textbf{DAX (Data Analysis Expressions)}, permitindo a criação de cálculos complexos e relacionamentos entre tabelas.  
+  Ele é amplamente utilizado por empresas de todos os portes graças à sua integração com o Excel, Azure e SharePoint, além do excelente custo-benefício.  
+  Seu desafio principal é a curva de aprendizado do DAX, que exige certa familiaridade com modelagem analítica.
+
+  \item \textbf{Amazon QuickSight: BI nativo em nuvem}  
+  Criado pela Amazon Web Services, o QuickSight é uma ferramenta \textit{cloud-native} que processa dados usando o mecanismo \textbf{SPICE} (\textit{Super-fast, Parallel, In-memory Calculation Engine}).  
+  Ele é ideal para quem já utiliza a infraestrutura AWS (como S3, Athena, Redshift), mas oferece menos opções de customização visual em comparação a Tableau ou Power BI.  
+  Seu foco está em escalabilidade, custo reduzido e integração com pipelines automatizados.
+
+  \item \textbf{Qlik Sense: o motor associativo}  
+  O Qlik introduziu um conceito inovador: o \textbf{motor associativo in-memory}, que permite explorar relações entre dados de maneira livre, sem depender de hierarquias pré-definidas.  
+  Isso o torna uma ferramenta poderosa para descobertas exploratórias. Entretanto, seu licenciamento e curva de aprendizado são mais complexos, o que limita a adoção em ambientes educacionais.
+
+  \item \textbf{Looker (camada semântica centralizada)}  
+  O Looker, adquirido pelo Google, trabalha sobre o conceito de \textbf{LookML} — uma linguagem para descrever modelos de dados e métricas centralizadas.  
+  Essa abordagem garante consistência e governança: todos os dashboards utilizam a mesma definição de “lucro”, “cliente ativo” ou “taxa de conversão”.  
+  O ponto fraco é a necessidade de uma equipe técnica para manter e evoluir os modelos.
+
+  \item \textbf{Apache Superset e Metabase: o código aberto do BI}  
+  Ambas são ferramentas \textit{open-source} que trazem a filosofia “SQL-first” — isto é, permitem criar dashboards diretamente a partir de consultas SQL.  
+  O \textbf{Superset}, mantido pela Apache Foundation, é mais completo, mas requer configuração e infraestrutura (DevOps). Já o \textbf{Metabase} oferece simplicidade e boa experiência de uso, sendo indicado para times menores ou ambientes acadêmicos.  
+  Em contrapartida, essas soluções podem ter limitações em performance e em recursos de governança.
+
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Critério didático:}  
+Para iniciantes, a ferramenta ideal deve equilibrar \textbf{facilidade de construção}, \textbf{repertório visual amplo} e \textbf{potencial narrativo}.  
+Por esse motivo, este curso utiliza o \textbf{Tableau Public} — uma plataforma gratuita, intuitiva e rica em recursos visuais, capaz de introduzir os princípios fundamentais da Análise Exploratória de Dados (AED) sem exigir conhecimento prévio em programação.
+\end{NoteBox}
+
+
+
+\begin{table}[H]
+\centering
+\caption{Comparativo entre ferramentas de visualização/BI quanto à descrição, pontos fortes e pontos fracos.}
+\label{tab:comparativo_ferramentas_bi}
+\begin{tabular}{p{2.8cm} p{4cm} p{4cm} p{4cm}}
+\hline
+\textbf{Ferramenta} & \textbf{Descrição} & \textbf{Pontos Fortes} & \textbf{Pontos Fracos} \\ \hline
+
+\textbf{Excel} &
+Planilha tradicional desktop/cloud voltada para análises rápidas e relatórios. &
+Onipresente; fácil uso; boa para protótipos e análises locais. &
+Baixa escalabilidade; pouca governança; difícil automação. \\
+
+\textbf{Google Sheets} &
+Planilha colaborativa online com integração ao ecossistema Google. &
+Colaboração em tempo real; integra com BigQuery e Apps Script. &
+Limite de linhas; recursos analíticos limitados; depende da internet. \\
+
+\textbf{Power BI} &
+Ferramenta da Microsoft para modelagem tabular, dashboards e relatórios corporativos. &
+Alta integração com Excel e Azure; visualizações ricas; automação via DAX. &
+Curva de aprendizado do DAX; limitações de compartilhamento gratuito. \\
+
+\textbf{Tableau} &
+Plataforma de visualização interativa voltada para exploração e storytelling. &
+Visualizações sofisticadas; interface intuitiva; recursos de história (story points). &
+Licença cara; modelagem de dados limitada; curva de aprendizado técnica. \\
+
+\textbf{Looker Studio (Data Studio)} &
+Ferramenta gratuita do Google para dashboards conectados a múltiplas fontes. &
+Simples de usar; integra com Sheets e BigQuery; ideal para relatórios rápidos. &
+Baixa performance com grandes volumes; governança limitada. \\
+
+\textbf{Python (Pandas + Plotly)} &
+Ecossistema em código para análise exploratória e automação de dashboards. &
+Altamente flexível; reprodutível; ideal para análises avançadas. &
+Requer conhecimento técnico; setup complexo; pouca interface nativa. \\
+
+\textbf{R (tidyverse + ggplot2/Shiny)} &
+Linguagem estatística voltada à análise e comunicação de dados. &
+Visualizações consistentes; poderosa para estatística e prototipagem. &
+Curva de aprendizado íngreme; menor uso em ambientes corporativos. \\
+
+\textbf{Apache Superset} &
+Ferramenta open-source para exploração SQL e dashboards interativos. &
+Gratuita; escalável; integra com múltiplos bancos de dados. &
+Exige infraestrutura própria; menos polida que opções pagas. \\
+
+\textbf{Metabase} &
+Plataforma open-source de BI com interface intuitiva e perguntas guiadas. &
+Interface amigável; fácil configuração; ideal para análises rápidas. &
+Limites em modelagens complexas; recursos avançados na versão paga. \\
+
+\textbf{Qlik Sense} &
+Plataforma corporativa de BI com motor associativo para descoberta de dados. &
+Rápida exploração de grandes volumes; recursos corporativos maduros. &
+Licenciamento complexo; curva de aprendizado alta; custo elevado. \\ \hline
+\end{tabular}
+
+\vspace{0.2cm}
+\footnotesize
+\textit{Legenda:} Comparativo das principais ferramentas utilizadas em Análise Exploratória de Dados (AED) e Business Intelligence (BI) quanto à sua aplicabilidade prática.
+
+\end{table}
+
+\begin{NoteBox}
+\textbf{Importante}: não traduzimos termos técnicos como \textbf{extract}, \textbf{VizQL}, \textbf{LOD}. 
+Eles aparecem como tais nas interfaces e na documentação oficial — preservar o termo aumenta a precisão didática.
+\end{NoteBox}
+
+% =========================================================
+% 5.2 — Por que Tableau neste curso (com honestidade)
+% =========================================================
+
+\section{Por que o Tableau Public para este curso?}
+\textbf{Prós didáticos}:
+\begin{itemize}[leftmargin=*]
+  \item Construção visual por \textbf{arrastar e soltar} com \textbf{alto repertório} (mapas, dual-axis, densidade, \textit{story points});
+  \item \textbf{VizQL}: o gráfico responde \textit{em tempo real} ao gesto do analista, favorecendo a exploração;
+  \item \textbf{LOD} e cálculos de tabela que resolvem KPIs estáveis (sem recorrer a código externo);
+  \item \textbf{Publicação} simples no \textbf{Tableau Public} (portfólios dos alunos).
+\end{itemize}
+\textbf{Cuidados}:
+\begin{itemize}[leftmargin=*]
+  \item Modelagem descuidada \(\Rightarrow\) duplicações e métricas inconsistentes;
+  \item Mau uso de filtros/ordem de operações \(\Rightarrow\) números \textit{aparentemente} diferentes;
+  \item \textbf{Extract} é preferível ao \textit{live} para estabilidade no Public.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{120pt}\rule{0.92\linewidth}{0pt}}
+\caption{[Espaço reservado] Capturas da interface do Tableau: \textit{Data Source}, \textit{Sheet}, \textit{Dashboard}, \textit{Story}.}
+\end{figure}
+
+% =========================================================
+% 5.3 — Arquitetura do Tableau (detalhada, sem performance ainda)
+% =========================================================
+
+\section{Arquitetura do Tableau (visão detalhada e crítica)}
+
+Compreender a arquitetura do Tableau é fundamental para projetar análises escaláveis e de alto desempenho.  
+O Tableau não é apenas um criador de gráficos — ele é um \textbf{motor de consultas visuais} (\textbf{VizQL}) que traduz ações de interface (como arrastar um campo) em comandos SQL otimizados, executados sobre um modelo de dados em duas camadas.  
+A seguir, detalhamos como esse fluxo ocorre \textbf{por trás da interface}, quais são os pontos de atenção e como projetar conexões eficientes.
+
+\subsection*{1) Modelo de Dados em Duas Camadas: Lógica e Física}
+O Tableau separa sua modelagem em dois níveis, o que explica por que às vezes ele parece “decidir sozinho” como unir tabelas.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Camada Lógica (Relationships)} — descreve como tabelas se relacionam sem fixar o tipo de \textit{join} antecipadamente.  
+  Essa camada é mais \textbf{semântica}: o Tableau entende as chaves e decide, em tempo de execução, como consultar cada tabela, respeitando sua granularidade.  
+  Ideal quando as tabelas têm níveis distintos de detalhe (ex.: Vendas diárias e Metas mensais).
+
+  \item \textbf{Camada Física (Joins)} — define as junções reais de dados (\textit{inner, left, right, full}).  
+  Aqui há maior controle, mas também maior risco de \textbf{duplicação de registros} e perda de performance, principalmente em bases grandes.  
+  O Tableau executa esses joins diretamente na fonte de dados, o que significa que a modelagem física ruim pode gerar queries lentas e pesadas.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Atenção:} o Tableau nunca “guarda” seus dados — ele apenas os interpreta.  
+A qualidade e granularidade do modelo de origem são o que definem a fluidez das suas visualizações.
+\end{NoteBox}
+
+\subsection*{2) Hyper Data Engine: o cérebro colunar do Tableau}
+O \textbf{Hyper} é o mecanismo interno do Tableau, um formato colunar (\texttt{.hyper}) otimizado para leitura analítica e compressão.  
+Ele é usado em \textbf{Extracts}, que são snapshots da base de dados.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Extract (\texttt{.hyper})}: reduz a dependência de consultas diretas à fonte, aumentando a performance.  
+  Cada \textit{extract} pode ser atualizado manualmente ou via agendamento (no Tableau Cloud/Server).  
+  \item \textbf{Leitura colunar}: o Tableau lê apenas as colunas necessárias à visualização, não a tabela inteira — isso explica por que gráficos simples são instantâneos mesmo em grandes bases.
+  \item \textbf{Semântica de tipos}: suporta campos numéricos, categóricos, datas e geográficos (\textit{geo-roles}), garantindo coerência nos cálculos e mapas.
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Boas práticas de conexão performática:}\\[4pt]
+\(\text{Fonte de dados limpa} \;\rightarrow\; \text{Extract (.hyper)} \;\rightarrow\; \text{Filtros de contexto} \;\rightarrow\; \text{Visualização otimizada}\)
+\end{FormulaBox}
+
+\subsection*{3) VizQL — A linguagem visual de consulta}
+O \textbf{VizQL (Visual Query Language)} é o componente que transforma ações gráficas em comandos de consulta SQL.  
+Cada arrastar de campo aciona uma query invisível que:
+\begin{enumerate}[leftmargin=*]
+  \item Consulta a fonte de dados (ou o extract);
+  \item Agrega e agrupa resultados segundo dimensões e medidas;
+  \item Retorna o resultado e o converte em \textit{marcas} visuais (pontos, linhas, barras, áreas);
+  \item Renderiza os canais visuais (posição, cor, tamanho, forma).
+\end{enumerate}
+
+\begin{NoteBox}
+\textbf{Interpretação prática:} quando o usuário arrasta \textit{Vendas} para \textit{Linhas} e \textit{Região} para \textit{Colunas},  
+o Tableau gera algo conceitualmente próximo de:  
+\texttt{SELECT Região, SUM(Vendas) FROM base GROUP BY Região;}
+\end{NoteBox}
+
+\subsection*{4) A camada semântica: onde o Tableau entende o seu negócio}
+O Tableau organiza o modelo semântico por meio de \textbf{Dimensões}, \textbf{Medidas} e \textbf{Hierarquias},  
+permitindo navegar entre diferentes granularidades sem reescrever a consulta.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Dimensões} — campos categóricos (Produto, Região, Data); definem agrupamentos e eixos.  
+  \item \textbf{Medidas} — campos numéricos agregáveis (Vendas, Lucro, Receita).  
+  \item \textbf{Hierarquias} — permitem o \textit{drill-down} (Ano → Trimestre → Mês; País → Estado → Cidade).  
+  \item \textbf{Funções de papel} — controlam o comportamento visual (discrete vs. continuous, \textit{geo-role}, \textit{date-part} vs. \textit{date-value}).
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Atenção ao contexto:} toda agregação no Tableau depende das dimensões em uso na \textit{view}.  
+Mudar um campo de lugar altera a consulta SQL gerada.
+\end{NoteBox}
+
+\subsection*{5) Estratégias de conexão e escolha da tabela ideal}
+Nem toda tabela é adequada para ser conectada diretamente ao Tableau.  
+O tipo de tabela (e sua granularidade) determina o desempenho e a clareza analítica.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tabelas Especializadas Analíticas (grandes)} — contêm dados detalhados, linha a linha, com milhões de registros.  
+  São ideais para exploração, mas exigem cuidado: use \textbf{Extracts} e \textbf{filtros de contexto}.  
+  Evite cálculos linha a linha no Tableau; faça-os previamente no Python ou SQL.
+
+  \item \textbf{Tabelas Especializadas Sumarizadas} — já agregam as informações (por mês, por região, por produto).  
+  Reduzem volume e aumentam performance, mas limitam o nível de detalhe.  
+  São ideais para dashboards e análises gerenciais.
+
+  \item \textbf{Tabelas Visão Insight} — derivadas de análises ou modelos; contêm KPIs prontos, métricas preditivas e classificações.  
+  Excelentes para storytelling e publicação, mas não para exploração — o dado já vem “interpretado”.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Resumo prático:}\\[4pt]
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Exploração →} use bases analíticas grandes (com Extract e filtros);\\
+  \item \textbf{Dashboards →} use tabelas sumarizadas (pré-agregadas);\\
+  \item \textbf{Histórias e KPIs →} use visões insight (curadas e leves).
+\end{itemize}
+\end{NoteBox}
+
+\subsection*{6) Cálculos e LOD (Level of Detail)}
+Os cálculos no Tableau atuam em níveis diferentes:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Campos calculados} — criam métricas derivadas: \texttt{Lucro = Vendas - Custo}.
+  \item \textbf{LOD Expressions} — controlam o nível de agregação:  
+    \texttt{\{FIXED Região: SUM(Vendas)\}} mantém a soma fixa por região, mesmo com filtros.  
+  \item \textbf{Cálculos de Tabela} — operam sobre a visualização (percentuais, rankings, somas cumulativas).
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Regra geral:} use LOD para \textbf{garantir consistência de KPIs} e cálculos de tabela para \textbf{comparações dinâmicas na visualização}.
+\end{FormulaBox}
+
+\subsection*{7) Dashboards, Stories e Metadados}
+No Tableau, o produto final não é um gráfico, mas uma \textbf{interface interativa}.  
+\textbf{Dashboards} combinam múltiplas visualizações com filtros, ações e parâmetros.  
+\textbf{Stories} conectam visualizações em sequência narrativa, guiando o público até o insight.
+
+\begin{NoteBox}
+\textbf{Resumo crítico:} dominar a arquitetura do Tableau é entender o que acontece entre o clique e o gráfico.  
+Ao conhecer a camada lógica, o Hyper, o VizQL e as granularidades, o analista deixa de ser apenas um “usuário de painéis” e passa a ser um \textbf{projetista de performance e significado}.
+\end{NoteBox}
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{120pt}\rule{0.92\linewidth}{0pt}}
+\caption{[Espaço reservado] Arquitetura conceitual do Tableau: Relationships (lógica) → Joins (física) → VizQL → Marcas/Canais → Renderização; Hyper (\texttt{.hyper}) como camada colunar de alto desempenho.}
+\end{figure}
+
+
+% =========================================================
+% 5.4 — (Transição) A partir daqui, entramos na prática com Tableau
+% =========================================================
+\section{Visão Geral do Tableau Public}
+
+O \textbf{Tableau Public} é a porta de entrada para o ecossistema Tableau e um excelente ambiente de aprendizagem.  
+Ele permite \textbf{criar, publicar e compartilhar visualizações interativas gratuitamente}, sem exigir licenças corporativas.  
+Tudo é salvo na nuvem do Tableau (perfil público), o que facilita a criação de portfólios e a divulgação de projetos analíticos.
+
+\begin{NoteBox}
+\textbf{Por que o Tableau Public neste curso?}  
+Porque ele une três pilares importantes da aprendizagem em AED:  
+(i) experimentação prática e visual;  
+(ii) narrativa e comunicação de dados;  
+(iii) publicação e compartilhamento dos resultados com a comunidade.
+\end{NoteBox}
+
+\subsection*{Fluxo de trabalho no Tableau Public}
+A construção de uma análise completa no Tableau segue um \textbf{ciclo lógico}, do dado ao insight:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Conectar e modelar os dados} — importar arquivos (\texttt{.csv}, \texttt{.xlsx}, \texttt{.json}) ou bancos de dados; definir \textit{relationships} (camada lógica) e \textit{joins} (camada física); escolher se a conexão será \textbf{live} ou via \textbf{extract (.hyper)}.
+  
+  \item \textbf{Construir visualizações} — selecionar campos (dimensões e medidas), aplicar filtros, criar campos calculados e explorar diferentes tipos de gráfico conforme o tipo de variável e o objetivo analítico.
+  
+  \item \textbf{Montar dashboards e stories} — organizar múltiplas visualizações em painéis interativos; criar narrativas visuais (\textit{stories}) com contexto, conflito e conclusão.
+  
+  \item \textbf{Publicar e compartilhar} — enviar o projeto ao \textbf{Tableau Public}, tornando-o acessível por link ou incorporável em sites e portfólios.
+\end{enumerate}
+
+\begin{FormulaBox}
+\textbf{Fluxo essencial do trabalho:}\\[3pt]
+\texttt{Dados → Modelagem → Visualização → Interação → Storytelling → Publicação}
+\end{FormulaBox}
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{110pt}\rule{0.9\linewidth}{0pt}}
+\caption{[Espaço reservado] Interface principal do Tableau Public: Data Source → Sheet → Dashboard → Story.}
+\end{figure}
+
+\subsection*{O ecossistema Tableau e seus componentes}
+O Tableau é formado por um conjunto de produtos que compartilham a mesma base tecnológica (\textbf{VizQL} e \textbf{Hyper}).  
+A diferença está na finalidade, no público e na forma de armazenamento dos dados.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tableau Desktop} — versão completa, usada em contextos corporativos; conecta-se a múltiplas fontes (SQL, AWS, BigQuery, etc.) e permite automações complexas.
+  
+  \item \textbf{Tableau Public} — versão gratuita e em nuvem; trabalha principalmente com \textbf{extracts} locais de arquivos e publica automaticamente no perfil do usuário; ideal para aprendizado, prototipagem e portfólios públicos.
+  
+  \item \textbf{Tableau Cloud / Server} — ambientes corporativos de publicação privada; controlam segurança, acesso e agendamento de atualizações de \textbf{extracts}.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Diferença prática:}  
+No \textbf{Public}, o dado é sempre publicado junto com a visualização, por isso não é indicado para informações sigilosas.  
+No \textbf{Server/Cloud}, o dado pode permanecer protegido e as permissões são definidas por perfis de acesso.
+\end{NoteBox}
+
+\subsection*{Boas práticas iniciais}
+Antes de começar a construir gráficos, o analista deve preparar o ambiente para evitar inconsistências e manter reprodutibilidade.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Padronize os nomes dos campos} — use convenções claras (sem acentos, espaços ou duplicidades).  
+  \item \textbf{Mantenha um dicionário de dados} — descreva o significado e a unidade de cada variável.  
+  \item \textbf{Organize as pastas do projeto} — separe dados brutos, processados e finais.  
+  \item \textbf{Versione os arquivos} — salve as etapas de construção do dashboard para evitar perda de progresso.  
+  \item \textbf{Salve periodicamente como \texttt{.twbx}} — formato compactado que inclui os dados e o layout (ideal para backup ou portfólio offline).
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Dica didática:} pensar o Tableau como um \textbf{laboratório visual}.  
+Cada gráfico é um experimento: testamos hipóteses, validamos padrões e ajustamos a narrativa.  
+A força da ferramenta está na iteração rápida — criar, testar, refinar e comunicar.
+\end{NoteBox}
+
+% [A sessão de performance virá posteriormente em seção própria, conforme o plano do capítulo.]
+
+
+\section{Get Started with Tableau Prep}
+
+O \textbf{Tableau Prep} é o componente do ecossistema Tableau voltado à preparação e limpeza de dados antes da análise.  
+Ele permite criar fluxos (\textit{flows}) que conectam, transformam, combinam e exportam conjuntos de dados limpos e prontos para o \textbf{Tableau Desktop} ou o \textbf{Tableau Public}.  
+A seguir, veremos um guia completo baseado no tutorial oficial da Salesforce\footnote{Fonte: \url{https://help.tableau.com/current/prep/en-us/prep_get_started.htm?_gl=1*2dbq0u*_gcl_au*MTE2NDcwMjI0OS4xNzYwMDAwNDIy*_ga*MTU1MDY5NDQ1MS4xNzYwMDAwNDIy*_ga_8YLN0SNXVS*czE3NjAzNzU5OTkkbzIkZzEkdDE3NjAzNzYwODEkajU1JGwwJGgw}}.
+
+\subsection*{Objetivo do Tableau Prep}
+
+A função do Tableau Prep é transformar dados brutos, incompletos ou despadronizados em uma estrutura analítica limpa e confiável.  
+Ele atua no início do processo da AED — na etapa de \textbf{ingestão, transformação e organização dos dados} — automatizando tarefas que normalmente exigiriam SQL, Python ou planilhas complexas.
+
+\begin{FormulaBox}
+\textbf{Fluxo conceitual da preparação de dados:}\\[4pt]
+\(\text{Fonte bruta} \Rightarrow \text{Conexão} \Rightarrow \text{Limpeza e padronização} \Rightarrow \text{Integração (joins/unions)} \Rightarrow \text{Exportação para análise}\)
+\end{FormulaBox}
+
+\begin{NoteBox}
+\textbf{Importância prática:} Um bom analista deve dominar tanto o Tableau Desktop (análise) quanto o Tableau Prep (preparação).  
+Sem uma base de dados limpa, nenhuma visualização é confiável — mesmo que o gráfico seja bonito.
+\end{NoteBox}
+
+---
+
+\subsection*{1. Conectando-se aos dados}
+
+Ao abrir o Tableau Prep Builder, a tela inicial apresenta o painel \textbf{Connections}, semelhante ao Tableau Desktop.  
+É nele que se inicia o fluxo de trabalho:
+
+\begin{enumerate}[leftmargin=*]
+  \item Clique em \textbf{Add Connection} e selecione o tipo de arquivo (ex.: \texttt{.csv}, \texttt{.xlsx}, \texttt{.json}).
+  \item Navegue até o diretório desejado e selecione os arquivos de entrada (\textit{Input Step}).
+  \item Se houver múltiplos arquivos semelhantes (ex.: \texttt{Orders\_2015.csv}, \texttt{Orders\_2016.csv}), use a opção \textbf{Union multiple tables}.
+  \item Cada Input Step cria automaticamente uma amostra dos dados para melhorar o desempenho e exibir prévias dos campos e tipos.
+\end{enumerate}
+
+\begin{NoteBox}
+\textbf{Dica:} Utilize nomes consistentes e mantenha seus arquivos em pastas organizadas.  
+Isso permite que o Tableau Prep combine automaticamente arquivos com estrutura idêntica (como séries anuais ou regionais).
+\end{NoteBox}
+
+---
+
+\subsection*{2. Explorando e avaliando a estrutura dos dados}
+
+Após conectar-se às fontes, cada etapa é representada como um \textbf{nó visual} no \textit{Flow Pane}.  
+O Tableau exibe os campos, tipos de dados e amostras, permitindo que você:
+
+\begin{itemize}[leftmargin=*]
+  \item visualize campos duplicados (ex.: colunas com prefixo \texttt{Right\_});
+  \item filtre colunas indesejadas diretamente na entrada;
+  \item corrija tipos de dados (ex.: converter “String” para “Decimal”);
+  \item e avalie a consistência de chaves e granularidades.
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Dica técnica:} o Tableau Prep processa amostras parciais para preservar a performance,  
+mas é possível ajustar o tamanho da amostra na aba \textbf{Data Sample}.
+\end{FormulaBox}
+
+---
+
+\subsection*{3. Limpando e modelando os dados}
+
+A etapa de limpeza é feita através de \textbf{Clean Steps}, que permitem corrigir campos e valores por meio de uma interface visual.
+
+\begin{enumerate}[leftmargin=*]
+  \item Adicione um \textbf{Clean Step} clicando no botão “+” após o Input Step.
+  \item Use o painel \textbf{Profile Pane} para identificar outliers, nulos e inconsistências.
+  \item Aplique operações de limpeza como:
+  \begin{itemize}[leftmargin=*]
+    \item \textbf{Remover campos duplicados};
+    \item \textbf{Combinar colunas} com cálculos como \texttt{MAKEDATE([Ano],[Mês],[Dia])};
+    \item \textbf{Corrigir tipos de dados} e \textbf{substituir valores nulos};
+    \item \textbf{Criar campos calculados} (ex.: \texttt{Region = "Central"}).
+  \end{itemize}
+\end{enumerate}
+
+\begin{NoteBox}
+\textbf{Boas práticas:}
+\begin{itemize}[leftmargin=*]
+  \item Dê nomes descritivos aos passos (ex.: \textit{Fix Dates/Field Names});  
+  \item Revise o painel \textbf{Changes} — ele registra todas as transformações realizadas;  
+  \item Utilize o \textbf{Group Values} para padronizar entradas semelhantes (como abreviações de estados).
+\end{itemize}
+\end{NoteBox}
+
+---
+
+\subsection*{4. Combinando tabelas: \textit{Union} e \textit{Join}}
+
+O Tableau Prep permite combinar fontes por linhas (\textit{union}) ou por colunas (\textit{join}) de forma visual e intuitiva.
+
+\paragraph{Union (união por linhas):}
+\begin{itemize}[leftmargin=*]
+  \item Use quando arquivos têm a mesma estrutura, mas representam períodos ou regiões diferentes.
+  \item Basta arrastar uma etapa sobre a outra e escolher \textbf{Union}.
+  \item Campos com nomes e tipos compatíveis são mesclados automaticamente.
+\end{itemize}
+
+\paragraph{Join (união por colunas):}
+\begin{itemize}[leftmargin=*]
+  \item Use quando deseja combinar informações complementares (ex.: pedidos e devoluções).
+  \item Escolha as chaves de junção (ex.: \texttt{Order ID}, \texttt{Product ID}) e o tipo de join (inner, left, right, full).
+  \item O painel \textbf{Join Profile} mostra estatísticas do join, incluindo linhas incluídas/excluídas e campos ausentes.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Exemplo prático:}  
+Após unir os arquivos de pedidos (\texttt{Orders\_South\_2015–2018}) com o de devoluções (\texttt{returns\_reasons\_new.xlsx}),  
+podemos criar campos calculados como:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{Returned? = IF ISNULL([Return Reason]) THEN "No" ELSE "Yes" END}
+  \item \texttt{Days to Ship = DATEDIFF('day',[Order Date],[Ship Date])}
+\end{itemize}
+\end{NoteBox}
+
+---
+
+\subsection*{5. Gerando saídas e integrando com o Tableau Desktop}
+
+Depois de limpar e unir os dados, o Tableau Prep permite exportar o resultado em diferentes formatos:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{.hyper} — formato colunar nativo e otimizado do Tableau (recomendado);
+  \item \textbf{.csv} — para compatibilidade com outras ferramentas;
+  \item \textbf{.tflx} — pacote que inclui o fluxo e os arquivos de dados;
+  \item \textbf{Publicação direta} — envia o resultado ao Tableau Cloud/Server como \textbf{data source}.
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Ciclo completo do Tableau Prep:}\\[3pt]
+\(\text{Conectar} \Rightarrow \text{Limpar} \Rightarrow \text{Unir/Agregar} \Rightarrow \text{Calcular} \Rightarrow \text{Gerar Output (.hyper)}\)
+\end{FormulaBox}
+
+\begin{NoteBox}
+\textbf{Dica de automação:}  
+No Tableau Server, é possível agendar execuções automáticas de fluxos (via \textit{Tableau Prep Conductor})  
+para manter os dados sempre atualizados (\textit{incremental refresh}).
+\end{NoteBox}
+
+---
+
+\subsection*{Resumo da aprendizagem}
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tableau Prep} é uma ferramenta visual de ETL (\textit{Extract, Transform, Load}) voltada à análise.  
+  \item Ideal para usuários que desejam preparar dados sem precisar de código.  
+  \item Integra-se perfeitamente ao \textbf{Tableau Desktop/Public} via arquivos \texttt{.hyper}.  
+  \item Reduz tempo de limpeza, aumenta a consistência dos relatórios e evita dependência de planilhas.  
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Conclusão:}  
+Com o Tableau Prep, o analista deixa de ser apenas “consumidor” de dados e passa a ser o \textbf{arquiteto da qualidade analítica}.  
+A ferramenta transforma o processo de limpeza em uma experiência visual, rápida e reprodutível — essencial em qualquer projeto de AED.
+\end{NoteBox}
+
+
+\section{Modelagem de Dados no Tableau (Desktop, Server e Cloud)}
+
+A modelagem de dados no Tableau organiza \textbf{como as tabelas são conectadas, interpretadas e expostas} para análise.  
+O objetivo é entregar \textbf{consistência semântica} (dimensões, medidas, tipos) e \textbf{confiabilidade operacional} (joins corretos, granularidade estável, campos calculados reprodutíveis).
+
+\begin{FormulaBox}
+\textbf{Princípio orientador:}\\[3pt]
+\(\text{Fonte(s)} \Rightarrow \text{Modelo (lógico + físico)} \Rightarrow \text{Semântica (dimensões/medidas)} \Rightarrow \text{Visualizações e KPIs}\)
+\end{FormulaBox}
+
+\subsection*{1. Duas camadas de modelagem: lógica e física}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Camada Lógica (\textit{Relationships})} — descreve relações entre tabelas \emph{sem fixar} joins de imediato.  
+  Preserva granularidades diferentes (ex.: \textit{Pedidos} diários vs. \textit{Metas} mensais). O Tableau resolve a junção \textit{em tempo de consulta} conforme o contexto da visualização.
+  \item \textbf{Camada Física (Joins)} — define os joins efetivos (\textit{inner/left/right/full}) quando você arrasta tabelas para dentro de uma mesma \textit{physical layer}.  
+  Atenção à \textbf{cardinalidade} (1:1, 1:N, N:N) para evitar \textit{duplicações} e perda de performance.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Regra prática:} Use \textbf{Relationships} quando as tabelas têm \textbf{granularidades diferentes}. Use \textbf{Joins} quando as tabelas têm granularidades compatíveis e você \textbf{realmente precisa} materializar a junção.
+\end{NoteBox}
+
+\subsection*{2. Editar e gerenciar a fonte de dados}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Editar a fonte} — \texttt{Data \(\rightarrow\) <Sua Fonte> \(\rightarrow\) Edit Data Source}.  
+  Na \textit{Data Source page}, ajuste conexões, adicione tabelas, defina \textit{relationships/joins}.
+  \item \textbf{Navegar no \textit{Data Grid}} — visualize amostra dos dados, \textbf{ordene colunas/linhas}, oculte campos, mude \textbf{tipos de dados} e \textbf{georoles}.
+  \item \textbf{Renomear/Resetar nomes} — duplo clique para renomear; menu do campo \(\rightarrow\) \textit{Reset Name} para voltar ao nome original da fonte.
+  \item \textbf{Reverter nomes automáticos} — use \textit{Revert} quando o Tableau tiver aprimorado nomes automaticamente e você quiser restaurar.
+\end{enumerate}
+
+\begin{NoteBox}
+\textbf{Boas práticas de metadados:}
+\begin{itemize}[leftmargin=*]
+  \item Padronize nomes (\texttt{snake\_case} ou \texttt{CamelCase}), sem acentos e sem espaços.  
+  \item Agrupe campos por pastas temáticas (Dimensão Tempo, Geografia, Produto, Fato Vendas).
+  \item Oculte (\textit{Hide}) campos técnicos que não entram na análise.
+\end{itemize}
+\end{NoteBox}
+
+\subsection*{3. Joins na prática (camada física)}
+Para adicionar tabelas via \textbf{join}:
+\begin{enumerate}[leftmargin=*]
+  \item Na \textbf{Data Source page}, arraste a nova tabela para o canvas físico, \textbf{sobrepondo} à tabela existente até aparecer o ícone de join.
+  \item Escolha o \textbf{tipo de join} no diagrama (inner/left/right/full).
+  \item Defina as \textbf{chaves de junção} (ex.: \texttt{Orders.OrderID} = \texttt{Returns.OrderID}).  
+  \item Revise o \textbf{perfil do join}: linhas incluídas/excluídas e \textbf{mismatch} de campos.
+\end{enumerate}
+
+\begin{FormulaBox}
+\textbf{Tipos de join (resumo):}\\[3pt]
+\(\textbf{INNER}\) — mantém apenas correspondências; \(\;\)
+\(\textbf{LEFT}\) — preserva a esquerda + correspondências; \(\;\)
+\(\textbf{RIGHT}\) — preserva a direita + correspondências; \(\;\)
+\(\textbf{FULL}\) — preserva ambas, preenchendo ausências com \texttt{NULL}.
+\end{FormulaBox}
+
+\begin{NoteBox}
+\textbf{Evite duplicação:} Em joins 1:N ou N:N, medidas podem ser multiplicadas.  
+Soluções: \textbf{Relationships} na camada lógica, \textbf{LOD FIXED} para KPIs estáveis, ou pré-agregação na fonte.
+\end{NoteBox}
+
+\subsection*{4. Union, agregação e consistência de campos}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Union (linha a linha):} combine arquivos/tabelas com \textbf{mesma estrutura} (ex.: regiões ou anos).  
+  Após o union, use \textit{merge fields} para unificar nomes (ex.: \texttt{Product} vs. \texttt{Product Name}).
+  \item \textbf{Agregação:} crie \textbf{tabelas sumarizadas} (mês, região, categoria) para acelerar painéis gerenciais.
+\end{itemize}
+
+\subsection*{5. Cálculos no nível certo}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Campos calculados} — criam métricas derivadas (ex.: \texttt{Lucro = Vendas - Custo}).
+  \item \textbf{LOD Expressions} — controlam a granularidade do cálculo independentemente da view:  
+  \(\{\texttt{FIXED Região: SUM(Vendas)}\}\) fixa o KPI por região \emph{mesmo se} filtros mudarem a exibição.
+  \item \textbf{Table Calculations} — operam sobre a visualização (rank, \% do total, \textit{running sum}); dependem de \textit{addressing/partitioning}.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Dica curricular:} LOD para \textbf{consistência de KPI}. Table Calc para \textbf{comparação dinâmica} na view.
+\end{NoteBox}
+
+\subsection*{6. Custom SQL e Stored Procedures (Desktop)}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Custom SQL} — conecte-se a uma consulta SQL escrita por você (filtros, CTEs, pré-agregações, janelas analíticas).  
+  Útil para padronizar nomes, resolver \textbf{N:N} antes do Tableau e expor apenas colunas necessárias.
+  \item \textbf{Stored Procedures} — execute lógica pré-definida no banco (limpeza, regras de negócio, auditoria).  
+  Entregue ao Tableau uma \textbf{view} mais estável e performática.
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Padrão robusto:}\\[3pt]
+\(\text{Camada SQL (views/procs)} \Rightarrow \text{Relationships} \Rightarrow \text{Joins cirúrgicos (se preciso)} \Rightarrow \text{Semântica clara}\)
+\end{FormulaBox}
+
+\subsection*{7. Inspeção e manutenção de metadados}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Metadata Grid} — cada linha representa um campo; ajuste \textbf{tipo}, \textbf{nome}, \textbf{tabela física} e \textbf{nome remoto}; altere \textbf{papel geográfico}.
+  \item \textbf{View Extract Data} — ao usar WDC ou \textit{Extract mode}, saiba que a \textbf{ordem de linhas} pode diferir do \textit{Live mode}.
+  \item \textbf{Copiar valores} — selecione células no grid \(\rightarrow\) \textit{Copy} para inspeções rápidas.
+\end{itemize}
+
+\subsection*{8. Trocar, substituir e duplicar fontes}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Editar conexão} — \textit{Data pane} \(\rightarrow\) \textit{Edit Connection} para apontar para novo caminho/servidor.
+  \item \textbf{Replace References} — ao trocar a fonte, mapeie \textbf{campos inválidos} (ex.: \texttt{Customer Name} \(\rightarrow\) \texttt{Name}).
+  \item \textbf{Renomear data source} — \textit{Data} \(\rightarrow\) \textit{Rename} para identificar ambientes (\texttt{prod}, \texttt{dev}).
+  \item \textbf{Duplicar data source} — \textit{Data} \(\rightarrow\) \textit{Duplicate}; teste mudanças \emph{sem} impactar as \textit{sheets} existentes.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Higiene operacional:} use sufixos claros (\texttt{\_prod}, \texttt{\_staging}), documente \textit{Replace References} e registre mudanças estruturais (log/README do projeto).
+\end{NoteBox}
+
+\subsection*{9. Escolha do tipo de tabela para conectar}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Especializada Analítica (grande, detalhada)} — ótima para exploração; prefira \textbf{Extract} e \textbf{filtros de contexto}; evite \textit{row-by-row} pesados no Tableau.
+  \item \textbf{Especializada Sumarizada} — agregada por período/segmento; \textbf{rápida} para dashboards gerenciais, porém menos flexível.
+  \item \textbf{Visão Insight} — KPIs calculados e curadoria final; excelente para storytelling e publicação (leve), \textbf{não} ideal para exploração profunda.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Exercício Resolvido (modelo de prova) — Join e KPI estável}\\[4pt]
+\textbf{Objetivo:} unir \textit{Orders} e \textit{Returns}, criar \texttt{Returned?} e um KPI de vendas \textbf{fixo por região}.\\[4pt]
+\textbf{Passo a passo:}\\
+1) \textbf{Join físico (LEFT)}: \texttt{Orders.OrderID = Returns.OrderID}.\\
+2) \textbf{Campo calculado} \texttt{Returned?}: \texttt{IF ISNULL([Return Reason]) THEN "No" ELSE "Yes" END}.\\
+3) \textbf{KPI} \(\{\texttt{FIXED Região: SUM(Vendas)}\}\) — consistente mesmo com filtros por \textit{Categoria} ou \textit{Produto}.\\
+4) Verifique duplicações: se \texttt{Orders} 1:N \texttt{Returns}, prefira \textbf{Relationship} ou agregue \texttt{Returns} antes do join.
+\end{SolvedBox}
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{120pt}\rule{0.92\linewidth}{0pt}}
+\caption{[Espaço reservado] Esquema da \textit{Data Source page}: Relationships (camada lógica) \(\rightarrow\) Joins (camada física) \(\rightarrow\) Semântica (dimensões/medidas) \(\rightarrow\) \textit{Sheets}/Dashboards.}
+\end{figure}
+
+\begin{NoteBox}
+\textbf{Checklist rápido (antes de publicar):}
+\begin{enumerate}[leftmargin=*]
+  \item Nomes e tipos dos campos padronizados; campos técnicos \textit{hidden}.  
+  \item Joins revisados (cardinalidade e \textit{join type}); \textit{Relationships} quando há granularidades diferentes.  
+  \item KPIs críticos com \textbf{LOD FIXED}; \textit{Table Calcs} apenas onde a dinâmica da view é desejada.  
+  \item Se necessário, \textbf{Custom SQL/Stored Procedure} para entregar uma visão limpa e performática.
+\end{enumerate}
+\end{NoteBox}
+
+
+\section{Dimensões, Medidas e Hierarquias}
+
+Neste capítulo definimos os três pilares semânticos que organizam como interpretamos dados no Tableau: \textbf{dimensões}, \textbf{medidas} e \textbf{hierarquias}. Cada um tem papel distinto — entender essas diferenças é essencial para construir visualizações corretas e consistentes.
+
+\subsection*{Dimensões (Dimensions)}
+
+\begin{itemize}[leftmargin=*]
+  \item São campos qualitativos ou categóricos que “quebram” ou segmentam os dados: exemplo: \texttt{Categoria}, \texttt{Região}, \texttt{Cliente}, \texttt{Data}.  
+  \item Em consultas SQL correspondem a colunas do \texttt{GROUP BY} — elas definem o nível de detalhe (granularidade) da agregação.  
+  \item No Tableau, dimensões não são agregadas automaticamente: você “quebra” as medidas com elas.  
+  \item Por padrão, aparecem acima da linha cinza no painel de dados. :contentReference[oaicite:0]{index=0}  
+  \item Podem ser discretas (\textit{discrete}, mostradas como cabeçalhos) ou contínuas (\textit{continuous}, mostradas como eixo). :contentReference[oaicite:1]{index=1}  
+  \item Você pode converter uma medida para dimensão se o campo numérico não deve ser agregado (ex: códigos postais, IDs) usando \textit{Convert to Dimension}. :contentReference[oaicite:2]{index=2}  
+\end{itemize}
+
+\subsection*{Medidas (Measures)}
+
+\begin{itemize}[leftmargin=*]
+  \item São campos quantitativos que podem ser agregados (soma, média, contagem, mínimo, máximo etc.) — exemplo: \texttt{Vendas}, \texttt{Lucro}, \texttt{Quantidade}. :contentReference[oaicite:3]{index=3}  
+  \item Quando arrastadas para a visualização, o Tableau aplica uma agregação por padrão (ex: \texttt{SUM([Vendas])}). :contentReference[oaicite:4]{index=4}  
+  \item Podem ser discretas ou contínuas também — embora medidas contínuas (eixos) sejam mais comuns. :contentReference[oaicite:5]{index=5}  
+  \item Algumas expressões de nível de detalhe (LOD) são consideradas medidas, como \textit{INCLUDE} e \textit{EXCLUDE}. :contentReference[oaicite:6]{index=6}  
+  \item Também existe o conjunto gerado \texttt{Measure Values} / \texttt{Measure Names}, que permite combinar múltiplas medidas em uma mesma visualização. :contentReference[oaicite:7]{index=7}  
+\end{itemize}
+
+\subsection*{Hierarquias (Hierarchies)}
+
+\begin{itemize}[leftmargin=*]
+  \item São relações organizadas entre dimensões de granularidade crescente ou decrescente — por exemplo: \texttt{Ano → Trimestre → Mês}, \texttt{País → Estado → Cidade}. :contentReference[oaicite:8]{index=8}  
+  \item Permitem que o usuário clique em \texttt{+ / –} nas visualizações para “drill down” ou “drill up” entre níveis. :contentReference[oaicite:9]{index=9}  
+  \item Para criar uma hierarquia: no painel de dados, arraste um campo sobre outro e escolha “Create Hierarchy”. :contentReference[oaicite:10]{index=10}  
+  \item Você pode ordenar e reorganizar os níveis dentro da hierarquia conforme a necessidade analítica. :contentReference[oaicite:11]{index=11}  
+  \item A hierarquia não muda os dados, apenas organiza como são explorados (navegação entre granularidades).  
+\end{itemize}
+
+\subsection*{Relação entre Dimensões, Medidas e Visualização}
+
+\begin{itemize}[leftmargin=*]
+  \item As dimensões definem os “cortes” (linhas, colunas, categorias) sobre os quais as medidas são calculadas.  
+  \item Em SQL, isso equivaleria a:
+  \[
+    \texttt{SELECT Dimensão, AGG(Measure) \;FROM\; Tabela \;GROUP BY\; Dimensão}
+  \]
+  \item Quando você adiciona mais dimensões na visualização, o número de “marcas” (pontos, barras) tende a aumentar — é como expandir o nível de detalhe. :contentReference[oaicite:12]{index=12}  
+  \item Medidas isoladas sem dimensão produzem agregados gerais (ex: total de vendas).  
+  \item Se converter uma medida para dimensão (caso especial), ela passa a “quebrar” outras medidas em categorias discretas. :contentReference[oaicite:13]{index=13}  
+  \item Deve-se ter cuidado ao misturar níveis: muitos níveis de dimensão podem causar “mark explosion” (marcas demais).
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Resumo conceitual:}\\
+- \textbf{Dimensão} = atributo, categoria, divisória.  
+- \textbf{Medida} = valor, métrica, agregável.  
+- \textbf{Hierarquia} = estrutura de níveis para navegar granularidades.
+\end{NoteBox}
+
+\begin{SolvedBox}
+\textbf{Exercício prático:}\\  
+Dada a base com campos \texttt{Ano}, \texttt{Mês}, \texttt{Região}, \texttt{Vendas}, \texttt{Lucro}:  
+\begin{itemize}
+  \item Crie a hierarquia \texttt{Ano → Mês}.  
+  \item Utilize \texttt{Região} como dimensão para “quebrar” os valores.  
+  \item Plote \texttt{SUM(Vendas)} e \texttt{SUM(Lucro)} como medidas.  
+  \item Experimente converter \texttt{Lucro} para dimensão e observe o que acontece.
+\end{itemize}
+\end{SolvedBox}
+
+
+\section{Workbooks, Dashboards e Stories: visão conceitual e prática}
+
+Nesta sessão você entenderá \textbf{o que é cada artefato no Tableau}, quando usar e como eles se relacionam no fluxo de AED — do experimento visual (worksheet) à \textit{curadoria} (dashboard) e à \textit{narrativa} (story).
+
+\subsection{Workbook e Sheets (Worksheets)}
+\textbf{Workbook} é o arquivo/container lógico que organiza tudo o que você cria: conexões de dados, planilhas (sheets), dashboards e stories. Você pode abrir múltiplos workbooks em janelas separadas, duplicar, renomear e organizar as \textit{sheets} por abas, \textit{filmstrip} ou \textit{sheet sorter}.\footnote{``Create or open a workbook'' e navegação/organização de sheets. Ver documentação oficial. \url{https://help.tableau.com/current/pro/desktop/en-us/environ_workbooksandsheets_workbooks.htm} e \url{https://help.tableau.com/current/pro/desktop/en-us/environ_workbooksandsheets_sheets_organize.htm}. :contentReference[oaicite:0]{index=0}}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Worksheet (sheet)}: uma \textit{vis} única (gráfico/mapa/tabela) construída arrastando dimensões e medidas, definindo marcas e agregações.
+  \item \textbf{Gestão de sheets} em workbooks grandes: \textit{hide/show} de planilhas, navegação entre sheets, dashboards e stories para manter o projeto organizado. \footnote{``Manage Sheets in Dashboards and Stories'' (hide/show, navegação). \url{https://help.tableau.com/current/pro/desktop/en-us/environ_workbooksandsheets_sheets_hideshow.htm}. :contentReference[oaicite:1]{index=1}}
+  \item \textbf{Empacotamento para distribuição}: um \texttt{.twbx} inclui o workbook e cópias de fontes locais/imagens para compartilhamento. \footnote{``Packaged Workbooks''. \url{https://help.tableau.com/current/pro/desktop/en-us/save_savework_packagedworkbooks.htm}. :contentReference[oaicite:2]{index=2}}
+\end{itemize}
+
+\subsection{Dashboards}
+\textbf{Dashboard} combina múltiplas sheets em um só layout, adicionando objetos (texto, imagens, web, navegação, downloads) e \textbf{interatividade} (filtros, ações, realce) para responder perguntas do negócio de forma \textit{explorável}. Cria-se um dashboard como uma nova guia e arrastam-se sheets/objetos para o canvas; é possível \textit{substituir} uma sheet mantendo estilo do container e adicionar \textit{Use as Filter} para ação cruzada entre vis.\footnote{``Create a Dashboard'' — criação, troca de sheets, interatividade e objetos. \url{https://help.tableau.com/current/pro/desktop/en-us/dashboards_create.htm}. :contentReference[oaicite:3]{index=3}}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Boas práticas}: defina objetivo e público; coloque a \textit{vis} principal na região superior-esquerda; limite o número de \textit{views} (2–3) por painel; projete no \textit{final display size} e crie \textit{device layouts} para tablet/phone; use filtros e \textit{highlighter} para encorajar exploração. \footnote{``Best Practices for Effective Dashboards'' (propósito/audiência, layout, número de views, device layouts, filtros/highlighting). \url{https://help.tableau.com/current/pro/desktop/en-us/dashboards_best_practices.htm}. :contentReference[oaicite:4]{index=4}}
+  \item \textbf{Layout e responsividade}: configure \textit{Fixed/Automatic/Range} e crie \textit{Device Designer} para entregar uma URL única com variações por dispositivo. \footnote{``Create Dashboard Layouts for Different Device Types''. \url{https://help.tableau.com/current/pro/desktop/en-us/dashboards_dsd_create.htm}. :contentReference[oaicite:5]{index=5}}
+  \item \textbf{Segurança e objetos Web}: prefira HTTPS em \textit{Web Page/Image objects} e ajuste políticas de web view (JS, pop-ups) ao publicar. \footnote{Seção de segurança em ``Create a Dashboard''. \url{https://help.tableau.com/current/pro/desktop/en-us/dashboards_create.htm}. :contentReference[oaicite:6]{index=6}}
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Dica de AED}: o dashboard \textit{não} substitui a exploração em \textit{worksheets}. Primeiro \textit{descubra} (iterando em sheets), depois \textit{explique} (curadoria no dashboard). Evite painéis ``mural de gráficos'' sem hierarquia visual.
+\end{NoteBox}
+
+\subsection{Stories}
+\textbf{Story} é uma \textit{sequência de pontos} (story points), cada um contendo uma sheet, dashboard ou texto, para conduzir a audiência por uma narrativa (mudança no tempo, contraste, \textit{drill down}, etc.). Stories são \textit{sheets} especiais: criam-se com \textit{New Story}, definem-se dimensões fixas e adicionam-se pontos com legendas; pode-se duplicar/atualizar pontos mantendo ligação às vis originais.\footnote{``Stories'' (conceito) e ``Create a Story'' (passo a passo). \url{https://help.tableau.com/current/pro/desktop/en-us/stories.htm} e \url{https://help.tableau.com/current/pro/desktop/en-us/story_create.htm}. :contentReference[oaicite:7]{index=7}}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Propósito e padrões narrativos}: esboce a \textit{jornada} e escolha um tipo (mudança no tempo, contraste, fatores, outliers, etc.); mantenha simples e planeje \textit{load times}. \footnote{``Best Practices for Telling Great Stories''. \url{https://help.tableau.com/current/pro/desktop/en-us/story_best_practices.htm}. (Seção referenciada a partir de Stories e exemplos). :contentReference[oaicite:8]{index=8}}
+  \item \textbf{Ajuste de tamanho}: use \textit{Fit to Story} para que dashboards encaixem exatamente na dimensão do \textit{story}. \footnote{Ver ``Create a Story'' — Fit a dashboard to a story. \url{https://help.tableau.com/current/pro/desktop/en-us/story_create.htm}. :contentReference[oaicite:9]{index=9}}
+  \item \textbf{Exemplo guiado}: o tutorial de \textit{Get Started} inclui a etapa ``Build a story to present'' com boas práticas de foco e legendas. \footnote{Tutorial ``Step 7: Build a story to present''. \url{https://help.tableau.com/current/guides/get-started-tutorial/en-us/get-started-tutorial-story.htm}. :contentReference[oaicite:10]{index=10}}
+\end{itemize}
+
+\subsection{Quando usar cada um (mapa mental rápido)}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Worksheet}: exploração tática (\textit{hypothesis testing}), criação de cálculos, comparação de alternativas de gráfico.
+  \item \textbf{Dashboard}: síntese operacional/gerencial com 2–3 \textit{vistas-chave}, interações e objetos de suporte (legendas, filtros, navegação).
+  \item \textbf{Story}: argumento persuasivo ou relatório sequencial (ex.: antes/depois, tendência, contraste por segmentos) com \textbf{pontos} e \textbf{captions}.
+\end{itemize}
+
+\subsection{Performance e experiência}
+Antes do design final, \textit{conheça seus dados}, teste filtros (prefira \textit{Keep Only} a \textit{Exclude} quando possível), e considere extratos para acelerar. O guia de performance resume práticas para workbooks rápidos.\footnote{``Optimize Workbook Performance'' e referências de \textit{Designing Efficient Workbooks}. \url{https://help.tableau.com/current/pro/desktop/en-us/performance_tips.htm}. :contentReference[oaicite:11]{index=11}}
+
+\begin{SolvedBox}
+\textbf{Exercício resolvido (prova)}\\[-2pt]
+\emph{Cenário}: você tem 6 worksheets (KPIs, Mapa, Série temporal, Ranking, Detalhe por produto, Tabela de metas). Monte um \textbf{dashboard} e uma \textbf{story} de 4 pontos.\\
+\textbf{Solução (resumo)}:
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Dashboard}: tamanho fixo 1300$\times$700; layout em \emph{tiled}; vistas: KPIs (canto sup.\,esq.), Mapa (ocupa largura superior), Série temporal (inferior). Adicione filtros globais (Região, Período) e \emph{Use as Filter} no mapa. 
+  \item \textbf{Story} (4 pontos): \emph{Visão geral} (dashboard); \emph{Queda no Sul} (filtro aplicado + legenda); \emph{Produtos críticos} (ranking/pareto); \emph{Plano de ação} (tabela de metas). Use \emph{Fit to Story} no dashboard e legendas curtas (1 frase/insight).
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{110pt}\rule{0.92\linewidth}{0pt}}
+\caption{[Espaço reservado] Exemplos de layout (dashboard) e sequência (story) para inserir imagens do Tableau.}
+\end{figure}
+
+
+
+
+
+\section{Campos Calculados e Ordem de Operações}
+
+Nesta seção, aprofundamos o conceito de **campos calculados** no Tableau, explorando desde fórmulas simples até cálculos avançados (Tabela, LOD, janelas). Também explicamos a **ordem em que o Tableau executa filtros e cálculos**, o que é fundamental para evitar resultados incorretos.
+
+\subsection{Camadas de Cálculo no Tableau}
+
+Os campos calculados no Tableau podem ser aplicados em diferentes camadas — cada camada tem escopo e implicações distintas:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Cálculos de campo simples (row-level)} — operam em cada linha da base (antes de agregações).
+  \item \textbf{Cálculos agregados / de medida} — aplicam funções agregadas (\texttt{SUM}, \texttt{AVG}, etc.).
+  \item \textbf{Cálculos de Tabela (Table Calculations)} — operam sobre a visualização resultante, com escopo definido por \textit{addressing/partitioning}.
+  \item \textbf{Expressões de Nível de Detalhe (LOD)} — calculam agregações em granularidade distinta, independentemente da exibição (\texttt{FIXED}, \texttt{INCLUDE}, \texttt{EXCLUDE}).
+\end{enumerate}
+
+\subsection{Sintaxe e exemplos básicos}
+
+Alguns operadores e funções comuns em campos calculados:
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{IF / THEN / ELSE} — lógica condicional  
+  \item \texttt{CASE} — lógica condicional com muitos casos  
+  \item \texttt{DATEPART(date, “month”)} — extrair partes da data  
+  \item \texttt{ZN(expression)} — trata valores nulos (Null) como zero  
+  \item \texttt{WINDOW\_SUM(expr, start, end)} — soma de valores na janela sobre a visualização  
+\end{itemize}
+
+\subsection{Cálculos de Tabela (Table Calculations)}
+
+Cálculos de tabela são avaliados \textit{após} a agregação dos dados e atuam sobre as marcas exibidas. Dois parâmetros-chave definem o escopo:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Addressing} — o campo que “anda” pela dimensão de agregação (ex: soma cumulativa sobre meses).  
+  \item \textbf{Partitioning} — como as marcas são agrupadas para fins de cálculo (ex: por região, por categoria).  
+\end{itemize}
+
+Exemplo:  
+\[
+\texttt{RUNNING\_SUM(SUM([Vendas]))}
+\]  
+é um cálculo de tabela que soma cumulativamente ao longo do eixo definido.
+
+\subsection{Expressões de Nível de Detalhe (LOD)}
+
+As expressões LOD permitem agregações independentes da visualização atual. Existem três modos:
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{FIXED} — fixa uma granularidade (ex: \(\{ \texttt{FIXED Região : SUM(Vendas)}\}\)).  
+  \item \texttt{INCLUDE} — inclui uma dimensão extra no cálculo, mesmo que não esteja na visualização.  
+  \item \texttt{EXCLUDE} — exclui uma dimensão da agregação, ainda que apareça no gráfico.
+\end{itemize}
+
+Exemplos mais avançados:
+
+\begin{itemize}[leftmargin=*]
+  \item \(\{ \texttt{FIXED Cliente : SUM(Vendas)}\}\) — soma de vendas por cliente, independente de filtros de categoria.  
+  \item \(\{ \texttt{INCLUDE Categoria : SUM(Vendas)}\} / \{ \texttt{FIXED Região : SUM(Vendas)}\}\) — proporção da categoria dentro da região, mesmo se categoria não estiver no gráfico.  
+  \item \(\{ \texttt{EXCLUDE Ano : SUM(Vendas)}\}\) — calcula vendas agregadas ignorando o nível “Ano”.
+\end{itemize}
+
+\subsection{Ordem de Operações (Order of Operations)}
+
+O Tableau processa filtros e cálculos em uma sequência fixa. Entender essa ordem evita surpresas e incoerências nos resultados:
+
+\begin{center}
+\begin{tabular}{ll}
+1. & \textbf{Extrato / Filtros de Fonte (extract / datasource filters)} \\
+2. & \textbf{Filtros de Contexto} \\
+3. & \textbf{LOD FIXED} \\
+4. & \textbf{Dimensões / Medidas padrões} \\
+5. & \textbf{LOD INCLUDE / EXCLUDE} \\
+6. & \textbf{Cálculos de Tabela} \\
+7. & \textbf{Ordenação, Top N, Ranks, Exceções}
+\end{tabular}
+\end{center}
+
+Erros comuns:
+\begin{itemize}[leftmargin=*]
+  \item Usar \texttt{INCLUDE} onde \texttt{FIXED} deveria ser usado — pode gerar “duplicações invisíveis”.  
+  \item Aplicar filtros depois de LOD FIXED — eles não afetam agregações FIXED.  
+  \item Misturar cálculos de tabela com LOD sem cuidado no \textit{addressing/partitioning}.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Exercício resolvido (nível intermediário)}\\[-3pt]
+Em uma base com \texttt{Cliente}, \texttt{Categoria}, \texttt{Ano}, \texttt{Vendas}, crie um KPI “\%VendasClienteRegião” estável:
+
+\begin{enumerate}[leftmargin=*]
+  \item \texttt{SumVendasCliente} = \(\{ \texttt{FIXED Cliente : SUM(Vendas)}\}\)  
+  \item \texttt{SumVendasRegião} = \(\{ \texttt{FIXED Região : SUM(Vendas)}\}\)  
+  \item \texttt{\%VendasClienteRegião} = \texttt{SumVendasCliente / SumVendasRegião}  
+\end{enumerate}
+
+Mesmo se você filtrar por ano ou por categoria, essa porcentagem permanece coerente em comparação regional.
+\end{SolvedBox}
+
+
+\section{Performance: Princípios Essenciais e Boas Práticas}
+
+A performance em Tableau refere-se à \textbf{velocidade e fluidez da análise}, desde a resposta das consultas até o carregamento de dashboards. Um workbook eficiente economiza tempo, reduz carga no servidor e melhora a experiência analítica.  
+Os princípios abaixo resumem práticas extraídas da documentação oficial\footnote{Baseado em: \textit{Optimize Workbook Performance}, \url{https://help.tableau.com/current/pro/desktop/en-us/performance_tips.htm}.} e no whitepaper \textit{Designing Efficient Workbooks}.
+
+---
+
+\subsection{1. Conheça seus dados (nível de banco)}
+
+Antes mesmo de abrir o Tableau, o desempenho começa na base de dados.  
+Converse com o time de banco e avalie:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Integridade referencial}: habilite \textit{Assume Referential Integrity} em bancos que suportam — isso ativa o \textit{join culling}, que consulta apenas as tabelas necessárias.  
+  \item \textbf{Índices}: crie índices para colunas usadas frequentemente em filtros ou relacionamentos.  
+  \item \textbf{Permissões para tabelas temporárias}: o Tableau cria tabelas temporárias para agilizar consultas — certifique-se de que o usuário tem permissão para criá-las.  
+  \item \textbf{Particionamento e redução de dados}: divida grandes tabelas em partições (por período ou região) para reduzir varreduras desnecessárias.  
+  \item \textbf{Use bancos servidores}: arquivos como Excel e CSV podem ser lentos em consultas diretas — use banco relacional ou crie um \textit{extract}.  
+\end{itemize}
+
+---
+
+\subsection{2. Trabalhe com \textit{Extracts} e não \textit{Live} quando possível}
+
+Os \textbf{Extracts} (\texttt{.hyper}) são snapshots comprimidos otimizados para leitura analítica e consultas repetidas.  
+Segundo o manual oficial\footnote{\textit{Test Your Data and Use Extracts}, Tableau Help. \url{https://help.tableau.com/current/pro/desktop/en-us/performance_extracts.htm}}, extratos:
+\begin{itemize}[leftmargin=*]
+  \item Reduzem o tempo de renderização e carga da rede;  
+  \item Suportam cálculos pré-materializados (\textit{Compute Calculations Now});  
+  \item Podem usar filtros e amostragens para diminuir volume;  
+  \item Permitem agregação de dados nas dimensões visíveis para reduzir granularidade.  
+\end{itemize}
+
+Evite \textit{Custom SQL} em conexões ao vivo, pois o Tableau não pode otimizá-las.  
+Quando precisar, crie um \textit{extract} para executar a consulta apenas uma vez.
+
+---
+
+\subsection{3. Simplifique cálculos e lógica}
+
+Cálculos complexos e aninhados aumentam o custo de compilação e execução da query.  
+Boas práticas segundo o \textit{Workbook Optimizer}\footnote{\textit{Create Efficient Calculations}, Tableau Help. \url{https://help.tableau.com/current/pro/desktop/en-us/performance_calculations.htm}}:
+\begin{itemize}[leftmargin=*]
+  \item Prefira \texttt{CASE} em vez de \texttt{IF/ELSE} para grandes condicionais;  
+  \item Evite cálculos linha a linha em campos com milhões de registros — mova para SQL ou Python antes de importar;  
+  \item Converta datas corretamente: \texttt{DATEPARSE} e \texttt{DATEDIFF} são mais rápidos que combinações \texttt{STRING → DATE};  
+  \item Agregue medidas antes de trazer para o Tableau (\texttt{SUM}, \texttt{AVG}) sempre que possível;  
+  \item Use LOD (\texttt{FIXED, INCLUDE, EXCLUDE}) com parcimônia — são poderosos, mas custosos.  
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Dica prática:}  
+Evite cálculos aninhados como  
+\texttt{IF [Lucro] > AVG([Lucro]) THEN ... ELSEIF [Lucro] > MEDIAN([Lucro]) ...}  
+— isso força múltiplas varreduras.  
+Crie agregações em camadas no SQL ou no \textit{extract}.
+\end{FormulaBox}
+
+---
+
+\subsection{4. Design eficiente de \textit{views} e dashboards}
+
+A maior causa de lentidão vem do design — \textbf{muitos gráficos, muitas marcas, muitos filtros}.  
+Recomendações\footnote{\textit{Design for Performance While You Build a View} e \textit{Make Visualizations Faster}, Tableau Help.}:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Reduza a cardinalidade}: evite colocar dimensões com milhares de valores em \textit{detail} — cada valor vira uma marca.  
+  \item \textbf{Menos é mais}: limite dashboards a 2–3 \textit{views} principais.  
+  \item \textbf{Use filtros inteligentes}: prefira filtros de ação (\textit{Use as Filter}) a \textit{Show Relevant Values}, que reconsultam a base a cada interação.  
+  \item \textbf{Evite \textit{blends}}: quando possível, use \textit{relationships} ou \textit{joins}. Blends fazem junções em memória e degradam performance.  
+  \item \textbf{Fixe o tamanho do dashboard}: tamanhos automáticos impedem cache e forçam re-renderização.  
+  \item \textbf{Agrupe visualmente}: evite excesso de containers e objetos flutuantes — cada elemento adicional gera cálculos de layout.  
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Regra de ouro:} Cada marca = uma linha processada.  
+Um mapa com 100 mil pontos é uma query com 100 mil linhas renderizadas — mesmo que apenas 10 sejam legíveis visualmente.
+\end{NoteBox}
+
+---
+
+\subsection{5. Controle de atualizações e consultas}
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Desative \textit{Automatic Updates}} (\texttt{F10}) durante construção de views grandes.  
+  \item \textbf{Use o \textit{Performance Recorder}} (\textit{Help → Settings and Performance → Start Recording}) para medir tempo de consulta, renderização e cálculos.  
+  \item \textbf{Analise o painel \textit{Performance Summary}} para identificar gargalos:  
+    \begin{itemize}
+      \item \textit{Executing Query} — lentidão no banco;  
+      \item \textit{Compiling Query} — cálculos excessivos;  
+      \item \textit{Layout Computations} — dashboards complexos;  
+      \item \textit{Blending Data} — múltiplas fontes.  
+    \end{itemize}
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Fluxo de medição de performance:}\\
+1. Inicie o \textit{Performance Recorder};\\
+2. Execute suas interações normais (filtros, drill-downs, navegação);\\
+3. Pare a gravação e analise os eventos;\\
+4. Simplifique cálculos e reduza \textit{marks} ou fontes duplicadas.
+\end{FormulaBox}
+
+---
+
+\subsection{6. Estruture o workbook e fontes de forma enxuta}
+
+\begin{itemize}[leftmargin=*]
+  \item Feche fontes de dados não utilizadas (\texttt{Right Click → Close}).  
+  \item Oculte campos não usados antes de criar \textit{extracts} (\texttt{Hide All Unused Fields}).  
+  \item Divida workbooks muito grandes em arquivos menores focados em propósitos específicos.  
+  \item Prefira relacionamentos bem definidos entre fontes — múltiplas conexões degradam o cache local.  
+  \item Remova cálculos ou filtros redundantes.  
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Regra prática:}  
+Se você sente lentidão no Tableau Desktop, o problema persistirá (ou piorará) no Tableau Server.  
+Otimize localmente antes de publicar.
+\end{NoteBox}
+
+---
+
+\subsection{7. Checklist de Performance (resumo prático)}
+
+\begin{longtable}{p{4cm}p{10cm}}
+\toprule
+\textbf{Categoria} & \textbf{Recomendação prática} \\ \midrule
+\textbf{Dados} & Use índices, particione grandes tabelas e teste o desempenho direto no banco. \\
+\textbf{Conexão} & Prefira \textbf{Extracts} (.hyper) com campos limitados e cálculos materializados. \\
+\textbf{Cálculos} & Simplifique expressões; mova cálculos repetitivos para SQL/Python. \\
+\textbf{Filtros} & Use filtros de ação e contextuais; evite \textit{Only Relevant Values}. \\
+\textbf{Visualização} & Limite o número de views e de marcas; use dashboards fixos. \\
+\textbf{Design} & Minimize containers, imagens e objetos flutuantes. \\
+\textbf{Monitoramento} & Use o \textit{Performance Recorder} e otimize gargalos de query ou layout. \\
+\bottomrule
+\end{longtable}
+
+---
+
+\begin{SolvedBox}
+\textbf{Exercício resolvido (avançado):}\\[-3pt]
+Dado um dashboard com:
+\begin{itemize}
+  \item 7 views conectadas a 4 fontes distintas (CSV + SQL + API + Excel);
+  \item 12 filtros, sendo 4 com \textit{Only Relevant Values};
+  \item 5 cálculos LOD (\texttt{FIXED, INCLUDE, EXCLUDE});
+\end{itemize}
+
+\textbf{Otimização aplicada:}
+\begin{enumerate}
+  \item Combinar CSV e Excel no Tableau Prep → gerar um único \textit{extract} .hyper.  
+  \item Reduzir filtros para 4 e substituir por \textit{action filters}.  
+  \item Reescrever cálculos LOD como agregações fixas no SQL.  
+  \item Fixar tamanho do dashboard (1300×700).  
+  \item Executar o \textit{Performance Recorder} e medir redução no tempo médio de carregamento.  
+\end{enumerate}
+
+\textbf{Resultado:} tempo de renderização caiu de 11,2 s para 3,9 s (−65 \%).  
+\end{SolvedBox}
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{120pt}\rule{0.92\linewidth}{0pt}}
+\caption{[Espaço reservado] Diagrama de fluxo de otimização: fonte → cálculos → visualização → gravação de performance.}
+\end{figure}
+
+\subsection{Python no Tableau \textit{Public}: limitações e alternativas práticas}
+\textbf{Resumo}: o \textbf{Tableau Public} \emph{não} executa extensões analíticas (R/TabPy). Logo, campos \texttt{SCRIPT_…} não funcionam. Para ter Python “dinâmico”, é preciso Tableau Desktop (Creator) + Server/Cloud. No \textit{Public}, o caminho é \textbf{pré-processar fora} (Python) e publicar os \emph{resultados prontos} — ou usar uma \textbf{ponte via Google Sheets} (atualização limitada). Abaixo vai um passo-a-passo detalhado.
+
+\subsubsection*{A. Pré-processar no Python (ex.: \textit{Titanic})}
+\paragraph{O que pré-processar?}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Limpeza e enriquecimento}: imputar faltantes, normalizar categorias, criar \emph{features}.
+\item \textbf{Agregações/indicadores}: métricas de negócio (ex.: taxa de sobrevivência por classe/sexo), escores de modelos (probabilidades), \emph{rankings}, \emph{clusters}.
+\item \textbf{Narrativas e \emph{insights}}: textos gerados (ex.: “Mulheres na 1ª classe tiveram 95% de sobrevivência”), importância de variáveis, \emph{explanations} (SHAP) \emph{flattened}.
+\end{itemize}
+
+\paragraph{Exemplo simples com \textit{Titanic}}
+Dados: \texttt{titanic.csv} (Kaggle). Objetivo: publicar no \textit{Public} um conjunto enriquecido + previsões.
+
+\textbf{Passos de pré-processamento} (roteiro típico):
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Carregar e limpar}: remover \texttt{Cabin} (muitos NAs), imputar \texttt{Age} pela mediana por \texttt{Sex+Pclass}; preencher \texttt{Embarked} com modo.
+\item \textbf{Criar \emph{features}}:
+\begin{itemize}
+\item \texttt{FamilySize = SibSp + Parch + 1}
+\item \texttt{IsAlone = 1{FamilySize = 1}}
+\item Extrair \texttt{Title} de \texttt{Name} (\texttt{Mr/Mrs/Miss/Master/Other})
+\end{itemize}
+\item \textbf{Codificar categorias}: \texttt{Sex}, \texttt{Embarked}, \texttt{Title} (one-hot ou ordinal coerente).
+\item \textbf{Treinar um modelo} (ex.: \texttt{LogisticRegression} ou \texttt{XGBoost}) para \texttt{Survived}; salvar:
+\begin{itemize}
+\item \texttt{Survival_Proba} (% de sobrevivência prevista) e \texttt{Survival_Pred} (0/1 com limiar 0{,}5).
+\item \texttt{FeatureImportance} (ou SHAP \emph{mean abs} por variável).
+\end{itemize}
+\item \textbf{Gerar \emph{insights} textuais} (opcional): frases por segmento (ex.: “\texttt{Pclass=3, male}: 13% real, 12% previsto”).
+\item \textbf{Exportar} um \texttt{CSV} (ou \texttt{.hyper}) com:
+\begin{itemize}
+\item colunas originais úteis + \texttt{FamilySize}, \texttt{IsAlone}, \texttt{Title}, \texttt{Survival_Proba}, \texttt{Survival_Pred}, métricas agregadas por segmento (se quiser uma \emph{tabela wide} de indicadores), e um campo \texttt{InsightText}.
+\end{itemize}
+\end{enumerate}
+
+\textbf{Publicação no \textit{Public}}:
+\begin{enumerate}[leftmargin=*]
+\item Abra o \textbf{Tableau Public Desktop}, conecte em \texttt{Text File} (\texttt{CSV}) ou \texttt{.hyper}.
+\item Monte as \textbf{views} usando as colunas calculadas (\texttt{Survival_Proba}, \texttt{Title}, etc.).
+\item Publique: \texttt{Server → Tableau Public → Save to Tableau Public}.
+\end{enumerate}
+
+\emph{Vantagem}: tudo roda rápido (sem TabPy); você controla a qualidade/versão dos dados.
+\emph{Limite}: não é “tempo real”; precisa reprocessar e reenviar quando houver mudanças.
+
+\subsubsection*{B. Ponte via Google Sheets (atualização leve)}
+\textbf{Ideia}: seu script Python escreve numa planilha do Google; o \textit{Public} se conecta a ela. O \textit{Public} costuma \emph{atualizar cerca de 1x/dia} (ou sob ação manual do usuário/autor).
+
+\textbf{Passo a passo}:
+\begin{enumerate}[leftmargin=*]
+\item \textbf{No Google}: crie uma planilha com abas (ex.: \texttt{base_titanic}, \texttt{dim_segmentos}, \texttt{insights}).
+\item \textbf{No Python}: use uma lib como \texttt{gspread} ou \texttt{pygsheets} para \emph{overwrite} as abas com os dados pré-processados (mesmos campos do item A).
+\item \textbf{No Tableau Public}: \texttt{Connect → Google Sheets}, selecione a planilha/abas e construa os \emph{dashboards}.
+\item \textbf{Rotina de atualização}: agende seu script (cron/Task Scheduler/GitHub Actions) para atualizar a planilha (ex.: 1x por dia). O \textit{Public} refletirá isso no próximo refresh.
+\end{enumerate}
+
+\emph{Dicas}:
+\begin{itemize}[leftmargin=*]
+\item Mantenha \textbf{esquema estável} (nomes de colunas/tipos) para evitar quebras.
+\item Separe abas “\texttt{facts}” e “\texttt{dims}”; no Tableau, relacione/junte conforme necessário.
+\item Se precisar de \textbf{controle manual}, inclua uma aba de \texttt{Parametros} (ver abaixo).
+\end{itemize}
+
+\subsubsection*{C. Parâmetros e Ações (para simulações e navegação)}
+Mesmo sem Python ao vivo, você mantém interatividade rica no \textit{Public}:
+
+\paragraph{Parâmetros (what-if)}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Ex.: Limiar de classificação} do Titanic: crie um \texttt{Parâmetro} \texttt{p_threshold} (0–1, step 0{,}01).
+\item \textbf{Cálculo} \texttt{Pred_Dynamic}: \texttt{INT([Survival_Proba] >= [p_threshold])}.
+\item Use \texttt{Pred_Dynamic} para colorir/filtrar; mostre KPIs “sensíveis” ao parâmetro.
+\end{itemize}
+
+\paragraph{Ações de \textit{Dashboard}}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Filtro por seleção}: clique em um segmento (ex.: \texttt{Title = Miss}) para filtrar demais \emph{views} (Action → Filter).
+\item \textbf{Highlight}: destaque itens relacionados sem filtrar (Action → Highlight).
+\item \textbf{URL}: abra uma fonte externa (ex.: dicionário de títulos “Mr/Mrs/Miss”) em nova guia.
+\end{itemize}
+
+\paragraph{Parâmetro → Título dinâmico/explicação}
+\begin{itemize}[leftmargin=*]
+\item Campo calc. \texttt{Titulo_Dinamico}: \texttt{"Cenário: Limiar = " + STR([p_threshold])}.
+\item Campo \texttt{Texto_Insight}: concatene \texttt{InsightText} (gerado no Python) filtrado pelo contexto atual.
+\end{itemize}
+
+\subsubsection*{D. Criando \emph{insights} com ajuda do Python (e \emph{agents})}
+Sem TabPy, gere os \emph{insights} \emph{fora} e traga como \textbf{colunas/camadas}:
+
+\paragraph{Tipos de \emph{insights} úteis de pré-cálculo}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Segmentos chave}: \texttt{GroupBy} (ex.: \texttt{Pclass}×\texttt{Sex}×\texttt{Title}) com \texttt{count}, \texttt{survival_rate}, \texttt{lift} vs. média.
+\item \textbf{Importância de variáveis}: \texttt{coef_abs} (logística) ou \texttt{gain} (XGBoost), normalizados em 0–100.
+\item \textbf{Explicabilidade}: SHAP médio por variável/segmento (agregado) → tabela “wide” para \emph{bars}.
+\item \textbf{Narrativas} (\texttt{InsightText}): frases curtas com \emph{templates}, ex.: \
+“\emph{Mulheres na 1ª classe: 96\% sobreviveram (lift +2{,}1×). Importância: \texttt{Sex}, \texttt{Pclass}.}”
+\end{itemize}
+
+\paragraph{Com \emph{agents} (LLMs) no seu pipeline}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Geração de texto/explicações}: depois de calcular métricas, passe \emph{resumos estruturados} a um agente (LLM) para transformar em bullets curtos (controle de tamanho/termos).
+\item \textbf{Curadoria} (\emph{guardrails}): imponha limites (sem PII), \emph{templates} fixos, e \emph{whitelist} de termos.
+\item \textbf{Output}: grave o texto final em uma coluna \texttt{InsightText} por segmento/aba, consumida pelo Tableau como \emph{tooltip} ou \emph{card}.
+\end{itemize}
+
+\paragraph{Como conectar esses \emph{insights} no \textit{Public}}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Inclua} \texttt{InsightText} como campo no CSV/Google Sheets.
+\item No Tableau, crie um \textbf{Worksheet de texto} (ou \emph{tooltip viz}) que mostre \texttt{InsightText} conforme a seleção (Ação de Filtro).
+\item Opcional: \textbf{parâmetro de idioma/nível de detalhe} para trocar entre “Executivo”, “Analista”, etc. (seu pipeline gera múltiplas versões).
+\end{enumerate}
+
+\subsubsection*{E. Boas práticas para o \textit{Public}}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Performance}: pré-agregue o que puder, limite # de \emph{views}/marcas, use \textbf{camadas de detalhe sob demanda} (Ações).
+\item \textbf{Estabilidade}: \emph{schema} consistente entre atualizações; evite mudar nomes de colunas.
+\item \textbf{Transparência}: exiba “\emph{Dados atualizados em:} \texttt{YYYY-MM-DD HH:MM}” (campo gerado pelo Python).
+\end{itemize}
+
+\subsubsection*{F. Checklist rápido (Titanic \texorpdfstring{$\rightarrow$}{->} Public)}
+\begin{enumerate}[leftmargin=*]
+\item Python: limpar/engenhar \emph{features} + treinar modelo + gerar \texttt{Survival_Proba}, \texttt{Pred}, \texttt{FeatureImportance}, \texttt{InsightText}.
+\item Exportar: \texttt{CSV} (ou escrever no \textbf{Google Sheets}).
+\item Tableau Public: conectar, montar \emph{views}, criar \textbf{parâmetro de limiar}, ações de filtro, painel de \textbf{insights}.
+\item Publicar (+, se Google Sheets, agendar \textbf{atualização diária} do script).
+\end{enumerate}
+
+\noindent\emph{Resultado}: você obtém dashboards públicos com “toque de ciência de dados” (previsões, explicações e narrativas) — \textbf{sem} depender de TabPy — e com atualizações controladas pelo seu pipeline Python.
+
+
+\section{Exercício Resolvido — Conexão, Modelagem e Visualização }
+\begin{SolvedBox}
+\textbf{Problema:} Conecte um CSV de \textit{Vendas} (linhas: Data, Região, Categoria, Vendas, Custo), crie o campo \texttt{Lucro = Vendas - Custo}, publique um gráfico de barras com \%Lucro por Região e otimize a performance.
+
+\textbf{Solução (passo a passo):}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Conexão}: \textit{Data Source} $\rightarrow$ CSV (Extrato .hyper).
+  \item \textbf{Campo Calculado}: \texttt{Lucro = [Vendas] - [Custo]}; \texttt{\%Lucro = [Lucro]/[Vendas]}.
+  \item \textbf{Visual}: Dimensão = Região; Medida = AVG(\%Lucro); \textit{Label} de \%.
+  \item \textbf{Performance}: filtro de contexto em Ano; extract atualizado; remover colunas não usadas.
+  \item \textbf{Publicação}: Tableau Public (nomeando com título e descrição).
+\end{enumerate}
+\textbf{Comentário}: \%Lucro médio por Região destaca discrepâncias; LOD FIXED por Região pode ser usado para estabilizar o denominador.
+\end{SolvedBox}
+
+
+
+\begin{SolvedBox}
+\textbf{Exercício 1 — Conexão e Modelagem Inicial}\\[4pt]
+\textbf{Objetivo:} Conectar e modelar corretamente uma base de vendas.\\[4pt]
+\textbf{Passos:}
+\begin{enumerate}[leftmargin=*]
+  \item Baixe o arquivo \texttt{vendas\_loja.csv} com campos: \texttt{Data}, \texttt{Região}, \texttt{Categoria}, \texttt{Vendas}, \texttt{Custo}.
+  \item No Tableau Public, clique em \texttt{Conectar → Arquivo de Texto} e selecione o CSV.
+  \item Na aba \textbf{Data Source}, renomeie os campos com convenção clara (\texttt{snake\_case}) e verifique tipos:  
+  \texttt{Data} (Date), \texttt{Região} (String), \texttt{Vendas/Custo} (Number).
+  \item Crie o campo calculado \texttt{Lucro = [Vendas] - [Custo]}.
+  \item No painel de dados, verifique se \texttt{Lucro} aparece em “Medidas”.
+\end{enumerate}
+\textbf{Resultado:} A base está limpa e modelada com medidas e dimensões prontas.\\
+\textbf{Insight esperado:} “A estruturação correta da fonte é o primeiro passo para visualizações coerentes.”
+\end{SolvedBox}
+
+
+\begin{SolvedBox}
+\textbf{Exercício 2 — Join e KPI Estável com LOD}\\[4pt]
+\textbf{Objetivo:} Combinar duas tabelas e garantir KPIs consistentes.\\[4pt]
+\textbf{Cenário:} Tabelas \texttt{Orders} (pedidos) e \texttt{Returns} (devoluções).\\[4pt]
+\textbf{Passos:}
+\begin{enumerate}[leftmargin=*]
+  \item Na aba \textbf{Data Source}, arraste \texttt{Returns} sobre \texttt{Orders} e escolha \textbf{Left Join}.
+  \item Defina a chave de junção: \texttt{OrderID = OrderID}.
+  \item Crie o campo calculado \texttt{Returned? = IF ISNULL([Return Reason]) THEN "No" ELSE "Yes" END}.
+  \item Crie o KPI fixo por região:  
+  \(\{\texttt{FIXED [Região] : SUM([Vendas])}\}\)
+  \item Coloque \texttt{Região} em Colunas e \texttt{SUM([Vendas])} em Linhas.  
+        Adicione \texttt{Returned?} em Cor.
+\end{enumerate}
+\textbf{Resultado:} O LOD garante estabilidade do KPI mesmo ao aplicar filtros.\\
+\textbf{Insight esperado:} “O LOD FIXED preserva a coerência dos KPIs independentemente do contexto de filtro.”
+\end{SolvedBox}
+
+
+\begin{SolvedBox}
+\textbf{Exercício 3 — Dimensões, Hierarquias e Drill-Down}\\[4pt]
+\textbf{Objetivo:} Criar e explorar hierarquias temporais e geográficas.\\[4pt]
+\textbf{Passos:}
+\begin{enumerate}[leftmargin=*]
+  \item Crie uma hierarquia temporal: arraste \texttt{Ano} sobre \texttt{Mês} e nomeie “Tempo”.
+  \item Crie uma hierarquia espacial: arraste \texttt{País} sobre \texttt{Estado} e depois sobre \texttt{Cidade}.
+  \item Construa um gráfico de linhas: Eixo X = \texttt{Ano}, Eixo Y = \texttt{SUM(Vendas)}.
+  \item Clique no símbolo \texttt{+} ao lado de “Ano” para expandir até “Mês”.
+  \item Use cor para representar \texttt{Região}.
+\end{enumerate}
+\textbf{Resultado:} Visualização hierárquica temporal e espacial pronta para exploração.\\
+\textbf{Insight esperado:} “Hierarquias facilitam o drill-down analítico sem reescrever a visualização.”
+\end{SolvedBox}
+
+
+\begin{SolvedBox}
+\textbf{Exercício 4 — Campos Calculados e Ordem de Operações}\\[4pt]
+\textbf{Objetivo:} Demonstrar a diferença entre cálculo de tabela e LOD.\\[4pt]
+\textbf{Passos:}
+\begin{enumerate}[leftmargin=*]
+  \item Use a base \texttt{vendas\_loja.csv}.
+  \item Crie dois campos:
+  \begin{itemize}
+    \item \texttt{Lucro Médio por Região = \{FIXED [Região] : AVG([Lucro])\}}
+    \item \texttt{Lucro Cumulativo = RUNNING_SUM(SUM([Lucro]))}
+  \end{itemize}
+  \item Coloque \texttt{Região} e \texttt{Data} em Colunas, \texttt{Lucro} em Linhas.
+  \item Compare os dois cálculos aplicando filtros por “Categoria”.
+\end{enumerate}
+\textbf{Resultado:} O campo LOD permanece fixo; o cálculo de tabela varia conforme a view.\\
+\textbf{Insight esperado:} “Cálculos de tabela dependem da visualização; LODs dependem da definição analítica.”
+\end{SolvedBox}
+
+
+\begin{SolvedBox}
+\textbf{Exercício 5 — Integração Python + Tableau Public (Titanic)}\\[4pt]
+\textbf{Objetivo:} Demonstrar o uso de Python para pré-processamento de dados antes da publicação no Tableau Public.\\[4pt]
+\textbf{Cenário:} Usar a base \texttt{titanic.csv} e gerar previsões de sobrevivência.\\[4pt]
+\textbf{Passos no Python:}
+\begin{enumerate}[leftmargin=*]
+  \item Carregue o CSV e limpe dados nulos:  
+  \texttt{df['Age'] = df.groupby('Sex')['Age'].transform(lambda x: x.fillna(x.median()))}
+  \item Crie \texttt{FamilySize = SibSp + Parch + 1}.
+  \item Treine uma regressão logística para prever \texttt{Survived}.
+  \item Salve as probabilidades em \texttt{Survival_Proba}.
+  \item Exporte o resultado para \texttt{titanic\_insights.csv}.
+\end{enumerate}
+\textbf{No Tableau Public:}
+\begin{enumerate}[leftmargin=*]
+  \item Conecte o CSV e crie um parâmetro \texttt{Limiar} (0–1).
+  \item Campo calculado: \texttt{Pred_Dynamic = INT([Survival_Proba] >= [Limiar])}.
+  \item Crie um mapa de dispersão com \texttt{Age} e \texttt{Fare}, colorindo por \texttt{Pred_Dynamic}.
+\end{enumerate}
+\textbf{Resultado:} Dashboard com simulação interativa sem uso direto de TabPy.\\
+\textbf{Insight esperado:} “Mesmo sem integração direta, Python pode enriquecer análises publicadas via pré-processamento inteligente.”
+\end{SolvedBox}
+
+
+
+
+\begin{appendices}
+
+\chapter*{Apêndice do Capítulo 4 — Desafios Analíticos em Tableau}
+\addcontentsline{toc}{chapter}{Apêndice do Capítulo 4 — Desafios Analíticos em Tableau}
+
+Este apêndice apresenta uma coletânea de \textbf{perguntas orientadoras e desafios práticos} para aplicação no \textbf{Tableau}, utilizando as quatro bases de dados criadas na arquitetura de finanças:
+\begin{itemize}
+  \item \texttt{pessoas\_salarios.csv}
+  \item \texttt{contas.csv}
+  \item \texttt{cartoes.csv}
+  \item \texttt{transacoes.csv}
+\end{itemize}
+
+Essas perguntas podem ser exploradas como \textbf{painéis interativos, dashboards executivos} ou \textbf{storytelling analítico}, permitindo ao aluno aplicar as técnicas de \textit{Análise Exploratória de Dados} (AED) e desenvolver raciocínio crítico sobre correlações e padrões financeiros.
+
+---
+
+\section{Perfil Socioeconômico e Comportamento Financeiro}
+
+\subsection*{Desafios Principais}
+\begin{itemize}
+  \item Qual é a \textbf{distribuição dos salários} por escolaridade e sexo?
+  \item O salário varia de forma significativa entre diferentes \textbf{faixas etárias}?
+  \item Pessoas com maior escolaridade possuem \textbf{rendimentos mais altos}?
+  \item Existe diferença salarial entre os \textbf{gêneros} em cada nível de escolaridade?
+  \item Há \textbf{valores salariais atípicos} (outliers) em determinados grupos?
+\end{itemize}
+
+\subsection*{Visualizações Recomendadas}
+Boxplot, barras empilhadas, gráficos de linha por faixa etária e histogramas comparativos.
+
+---
+
+\section{Contas e Saldos Bancários}
+
+\subsection*{Desafios Principais}
+\begin{itemize}
+  \item Quais são os \textbf{tipos de conta} mais comuns?
+  \item Quantas contas foram abertas por \textbf{ano ou mês}?
+  \item Quais agências concentram os \textbf{maiores saldos médios}?
+  \item Quais clientes apresentam \textbf{maior saldo total}?
+  \item Clientes mais antigos tendem a ter \textbf{saldos mais elevados}?
+\end{itemize}
+
+\subsection*{Visualizações Recomendadas}
+Gráficos de barras, linhas temporais, mapas de calor e pareto de clientes por saldo.
+
+---
+
+\section{Cartões e Crédito Pessoal}
+
+\subsection*{Desafios Principais}
+\begin{itemize}
+  \item Qual é o \textbf{limite médio} por bandeira e status do cartão?
+  \item O \textbf{score de crédito} aumenta proporcionalmente ao salário?
+  \item Qual o percentual de cartões \textbf{ativos, bloqueados e cancelados}?
+  \item Há relação entre o \textbf{limite do cartão} e a \textbf{renda mensal}?
+  \item Como se distribuem as faixas de \textbf{score} por faixa salarial?
+\end{itemize}
+
+\subsection*{Visualizações Recomendadas}
+Gráficos de dispersão (score × salário), barras agrupadas, pizza de status e histogramas de score.
+
+---
+
+\section{Transações e Padrões de Consumo}
+
+\subsection*{Desafios Principais}
+\begin{itemize}
+  \item Quais categorias possuem o \textbf{maior volume de gastos}?
+  \item Quais canais (App, POS, Caixa, Internet Banking) são mais utilizados?
+  \item Qual é a \textbf{tendência de gastos e receitas} ao longo do tempo?
+  \item Há sazonalidade em determinados meses (ex: dezembro, férias)?
+  \item O cliente gasta mais do que recebe? Qual o \textbf{saldo líquido médio}?
+\end{itemize}
+
+\subsection*{Visualizações Recomendadas}
+Gráficos de linha temporal, barras horizontais, gráficos de área e mapas de calor por categoria.
+
+---
+
+\section{Relações Integradas Entre Tabelas}
+
+\subsection*{Desafios Principais}
+\begin{itemize}
+  \item Clientes com salários maiores possuem \textbf{limites de crédito mais altos}?
+  \item Pessoas com maior saldo bancário realizam \textbf{mais transações positivas}?
+  \item Há relação entre o \textbf{tempo de abertura da conta} e o volume de transações?
+  \item Pessoas com score baixo realizam mais \textbf{transações negativas}?
+  \item A idade influencia o \textbf{score de crédito}?
+\end{itemize}
+
+\subsection*{Visualizações Recomendadas}
+Dispersões integradas, heatmaps de correlação e dashboards com filtros cruzados.
+
+---
+
+\section{Indicadores e Painel Gerencial}
+
+\subsection*{KPIs Sugeridos}
+\begin{itemize}
+  \item �� \textbf{Média salarial}: \texttt{AVG(salario\_capped)}
+  \item �� \textbf{Saldo médio por conta}: \texttt{AVG(saldo\_atual)}
+  \item �� \textbf{Limite médio de crédito}: \texttt{AVG(limite)}
+  \item �� \textbf{Score médio}: \texttt{AVG(score\_credito)}
+  \item �� \textbf{Volume líquido de transações}: \texttt{SUM(valor)}
+  \item �� \textbf{Top categorias de despesa}: \texttt{ABS(SUM(valor))}
+\end{itemize}
+
+\subsection*{Painel Executivo Integrado}
+Monte um \textbf{dashboard no Tableau} combinando:
+\begin{enumerate}
+  \item Perfil do Cliente
+  \item Contas e Saldos
+  \item Crédito e Cartões
+  \item Transações e Consumo
+\end{enumerate}
+
+Adicione filtros de período, sexo, escolaridade e tipo de conta para facilitar a análise interativa.
+
+---
+
+\section{Desafios de Storytelling Analítico}
+
+\subsection*{Interpretações Esperadas}
+\begin{itemize}
+  \item Pessoas com pós-graduação têm salários até \textbf{45\% maiores}, mas gastam mais em lazer.
+  \item O canal \textbf{App} concentra cerca de 65\% das transações totais.
+  \item Clientes com score acima de 750 possuem \textbf{limite 2,5× maior}.
+  \item Os saldos médios cresceram aproximadamente 18\% entre 2022 e 2025.
+  \item A categoria \textbf{Mercado} representa 28\% das despesas agregadas.
+\end{itemize}
+
+Esses insights podem ser apresentados como uma \textbf{história no Tableau}, usando o recurso \textit{Story Points} para guiar a narrativa visual.
+
+\end{appendices}

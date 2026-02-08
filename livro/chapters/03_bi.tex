@@ -1,0 +1,190 @@
+\chapter{Análise Bivariada}
+
+\section{Introdução}
+A \textbf{análise bivariada} é o estudo de duas variáveis ao mesmo tempo, com o objetivo de verificar a existência de associação, tendência ou dependência entre elas.  
+
+Perguntas típicas que a análise bivariada ajuda a responder:
+\begin{itemize}[leftmargin=*]
+  \item Existe relação entre as horas de estudo e o desempenho em provas?
+  \item A renda de um consumidor influencia seu gasto mensal?
+  \item A temperatura está relacionada às vendas de sorvete?
+\end{itemize}
+
+\section{Tabelas de Contingência e Gráficos de Dispersão}
+Antes das medidas numéricas, a exploração inicial pode ser feita por:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tabelas de contingência}: aplicáveis quando as variáveis são qualitativas (ex.: gênero $\times$ preferência de produto).
+  \item \textbf{Gráficos de dispersão}: aplicáveis quando as variáveis são quantitativas, permitindo observar padrões de associação (linearidade, tendência positiva/negativa, presença de outliers).
+\end{itemize}
+
+\section{Covariância}
+\subsection*{Definição}
+A \textbf{covariância} mede o grau em que duas variáveis variam conjuntamente.  
+- Se valores altos de $X$ estão associados a valores altos de $Y$, a covariância tende a ser positiva.  
+- Se valores altos de $X$ estão associados a valores baixos de $Y$, a covariância tende a ser negativa.  
+- Se não há relação linear clara, a covariância tende a valores próximos de zero.
+
+\begin{FormulaBox}
+\[
+\mathrm{Cov}(X,Y)=\dfrac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})
+\]
+\end{FormulaBox}
+
+\subsection*{Interpretação}
+- $\mathrm{Cov}(X,Y)>0$: associação linear positiva.  
+- $\mathrm{Cov}(X,Y)<0$: associação linear negativa.  
+- $\mathrm{Cov}(X,Y)\approx 0$: ausência de relação linear clara.
+
+\subsection*{Exemplo}
+Considere as variáveis \emph{Horas de estudo} ($X$) e \emph{Nota final} ($Y$):
+
+\begin{center}
+\begin{tabular}{@{}c|c|c|c|c@{}}\toprule
+$x_i$ & $y_i$ & $(x_i-\bar{x})$ & $(y_i-\bar{y})$ & Produto $(x_i-\bar{x})(y_i-\bar{y})$ \\\midrule
+8 & 8  & 3   & 2,6  & 7,8 \\
+4 & 6  & -1  & 0,6  & -0,6 \\
+2 & 2  & -3  & -3,4 & 10,2 \\
+1 & 1  & -4  & -4,4 & 17,6 \\
+10& 10 & 5   & 4,6  & 23,0 \\\midrule
+\multicolumn{4}{r|}{Soma} & \textbf{58,0} \\\bottomrule
+\end{tabular}
+\end{center}
+
+\[
+\mathrm{Cov}(X,Y)=\frac{58}{5-1}=14,5
+\]
+
+A covariância positiva indica que quanto mais horas de estudo, maior tende a ser a nota.
+
+\subsection*{Limitações}
+A covariância não é normalizada: o valor depende da unidade de medida das variáveis.  
+Por exemplo, medir horas em minutos aumentaria numericamente a covariância sem mudar a relação.  
+Por isso, usamos a \textbf{correlação} como medida padronizada.
+
+\section{Correlação de Pearson}
+\subsection*{Definição}
+A \textbf{correlação de Pearson} é a medida mais usada para quantificar a força e a direção da relação linear entre duas variáveis quantitativas.  
+Ela é obtida pela normalização da covariância.
+
+\begin{FormulaBox}
+\[
+r = \dfrac{\mathrm{Cov}(X,Y)}{s_X s_Y}, \quad r\in[-1,1]
+\]
+\end{FormulaBox}
+
+\subsection*{Interpretação dos valores de $r$}
+\begin{itemize}[leftmargin=*]
+  \item $r \approx 1$: correlação linear positiva muito forte.
+  \item $r \approx -1$: correlação linear negativa muito forte.
+  \item $r \approx 0$: ausência de relação linear clara.
+\end{itemize}
+
+\subsection*{Exemplo (continuação do anterior)}
+Sabendo que $s_X=\sqrt{15}\approx 3,873$ e $s_Y=\sqrt{14,8}\approx 3,847$:
+
+\[
+r = \frac{14,5}{(3,873)(3,847)} \approx 0,973
+\]
+
+Isso indica uma \textbf{forte correlação positiva}: mais horas de estudo estão fortemente associadas a notas mais altas.
+
+\subsection*{Observações importantes}
+- Correlação mede \emph{associação}, não \emph{causalidade}.  
+- Relações não lineares podem ter correlação próxima de zero, mesmo havendo forte associação (ex.: curva em forma de U).  
+- A presença de outliers pode distorcer o valor de $r$.
+
+\section{Resumo Comparativo}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Covariância}: indica direção da relação, mas depende da escala.  
+  \item \textbf{Correlação}: padroniza a covariância, facilitando a interpretação ($-1 \leq r \leq 1$).  
+\end{itemize}
+
+
+\section{Problema Resolvido — Relação entre horas de estudo e notas}
+
+\begin{SolvedBox}
+\textbf{Contexto.} Foram registradas \emph{Horas de estudo} ($x$) e \emph{Notas finais} ($y$) de 5 estudantes. Queremos calcular a \textbf{covariância} e a \textbf{correlação de Pearson} entre as variáveis.
+
+\textbf{Passo 1 — Tabela de dados}\\[-6pt]
+\begin{center}
+\begin{tabular}{@{}lccccc@{}}\toprule
+Registro & R1 & R2 & R3 & R4 & R5 \\\midrule
+Horas ($x$) & 8 & 4 & 2 & 1 & 10 \\
+Notas ($y$) & 8 & 6 & 2 & 1 & 10 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 2 — Médias}\\
+\[
+\bar{x} = \frac{25}{5} = 5, 
+\qquad 
+\bar{y} = \frac{27}{5} = 5{,}4
+\]
+
+\textbf{Passo 3 — Tabela para produtos centrados}
+
+\begin{center}
+\begin{tabular}{@{}c|c|c|c|c@{}}\toprule
+$x_i$ & $y_i$ & $(x_i-\bar{x})$ & $(y_i-\bar{y})$ & Produto $(x_i-\bar{x})(y_i-\bar{y})$ \\\midrule
+8  & 8  & 3   & 2,6  & 7,8  \\
+4  & 6  & -1  & 0,6  & -0,6 \\
+2  & 2  & -3  & -3,4 & 10,2 \\
+1  & 1  & -4  & -4,4 & 17,6 \\
+10 & 10 & 5   & 4,6  & 23,0 \\\midrule
+\textbf{Totais} & --- & --- & --- & \textbf{58,0} \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 4 — Covariância}
+
+\begin{FormulaBox}
+$\mathrm{Cov}(X,Y) = \dfrac{\sum (x_i-\bar{x})(y_i-\bar{y})}{n-1}$
+\end{FormulaBox}
+
+\[
+\mathrm{Cov}(X,Y) = \frac{58}{4} = 14,5
+\]
+
+\textbf{Passo 5 — Correlação de Pearson}
+
+\begin{FormulaBox}
+$r = \dfrac{\mathrm{Cov}(X,Y)}{s_X s_Y}$
+\end{FormulaBox}
+
+Sabemos: $s_X=\sqrt{15}\approx 3,873$, \quad $s_Y=\sqrt{14,8}\approx 3,847$.
+
+\[
+r = \frac{14,5}{(3,873)(3,847)} \approx \frac{14,5}{14,92} \approx 0,973
+\]
+
+\textbf{Conclusão:} $r \approx 0,97$, indicando \textbf{forte correlação linear positiva} entre horas de estudo e nota.
+\end{SolvedBox}
+
+\section*{Problemas Sugeridos — Análise Bivariada}
+
+\begin{enumerate}[leftmargin=*]
+  \item Calcule a covariância e a correlação entre os pares $(x,y)=\{(1,2),(2,3),(3,5),(4,4)\}$.  
+  \item Um conjunto de dados registra altura (cm) e peso (kg) de 5 pessoas. Estime a correlação.  
+  \item Construa um gráfico de dispersão para as horas de sono $\{5,6,7,8,9\}$ e desempenho $\{60,65,70,80,85\}$. Descreva a tendência.  
+  \item Em uma empresa, vendas (mil R\$) e gastos em propaganda (mil R\$) foram:
+  $$\{(10,3),(15,5),(20,7),(30,9)\}$$. Calcule $r$.  
+  \item Mostre que se todas as observações de $y$ forem iguais, a correlação é indefinida.  
+  \item Para as notas de matemática e português de 6 alunos, construa a tabela de produtos centrados e estime $r$.  
+  \item Explique com exemplo quando $r$ próximo de zero não significa ausência de relação.  
+  \item Compare os gráficos de dispersão de correlações $r=0,9$, $r=0$, e $r=-0,9$. Explique a diferença.  
+  \item Uma base tem pares $(x,y)=\{(2,4),(4,8),(6,12),(8,16)\}$. Calcule $r$ e interprete.  
+  \item Explique, com um exemplo de mercado, por que “correlação não implica causalidade”.
+\end{enumerate}
+
+\section*{Apêndice do Capítulo 3 — Demonstrações}
+
+\begin{ProofBox}
+\textbf{Por que a correlação é adimensional?}\\[4pt]
+A covariância depende das unidades de medida de $X$ e $Y$.  
+Ao dividir por $s_X s_Y$, normalizamos essa medida, garantindo $r \in [-1,1]$, sem unidade.  
+
+\textbf{Valores de referência:}\\
+$r \approx 1$: relação linear positiva forte.\\
+$r \approx -1$: relação linear negativa forte.\\
+$r \approx 0$: ausência de relação linear (mas podem existir relações não lineares).
+\end{ProofBox}

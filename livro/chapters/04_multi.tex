@@ -1,0 +1,395 @@
+\chapter{Análise Multivariada}
+
+\section{Visão Geral}
+A análise multivariada considera três ou mais variáveis simultaneamente, permitindo estudar relações complexas entre fatores.  
+Exemplos práticos incluem: \textbf{matriz de correlação}, \textbf{regressão múltipla}, \textbf{análise de componentes principais (PCA)}, \textbf{clusterização} e \textbf{árvores de decisão}.  
+
+Neste capítulo, vamos focar nos conceitos fundamentais de \textbf{probabilidade, probabilidade condicional, odds e odds ratio}, essenciais para responder perguntas do tipo:  
+- Quais fatores mais influenciam a chance de um aluno alcançar nota alta?  
+- Qual grupo apresenta maior risco ou chance relativa?  
+
+---
+
+\section{Probabilidade}
+\subsection*{Definição}
+A probabilidade mede a chance de ocorrência de um evento em um espaço de possibilidades.
+
+\begin{FormulaBox}
+Probabilidade: 
+\[
+P(A) = \frac{\text{número de casos favoráveis}}{\text{número total de casos}}
+\]
+\end{FormulaBox}
+
+\subsection*{Exemplo}
+Em uma turma de 20 alunos, 8 obtiveram nota $\ge 8$.  
+\[
+P(\text{Alta}) = \frac{8}{20} = 0,4 = 40\%
+\]
+
+---
+
+\section{Probabilidade Condicional}
+\subsection*{Definição}
+A probabilidade condicional mede a chance de um evento ocorrer dado que outro já ocorreu.
+
+\begin{FormulaBox}
+Probabilidade condicional:
+\[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+\]
+\end{FormulaBox}
+
+\subsection*{Exemplo}
+Se entre 10 alunos que estudaram mais de 5 horas, 7 tiveram nota $\ge 8$:  
+\[
+P(\text{Alta} \mid \text{Horas}>5) = \frac{7}{10} = 70\%
+\]
+
+---
+
+\section{Odds}
+\subsection*{Definição}
+Enquanto a probabilidade compara sucessos com o total de casos, as \textbf{odds} comparam sucessos com fracassos.
+
+\begin{FormulaBox}
+\[
+\mathrm{Odds}(A) = \frac{P(A)}{1-P(A)}
+\]
+\end{FormulaBox}
+
+\subsection*{Exemplo}
+Se $P(\text{Alta})=0,4$:  
+\[
+\mathrm{Odds}(\text{Alta}) = \frac{0,4}{1-0,4} = \frac{0,4}{0,6} \approx 0,67
+\]  
+Ou seja, para cada 10 alunos, a razão esperada é $\approx 4$ com Alta contra $\approx 6$ sem Alta.
+
+---
+
+\section{Odds Ratio (OR)}
+\subsection*{Definição}
+O Odds Ratio compara duas razões de chances, mostrando quanto mais provável é um evento em um grupo em relação a outro.
+
+\begin{FormulaBox}
+\[
+\mathrm{OR}_{A:B} = \frac{\mathrm{Odds}(A)}{\mathrm{Odds}(B)}
+\]
+\end{FormulaBox}
+
+\subsection*{Exemplo}
+- Grupo A: $P(\text{Alta})=0,7 \Rightarrow \mathrm{Odds}_A=\tfrac{0,7}{0,3}=2,33$  
+- Grupo B: $P(\text{Alta})=0,4 \Rightarrow \mathrm{Odds}_B=\tfrac{0,4}{0,6}=0,67$  
+
+\[
+\mathrm{OR}_{A:B} = \frac{2,33}{0,67} \approx 3,5
+\]
+
+Interpretação: alunos do grupo A têm cerca de 3,5 vezes mais chance de Alta em comparação ao grupo B.
+
+---
+
+\section{Como identificar características que mais influenciam uma variável-alvo com Odds Ratio}
+\begin{itemize}[leftmargin=*]
+  \item Passo 1: Defina a variável-alvo binária (ex.: Nota Alta = sim/não).  
+  \item Passo 2: Separe os dados em grupos (ex.: faixas de horas de estudo).  
+  \item Passo 3: Calcule as probabilidades de sucesso em cada grupo.  
+  \item Passo 4: Converta em Odds.  
+  \item Passo 5: Compare com um grupo de referência via OR.  
+\end{itemize}
+
+\textbf{Exemplo prático:}  
+Se para $\ge 8$ horas de estudo o OR = 4, e para $< 4$ horas o OR = 0,5, concluímos que estudar mais tempo aumenta significativamente a chance de nota Alta.
+
+---
+\clearpage
+\section{Problemas Resolvidos — Odds e Odds Ratio}
+
+\subsection*{Exemplo 1 — Horas de estudo e notas}
+
+
+\begin{SolvedBox}
+\textbf{Contexto:} A classificação \emph{Nota Alta/Baixa} segue as seguintes regras fornecidas: \\
+\begin{tabular}{@{}c|c|c@{}}\toprule
+Horas de estudo & Nota & Nota Alta/Baixa \\\midrule
+$<4$   & $<6$   & Baixa \\
+$<4$   & $\ge 6$& Baixa \\
+$5$--$7$ & $<6$   & Alta \\
+$5$--$7$ & $\ge 6$& Alta \\
+$\ge 8$  & $<6$   & Alta \\
+$\ge 8$  & $\ge 6$& Alta \\\bottomrule
+\end{tabular}
+
+\medskip
+Para tornar o cálculo concreto, suponha \textbf{10 observações em cada linha} (total 60). Agregando por \emph{faixa de horas}:
+
+\begin{center}
+\begin{tabular}{@{}c|c|c|c@{}}\toprule
+Grupo de Horas & Alta & Baixa & Total \\\midrule
+$<4$     & 0  & 20 & 20 \\
+$5$--$7$ & 20 & 0  & 20 \\
+$\ge 8$  & 20 & 0  & 20 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 1 — Probabilidades de Alta por grupo}
+\[
+P(\text{Alta}\mid <4)=\tfrac{0}{20}=0,\quad
+P(\text{Alta}\mid 5\text{--}7)=\tfrac{20}{20}=1,\quad
+P(\text{Alta}\mid \ge 8)=\tfrac{20}{20}=1.
+\]
+
+\textbf{Passo 2 — \emph{Odds} de Alta por grupo (com e sem correção)}
+\begin{FormulaBox}
+\textbf{Odds (sem correção):}\;\; \mathrm{Odds}=\dfrac{\text{Alta}}{\text{Baixa}}
+\end{FormulaBox}
+
+\begin{FormulaBox}
+\textbf{Odds (Haldane–Anscombe):}\;\; \mathrm{Odds}_{0{,}5}=\dfrac{\text{Alta}+0{,}5}{\text{Baixa}+0{,}5}
+\end{FormulaBox}
+
+\begin{itemize}[leftmargin=*]
+\item $<4$: $\mathrm{Odds}=\tfrac{0}{20}=0$ (indefinida para OR); \quad
+      $\mathrm{Odds}_{0{,}5}=\tfrac{0{,}5}{20{,}5}\approx 0{,}0244$.
+\item $5$--$7$: $\mathrm{Odds}=\tfrac{20}{0}=\infty$; \quad
+      $\mathrm{Odds}_{0{,}5}=\tfrac{20{,}5}{0{,}5}=41{,}0$.
+\item $\ge 8$: $\mathrm{Odds}=\tfrac{20}{0}=\infty$; \quad
+      $\mathrm{Odds}_{0{,}5}=41{,}0$.
+\end{itemize}
+\end{SolvedBox}
+
+
+
+\begin{SolvedBox}
+\textbf{Passo 3 — Odds Ratio (OR) usando o grupo $\ge 8$ como referência}
+
+\begin{FormulaBox}
+\textbf{Odds Ratio:}\;\; \mathrm{OR}_{A:\text{ref}}=\dfrac{\mathrm{Odds}(A)}{\mathrm{Odds}(\text{ref})}
+\end{FormulaBox}
+
+\[
+\mathrm{OR}_{<4:\ge 8}=\frac{0{,}0244}{41{,}0}\approx 5{,}95\times 10^{-4},
+\qquad
+\mathrm{OR}_{5\text{--}7:\ge 8}=\frac{41{,}0}{41{,}0}=1{,}00.
+\]
+
+\textbf{Interpretação:}
+\begin{itemize}[leftmargin=*]
+\item Estudar \textbf{$<4$ horas} está associado a \emph{odds} de Alta \textbf{quase nulas} comparadas a $\ge 8$ horas.
+\item Os grupos \textbf{$5$--$7$} e \textbf{$\ge 8$} têm \emph{odds} praticamente idênticas (OR $\approx 1$) neste cenário.
+\item O uso da correção $+0{,}5$ é fundamental quando há \textbf{zeros} nas células, evitando divisões por zero e permitindo comparar grupos via OR.
+\end{itemize}
+\end{SolvedBox}
+
+
+
+% -----------------------------------------------------
+
+\subsection*{Exemplo 2 — Exercício físico e pressão arterial}
+
+\begin{SolvedBox}
+\textbf{Contexto:} Pesquisadores dividiram pessoas em dois grupos: praticam exercício físico regularmente (Sim) e não praticam (Não). O desfecho observado foi \emph{pressão arterial controlada (Sim ou Não)}.
+
+\textbf{Tabela de frequências:}  
+
+\begin{center}
+\begin{tabular}{@{}c|c|c@{}}\toprule
+Grupo & Pressão Controlada & Não Controlada \\\midrule
+Exercício (Sim) & 18 & 12 \\
+Exercício (Não) & 10 & 20 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 1 — Probabilidades}  
+- Exercício (Sim): $P(\text{Controlada}) = 18/30 = 0,6$  
+- Exercício (Não): $P(\text{Controlada}) = 10/30 \approx 0,33$
+
+\textbf{Passo 2 — Odds}  
+- Exercício (Sim): $\mathrm{Odds} = 18/12 = 1,5$  
+- Exercício (Não): $\mathrm{Odds} = 10/20 = 0,5$
+
+\textbf{Passo 3 — OR (referência = Não)}  
+\[
+\mathrm{OR} = \frac{1,5}{0,5} = 3
+\]
+
+\textbf{Conclusão:} Pessoas que praticam exercício têm 3 vezes mais chance de controlar a pressão arterial do que as sedentárias.
+\end{SolvedBox}
+
+% -----------------------------------------------------
+
+\subsection*{Exemplo 3 — Uso de aplicativo de estudo e aprovação}
+
+\begin{SolvedBox}
+\textbf{Contexto:} Estudantes foram separados pelo uso de um aplicativo de estudo (Sim/Não). O desfecho foi aprovação na disciplina.
+
+\textbf{Tabela de frequências:}  
+
+\begin{center}
+\begin{tabular}{@{}c|c|c@{}}\toprule
+Grupo & Aprovado & Reprovado \\\midrule
+App (Sim)  & 45 & 15 \\
+App (Não)  & 20 & 25 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 1 — Probabilidades}  
+- App (Sim): $P(\text{Aprovado}) = 45/60 = 0,75$  
+- App (Não): $P(\text{Aprovado}) = 20/45 \approx 0,44$
+
+\textbf{Passo 2 — Odds}  
+- App (Sim): $\mathrm{Odds} = 45/15 = 3,0$  
+- App (Não): $\mathrm{Odds} = 20/25 = 0,8$
+
+\textbf{Passo 3 — OR (referência = Não)}  
+\[
+\mathrm{OR} = \frac{3,0}{0,8} = 3,75
+\]
+
+\textbf{Conclusão:} Estudantes que usam o aplicativo têm quase 4 vezes mais chance de aprovação do que os que não usam.
+\end{SolvedBox}
+
+% -----------------------------------------------------
+
+\subsection*{Exemplo 4 — Consumo de frutas e obesidade}
+
+\begin{SolvedBox}
+\textbf{Contexto:} Em um estudo, indivíduos foram separados em dois grupos: consumo diário de frutas (Sim/Não). O desfecho observado foi obesidade (Sim/Não).
+
+\textbf{Tabela de frequências:}  
+
+\begin{center}
+\begin{tabular}{@{}c|c|c@{}}\toprule
+Grupo & Obeso & Não Obeso \\\midrule
+Frutas (Sim)  & 12 & 48 \\
+Frutas (Não)  & 30 & 30 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 1 — Probabilidades}  
+- Frutas (Sim): $P(\text{Obeso}) = 12/60 = 0,2$  
+- Frutas (Não): $P(\text{Obeso}) = 30/60 = 0,5$
+
+\textbf{Passo 2 — Odds}  
+- Frutas (Sim): $\mathrm{Odds} = 12/48 = 0,25$  
+- Frutas (Não): $\mathrm{Odds} = 30/30 = 1,0$
+
+\textbf{Passo 3 — OR (referência = Não)}  
+\[
+\mathrm{OR} = \frac{0,25}{1,0} = 0,25
+\]
+
+\textbf{Conclusão:} Consumir frutas diariamente reduz a chance de obesidade (odds 4 vezes menores).
+\end{SolvedBox}
+
+% -----------------------------------------------------
+
+\subsection*{Exemplo 5 — Tabagismo e doença respiratória}
+
+\begin{SolvedBox}
+\textbf{Contexto:} Uma pesquisa analisou fumantes e não fumantes, verificando a ocorrência de doenças respiratórias.
+
+\textbf{Tabela de frequências:}  
+
+\begin{center}
+\begin{tabular}{@{}c|c|c@{}}\toprule
+Grupo & Doente & Saudável \\\midrule
+Fumante     & 40 & 60 \\
+Não Fumante & 20 & 80 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 1 — Probabilidades}  
+- Fumante: $P(\text{Doente}) = 40/100 = 0,4$  
+- Não Fumante: $P(\text{Doente}) = 20/100 = 0,2$
+
+\textbf{Passo 2 — Odds}  
+- Fumante: $\mathrm{Odds} = 40/60 = 0,67$  
+- Não Fumante: $\mathrm{Odds} = 20/80 = 0,25$
+
+\textbf{Passo 3 — OR (referência = Não)}  
+\[
+\mathrm{OR} = \frac{0,67}{0,25} \approx 2,68
+\]
+
+\textbf{Conclusão:} Fumantes têm quase 3 vezes mais chance de desenvolver doença respiratória em comparação com não fumantes.
+\end{SolvedBox}
+
+% -----------------------------------------------------
+
+\subsection*{Exemplo 6 — Horas e notas}
+
+\begin{SolvedBox}
+
+\textbf{Contexto:} Uma turma foi dividida em 3 grupos segundo as horas de estudo: $<4$, $5$–$7$ e $\ge 8$. Foi registrada a nota final (Alta $\ge 8$ ou Baixa $<8$).  
+
+\textbf{Tabela de frequências (dados simulados)}  
+
+\begin{center}
+\begin{tabular}{@{}c|c|c@{}}\toprule
+Grupo de Horas & Nota Alta & Nota Baixa \\\midrule
+$<4$       & 2 & 8 \\
+$5$–$7$    & 5 & 5 \\
+$\ge 8$    & 7 & 3 \\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Passo 1 — Probabilidade condicional (ex.: Alta dado $5$–$7$)}  
+\[
+P(\text{Alta}\mid 5\text{–}7) = \frac{5}{10} = 0,5
+\]
+
+\textbf{Passo 2 — Cálculo das Odds}  
+- Grupo $<4$: $\mathrm{Odds}=\frac{2}{8}=0,25$  
+- Grupo $5$–$7$: $\mathrm{Odds}=\frac{5}{5}=1,0$  
+- Grupo $\ge 8$: $\mathrm{Odds}=\frac{7}{3}\approx 2,33$
+
+\textbf{Passo 3 — Cálculo dos OR (referência: $\ge 8$)}  
+\[
+\mathrm{OR}_{<4:\ge 8} = \frac{0,25}{2,33}\approx 0,11
+\]
+\[
+\mathrm{OR}_{5\text{–}7:\ge 8} = \frac{1,0}{2,33}\approx 0,43
+\]
+
+\textbf{Conclusão:}  
+- O grupo $\ge 8$ é o que mais favorece nota Alta.  
+- Quanto menor o tempo de estudo, menor a chance de nota Alta em relação ao grupo de referência.
+\end{SolvedBox}
+
+
+---
+
+\section*{Problemas Sugeridos — Análise Multivariada}
+\begin{enumerate}[leftmargin=*]
+  \item Em uma pesquisa com 100 pacientes, 40 melhoraram após tratamento (Alta) e 60 não. Calcule as probabilidades, odds e OR entre os grupos Tratamento e Placebo.  
+  \item Considere 3 grupos de estudantes (pouco, médio, muito estudo). Monte tabelas $2\times 2$ e calcule os OR relativos ao grupo de muito estudo.  
+  \item Em um jogo de basquete, 30 de 50 arremessos foram convertidos. Calcule $P$, Odds e interprete.  
+  \item Explique a diferença entre $P(\text{Vitória}\mid \text{Casa})$ e $P(\text{Casa}\mid \text{Vitória})$ em uma temporada esportiva.  
+  \item Se em uma pesquisa eleitoral 55\% votariam no candidato A, calcule a probabilidade, odds e interprete.  
+  \item Monte um exemplo em que a probabilidade de sucesso é a mesma em dois grupos, mas o OR é diferente (discuta por quê).  
+  \item Explique por que o OR é usado em regressão logística como medida de efeito.  
+  \item Em um estudo de saúde, fumo $\times$ doença respiratória apresentaram OR=4. Interprete.  
+  \item Calcule e compare Odds e OR em um campeonato de futebol entre times de alto e baixo investimento.  
+  \item Discuta o impacto de outliers (jogadores extremos) nos cálculos de probabilidade e OR.
+\end{enumerate}
+
+---
+
+\section*{Apêndice do Capítulo 4 — Odds e Apostas Online}
+
+\begin{ProofBox}
+\textbf{Odds nas apostas esportivas:}  
+Nas casas de apostas, as \emph{odds} representam a chance atribuída a um evento.  
+
+- Se $P(\text{Vitória})=0,5$, a odd justa seria $2,0$ (pagamento de 2 para cada 1 apostado).  
+- Odds baixas (ex.: 1,2) indicam favorito; odds altas (ex.: 5,0) indicam azarão.
+
+\textbf{Odds Ratio nas apostas:}  
+Pode-se comparar o risco relativo entre dois resultados:  
+- Ex.: OR entre “Time A vencer” e “Time B vencer” mostra qual lado tem mais chance relativa.  
+
+\textbf{Prática:}  
+Casas de apostas usam margens (ou “taxa da casa”) que reduzem a odd real para garantir lucro.  
+Na AED e na estatística, o OR serve como medida análoga, mas aplicada em contextos de saúde, educação, marketing e ciências sociais.
+\end{ProofBox}

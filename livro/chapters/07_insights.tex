@@ -1,0 +1,45 @@
+
+
+% --------------------------------------------
+
+\chapter{Insights com Tableau e Python} % Capítulo 7
+
+\section{O que é Insight}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tipos}: descritivo, diagnóstico, preditivo, prescritivo.
+  \item \textbf{Regras}: relevância, evidência, acionabilidade, clareza.
+\end{itemize}
+
+\section{Geração de Insights em Python}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{EDA automatizada}: \texttt{pandas-profiling}/\texttt{ydata-profiling} (resumos); seleção manual para o Tableau.
+  \item \textbf{Correlação e regressão}: exportar coeficientes e \textit{scores} para o Tableau (CSV/SQL).
+  \item \textbf{Feature Store simples}: tabelas derivadas com métricas agregadas (por cliente, por mês).
+\end{itemize}
+
+\section{Integrando no Tableau}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{TabPy}: \texttt{SCRIPT\_REAL} para previsões curtas; \textit{scoring} de modelos (já treinados).
+  \item \textbf{Estratégia preferida}: pré-processar no Python, consumir no Tableau via \textbf{extracts} para melhor performance.
+\end{itemize}
+
+\section{Casos Reais}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Educação}: horas de estudo $\rightarrow$ probabilidade de nota $\ge$ 8 (logística em Python; visual no Tableau).
+  \item \textbf{Varejo}: desconto $\times$ margem; \textit{uplift} por campanha.
+  \item \textbf{Saúde}: adesão a tratamento por faixa etária e região.
+\end{itemize}
+
+\section{Exercício Resolvido — Pipeline Insight (��)}
+\begin{SolvedBox}
+\textbf{Problema:} Identificar fatores que mais explicam variação de vendas mensais por loja.
+
+\textbf{Solução:}
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Python}: regressão múltipla (ou árvore) com features (sazonalidade, promoções, clima); exportar \texttt{coef\_importances.csv}.
+  \item \textbf{Tableau}: conectar ao CSV; barras ordenadas das importâncias; \textit{tooltip} com sinal/valor.
+  \item \textbf{Narrativa}: destaque de 3 fatores principais + sugestão de ação (ex.: reduzir desconto em categorias com baixo \textit{uplift}).
+\end{enumerate}
+\textbf{Performance}: cálculos pesados no Python; Tableau recebe só o resultado agregado.
+\end{SolvedBox}
+

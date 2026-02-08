@@ -1,0 +1,253 @@
+% Capitulo 10: Analise Exploratoria de Dados com Tableau (versao ampliada e limpa)
+% Arquivo sem caracteres especiais para evitar erros de compilacao
+
+\chapter{Resump Tableau e Analise Exploratoria de Dados}
+\label{cap:tableau}
+
+\begin{EpigraphBox}
+  "Dados sao o novo petroleo quando refinados e visualizados com criterio."\\
+  	\textit{-- Clive Humby}
+\end{EpigraphBox}
+
+\begin{LearningObjectives}
+	\textbf{Ao final deste capitulo, voce sera capaz de:}
+\begin{itemize}
+  \item Entender o papel do Tableau na analise exploratoria de dados (EDA)
+  \item Distinguir Worksheet, Dashboard e Story e usa-los com proposito
+  \item Identificar e construir dashboards operacionais, taticos e estrategicos
+  \item Definir, calcular e interpretar KPIs relevantes para o negocio
+  \item Escolher graficos apropriados para objetivos analiticos
+  \item Aplicar medidas de tendencia central e detectar outliers
+  \item Interpretar correlacoes e transformar insights em decisoes
+\end{itemize}
+\end{LearningObjectives}
+
+%-----------------------------------------------------------------------
+\section{Introducao: uma conversa com os dados}
+%-----------------------------------------------------------------------
+
+Ao abrir um conjunto de dados pela primeira vez, voce esta prestes a iniciar uma conversa. Nessa conversacao, o objetivo e fazer perguntas simples, ouvir os sinais que os dados fornecem e ajustar as perguntas ate que respostas claras surjam. O Tableau funciona como uma ponte entre a curiosidade e a visualizacao: permite fazer perguntas, testar hipoteses e apresentar descobertas de forma visual e interativa.
+
+Neste capitulo vamos caminhar de forma pratica e narrativa. Em cada secao eu apresento um conceito, conto uma pequena historia que ilustra seu uso em contexto real e termino com um exercicio resolvido com contexto, calculos e interpretacao. O formato e pensado para que o capitulo leia como um trecho de livro, com ritmo, transicoes e exemplos aplicaveis.
+
+%-----------------------------------------------------------------------
+\section{Tableau: o que e, em poucas palavras}
+%-----------------------------------------------------------------------
+
+Tableau e uma plataforma de Business Intelligence focada em visualizacoes interativas e exploracao de dados. Diferente de ferramentas puramente programaticas, o Tableau permite que analistas arrastem e soltem campos, experimentem diferentes tipos de graficos e montem paineis que contam uma historia dos dados.
+
+Pense no Tableau como um laboratorio visual: voce testa rapidamente varias representacoes e encontra, por iteracao, a que melhor comunica determinado insight.
+
+%-----------------------------------------------------------------------
+\section{Worksheet, Dashboard e Story: papeis e analogias}
+%-----------------------------------------------------------------------
+
+Antes de construir qualquer painel grande, e util entender os papeis:
+\begin{itemize}
+  \item \textbf{Worksheet:} a unidade basica — um grafico ou tabela que responde a uma pergunta especifica.
+  \item \textbf{Dashboard:} um conjunto de worksheets organizadas para que o usuario veja diferentes angulos do mesmo problema.
+  \item \textbf{Story:} sequencia de dashboards/worksheets que guia a audiencia por uma narrativa (contexto -> analise -> conclusao).
+\end{itemize}
+
+Analogia: pense nas worksheets como cadernos de laboratorio, nos dashboards como relatorios de projeto e nas stories como a apresentacao executiva que voce fara para a diretoria.
+
+\begin{SolvedBox}{Contexto e Questao 1}
+	extbf{Contexto:} Uma equipe de analise de vendas recebeu uma solicitacao da diretoria: escolher uma ferramenta para padronizar a entrega de paineis mensais que serao usados por gerentes e analistas. A equipe precisa justificar a escolha com base em usabilidade, flexibilidade e velocidade de criacao.
+
+	\textbf{Pergunta:} Qual definicao descreve melhor o Tableau no contexto de EDA?
+
+	cblower
+	\textbf{Resposta:} Tableau e uma ferramenta de Business Intelligence para visualizacoes interativas e paineis dinamicos. Sua facilidade de uso e capacidade de producao rapida de visualizacoes o tornam apropriado para processos de EDA e comunicacao de insights.
+\end{SolvedBox}
+
+%-----------------------------------------------------------------------
+\section{Tipos de dashboards: quando usar cada um}
+%-----------------------------------------------------------------------
+
+Nem todo painel serve para todos os publicos. A definicao do tipo de dashboard deve ser guiada pelo objetivo e pela frequencia de atualizacao:
+\begin{itemize}
+  \item \textbf{Operacional:} monitoramento em tempo real; decisao rapida; visibilidade imediata.
+  \item \textbf{Tatico/Analitico:} foco em diagnostico e descoberta; filtros para exploracao; atualizacoes diarias/semanal.
+  \item \textbf{Estrategico:} resumo para decisores; poucos KPIs, tendencias de longo prazo; periodicidade mensal/trimestral.
+\end{itemize}
+
+\begin{SolvedBox}{Contexto e Questao 2}
+	\textbf{Contexto:} Um diretor hospitalar pediu um painel para a reuniao mensal do comite executivo. Ele precisa comparar ocupacao, custo medio por paciente e indicadores de seguranca para decidir sobre expansao de unidades.
+
+	\textbf{Pergunta:} Que tipo de dashboard atende melhor essa necessidade?
+
+	cblower
+	\textbf{Resposta:} Dashboard estrategico. Nessa reuniao o foco e decisao de longo prazo com KPIs agregados; portanto um painel sintetico, com comparacoes periodicas e metas claras, e o formato adequado.
+\end{SolvedBox}
+
+%-----------------------------------------------------------------------
+\section{KPIs: escolher, calcular e interpretar}
+%-----------------------------------------------------------------------
+
+KPIs sao metrics que orientam decisoes. Definir bom KPI implica alinhar a metrica ao objetivo de negocio, garantir dados confiaveis e ter uma meta clara.
+
+\begin{itemize}
+  \item Especifico: mede o que importa.
+  \item Mensuravel: formula definida e dados disponiveis.
+  \item Acionavel: provocar uma acao se estiver fora da meta.
+  \item Temporal: definido por periodo (mensal, trimestral etc.).
+\end{itemize}
+
+\begin{SolvedBox}{Contexto e Questao 3}
+	\textbf{Contexto:} Uma plataforma de cursos online quer avaliar se seus cursos estao sendo realmente efetivos. O time de produto sugere medir "eficacia" com uma unica metrica para comparacoes entre cursos.
+
+	\textbf{Pergunta:} Qual KPI unico e mais indicado para medir a eficacia de um curso?
+
+	cblower
+	extbf{Resposta sugerida:} Taxa de conclusao (percentual de alunos matriculados que completam o curso). Isso captura engajamento e finalizacao, que sao proximos de eficacia no contexto educacional. Complementarmente, usar media de notas e NPS para avaliar qualidade e satisfacao.
+\end{SolvedBox}
+
+\begin{SolvedBox}{Contexto e Questao 4}
+	\textbf{Contexto:} Em uma avaliacao operacional, o time de customer success apresenta dados: 320 clientes ativos, 400 clientes totais e taxa de satisfacao 85\%. Precisamos de um KPI composto para reportar a diretoria.
+
+	\textbf{Pergunta:} Calcule o KPI definido como (ativos/totais) x taxa de satisfacao e interprete.
+
+	cblower
+	extbf{Calculo:} (320/400) x 0.85 = 0.8 x 0.85 = 0.68 = 68\%.
+
+	extbf{Interpretacao:} O resultado indica que, combinando retencao e satisfacao, a empresa esta entregando cerca de 68\% do desempenho ideal. A solucao envolve melhorar retencao (reduzir churn) e elevar satisfacao para empurrar o KPI para niveis superiores.
+\end{SolvedBox}
+
+%-----------------------------------------------------------------------
+\section{Escolha de graficos: um guia pratico}
+%-----------------------------------------------------------------------
+
+A escolha do grafico depende do objetivo de comunicacao:
+\begin{itemize}
+  \item Comparacao entre categorias: barras ordenadas (melhor leitura para ranking).
+  \item Evolucao temporal: series de linhas (sazonalidade e tendencia).
+  \item Proporcoes: barras empilhadas ou pizza para poucas categorias.
+  \item Relacao entre duas variaveis: scatter plot com linha de tendencia.
+  \item Analise geografica: mapa coropletico.
+\end{itemize}
+
+Um bom grafico responde a uma pergunta clara; se a pergunta mudar, troque o grafico.
+
+%-----------------------------------------------------------------------
+\section{Medidas de tendencia central e variabilidade}
+%-----------------------------------------------------------------------
+
+Ao resumir conjuntos de dados, escolha a medida que melhor resiste a distorcoes (outliers) e que responde a pergunta de negocio:
+\begin{itemize}
+  \item Media: util quando a distribuicao e simetrica e sem outliers extremos.
+  \item Mediana: mais robusta a outliers; melhor para distribuicoes assimetricas.
+  \item Desvio padrao: mede variabilidade em torno da media.
+\end{itemize}
+
+\begin{SolvedBox}{Contexto e Questao 5}
+	\textbf{Contexto:} Em um painel de desempenho regional, um gerente nota que uma filial teve vendas muito altas (outlier) e pergunta se a media ou mediana explica melhor a situacao.
+
+	\textbf{Dados de exemplo:} vendas (em mil) = [6,7,8,9,10].
+
+	cblower
+	\textbf{Resposta:} Media = 8; Mediana = 8. Neste conjunto sem outliers extremos, ambas coincidem. Mas se houvesse um outlier (ex.: 900), a mediana seria mais representativa.
+\end{SolvedBox}
+
+%-----------------------------------------------------------------------
+\section{Correlacao e interpretacao}
+%-----------------------------------------------------------------------
+
+O coeficiente de Pearson r quantifica relacao linear entre duas variaveis. Use uma escala pratica:
+\begin{itemize}
+  \item 0 < r < 0.3 : fraca
+  \item 0.3 <= r < 0.7 : moderada
+  \item 0.7 <= r < 1 : forte
+\end{itemize}
+
+Sempre acompanhe r de um grafico de dispersao para visualizar padroes e outliers.
+
+\begin{SolvedBox}{Contexto e Questao 6}
+	\textbf{Contexto:} Um professor investiga a relacao entre horas de estudo e nota final numa amostra de alunos. O calculo do coeficiente de correlacao retorna r = 0.85.
+
+	\textbf{Pergunta:} Como interpretar esse valor no contexto educativo?
+
+	cblower
+	\textbf{Resposta:} r = 0.85 indica forte correlacao positiva: alunos que estudam mais tendem a obter notas maiores. Importante: correlacao nao prova causalidade. Fatores externos (qualidade do estudo, apoio, motivacao) tambem influenciam.
+\end{SolvedBox}
+
+%-----------------------------------------------------------------------
+\section{Fluxo pratico: construir um dashboard passo a passo}
+%-----------------------------------------------------------------------
+
+Siga este roteiro quando for montar um dashboard no Tableau:
+\begin{enumerate}
+  \item Defina a pergunta de negocio e o publico-alvo.
+  \item Escolha 3 a 5 KPIs que respondam diretamente a essa pergunta.
+  \item Crie worksheets focadas: uma pergunta por worksheet.
+  \item Combine em um dashboard: KPIs no topo, graficos principais no centro, filtros e controles na lateral.
+  \item Configure acoes (filtros, destaques) para navegacao fluida.
+  \item Teste com usuarios reais e refine a hierarquia visual e o desempenho.
+\end{enumerate}
+
+\begin{SolvedBox}{Contexto e Questao 7}
+	\textbf{Contexto:} Voce foi contratado para montar um dashboard de e-commerce. O gerente quer um painel que permita identificar rapidamente produtos com queda de vendas, regiao com performance abaixo da media e trackers de conversao.
+
+	\textbf{Pergunta:} Qual o papel da worksheet e do dashboard nesse projeto?
+
+	\cblower
+	\textbf{Resposta:} A worksheet responde a uma pergunta especifica (ex.: vendas mensais por produto). O dashboard integra varias worksheets (vendas mensais, top produtos, mapa por regiao, taxa de conversao) para que o gerente navegue e tome decisoes a partir de uma visao consolidada.
+\end{SolvedBox}
+
+%-----------------------------------------------------------------------
+\section{Boas praticas, desempenho e qualidade}
+%-----------------------------------------------------------------------
+
+Principios basicos:
+\begin{itemize}
+  \item Menos e mais: priorize clareza sobre abundancia de graficos.
+  \item Hierarquia visual: destaque KPIs e mensure o contraste entre elementos.
+  \item Consistencia: padronize cores para significados (verde = bom, vermelho = alerta).
+  \item Contexto: sempre informe periodo, fonte e data de atualizacao.
+\end{itemize}
+
+Armadilhas comuns:
+\begin{itemize}
+  \item Ignorar outliers sem investigar.
+  \item Usar graficos esteticamente agradaveis porem enganosos.
+  \item Interpretar correlacao como causalidade.
+  \item Nao validar dados antes de publicar o dashboard.
+\end{itemize}
+
+\begin{ChecklistBox}{Checklist rapido antes de publicar}
+\begin{itemize}
+  \item[$\\square$] Objetivo claro
+  \item[$\\square$] Audiencia definida
+  \item[$\\square$] KPIs relevantes e calculos validados
+  \item[$\\square$] Graficos apropriados e interpretaveis
+  \item[$\\square$] Dados validados e atualizados
+  \item[$\\square$] Performance aceitavel (tempo de carga)
+\end{itemize}
+\end{ChecklistBox}
+
+%-----------------------------------------------------------------------
+\section*{Apendice: formulas rapidas}
+%-----------------------------------------------------------------------
+
+\begin{FormulaBox}{Media aritmetica}
+\[
+\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}
+\]
+\end{FormulaBox}
+
+\begin{FormulaBox}{Desvio padrao amostral}
+\[
+ s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}
+\]
+\end{FormulaBox}
+
+\begin{FormulaBox}{Correlacao de Pearson}
+\[
+ r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}
+\]
+\end{FormulaBox}
+
+\begin{SummaryBox}{Resumo do capitulo}
+Este capitulo apresentou uma abordagem pratica e narrativa para usar o Tableau na Analise Exploratoria de Dados: definicoes, tipos de dashboards, selecao de graficos, KPI, estatistica basica, correlacao e um fluxo passo-a-passo para construir paineis efetivos. Os exercicios resolvidos mostram como aplicar conceitos em contextos reais.
+\end{SummaryBox}
+
+% Fim do arquivo

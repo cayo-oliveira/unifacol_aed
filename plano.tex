@@ -1,0 +1,356 @@
+
+\documentclass[12pt]{article}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=teal}
+
+% ---------- Colors (pastel palette) ----------
+\definecolor{pastelblue}{HTML}{E6F0FF}
+\definecolor{pastelgray}{HTML}{F2F2F2}
+\definecolor{pastelorange}{HTML}{FFEBD6}
+\definecolor{pastelteal}{HTML}{DFF7F2}
+
+% ---------- tcolorbox styles (compatível com o livro) ----------
+\tcbset{sharp corners, boxrule=0pt, coltitle=black, fonttitle=\bfseries, left=8pt, right=8pt, top=6pt, bottom=6pt}
+
+\newtcolorbox{NoteBox}[1][]{colback=pastelteal, coltitle=white, title=Nota, #1}
+\newtcolorbox{SolvedBox}[1][]{colback=pastelorange, coltitle=white, title=Entrega (Checklist), #1}
+
+\title{\Huge \textbf{Plano de Ensino}\\ \Large Análise Exploratória de Dados e Storytelling (2026.1)}
+\author{Sistemas de Informação -- UNIFACOL}
+\date{Fevereiro -- Maio/Junho de 2026}
+
+\begin{document}
+\maketitle
+
+\section{Visão Geral}
+Esta disciplina tem dois objetivos complementares:
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Unidade I (semanas 01--07):} construir a base de \textbf{AED} com \textbf{estatística prática} e \textbf{Python (Pandas)} para limpar, resumir e interpretar dados;
+	\item \textbf{Unidade II (semanas 08--12):} transformar insights em \textbf{comunicação persuasiva} com \textbf{Tableau} e \textbf{storytelling}.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Regra do ritmo (aula noturna 19h--22h):} em semanas com trabalho, as \textbf{apresentações ocupam no máximo 1 hora}. O restante da aula continua com teoria + prática guiada.
+\end{NoteBox}
+
+\section{Calendário Letivo (12 semanas de aula)}
+O calendário abaixo está alinhado ao arquivo \texttt{aed/calendario.md}. Semanas marcadas como \textit{não conta} (feriados/provas) não entram na contagem das 12 semanas.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c p{3.2cm} p{4.2cm} p{5.7cm}@{}}
+\toprule
+\textbf{Semana} & \textbf{Período (Seg--Qua)} & \textbf{Tipo da semana} & \textbf{Observação} \\
+\midrule
+01 & 02/02 a 04/02 & Teoria + lab & Início das aulas \\
+02 & 09/02 a 11/02 & Teoria + \textbf{Trabalho 1} & Entrega quinzenal \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{14 a 18/02 --- Carnaval [F] (não conta semana)}}\\
+\midrule
+03 & 23/02 a 25/02 & Teoria + lab & Semana normal \\
+04 & 02/03 a 04/03 & Teoria + \textbf{Trabalho 2} & Entrega quinzenal \\
+05 & 09/03 a 11/03 & Teoria + lab & Semana normal \\
+06 & 16/03 a 18/03 & Teoria + \textbf{Trabalho 3} & Entrega quinzenal \\
+07 & 23/03 a 25/03 & Teoria + lab & Semana normal \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{02 a 04/04 --- Semana Santa [F] (não conta semana)}}\\
+\multicolumn{4}{@{}l}{\textit{06 a 14/04 --- Prova I Unidade (não conta semana)}}\\
+\midrule
+08 & 20/04 & Teoria + \textbf{Trabalho 4} & Aula apenas na segunda (21/04 é feriado) \\
+09 & 27/04 a 29/04 & Teoria + lab & Semana normal \\
+10 & 04/05 a 06/05 & Teoria + \textbf{Trabalho 5} & 06/05 é feriado (Vitória) \\
+11 & 11/05 a 13/05 & Teoria + lab & Semana normal \\
+12 & 18/05 a 20/05 & Teoria + \textbf{Trabalho 6} & Entrega quinzenal (encerramento do conteúdo) \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{25/05 a 01/06 --- Prova II Unidade (não conta semana)}}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Avaliação (visão operacional)}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Trabalhos quinzenais (T1--T6):} entregas práticas curtas, com apresentação e checklist.
+	\item \textbf{Prova I Unidade:} janela 06/04 a 14/04 (conforme calendário institucional).
+	\item \textbf{Prova II Unidade:} janela 25/05 a 01/06.
+\end{itemize}
+
+\begin{NoteBox}
+\textbf{Formato padrão de entrega (em todos os trabalhos):}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Python}: 1 notebook com ETL + checagens (tipos, ausências, duplicadas, filtros).
+	\item \textbf{Dados}: 1 CSV ``limpo'' pronto para visualização.
+	\item \textbf{Tableau}: 1 workbook (ou export) com visuais/dash.
+	\item \textbf{Comunicação}: 1 slide (ou texto curto) com \textbf{Big Idea} + 3 bullets de evidências.
+\end{itemize}
+\end{NoteBox}
+
+\section{Plano Semana a Semana (conteúdo + aprendizagem + entregas)}
+
+\subsection*{Semana 01 (02/02--04/02) --- Do Caos à Clareza: AED e a \textit{Big Idea}}
+\textbf{O que vai ter na semana:}
+\begin{itemize}[leftmargin=*]
+	\item Abertura com \textbf{gancho} e \textbf{Big Idea} do semestre: ``dados brutos são ruído; valor é extrair uma história que force uma decisão''.
+	\item Diferença entre \textbf{análise exploratória} (cozinha) e \textbf{análise explanativa} (jantar).
+	\item Primeiro \textbf{ETL com Python/Pandas}: leitura, inspeção, tipos, ausências, conversão de datas, remoção de colunas e exportação de CSV limpo.
+	\item Primeiro contato com \textbf{Tableau}: conectar CSV e gerar visuais rápidos.
+	\item Design básico: \textbf{Teste do Relance (3 segundos)} e remoção de ``lixo visual''.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Diferenciar \textbf{descobrir} insight (AED) de \textbf{comunicar} insight (storytelling).
+	\item Rodar um ETL simples e produzir um dataset ``pronto para viz''.
+	\item Construir o primeiro visual no Tableau e avaliar clareza pelo Teste do Relance.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Preparação para o Trabalho 1 (entrega na Semana 02):}
+\begin{itemize}[leftmargin=*]
+	\item Escolher um dataset simples (Kaggle ou base sugerida pelo professor).
+	\item Definir 1 pergunta de negócio e 1 Big Idea.
+\end{itemize}
+\end{SolvedBox}
+
+\subsection*{Semana 02 (09/02--11/02) --- Trabalho 1 (apresentações) + Fundamentos de dados retangulares}
+\textbf{Formato da aula:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Até 1 hora}: apresentações relâmpago do T1 (2--3 min por aluno/grupo).
+	\item \textbf{Restante}: teoria + prática guiada.
+\end{itemize}
+
+\textbf{Teoria/Prática da semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Dados retangulares}: linhas x colunas, variável x registro.
+	\item \textbf{Dicionário de dados} e perguntas: ``o que cada coluna significa?''.
+	\item Qualidade básica: ausências, duplicadas, categorias sujas, datas e textos.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Formular uma pergunta e traduzir em colunas/transformações.
+	\item Entregar uma história curta com evidência (Big Idea + visuais).
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Trabalho 1 (entrega na Semana 02):} ETL básico + \textbf{3 visuais} no Tableau + Big Idea (1 slide).
+\end{SolvedBox}
+
+\subsection*{Semana 03 (23/02--25/02) --- Estatística descritiva I: medidas de posição}
+\textbf{O que vai ter na semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Média, mediana, moda} e quando usar cada uma.
+	\item \textbf{Resumo com Pandas}: \texttt{describe}, \texttt{value\_counts}, \texttt{groupby}.
+	\item Leitura crítica: por que ``média'' pode mentir (assimetria/outliers).
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Resumir uma coluna numérica e uma coluna categórica.
+	\item Explicar em linguagem de negócio o que um resumo indica.
+\end{itemize}
+
+\subsection*{Semana 04 (02/03--04/03) --- Trabalho 2 (apresentações) + Estatística descritiva II: variabilidade}
+\textbf{Formato da aula:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Até 1 hora}: apresentações do T2.
+	\item \textbf{Restante}: teoria + prática (boxplot, IQR, dispersão).
+\end{itemize}
+
+\textbf{Teoria/Prática da semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Variância, desvio-padrão, amplitude, IQR} e leitura prática.
+	\item \textbf{Outliers}: por que aparecem e como investigar antes de remover.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Comparar dois grupos (ex.: por categoria) usando medidas de posição e dispersão.
+	\item Justificar escolhas (mediana vs média; IQR vs DP) com base no dado.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Trabalho 2 (entrega na Semana 04):} mini-relatório AED (posição + dispersão) + 2 visuais (boxplot + histograma) + Big Idea.
+\end{SolvedBox}
+
+\subsection*{Semana 05 (09/03--11/03) --- Distribuições e dados ausentes: o ``formato'' dos dados}
+\textbf{O que vai ter na semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Histogramas} e leitura de forma (simetria/assimetria; caudas).
+	\item \textbf{Valores ausentes}: tipos de missing e estratégias (imputar, remover, sinalizar).
+	\item \textbf{Regras práticas} para preparar dados para o Tableau (tipos, datas, categorias).
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Identificar distribuições problemáticas e propor transformações simples.
+	\item Tratar missing sem ``matar'' o significado do dado.
+\end{itemize}
+
+\subsection*{Semana 06 (16/03--18/03) --- Trabalho 3 (apresentações) + Correlação introdutória}
+\textbf{Formato da aula:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Até 1 hora}: apresentações do T3.
+	\item \textbf{Restante}: teoria + prática (correlação e gráficos bivariados).
+\end{itemize}
+
+\textbf{Teoria/Prática da semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Dispersão (scatter)} e o que \textbf{correlação} mede (e o que não mede).
+	\item \textbf{Segmentação} por categoria (cor por classe, facetas simples).
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Investigar relações entre duas variáveis sem cair em conclusões causais.
+	\item Contar uma história com evidência bivariada (2 visuais coerentes).
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Trabalho 3 (entrega na Semana 06):} diagnóstico (missing + outliers + distribuição) + 1 relação bivariada (scatter) + Big Idea.
+\end{SolvedBox}
+
+\subsection*{Semana 07 (23/03--25/03) --- Variáveis categóricas e revisão para Prova I}
+\textbf{O que vai ter na semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Categóricas}: proporções, tabelas de frequência e gráficos de barras.
+	\item \textbf{Boas práticas} de escolha de gráfico (evitar pizza quando não faz sentido).
+	\item Revisão guiada dos conceitos da Unidade I (ETL, resumos, distribuições, correlação).
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Comparar categorias com clareza e consistência visual.
+	\item Consolidar um ``kit'' de AED para a Prova I.
+\end{itemize}
+
+\subsection*{Semana 08 (20/04) --- Trabalho 4 (apresentações) + Storytelling: da análise à decisão}
+\textbf{Observação:} aula concentrada (apenas segunda-feira).
+
+\textbf{Formato da aula:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Até 1 hora}: apresentações do T4.
+	\item \textbf{Restante}: storytelling aplicado (estrutura e mensagem).
+\end{itemize}
+
+\textbf{Teoria/Prática da semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{AED vs explanativa} (retomada): o que entra e o que não entra numa apresentação.
+	\item \textbf{Big Idea} e \textbf{pergunta de decisão}: ``o que eu quero que a audiência faça?''
+	\item Primeiro \textbf{storyboard} (3 a 5 telas) para um dashboard.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Transformar achados em uma linha narrativa curta.
+	\item Planejar um dashboard antes de construir.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Trabalho 4 (entrega na Semana 08):} roteiro curto (Big Idea + 3 evidências) + esboço de dashboard (wireframe) + 1 visual no Tableau.
+\end{SolvedBox}
+
+\subsection*{Semana 09 (27/04--29/04) --- Design de informação: clareza, hierarquia e consistência}
+\textbf{O que vai ter na semana:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Teste do Relance} em profundidade: título que diz a mensagem, não o tipo de gráfico.
+	\item \textbf{Hierarquia visual}: cor, tamanho, espaço em branco, alinhamento.
+	\item Padrões práticos para dashboards: filtros, contexto, explicações curtas.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Melhorar um visual ``ruim'' com pequenas decisões de design.
+	\item Escrever títulos orientados a insight (mensagem).
+\end{itemize}
+
+\subsection*{Semana 10 (04/05--06/05) --- Trabalho 5 (apresentações) + Tableau interativo}
+\textbf{Observação:} 06/05 é feriado; ajustar a prática para caber em 2 encontros.
+
+\textbf{Formato da aula:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Até 1 hora}: apresentações do T5.
+	\item \textbf{Restante}: Tableau avançado para interatividade.
+\end{itemize}
+
+\textbf{Teoria/Prática da semana:}
+\begin{itemize}[leftmargin=*]
+	\item Filtros, ações, parâmetros e interação guiada.
+	\item Publico-alvo: o que o usuário precisa explorar sozinho.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Criar pelo menos 1 mecanismo de exploração (filtro/parâmetro/ação).
+	\item Preservar clareza mesmo com interatividade.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Trabalho 5 (entrega na Semana 10):} dashboard com 1 a 2 mecanismos de interatividade + título-mensagem + checklist do Teste do Relance.
+\end{SolvedBox}
+
+\subsection*{Semana 11 (11/05--13/05) --- Dashboards que ``forçam'' decisão}
+\textbf{O que vai ter na semana:}
+\begin{itemize}[leftmargin=*]
+	\item Estrutura de dashboard: contexto, diagnóstico, recomendação.
+	\item Consistência de métricas e definições (evitar ``cada um calcula de um jeito'').
+	\item Preparar ``pitch'' de 3 minutos (história + decisão + próximo passo).
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Organizar telas para guiar o olhar e reduzir ruído.
+	\item Conectar insight a recomendação (chamada para ação).
+\end{itemize}
+
+\subsection*{Semana 12 (18/05--20/05) --- Trabalho 6 (apresentações) + Fechamento do conteúdo}
+\textbf{Formato da aula:}
+\begin{itemize}[leftmargin=*]
+	\item \textbf{Até 1 hora}: apresentações do T6 (pitch + demo do dashboard).
+	\item \textbf{Restante}: refinamento, revisão e checklist para Prova II.
+\end{itemize}
+
+\textbf{O aluno aprende a:}
+\begin{itemize}[leftmargin=*]
+	\item Defender um dashboard como produto (para usuário e decisão).
+	\item Fechar lacunas técnicas (dados) e de comunicação (mensagem).
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{Trabalho 6 (entrega na Semana 12):} dashboard final + roteiro de apresentação (3 min) + checklist completo (dados limpos + Big Idea + interatividade).
+\end{SolvedBox}
+
+\section{Resumo das Entregas Quinzenais}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c c p{10.5cm}@{}}
+\toprule
+\textbf{Entrega} & \textbf{Semana} & \textbf{Tema (artefatos principais)} \\
+\midrule
+T1 & 02 & ETL básico + 3 visuais + Big Idea \\
+T2 & 04 & Posição + dispersão + boxplot/hist + Big Idea \\
+T3 & 06 & Missing/outliers/distribuição + 1 relação bivariada \\
+T4 & 08 & Storytelling + wireframe + 1 visual no Tableau \\
+T5 & 10 & Dashboard interativo (filtro/parâmetro/ação) + título-mensagem \\
+T6 & 12 & Dashboard final + pitch (3 min) + checklist \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\input{aula/00_plano/diarios_site.tex}
+
+\end{document}
+

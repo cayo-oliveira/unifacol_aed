@@ -1,0 +1,113 @@
+\documentclass[12pt,openany]{book}
+
+% ============================================================
+% Livro de Notas de Aula (Professor)
+% Pasta: aed/aula/
+% Objetivo: compilar direto no Overleaf como um livro separado.
+% ============================================================
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage[most]{tcolorbox}
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=teal}
+
+% ---------- Colors (pastel palette) ----------
+\definecolor{pastelblue}{HTML}{E6F0FF}
+\definecolor{pastelgray}{HTML}{F2F2F2}
+\definecolor{pastelorange}{HTML}{FFEBD6}
+\definecolor{pastelteal}{HTML}{DFF7F2}
+
+% "Verde quadro" (fundo claro + borda/realce)
+\definecolor{boardgreen}{HTML}{0B3D2E}
+\definecolor{boardgreenlight}{HTML}{E9F6EF}
+
+% ---------- tcolorbox styles ----------
+\tcbset{sharp corners, boxrule=0pt, coltitle=black, fonttitle=\bfseries, left=8pt, right=8pt, top=6pt, bottom=6pt}
+
+\newtcolorbox{FormulaBox}[1][]{colback=pastelblue, coltitle=white, title=Fórmula, #1}
+\newtcolorbox{ProofBox}[1][]{colback=pastelgray, coltitle=white, title=Demonstração (Resumo), #1}
+\newtcolorbox{SolvedBox}[1][]{colback=pastelorange, coltitle=white, title=Checklist / Entrega, #1}
+\newtcolorbox{NoteBox}[1][]{colback=pastelteal, coltitle=white, title=Nota, #1}
+
+% Caixa "No Quadro" (verde)
+\newtcolorbox{BoardBox}[1][]{
+  colback=boardgreenlight,
+  colframe=boardgreen,
+  boxrule=0.6pt,
+  title=No Quadro,
+  coltitle=white,
+  fonttitle=\bfseries,
+  #1
+}
+
+% ---------- Listings (Python & SQL) ----------
+\lstdefinestyle{codeblock}{
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=6pt,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  framerule=0.2pt,
+  framesep=6pt,
+  rulecolor=\color{pastelgray},
+  xleftmargin=1em,
+  xrightmargin=1em
+}
+\lstdefinelanguage{SQL}{morekeywords={SELECT,FROM,WHERE,AND,OR,JOIN,LEFT,RIGHT,INNER,OUTER,ON,AS,GROUP,BY,ORDER,INSERT,INTO,VALUES,UPDATE,DELETE,CREATE,TABLE,VIEW,DROP,ALTER,PRIMARY,KEY,NOT,NULL,DEFAULT,DISTINCT}, sensitive=false}
+\lstset{style=codeblock}
+
+% ---------- Bibliografia ----------
+% Observação: manter estilo amplamente suportado no Overleaf.
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{referencias.bib}
+
+\title{\Huge \textbf{Notas de Aula (Professor)}\\ \Large AED, Python, Tableau e Storytelling (2026.1)}
+\author{Cayo Oliveira}
+\date{2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+% ------------------------------------------------------------
+% Parte 0: Plano (mesmo conteúdo do plano.tex)
+% ------------------------------------------------------------
+\input{00_plano/plano.tex}
+\input{00_plano/diarios_site.tex}
+% ------------------------------------------------------------
+% Semanas (cada pasta = 1 capítulo)
+% ------------------------------------------------------------
+\input{semana01/semana01.tex}
+\input{semana02/semana02.tex}
+\input{semana03/semana03.tex}
+\input{semana04/semana04.tex}
+\input{semana05/semana05.tex}
+\input{semana06/semana06.tex}
+\input{semana07/semana07.tex}
+\input{semana08/semana08.tex}
+\input{semana09/semana09.tex}
+\input{semana10/semana10.tex}
+\input{semana11/semana11.tex}
+\input{semana12/semana12.tex}
+
+\printbibliography
+\end{document}
