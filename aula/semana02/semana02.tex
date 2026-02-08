@@ -1,14 +1,187 @@
-\chapter{Semana 02 (09/02--11/02) --- Trabalho 1 + Dados retangulares}
+\chapter{Semana 02 (09/02--11/02) --- Introdução ao Tableau + Dataset de Desempenho Acadêmico}
 
 \section{Objetivo da semana}
-Nesta semana eu executo duas coisas em paralelo: (1) \textbf{avaliar} a entrega curta do Trabalho 1 (vale 0,5 ponto na I unidade); (2) consolidar a base de \textbf{dados retangulares} e qualidade de dados.
+Olá pessoal, bom dia! Bem-vindos à Semana 02. Hoje eu vou executar duas coisas em paralelo: (1) avaliar as apresentações do Trabalho 1, que valem 0,5 ponto na I unidade; (2) introduzir o Tableau como ferramenta poderosa para visualização de dados, aplicando tudo ao dataset de desempenho acadêmico dos estudantes. O objetivo é que vocês saiam daqui sabendo criar perguntas estratégicas, montar dashboards interativos e contar histórias com dados (storytelling). Vamos conectar teoria de AED com prática real!
 
-\section{Roteiro (19h--22h)}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{19:00--20:00} --- Apresentações do Trabalho 1 (no máximo 1h).
-  \item \textbf{20:00--21:20} --- Teoria + prática: dados retangulares, dicionário de dados, tipos, ausências, duplicadas.
-  \item \textbf{21:20--22:00} --- Mini-lab: refazer o ETL com checklist e exportar CSV limpo.
+\textbf{Por que AED?} AED investiga datasets para descobrir padrões invisíveis em planilhas; usa estatísticas e gráficos para insights acionáveis. \textbf{Por que Tableau?} Diferente do Excel (estático), Tableau é interativo, drag-and-drop, ideal para exploração rápida. \textbf{Objetivos detalhados:} Dominar ETL em Python (preparação), visualizações no Tableau (análise), storytelling (comunicação). Esperamos vocês aplicando a problemas reais de educação.
+
+Mas antes de começar, vamos contextualizar. AED, ou Análise Exploratória de Dados, é o processo de investigar datasets para descobrir padrões, anomalias e insights. Usamos estatísticas descritivas, visualizações e limpeza de dados. Python é ideal para ETL (Extract, Transform, Load), mas para visualizações interativas, Tableau é superior – permite drag-and-drop, filtros dinâmicos e compartilhamento fácil.
+
+O dataset que vamos usar é sobre desempenho acadêmico de estudantes. Coletado do Kaggle, tem 20 colunas como horas de estudo, frequência, gênero, e a variável alvo: notas dos exames. O objetivo final é responder perguntas como "Quais fatores mais influenciam as notas?" e criar dashboards que comuniquem decisões educacionais.
+
+\textbf{Por que este dataset?} Real, diverso (6607 alunos), cobre fatores sociais/econômicos; ideal para AED aplicada. \textbf{Perguntas estratégicas definidas:} "Frequência afeta notas?" (esperamos correlação alta, decisão: incentivar presença); "Renda impacta?" (esperamos desigualdade, decisão: apoio social). \textbf{O que esperamos das respostas?} Insights quantificáveis para políticas educacionais.
+
+Por que Tableau? Porque combina dados de múltiplas fontes, cria mapas, gráficos avançados e stories narrativas. Hoje, vocês aprenderão desde a instalação até a publicação. Lembrem: visualização não é só bonita, é comunicação de dados para ação.
+
+\begin{BoardBox}
+\textbf{Conceitos-chave de AED}
+\begin{itemize}
+  \item \textbf{ETL}: Extrair dados brutos (ex.: CSV do Kaggle), transformar (limpar nulos, normalizar), carregar para análise. \textbf{Por que?} Dados reais têm erros; ETL prepara para insights confiáveis. \textbf{Objetivo:} Dataset limpo acelera visualizações no Tableau.
+  \item \textbf{Variável alvo}: Nota\_Exame – o que queremos prever/explicar. \textbf{Por que?} Foca análise em impacto educacional. \textbf{Objetivo:} Responder "Quais fatores melhoram notas?".
+  \item \textbf{Fatores influentes}: Horas\_Estudadas, Frequencia, etc. (correlações positivas/negativas). \textbf{Por que?} Identifica causas de sucesso/falha. \textbf{Objetivo:} Decisões como "Aumentar frequência".
+  \item \textbf{Objetivo final}: Dashboards que respondam perguntas estratégicas para melhorar educação. \textbf{Por que?} AED leva a ação baseada em dados.
+  \item \textbf{Fórmula z-score}: $z = \frac{x - \mu}{\sigma}$ (normaliza para média 0, desvio 1). \textbf{O que é?} Padroniza valores para comparar escalas diferentes (ex.: horas de estudo vs. notas). \textbf{Por que usar?} Evita viés de unidades; facilita correlações. \textbf{Objetivo:} Features comparáveis em modelos.
+  \item \textbf{Correlação Pearson}: $r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}$ (mede relação linear, -1 a 1). \textbf{O que é?} Força e direção da relação (1 = perfeita positiva, -1 = negativa). \textbf{Por que?} Quantifica influência (ex.: Frequencia ~0.58 com Nota). \textbf{Objetivo:} Priorizar fatores (alta correlação = foco).
 \end{itemize}
+\end{BoardBox}
+
+\section{Roteiro Detalhado (19h--22h)}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{19:00--20:00} --- Apresentações dos alunos (Trabalho 1). \textbf{Por que?} Avalia aplicação prática de AED; esperamos ver ETL real e visualizações.
+  \item \textbf{20:00--21:30} --- Introdução ao Tableau: teoria, conexão de dados, visualizações básicas e dashboards. \textbf{Por que?} Core da aula; conecta Python a Tableau.
+  \item \textbf{21:30--22:00} --- Atividades práticas e discussão de insights. \textbf{Por que?} Reforça aprendizado; esperamos discussões aplicadas.
+\end{itemize}
+
+\subsection{19:00--20:00: Apresentações do Trabalho 1}
+Olá pessoal, vamos começar com as apresentações do Trabalho 1. Cada um de vocês tem 10 minutos para apresentar o infográfico ou dashboard que criaram com base no tema escolhido na Semana 01. Lembrem-se: foquem na Big Idea e nos 3 bullets de evidência. Eu vou avaliar clareza, coerência e ligação com decisão.
+
+O Trabalho 1 é uma introdução prática à AED: vocês escolheram um dataset de 20 temas possíveis, fizeram ETL básico em Python (pelo menos uma limpeza, como remover nulos), criaram um infográfico no Tableau e resumiram em Big Idea + 3 bullets. O objetivo é aplicar o ciclo de AED: pergunta → dados → limpeza → visualização → insight → decisão.
+
+Enquanto vocês se preparam, eu vou configurar o ambiente para a parte prática. Abram seus laptops e instalem o Tableau Public (gratuito) se ainda não tiverem. O link é \url{https://public.tableau.com/}. Também, preparem o Python com o ambiente virtual que preparei na pasta \texttt{tableau/dataset/python/}. Ambiente virtual (venv) isola dependências, evitando conflitos. Vamos explicar isso em detalhes na próxima seção.
+
+Durante as apresentações, observem: o infográfico passa no "teste do relance" (entende-se em 5 segundos)? A Big Idea é acionável? Os bullets apoiam com evidências quantitativas? Perguntem: "Alguém teve dificuldade em conectar o dataset no Tableau?" (esperamos respostas sobre erros comuns, para discutir troubleshooting); "Como vocês escolheram as cores?" (esperamos discussões sobre acessibilidade e impacto visual). \textbf{Por que essas perguntas?} Estimulam reflexão sobre design e técnica; definidas para avaliar clareza e aplicabilidade.
+
+\begin{BoardBox}
+\textbf{Critérios de Avaliação do Trabalho 1}
+\begin{itemize}
+  \item \textbf{Clareza}: Visual limpo, cores adequadas, sem clutter (desordem).
+  \item \textbf{Coerência}: Recorte lógico do tema, dados relevantes.
+  \item \textbf{Decisão}: Big Idea leva a ação (ex.: "Aumentar investimento em X para melhorar Y").
+  \item \textbf{Técnico}: ETL real (ex.: fillna, drop duplicates), visualização correta.
+  \item \textbf{Perguntas para alunos}: "O que foi mais desafiador no ETL?" "Como o Tableau ajudou na Big Idea?"
+\end{itemize}
+\end{BoardBox}
+
+\subsection{20:00--21:30: Introdução ao Tableau}
+Agora, vamos mergulhar no Tableau! Primeiro, o que é o Tableau? É uma ferramenta de business intelligence para criar visualizações interativas e dashboards sem precisar de muito código. Existem versões: Desktop (paga), Public (gratuita, online) e Server. Hoje usaremos Public.
+
+No Tableau, dados são divididos em \textbf{Dimensions} (categóricos, como Gênero) e \textbf{Measures} (numéricos, como Nota\_Exame). Dimensions criam rótulos/categorias; Measures calculam agregações (soma, média). Por que? Facilita drag-and-drop: arraste Dimension para Rows para categorias, Measure para Columns para valores.
+
+Mas antes, vamos preparar o Python. Ambiente virtual (venv) isola projetos, evitando conflitos de bibliotecas. Sem venv, instalar pandas globalmente pode quebrar outros projetos. O comando \texttt{python -m venv .venv} cria uma pasta com Python isolado. Ativar com \texttt{.venv\Scripts\activate} (Windows) ou \texttt{source .venv/bin/activate} (Mac/Linux). Então, \texttt{pip install -r requirements.txt} instala pandas, numpy, scikit-learn. Objetivo: reprodutibilidade e limpeza.
+
+Python é linguagem de programação para dados: pandas manipula DataFrames (tabelas), numpy arrays numéricos, sklearn machine learning. No notebook, executamos ETL: carregar CSV, limpar nulos (fillna com moda), traduzir categorias, criar features (Categoria\_Desempenho via pd.cut), normalizar (StandardScaler). Por que? Dados brutos têm nulos, tipos errados; transformações facilitam análise.
+
+\subsubsection{20:00--20:15: Conexão de Dados e Exploração}
+Olá pessoal, bom trabalho nas apresentações! Agora, vamos abrir o Tableau Public. No menu inicial, cliquem em "Connect to Data" e selecionem "Text file" para conectar ao CSV que preparei: \texttt{tableau/dataset/student\_academic\_performance/StudentPerformanceFactors\_transformado.csv}.
+
+Uma vez conectado, vocês verão a tela de Data Source. Aqui, o Tableau detecta tipos automaticamente. Vejam as colunas: temos numéricas como \texttt{Horas\_Estudadas}, categóricas como \texttt{Genero}, e as novas que criei como \texttt{Categoria\_Desempenho}.
+
+Mas primeiro, vamos executar o notebook de preparação. Abram o Jupyter: \texttt{jupyter notebook preparacao\_tableau.ipynb}. Configurem o kernel (.venv). Execute célula por célula:
+
+1. \textbf{Imports}: \texttt{import pandas as pd} – carrega biblioteca para DataFrames. \texttt{import numpy as np} – arrays eficientes. \texttt{from sklearn.preprocessing import StandardScaler} – normalização z-score (média 0, desvio 1). Objetivo: ter ferramentas para manipulação.
+
+2. \textbf{Load Data}: \texttt{df = pd.read\_csv('../student\_academic\_performance/StudentPerformanceFactors.csv')} – lê CSV em DataFrame. \texttt{print(df.shape)} – mostra (linhas, colunas). \texttt{print(df.head())} – primeiras 5 linhas. Por que? Verificar carregamento correto.
+
+3. \textbf{Data Cleaning}: \texttt{df.isnull().sum()} – conta nulos por coluna. Para colunas com nulos (ex.: Teacher\_Quality), \texttt{mode\_val = df[col].mode()[0]} – moda (valor mais frequente). \texttt{df[col].fillna(mode\_val, inplace=True)} – preenche nulos. Objetivo: dados completos para análise.
+
+4. \textbf{Data Transformations}: Mapeamentos traduzem (ex.: 'Low' → 'Baixo'). \texttt{df['Categoria\_Desempenho'] = pd.cut(df['Exam\_Score'], bins=[0,65,80,100], labels=['Baixo','Médio','Alto'])} – categoriza notas. \texttt{df['Faixa\_Frequencia'] = pd.cut(...)} – agrupa frequência. \texttt{scaler = StandardScaler(); df['Horas\_Estudadas\_Normalizado'] = scaler.fit\_transform(df[['Hours\_Studied']])} – normaliza para comparações. Por que? Features novas revelam padrões (ex.: alunos de alto desempenho).
+
+5. \textbf{Save}: \texttt{df.to\_csv(..., index=False)} – salva sem índice. Objetivo: CSV pronto para Tableau.
+
+Executem e vejam o output. Isso é ETL prático!
+
+\begin{BoardBox}
+\textbf{Passos do Notebook (ETL) com Sintaxes}
+\begin{enumerate}
+  \item \textbf{Imports}: \texttt{import pandas as pd} (DataFrames), \texttt{import numpy as np} (arrays), \texttt{from sklearn.preprocessing import StandardScaler} (z-score). \textbf{Por que?} Ferramentas essenciais para manipulação. \textbf{Objetivo:} Preparar ambiente para ETL eficiente.
+  \item \textbf{Load}: \texttt{pd.read\_csv(filepath\_or\_buffer='../student\_academic\_performance/StudentPerformanceFactors.csv', sep=',', header=0)} – lê CSV. Output esperado: shape=(6607, 20), head() mostra primeiras linhas. \textbf{Por que?} Carrega dados brutos. \textbf{Objetivo:} Verificar integridade (linhas/colunas corretas).
+  \item \textbf{Clean}: \texttt{df.isnull().sum()} – conta nulos (ex.: Teacher\_Quality: 78). \texttt{df.fillna(df.mode()[0], inplace=True)} – preenche com moda. \textbf{Por que?} Nulos quebram análises. \textbf{Objetivo:} Dataset completo; moda preserva distribuição.
+  \item \textbf{Transform}: \texttt{df.map(\{'Low': 'Baixo'\})} – traduz. \texttt{pd.cut(df['Exam\_Score'], bins=[0,65,80,100], labels=['Baixo','Médio','Alto'])} – categoriza. \texttt{StandardScaler().fit\_transform(df[['col']])} – normaliza. \textbf{Por que?} Padroniza para Tableau (ex.: z-score evita escalas diferentes). \textbf{Objetivo:} Features novas (Categoria\_Desempenho) revelam padrões; normalização facilita comparações.
+  \item \textbf{Save}: \texttt{df.to\_csv('file.csv', index=False)} – exporta limpo. \textbf{Por que?} Tableau precisa CSV limpo. \textbf{Objetivo:} Arquivo pronto para importação sem erros.
+\end{enumerate}
+\textbf{Objetivo final}: Dataset otimizado para visualizações. Se erro (ex.: ModuleNotFoundError), instale com pip. \textbf{Por que ETL?} Dados brutos têm inconsistências; transformação acelera AED.
+\end{BoardBox}
+
+Para explorar, cliquem em "Sheet 1". Arrastem \texttt{Nota\_Exame} para Rows e vejam o histograma automático. Isso é AED visual: distribuição mostra concentração em 65-75, assimetria esquerda (notas baixas raras).
+
+\subsubsection{20:15--20:45: Visualizações Básicas}
+Agora, vamos criar gráficos. Python é ótimo para ETL, mas Tableau brilha em visualizações rápidas. Por exemplo, scatter plot: arrastem \texttt{Horas\_Estudadas} para Columns, \texttt{Nota\_Exame} para Rows. Adicionem cor por \texttt{Genero}. Vejam a tendência positiva!
+
+Por que scatter plot? Mostra relação entre duas numéricas. Pontos dispersos indicam correlação (Horas\_Estudadas ~0.45 com Nota\_Exame). Cor por Gênero revela diferenças (mulheres vs. homens). Função: Analysis > Trend Lines > Linear adiciona linha de regressão, confirmando inclinação positiva. Objetivo: identificar fatores influentes visualmente.
+
+Outro: bar chart para médias. Arrastem \texttt{Envolvimento\_Parental} para Columns, \texttt{Nota\_Exame} (média) para Rows. Ordenem decrescente.
+
+Bar chart compara categorias. Média de Nota\_Exame por Envolvimento\_Parental mostra "Alto" com ~75, "Baixo" com ~65 – diferença de 10 pontos. Por que? Envolvimento parental afeta motivação. Função: Sort descending organiza visualmente. Objetivo: destacar disparidades categóricas.
+
+Lembrem: Tableau usa "prateleiras" (Rows/Columns) como eixos. Filtros globais permitem interatividade – arrastem campo para Filters, selecione valores. Por exemplo, filtre por Renda\_Familiar = "Baixo" para ver subgrupos.
+
+\begin{BoardBox}
+\textbf{Funções do Tableau em Visualizações}
+\begin{itemize}
+  \item \textbf{Scatter Plot}: Relações numéricas; tendência linear (correlação). \textbf{Por que ideal?} Mostra dispersão e inclinação (ex.: Horas\_Estudadas vs. Nota). \textbf{Alternativas:} Line chart (tendência temporal), heatmap (correlações múltiplas). \textbf{Objetivo:} Identificar fatores influentes; esperamos respostas como "Correlação positiva forte".
+  \item \textbf{Bar Chart}: Comparações categóricas; médias/somas. \textbf{Por que ideal?} Facilita ranking (ex.: Envolvimento\_Parental alto = notas maiores). \textbf{Alternativas:} Pie chart (proporções), stacked bar (subcategorias). \textbf{Objetivo:} Destacar disparidades; esperamos "Diferença de 10 pontos justifica foco".
+  \item \textbf{Filtros}: Interatividade; seleciona subconjuntos (ex.: Genero = "Masculino"). \textbf{Por que?} Exploração dinâmica sem recriar gráficos. \textbf{Alternativas:} Parameters (controles fixos), actions (drill-down). \textbf{Objetivo:} Personalizar insights; esperamos alunos descobrirem subgrupos.
+  \item \textbf{Objetivo final}: Responder perguntas (ex.: "Gênero afeta notas?"). \textbf{Por que AED visual?} Padrões emergem em gráficos; combina teoria com prática.
+\end{itemize}
+\end{BoardBox}
+
+\subsubsection{20:45--21:15: Dashboards Interativos}
+Dashboards combinam múltiplas visualizações. Criem uma nova sheet para KPIs: média de \texttt{Nota\_Exame} (use Measure Names/Values).
+
+Depois, no Dashboard, arrastem sheets. Adicionem filtros: por \texttt{Renda\_Familiar} ou \texttt{Tipo\_Escola}.
+
+Passos detalhados: 1. Criem sheet "KPIs" – arrastem Nota\_Exame para Text, selecione Average. 2. Sheet "Scatter" – como antes. 3. Sheet "Bar" – Envolvimento\_Parental vs. média Nota. 4. Novo Dashboard – arrastem sheets para layout (topo KPIs, centro gráficos). 5. Adicionem filtro: arrastem Genero para Filters no dashboard.
+
+Por que dashboards? Integram insights: KPIs mostram overview (média 67.7, aprovação >70: 60\%); gráficos detalham. Filtros permitem exploração (ex.: só alunos de renda baixa). Função: interatividade dinâmica, sem recriar gráficos. Objetivo final: painel acionável para educadores (ex.: "Focar em frequência baixa").
+
+\begin{BoardBox}
+\textbf{Estrutura do dashboard}
+\begin{itemize}
+  \item Topo: KPIs (média Nota\_Exame, taxa aprovação >70). \textbf{Por que?} Overview rápido. \textbf{Alternativas:} Gauges (metas), text boxes (resumos).
+  \item Centro: Scatter plot + bar chart. \textbf{Por que ideal?} Combina relações e comparações. \textbf{Alternativas:} Mapas (geografia), treemaps (hierarquias).
+  \item Baixo: Tabela dinâmica com médias por grupo. \textbf{Por que?} Detalhes granulares. \textbf{Alternativas:} Crosstabs (pivot), heatmaps (matrizes).
+  \item Filtros: Gênero, Renda. \textbf{Por que?} Interatividade para exploração. \textbf{Alternativas:} Hierarchies (drill-up/down), sets (grupos dinâmicos).
+  \item \textbf{Funções}: Layout floating/tiled; actions para drill-down. \textbf{Objetivo:} Painel acionável; esperamos alunos criando dashboards próprios para perguntas educacionais.
+\end{itemize}
+\end{BoardBox}
+
+\subsubsection{21:15--21:30: Storytelling}
+Storytelling transforma dados em narrativa. Criem uma Story: "Da frequência à excelência". Adicionem anotações como "Alunos com frequência >80 têm notas 15\% maiores".
+
+Passos: 1. Criem Story no menu. 2. Adicionem sheets (ex.: histograma, scatter). 3. Texto: "Introdução: Distribuição de notas". 4. "Análise: Correlação com frequência". 5. "Conclusão: Incentivar presença".
+
+Por que storytelling? Dados sozinhos não convencem; narrativa guia o público. Função: captions, arrows, highlights. Objetivo final: comunicar decisão (ex.: política de presença escolar).
+
+\begin{BoardBox}
+\textbf{Elementos de storytelling}
+\begin{itemize}
+  \item Título: Big Idea (ex.: Frequência é chave para desempenho). \textbf{Por que?} Resume insight principal. \textbf{Alternativas:} Subtítulos (contextos), bullets (evidências).
+  \item Bullets: Evidências com gráficos. \textbf{Por que ideal?} Apoia Big Idea com dados. \textbf{Alternativas:} Annotations (setas), highlights (cores).
+  \item Conclusão: Decisão (ex.: Incentivar presença). \textbf{Por que?} Liga dados a ação. \textbf{Alternativas:} Calls to action (botões), summaries (resumos).
+  \item \textbf{Funções}: Navigator para fluxo; annotations para explicações. \textbf{Objetivo:} Narrativa convincente; esperamos alunos comunicando decisões educacionais.
+\end{itemize}
+\end{BoardBox}
+
+\subsection{21:30--22:00: Atividades Práticas e Discussão}
+Agora, pratiquem! Criem uma visualização própria. Discutam: O que o dataset revela sobre educação? Como aplicar em projetos reais?
+
+Exercícios: 1. Scatter plot com filtro por Tipo\_Escola. 2. Dashboard com 3 gráficos. 3. Story curta.
+
+Discussão: Correlação alta (Frequencia 0.58) sugere foco em presença. Aplicações: dashboards para escolas monitorarem alunos em risco.
+
+Objetivo final: autonomia em Tableau para AED.
+
+\begin{BoardBox}
+\textbf{Exercícios Práticos}
+\begin{enumerate}
+  \item Criar scatter plot: Horas\_Sono vs. Nota\_Exame, cor por Motivação. \textbf{Por que?} Testa relação numérica; cor revela interações. \textbf{Alternativas:} Bubble chart (tamanho por frequência), dual axis (linhas). \textbf{O que esperamos:} Discussão sobre sono vs. motivação; correlação baixa sugere foco em outros fatores.
+  \item Dashboard: Incluir heatmap de correlações (usar table calc). \textbf{Por que ideal?} Mostra múltiplas relações simultaneamente. \textbf{Alternativas:} Correlation matrix (tabela), network graphs (dependências). \textbf{O que esperamos:} Identificação de fatores chave (ex.: Frequencia alta correlação).
+  \item Story: "Impacto da renda na educação". \textbf{Por que?} Explora desigualdade social. \textbf{Alternativas:} Infográficos (estáticos), presentations (PowerPoint). \textbf{O que esperamos:} Narrativa com decisão (ex.: programas de apoio a baixa renda).
+\end{enumerate}
+\textbf{Discussão}: Insights aplicáveis (ex.: tutoria para baixa renda). \textbf{Objetivo:} Autonomia; esperamos alunos aplicando AED a problemas reais.
+\end{BoardBox}
+
+\section{Materiais Preparados}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Dataset:} \texttt{tableau/dataset/student\_academic\_performance/StudentPerformanceFactors\_transformado.csv} (preparado com transformações em Python: traduções, features novas, normalização).
+  \item \textbf{Contexto:} \texttt{tableau/dataset/student\_academic\_performance/context.md} (guia completo com metadados, perguntas estratégicas, protótipo de dashboard – leiam para entender o dataset).
+  \item \textbf{Notebook de Preparação:} \texttt{tableau/dataset/python/preparacao\_tableau.ipynb} (ETL em Python com comentários: imports, load, clean, transform, save – execute para ver passos).
+  \item \textbf{Roteiro da Aula:} \texttt{tableau/roteiro\_aula\_tableau.md} (passos detalhados para a sessão prática – use como checklist).
+  \item \textbf{Perguntas:} \texttt{tableau/perguntas\_tableau.md} (lista para guiar análises – inspirem-se para suas visualizações).
+  \item \textbf{Ambiente:} Pasta \texttt{tableau/dataset/python/} com README (instalação venv), requirements.txt (pandas, numpy, scikit-learn).
+\end{itemize}
+
+Por que esses materiais? Dataset limpo acelera aula; contexto explica fundo; notebook ensina ETL; roteiro guia prática; perguntas estimulam criatividade.
 
 \section{Entrega (Trabalho 1 --- 0,5 ponto na I unidade)}
 \begin{SolvedBox}
@@ -25,5 +198,36 @@ Nesta semana eu executo duas coisas em paralelo: (1) \textbf{avaliar} a entrega 
 \textbf{Critério:} clareza (Teste do Relance), coerência do recorte e conclusão ligada a decisão.
 \end{SolvedBox}
 
+\section{Apresentações e Interações (30 min)}
+Durante as apresentações, observem: o infográfico passa no "teste do relance" (entende-se em 5 segundos)? A Big Idea é acionável? Os bullets apoiam com evidências quantitativas? Perguntem: "Alguém teve dificuldade em conectar o dataset no Tableau?" ou "Como vocês escolheram as cores?"
+
+\begin{BoardBox}
+\textbf{Critérios de Avaliação do Trabalho 1}
+\begin{itemize}
+  \item \textbf{Clareza}: Visual limpo, cores adequadas, sem clutter (desordem).
+  \item \textbf{Coerência}: Recorte lógico do tema, dados relevantes.
+  \item \textbf{Decisão}: Big Idea leva a ação (ex.: "Aumentar investimento em X para melhorar Y").
+  \item \textbf{Técnico}: ETL real (ex.: fillna, drop duplicates), visualização correta.
+  \item \textbf{Perguntas para alunos}: "O que foi mais desafiador no ETL?" "Como o Tableau ajudou na Big Idea?"
+\end{itemize}
+\end{BoardBox}
+
+Se houver tempo, discutam: "Como o Tableau se compara ao Excel para visualização?" ou "Quais visualizações vocês acham mais impactantes?"
+
+\begin{BoardBox}
+\textbf{Troubleshooting Comum}
+\begin{itemize}
+  \item \textbf{Erro de conexão}: "Tableau não conecta ao CSV" $\to$ Verificar caminho absoluto, encoding='utf-8'.
+  \item \textbf{Dados não aparecem}: "Colunas em branco" $\to$ Usar df.info() no Jupyter para verificar tipos.
+  \item \textbf{Visualização errada}: "Gráfico não faz sentido" $\to$ Verificar Measures vs Dimensions (ex.: Idade como Dimension, Nota como Measure).
+  \item \textbf{Performance}: "Tableau lento" $\to$ Filtrar dados no ETL (ex.: df = df[df['Ano'] > 2020]).
+  \item \textbf{Cores}: "Paleta não combina" $\to$ Usar paletas acessíveis (ex.: colorblind-friendly).
+\end{itemize}
+\end{BoardBox}
+
+\textbf{Fechamento (10 min):} Revisem os aprendizados: ETL com Python (preparação de dados), conexão no Tableau (importação), visualizações básicas (gráficos interativos), storytelling (comunicação). Anunciem: "Próxima aula: Dashboards avançados e filtros." Peçam feedback: "O que gostaram mais?" (esperamos menções a interatividade); "O que melhorar?" (esperamos sugestões para mais prática). \textbf{Por que feedback?} Melhora aulas futuras; definido para avaliar engajamento e compreensão.
+
 \section{Próximo passo}
-Depois que os alunos apresentarem, eu conecto o que eles trouxeram com o conceito de \textbf{tabela retangular} e com o que vai cair na Prova I Unidade.
+Excelente aula! Agora conectem visualização com dados retangulares. Reflitam sobre storytelling para a Prova I Unidade. Até semana que vem!
+
+Na próxima aula, vamos aprofundar dados retangulares: tipos, ausências, duplicadas. Usem o que aprenderam hoje (ETL em Python, visualizações no Tableau) para preparar Trabalhos futuros. O objetivo final é dominar AED de ponta a ponta: da pergunta à decisão baseada em dados.

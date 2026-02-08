@@ -1,0 +1,449 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataBiases": "cr:dataBiases",
+    "dataCollection": "cr:dataCollection",
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isEnumeration": "cr:isEnumeration",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "personalSensitiveInformation": "cr:personalSensitiveInformation",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "wd": "https://www.wikidata.org/wiki/"
+  },
+  "alternateName": "Academic, Behavioral, Family, and School-Related Factors Affecting Exam Scores.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "license": {
+    "@type": "sc:CreativeWork",
+    "name": "CC0: Public Domain",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  "distribution": [
+    {
+      "contentUrl": "https://www.kaggle.com/api/v1/datasets/download/ayeshasiddiqa123/student-perfirmance?datasetVersionNumber=1",
+      "contentSize": "93.924 KB",
+      "md5": "UyaWhTVia/y7UzG5ewupdg==",
+      "encodingFormat": "application/zip",
+      "@id": "archive.zip",
+      "@type": "cr:FileObject",
+      "name": "archive.zip",
+      "description": "Archive containing all the contents of the Student Academic Performance Dataset. dataset"
+    },
+    {
+      "contentUrl": "StudentPerformanceFactors.csv",
+      "containedIn": {
+        "@id": "archive.zip"
+      },
+      "encodingFormat": "text/csv",
+      "@id": "StudentPerformanceFactors.csv_fileobject",
+      "@type": "cr:FileObject",
+      "name": "StudentPerformanceFactors.csv",
+      "description": "This file includes organized student-level data intended to investigate academic achievement and the variables that affect test scores. While the columns capture a variety of academic, behavioral, family, and school-related characteristics such study habits, attendance, motivation, resource access, parental participation, and learning environment, each row represents a single kid. The dataset is well-structured and appropriate for statistical analysis, machine learning tasks including regression and classification, and exploratory data analysis. Researchers and novices alike can simply use it to identify trends in student performance and create predictive models based on actual educational aspects."
+    }
+  ],
+  "recordSet": [
+    {
+      "field": [
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Hours_Studied"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Hours_Studied",
+          "@type": "cr:Field",
+          "name": "Hours_Studied",
+          "description": "Daily study hours"
+        },
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Attendance"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Attendance",
+          "@type": "cr:Field",
+          "name": "Attendance",
+          "description": "Class attendance percentageClass attendance percentage"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Parental_Involvement"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Parental_Involvement",
+          "@type": "cr:Field",
+          "name": "Parental_Involvement",
+          "description": "Parents’ academic support"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Access_to_Resources"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Access_to_Resources",
+          "@type": "cr:Field",
+          "name": "Access_to_Resources",
+          "description": "Learning resource availability"
+        },
+        {
+          "dataType": [
+            "sc:Boolean"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Extracurricular_Activities"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Extracurricular_Activities",
+          "@type": "cr:Field",
+          "name": "Extracurricular_Activities",
+          "description": "Participation in activities"
+        },
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Sleep_Hours"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Sleep_Hours",
+          "@type": "cr:Field",
+          "name": "Sleep_Hours",
+          "description": "Average sleep duration"
+        },
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Previous_Scores"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Previous_Scores",
+          "@type": "cr:Field",
+          "name": "Previous_Scores",
+          "description": "Past academic performance"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Motivation_Level"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Motivation_Level",
+          "@type": "cr:Field",
+          "name": "Motivation_Level",
+          "description": "Student motivation level"
+        },
+        {
+          "dataType": [
+            "sc:Boolean"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Internet_Access"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Internet_Access",
+          "@type": "cr:Field",
+          "name": "Internet_Access",
+          "description": "Internet availability status"
+        },
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Tutoring_Sessions"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Tutoring_Sessions",
+          "@type": "cr:Field",
+          "name": "Tutoring_Sessions",
+          "description": "Extra tutoring frequency"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Family_Income"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Family_Income",
+          "@type": "cr:Field",
+          "name": "Family_Income"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Teacher_Quality"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Teacher_Quality",
+          "@type": "cr:Field",
+          "name": "Teacher_Quality"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "School_Type"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/School_Type",
+          "@type": "cr:Field",
+          "name": "School_Type"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Peer_Influence"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Peer_Influence",
+          "@type": "cr:Field",
+          "name": "Peer_Influence"
+        },
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Physical_Activity"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Physical_Activity",
+          "@type": "cr:Field",
+          "name": "Physical_Activity"
+        },
+        {
+          "dataType": [
+            "sc:Boolean"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Learning_Disabilities"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Learning_Disabilities",
+          "@type": "cr:Field",
+          "name": "Learning_Disabilities"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Parental_Education_Level"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Parental_Education_Level",
+          "@type": "cr:Field",
+          "name": "Parental_Education_Level"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Distance_from_Home"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Distance_from_Home",
+          "@type": "cr:Field",
+          "name": "Distance_from_Home"
+        },
+        {
+          "dataType": [
+            "sc:Text"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Gender"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Gender",
+          "@type": "cr:Field",
+          "name": "Gender"
+        },
+        {
+          "dataType": [
+            "sc:Integer"
+          ],
+          "source": {
+            "fileObject": {
+              "@id": "StudentPerformanceFactors.csv_fileobject"
+            },
+            "extract": {
+              "column": "Exam_Score"
+            }
+          },
+          "@id": "StudentPerformanceFactors.csv/Exam_Score",
+          "@type": "cr:Field",
+          "name": "Exam_Score"
+        }
+      ],
+      "@id": "StudentPerformanceFactors.csv",
+      "@type": "cr:RecordSet",
+      "name": "StudentPerformanceFactors.csv",
+      "description": "This file includes organized student-level data intended to investigate academic achievement and the variables that affect test scores. While the columns capture a variety of academic, behavioral, family, and school-related characteristics such study habits, attendance, motivation, resource access, parental participation, and learning environment, each row represents a single kid. The dataset is well-structured and appropriate for statistical analysis, machine learning tasks including regression and classification, and exploratory data analysis. Researchers and novices alike can simply use it to identify trends in student performance and create predictive models based on actual educational aspects."
+    }
+  ],
+  "version": 1,
+  "keywords": [
+    "subject > people and society > education",
+    "technique > exploratory data analysis",
+    "technique > data visualization",
+    "technique > data analytics"
+  ],
+  "isAccessibleForFree": true,
+  "includedInDataCatalog": {
+    "@type": "sc:DataCatalog",
+    "name": "Kaggle",
+    "url": "https://www.kaggle.com"
+  },
+  "creator": {
+    "@type": "sc:Person",
+    "name": "A.",
+    "url": "/ayeshasiddiqa123",
+    "image": "https://storage.googleapis.com/kaggle-avatars/thumbnails/28446921-kg.jpg?t=2025-11-24-06-56-05"
+  },
+  "publisher": {
+    "@type": "sc:Organization",
+    "name": "Kaggle",
+    "url": "https://www.kaggle.com/organizations/kaggle",
+    "image": "https://storage.googleapis.com/kaggle-organizations/4/thumbnail.png"
+  },
+  "thumbnailUrl": "https://storage.googleapis.com/kaggle-datasets-images/9204547/14411823/b0276ae0adacd54e0c0953539469f297/dataset-card.jpg?t=2026-01-06-12-31-40",
+  "dateModified": "2026-01-06T12:08:32.54",
+  "datePublished": "2026-01-06T12:32:20.4052089",
+  "@type": "sc:Dataset",
+  "name": "Student Academic Performance Dataset.",
+  "url": "https://www.kaggle.com/datasets/ayeshasiddiqa123/student-perfirmance/versions/1",
+  "description": "# Context :\nThe purpose of this dataset is to examine the major variables that affect students' academic achievement, especially their test results. It focuses on how the educational environment, learning resources, family history, and individual behaviors all influence student results. The dataset is helpful for machine learning models, educational research, and data science initiatives that seek to comprehend academic achievement and spot trends in high and low performance. It is appropriate for exploratory data analysis and predictive modeling since it offers a realistic picture of student life and learning environments.\n\n# Content :\nStudents' study hours, attendance, motivation level, availability to learning resources, parental participation, teacher quality, peer influence, and family background are all included in the dataset. It also include environmental and lifestyle elements including internet availability, sleep patterns, and school type. The dataset can be utilized for performance prediction and educational insights because the goal variable represents students' exam scores. Together, these characteristics create a comprehensive dataset that can be used to analyze the various factors that influence academic attainment."
+}
