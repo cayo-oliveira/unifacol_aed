@@ -95,61 +95,378 @@ Executem e vejam o output. Isso é ETL prático!
 Para explorar, cliquem em "Sheet 1". Arrastem \texttt{Nota\_Exame} para Rows e vejam o histograma automático. Isso é AED visual: distribuição mostra concentração em 65-75, assimetria esquerda (notas baixas raras).
 
 \subsubsection{20:15--20:45: Visualizações Básicas}
-Agora, vamos criar gráficos. Python é ótimo para ETL, mas Tableau brilha em visualizações rápidas. Por exemplo, scatter plot: arrastem \texttt{Horas\_Estudadas} para Columns, \texttt{Nota\_Exame} para Rows. Adicionem cor por \texttt{Genero}. Vejam a tendência positiva!
+Agora, vamos criar gráficos guiados por perguntas estratégicas. A lógica é sempre a mesma: (1) definir a pergunta, (2) escolher o gráfico certo, (3) selecionar as colunas, (4) montar passo a passo no Tableau, (5) ler o resultado, (6) responder à pergunta com uma decisão. Vamos aplicar isso a 4 visualizações.
 
-Por que scatter plot? Mostra relação entre duas numéricas. Pontos dispersos indicam correlação (Horas\_Estudadas ~0.45 com Nota\_Exame). Cor por Gênero revela diferenças (mulheres vs. homens). Função: Analysis > Trend Lines > Linear adiciona linha de regressão, confirmando inclinação positiva. Objetivo: identificar fatores influentes visualmente.
+\bigskip
+\textbf{--- Visualização 1: Scatter Plot ---}
 
-Outro: bar chart para médias. Arrastem \texttt{Envolvimento\_Parental} para Columns, \texttt{Nota\_Exame} (média) para Rows. Ordenem decrescente.
+\begin{SolvedBox}
+\textbf{Pergunta estratégica 1:} ``Estudar mais horas realmente melhora a nota do exame?''
 
-Bar chart compara categorias. Média de Nota\_Exame por Envolvimento\_Parental mostra "Alto" com ~75, "Baixo" com ~65 – diferença de 10 pontos. Por que? Envolvimento parental afeta motivação. Função: Sort descending organiza visualmente. Objetivo: destacar disparidades categóricas.
+\textbf{Por que essa pergunta?} Se houver correlação positiva, a decisão é incentivar horas de estudo; se não houver, devemos investigar outros fatores.
 
-Lembrem: Tableau usa "prateleiras" (Rows/Columns) como eixos. Filtros globais permitem interatividade – arrastem campo para Filters, selecione valores. Por exemplo, filtre por Renda\_Familiar = "Baixo" para ver subgrupos.
+\textbf{Tipo de gráfico:} Scatter Plot (dispersão) --- ideal para ver relação entre duas variáveis numéricas.
+
+\textbf{Colunas usadas:} \texttt{Horas\_Estudadas} (eixo X), \texttt{Nota\_Exame} (eixo Y), \texttt{Genero} (cor).
+\end{SolvedBox}
+
+Passo a passo no Tableau:
+\begin{enumerate}
+  \item Cliquem em \textbf{Sheet 1} (aba inferior). Renomeiem para ``Scatter\_Horas\_vs\_Nota'' (duplo clique na aba).
+  \item No painel esquerdo, encontrem \texttt{Horas\_Estudadas} (em Measures). \textbf{Arrastem para Columns} (prateleira superior).
+  \item Encontrem \texttt{Nota\_Exame} (em Measures). \textbf{Arrastem para Rows} (prateleira lateral).
+  \item Resultado parcial: vocês verão um único ponto (Tableau agrega por padrão). Para ver todos os pontos, arrastem \texttt{Genero} para \textbf{Detail} no cartão Marks (painel central).
+  \item Agora arrastem \texttt{Genero} também para \textbf{Color} no cartão Marks. Os pontos ficarão coloridos por gênero.
+  \item Para adicionar linha de tendência: menu \textbf{Analysis > Trend Lines > Show Trend Lines}. Selecionem ``Linear''.
+  \item Opcional: cliquem com botão direito no eixo X > \textbf{Edit Axis} > Title: ``Horas Estudadas''. Façam o mesmo no eixo Y.
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Leitura do resultado:} Olhem o gráfico. Os pontos sobem da esquerda para a direita? Se sim, a correlação é positiva. A linha de tendência confirma: inclinação para cima = mais horas $\to$ melhores notas. A correlação esperada é ~0.45 (moderada positiva). Notem que os pontos masculinos e femininos seguem padrão semelhante.
+
+\textbf{Resposta à pergunta:} \textbf{SIM}, estudar mais horas melhora a nota, mas a relação é moderada (não perfeita). Há outros fatores em jogo. \textbf{Decisão:} Incentivar horas de estudo, mas investigar fatores complementares.
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Visualização 2: Bar Chart ---}
+
+\begin{SolvedBox}
+\textbf{Pergunta estratégica 2:} ``O envolvimento dos pais faz diferença nas notas?''
+
+\textbf{Por que essa pergunta?} Se pais mais envolvidos = notas maiores, a decisão é criar programas de engajamento parental na escola.
+
+\textbf{Tipo de gráfico:} Bar Chart (barras) --- ideal para comparar médias entre categorias.
+
+\textbf{Colunas usadas:} \texttt{Envolvimento\_Parental} (eixo X, Dimension), \texttt{Nota\_Exame} (eixo Y, Measure, agregação: Average).
+\end{SolvedBox}
+
+Passo a passo no Tableau:
+\begin{enumerate}
+  \item Criem nova sheet: cliquem no ícone ``+'' (aba inferior). Renomeiem para ``Bar\_Envolvimento''.
+  \item Arrastem \texttt{Envolvimento\_Parental} (Dimensions) para \textbf{Columns}.
+  \item Arrastem \texttt{Nota\_Exame} (Measures) para \textbf{Rows}. O Tableau calcula SUM por padrão.
+  \item \textbf{Mudem a agregação:} cliquem com botão direito em \texttt{Nota\_Exame} na prateleira Rows > \textbf{Measure} > \textbf{Average}. Agora mostra a média.
+  \item \textbf{Ordenem:} cliquem no ícone de ordenação decrescente na toolbar (seta para baixo). As barras ficarão do maior para o menor.
+  \item \textbf{Adicionem rótulos:} arrastem \texttt{Nota\_Exame} para \textbf{Label} no cartão Marks. Agora cada barra mostra o valor.
+  \item \textbf{Cor:} arrastem \texttt{Envolvimento\_Parental} para \textbf{Color} para diferenciar visualmente.
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Leitura do resultado:} Comparem as barras. ``Alto'' mostra média ~75, ``Médio'' ~70, ``Baixo'' ~65. Diferença de 10 pontos entre extremos. Isso é significativo: 10 pontos pode ser a diferença entre aprovação e reprovação.
+
+\textbf{Resposta à pergunta:} \textbf{SIM}, envolvimento parental alto está associado a notas 15\% maiores. \textbf{Decisão:} Criar programas de reuniões escola-família e acompanhamento parental.
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Visualização 3: Histograma ---}
+
+\begin{SolvedBox}
+\textbf{Pergunta estratégica 3:} ``Como as notas estão distribuídas? Há muitos alunos reprovando?''
+
+\textbf{Por que essa pergunta?} Se a distribuição mostra concentração em notas baixas, a decisão é reforço escolar urgente.
+
+\textbf{Tipo de gráfico:} Histograma --- ideal para ver distribuição de uma variável numérica.
+
+\textbf{Colunas usadas:} \texttt{Nota\_Exame} (eixo X, bins automáticos), contagem (eixo Y).
+\end{SolvedBox}
+
+Passo a passo no Tableau:
+\begin{enumerate}
+  \item Nova sheet > renomeiem para ``Histograma\_Notas''.
+  \item Arrastem \texttt{Nota\_Exame} para \textbf{Columns}.
+  \item No cartão Marks, selecionem o menu ``Automatic'' e troquem para \textbf{Bar} (ícone de barras).
+  \item Cliquem com botão direito em \texttt{Nota\_Exame} na prateleira Columns > \textbf{Create Bins...} > Tamanho: \textbf{5}. Cliquem OK.
+  \item Agora arrastem a nova pill ``Nota\_Exame (bin)'' para substituir a original em Columns.
+  \item O eixo Y (contagem) aparece automaticamente como \texttt{CNT(Nota\_Exame)}.
+  \item \textbf{Cor por desempenho:} arrastem \texttt{Categoria\_Desempenho} para \textbf{Color}. Vermelhos (Baixo), amarelos (Médio), verdes (Alto).
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Leitura do resultado:} A distribuição concentra-se entre 65--75 (maioria dos alunos). A cauda esquerda (notas <55) é pequena mas preocupante. A cor mostra que ``Baixo'' (vermelho) domina abaixo de 65.
+
+\textbf{Resposta à pergunta:} A maioria está na faixa média. Cerca de 25\% estão abaixo de 65 (Baixo). \textbf{Decisão:} Reforço escolar direcionado ao quartil inferior.
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Visualização 4: Box Plot ---}
+
+\begin{SolvedBox}
+\textbf{Pergunta estratégica 4:} ``A frequência às aulas impacta as notas? Há outliers?''
+
+\textbf{Por que essa pergunta?} Se alunos com alta frequência têm notas consistentemente maiores, a decisão é política de presença obrigatória.
+
+\textbf{Tipo de gráfico:} Box Plot --- ideal para ver mediana, quartis e outliers por categoria.
+
+\textbf{Colunas usadas:} \texttt{Faixa\_Frequencia} (eixo X, Dimension), \texttt{Nota\_Exame} (eixo Y, desagregado).
+\end{SolvedBox}
+
+Passo a passo no Tableau:
+\begin{enumerate}
+  \item Nova sheet > renomeiem para ``BoxPlot\_Frequencia''.
+  \item Arrastem \texttt{Faixa\_Frequencia} para \textbf{Columns}.
+  \item Arrastem \texttt{Nota\_Exame} para \textbf{Rows}.
+  \item No cartão Marks, troquem ``Automatic'' para \textbf{Circle} (círculos).
+  \item Menu \textbf{Analysis > Add Reference Line > Box Plot}. Configurem: mediana, quartis, whiskers 1.5×IQR.
+  \item Arrastem \texttt{Faixa\_Frequencia} para \textbf{Color} para diferenciar.
+  \item Observem os outliers (pontos fora dos whiskers): alunos com frequência alta mas notas baixas --- o que está acontecendo com eles?
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Leitura do resultado:} A mediana sobe conforme a frequência aumenta: ``Baixa'' ~60, ``Média'' ~68, ``Alta'' ~75. Os outliers em ``Alta'' (alunos presentes mas com notas baixas) podem indicar dificuldades de aprendizagem que presença sozinha não resolve.
+
+\textbf{Resposta à pergunta:} \textbf{SIM}, frequência impacta fortemente (correlação ~0.58). Mas outliers revelam que presença é necessária, não suficiente. \textbf{Decisão:} Política de presença + tutoria para alunos com notas abaixo da mediana.
+\end{SolvedBox}
+
+Perguntem aos alunos: ``Qual dos 4 gráficos responde melhor à pergunta 'O que fazer para melhorar notas?'{}''. Esperamos debate: scatter mostra relação individual, bar mostra categorias, histograma mostra distribuição, box plot mostra dispersão. Juntos, contam a história completa.
 
 \begin{BoardBox}
-\textbf{Funções do Tableau em Visualizações}
-\begin{itemize}
-  \item \textbf{Scatter Plot}: Relações numéricas; tendência linear (correlação). \textbf{Por que ideal?} Mostra dispersão e inclinação (ex.: Horas\_Estudadas vs. Nota). \textbf{Alternativas:} Line chart (tendência temporal), heatmap (correlações múltiplas). \textbf{Objetivo:} Identificar fatores influentes; esperamos respostas como "Correlação positiva forte".
-  \item \textbf{Bar Chart}: Comparações categóricas; médias/somas. \textbf{Por que ideal?} Facilita ranking (ex.: Envolvimento\_Parental alto = notas maiores). \textbf{Alternativas:} Pie chart (proporções), stacked bar (subcategorias). \textbf{Objetivo:} Destacar disparidades; esperamos "Diferença de 10 pontos justifica foco".
-  \item \textbf{Filtros}: Interatividade; seleciona subconjuntos (ex.: Genero = "Masculino"). \textbf{Por que?} Exploração dinâmica sem recriar gráficos. \textbf{Alternativas:} Parameters (controles fixos), actions (drill-down). \textbf{Objetivo:} Personalizar insights; esperamos alunos descobrirem subgrupos.
-  \item \textbf{Objetivo final}: Responder perguntas (ex.: "Gênero afeta notas?"). \textbf{Por que AED visual?} Padrões emergem em gráficos; combina teoria com prática.
-\end{itemize}
+\textbf{Resumo: Pergunta $\to$ Gráfico $\to$ Colunas $\to$ Resposta}
+\begin{enumerate}
+  \item ``Mais horas = melhores notas?'' $\to$ Scatter Plot $\to$ \texttt{Horas\_Estudadas} × \texttt{Nota\_Exame}, cor \texttt{Genero} $\to$ SIM, correlação ~0.45. Decisão: incentivar estudo.
+  \item ``Pais envolvidos = notas maiores?'' $\to$ Bar Chart $\to$ \texttt{Envolvimento\_Parental} × avg(\texttt{Nota\_Exame}) $\to$ SIM, +10 pontos. Decisão: engajamento parental.
+  \item ``Quantos alunos reprovam?'' $\to$ Histograma $\to$ \texttt{Nota\_Exame} (bins=5), cor \texttt{Categoria\_Desempenho} $\to$ ~25\% abaixo de 65. Decisão: reforço escolar.
+  \item ``Frequência impacta?'' $\to$ Box Plot $\to$ \texttt{Faixa\_Frequencia} × \texttt{Nota\_Exame} $\to$ SIM, +15 pontos mediana. Decisão: política de presença + tutoria.
+\end{enumerate}
 \end{BoardBox}
 
 \subsubsection{20:45--21:15: Dashboards Interativos}
-Dashboards combinam múltiplas visualizações. Criem uma nova sheet para KPIs: média de \texttt{Nota\_Exame} (use Measure Names/Values).
 
-Depois, no Dashboard, arrastem sheets. Adicionem filtros: por \texttt{Renda\_Familiar} ou \texttt{Tipo\_Escola}.
+\begin{SolvedBox}
+\textbf{Pergunta estratégica do dashboard:} ``Quais subgrupos de alunos precisam de intervenção urgente, e quais fatores priorizar?''
 
-Passos detalhados: 1. Criem sheet "KPIs" – arrastem Nota\_Exame para Text, selecione Average. 2. Sheet "Scatter" – como antes. 3. Sheet "Bar" – Envolvimento\_Parental vs. média Nota. 4. Novo Dashboard – arrastem sheets para layout (topo KPIs, centro gráficos). 5. Adicionem filtro: arrastem Genero para Filters no dashboard.
+\textbf{Por que essa pergunta?} Um dashboard integra as 4 visualizações que fizemos. Ao filtrar por subgrupo (renda, gênero, escola), o educador identifica QUEM precisa de ajuda e POR QUÊ. Isso é AED aplicada: de dados a decisão.
 
-Por que dashboards? Integram insights: KPIs mostram overview (média 67.7, aprovação >70: 60\%); gráficos detalham. Filtros permitem exploração (ex.: só alunos de renda baixa). Função: interatividade dinâmica, sem recriar gráficos. Objetivo final: painel acionável para educadores (ex.: "Focar em frequência baixa").
+\textbf{Objetivo:} Criar um painel único que responda: qual a média geral? quem está abaixo? o que influencia? como agir?
+\end{SolvedBox}
+
+Vamos montar o dashboard em 5 etapas. Cada etapa cria uma peça do painel final.
+
+\bigskip
+\textbf{Etapa 1 --- Sheet ``KPIs'' (indicadores-chave)}
+
+\textbf{O que mostrar:} Média geral de Nota\_Exame, total de alunos, taxa de aprovação (>70).
+
+\textbf{Colunas:} \texttt{Nota\_Exame} (Average, Count), campo calculado para aprovação.
+
+Passo a passo:
+\begin{enumerate}
+  \item Nova sheet > renomeiem para ``KPIs''.
+  \item Arrastem \texttt{Measure Names} para \textbf{Columns}.
+  \item Arrastem \texttt{Measure Values} para \textbf{Rows} (ou Text).
+  \item Filtrem Measure Names: mantenham apenas \texttt{Nota\_Exame}.
+  \item Cliquem em \texttt{Nota\_Exame} no cartão Measure Values > \textbf{Average}. Resultado esperado: \textbf{67.7}.
+  \item Para total de alunos: arrastem \texttt{Nota\_Exame} novamente para Measure Values > \textbf{Count}. Resultado: \textbf{6607}.
+  \item Para taxa de aprovação: menu \textbf{Analysis > Create Calculated Field}: nome ``Taxa\_Aprovacao'', fórmula: \texttt{COUNTD(IF [Nota\_Exame]>70 THEN [Nota\_Exame] END) / COUNTD([Nota\_Exame])}. Arrastem para Measure Values, formatem como porcentagem.
+  \item No cartão Marks, troquem para \textbf{Text}. Aumentem a fonte para 36pt (formatem como ``Big Numbers'').
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{O que os KPIs dizem:} Média 67.7 (abaixo de 70 = alerta). 6607 alunos na amostra. ~60\% aprovam (>70). Ou seja: \textbf{40\% dos alunos estão em risco.} Essa é a motivação do dashboard: encontrar o que ajuda esses 40\%.
+\end{SolvedBox}
+
+\bigskip
+\textbf{Etapa 2 --- Reusar as sheets anteriores}
+
+Já temos 4 sheets criadas na seção anterior:
+\begin{itemize}
+  \item ``Scatter\_Horas\_vs\_Nota'' --- responde: horas de estudo melhoram notas?
+  \item ``Bar\_Envolvimento'' --- responde: envolvimento parental faz diferença?
+  \item ``Histograma\_Notas'' --- responde: como as notas estão distribuídas?
+  \item ``BoxPlot\_Frequencia'' --- responde: frequência impacta notas?
+\end{itemize}
+
+Não precisamos refazê-las. Vamos usá-las diretamente no dashboard.
+
+\bigskip
+\textbf{Etapa 3 --- Montar o Dashboard (layout)}
+
+Passo a passo:
+\begin{enumerate}
+  \item Cliquem no ícone \textbf{``New Dashboard''} (aba inferior, ícone de grade).
+  \item Renomeiem para ``Dashboard\_Desempenho\_Academico''.
+  \item No painel esquerdo, vejam as sheets disponíveis. Configurem o tamanho: \textbf{Size > Automatic} (se adapta à tela).
+  \item \textbf{Topo:} Arrastem ``KPIs'' para a parte superior. Redimensionem para ocupar ~15\% da altura.
+  \item \textbf{Centro-esquerda:} Arrastem ``Scatter\_Horas\_vs\_Nota'' abaixo dos KPIs, lado esquerdo (~50\% da largura).
+  \item \textbf{Centro-direita:} Arrastem ``Bar\_Envolvimento'' ao lado do scatter (~50\% da largura).
+  \item \textbf{Base-esquerda:} Arrastem ``Histograma\_Notas'' abaixo do scatter.
+  \item \textbf{Base-direita:} Arrastem ``BoxPlot\_Frequencia'' abaixo do bar chart.
+  \item \textbf{Título:} Duplo clique no topo > ``Painel de Desempenho Acadêmico -- AED Unifacol''.
+\end{enumerate}
+
+\bigskip
+\textbf{Etapa 4 --- Adicionar filtros interativos}
+
+Agora, o mais poderoso: filtros que atualizam TODOS os gráficos simultaneamente.
+
+Passo a passo:
+\begin{enumerate}
+  \item No painel esquerdo do dashboard, arrastem \texttt{Genero} para uma área vazia > \textbf{Add as Filter}.
+  \item Repitam com \texttt{Renda\_Familiar} e \texttt{Tipo\_Escola}.
+  \item Para que o filtro afete todas as sheets: cliquem na seta do filtro > \textbf{Apply to Worksheets > All Using This Data Source}.
+  \item Posicionem os filtros no canto direito ou topo do dashboard.
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Interação guiada --- Experimentem agora (façam junto comigo):}
+
+\textbf{Filtro 1 --- Renda\_Familiar = ``Baixo'':} Selecionem apenas ``Baixo'' no filtro. O que muda?
+\begin{itemize}
+  \item KPIs: média cai de 67.7 para ~62. Taxa de aprovação cai para ~45\%.
+  \item Scatter: pontos se concentram mais embaixo.
+  \item Bar: envolvimento parental ``Alto'' fica raro neste grupo.
+  \item \textbf{Insight:} Alunos de renda baixa têm média 8\% menor. \textbf{Decisão:} Programas de apoio financeiro + tutoria.
+\end{itemize}
+
+\textbf{Filtro 2 --- Genero = ``Feminino'':} Limpem o filtro anterior. Selecionem ``Feminino''.
+\begin{itemize}
+  \item KPIs: média sobe ligeiramente (~69).
+  \item Box Plot: mediana feminina mais alta em todas as faixas de frequência.
+  \item \textbf{Insight:} Meninas têm desempenho marginalmente melhor. \textbf{Decisão:} Investigar fatores como motivação e hábitos de estudo.
+\end{itemize}
+
+\textbf{Filtro 3 --- Tipo\_Escola = ``Pública'' + Renda = ``Baixo'':} Combinem dois filtros.
+\begin{itemize}
+  \item KPIs: média cai para ~58. Aprovação ~35\%.
+  \item \textbf{Insight:} Este é o subgrupo mais vulnerável. \textbf{Decisão:} Prioridade máxima para intervenção.
+\end{itemize}
+\end{SolvedBox}
+
+\bigskip
+\textbf{Etapa 5 --- Ações de drill-down (opcional avançado)}
+
+Para tornar o dashboard ainda mais interativo:
+\begin{enumerate}
+  \item Menu \textbf{Dashboard > Actions > Add Action > Filter}.
+  \item Source: ``Bar\_Envolvimento''. Target: todas as sheets.
+  \item Agora, ao clicar em uma barra (ex.: ``Alto''), todos os gráficos filtram automaticamente para mostrar apenas alunos com envolvimento alto.
+\end{enumerate}
 
 \begin{BoardBox}
-\textbf{Estrutura do dashboard}
+\textbf{Estrutura final do dashboard}
 \begin{itemize}
-  \item Topo: KPIs (média Nota\_Exame, taxa aprovação >70). \textbf{Por que?} Overview rápido. \textbf{Alternativas:} Gauges (metas), text boxes (resumos).
-  \item Centro: Scatter plot + bar chart. \textbf{Por que ideal?} Combina relações e comparações. \textbf{Alternativas:} Mapas (geografia), treemaps (hierarquias).
-  \item Baixo: Tabela dinâmica com médias por grupo. \textbf{Por que?} Detalhes granulares. \textbf{Alternativas:} Crosstabs (pivot), heatmaps (matrizes).
-  \item Filtros: Gênero, Renda. \textbf{Por que?} Interatividade para exploração. \textbf{Alternativas:} Hierarchies (drill-up/down), sets (grupos dinâmicos).
-  \item \textbf{Funções}: Layout floating/tiled; actions para drill-down. \textbf{Objetivo:} Painel acionável; esperamos alunos criando dashboards próprios para perguntas educacionais.
+  \item \textbf{Topo:} KPIs --- Média (67.7), Total (6607), Aprovação (60\%). \textbf{Função:} Overview instantâneo para educador.
+  \item \textbf{Centro-esquerda:} Scatter Plot (Horas × Nota). \textbf{Função:} Responde ``estudo ajuda?''.
+  \item \textbf{Centro-direita:} Bar Chart (Envolvimento × Nota). \textbf{Função:} Responde ``pais importam?''.
+  \item \textbf{Base-esquerda:} Histograma (distribuição de notas). \textbf{Função:} Responde ``quantos reprovam?''.
+  \item \textbf{Base-direita:} Box Plot (Frequência × Nota). \textbf{Função:} Responde ``presença importa?''.
+  \item \textbf{Filtros:} Gênero, Renda, Tipo\_Escola. \textbf{Função:} Segmenta para encontrar subgrupos vulneráveis.
+  \item \textbf{Actions:} Clicar em barra filtra tudo. \textbf{Função:} Drill-down sem sair do painel.
 \end{itemize}
+\textbf{Objetivo final:} Educador abre o dashboard, filtra por escola dele, identifica subgrupo em risco, toma decisão (tutoria, apoio parental, presença).
 \end{BoardBox}
 
 \subsubsection{21:15--21:30: Storytelling}
-Storytelling transforma dados em narrativa. Criem uma Story: "Da frequência à excelência". Adicionem anotações como "Alunos com frequência >80 têm notas 15\% maiores".
 
-Passos: 1. Criem Story no menu. 2. Adicionem sheets (ex.: histograma, scatter). 3. Texto: "Introdução: Distribuição de notas". 4. "Análise: Correlação com frequência". 5. "Conclusão: Incentivar presença".
+\begin{SolvedBox}
+\textbf{Pergunta estratégica do storytelling:} ``Como comunicar a um diretor de escola que frequência é o fator mais importante para melhorar notas --- e convencê-lo a agir?''
 
-Por que storytelling? Dados sozinhos não convencem; narrativa guia o público. Função: captions, arrows, highlights. Objetivo final: comunicar decisão (ex.: política de presença escolar).
+\textbf{Por que storytelling?} Dados sozinhos não convencem. Um dashboard mostra informação, mas uma story guia o público por uma narrativa: contexto $\to$ problema $\to$ evidência $\to$ decisão. É assim que dados viram política educacional.
+
+\textbf{Big Idea da nossa story:} ``Frequência é a chave: alunos com presença acima de 80\% têm notas 15\% maiores --- investir em controle de presença é a ação mais eficaz.''
+\end{SolvedBox}
+
+Vamos criar uma Story completa com 5 Story Points. Cada ponto responde a uma pergunta e avança a narrativa.
+
+Passo a passo inicial:
+\begin{enumerate}
+  \item Cliquem no ícone \textbf{``New Story''} (aba inferior, ícone de livro).
+  \item Renomeiem para ``Da Frequência à Excelência''.
+  \item No painel esquerdo, vocês verão as sheets e dashboards disponíveis.
+\end{enumerate}
+
+\bigskip
+\textbf{--- Story Point 1: ``O Panorama'' ---}
+
+\textbf{Pergunta:} ``Como estão as notas dos nossos alunos?''
+
+Passo a passo:
+\begin{enumerate}
+  \item Arrastem a sheet ``Histograma\_Notas'' para a área central do Story.
+  \item Na caixa de texto (caption) acima, escrevam: \textbf{``Panorama: A maioria dos 6607 alunos tem notas entre 65-75. Cerca de 25\% estão abaixo de 65 (em risco).''}
+  \item Cliquem em \textbf{Add Annotation > Area} e destaquem a região vermelha (<65) com texto: ``Zona de risco: 1 em cada 4 alunos.''
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Narrativa para o diretor:} ``Diretor, veja esta distribuição. A média é 67.7, mas o problema real está aqui (apontar região vermelha): 25\% dos alunos estão abaixo do mínimo. Precisamos investigar por quê.''
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Story Point 2: ``O Fator Determinante'' ---}
+
+\textbf{Pergunta:} ``O que mais influencia as notas?''
+
+Passo a passo:
+\begin{enumerate}
+  \item Cliquem em \textbf{``Blank''} (novo Story Point).
+  \item Arrastem a sheet ``BoxPlot\_Frequencia''.
+  \item Caption: \textbf{``A frequência é o fator mais forte: correlação de 0.58 com a nota. Alunos com presença alta têm mediana 15 pontos acima.''}
+  \item Annotation com seta: apontem para a diferença entre medianas de ``Baixa'' e ``Alta''.
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Narrativa:} ``Investigamos todos os fatores. E olhe o que encontramos: frequência é o mais forte. Veja a diferença: alunos que vêm às aulas regularmente (>80\%) têm mediana de 75. Os que faltam muito? 60. São 15 pontos de diferença.''
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Story Point 3: ``Confirmando com Outra Perspectiva'' ---}
+
+\textbf{Pergunta:} ``Essa relação se mantém quando olhamos horas de estudo?''
+
+Passo a passo:
+\begin{enumerate}
+  \item Novo Story Point > arrastem ``Scatter\_Horas\_vs\_Nota''.
+  \item Caption: \textbf{``Horas de estudo também importam (correlação 0.45), mas a frequência é mais forte. Alunos frequentes que estudam mais têm os melhores resultados.''}
+  \item Annotation: destaquem o cluster superior-direito (alta hora + alta nota).
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Narrativa:} ``Horas de estudo ajudam, sim, mas sozinhas não bastam. Vejam que a dispersão é grande. Agora, quando combinamos presença alta com estudo, aí temos os melhores resultados (apontar cluster). A presença é a base.''
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Story Point 4: ``Os Grupos Vulneráveis'' ---}
+
+\textbf{Pergunta:} ``Quem são os alunos que mais precisam de ajuda?''
+
+Passo a passo:
+\begin{enumerate}
+  \item Novo Story Point > arrastem o ``Dashboard\_Desempenho\_Academico''.
+  \item \textbf{Apliquem filtro:} Renda\_Familiar = ``Baixo'', Tipo\_Escola = ``Pública''.
+  \item Caption: \textbf{``O subgrupo mais vulnerável: alunos de escola pública e renda baixa. Média de 58, aprovação de apenas 35\%. Frequência é ainda mais baixa neste grupo.''}
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Narrativa:} ``Agora, quem são esses alunos em risco? Filtramos por escola pública e renda baixa. Olhe os números: média 58, só 35\% aprovam. E a frequência deles é a mais baixa. É um ciclo: renda baixa $\to$ dificuldade de transporte $\to$ faltam mais $\to$ notas caem.''
+\end{SolvedBox}
+
+\bigskip
+\textbf{--- Story Point 5: ``A Decisão'' ---}
+
+\textbf{Pergunta:} ``O que fazer com esses dados?''
+
+Passo a passo:
+\begin{enumerate}
+  \item Novo Story Point > arrastem ``Bar\_Envolvimento'' com filtro Renda=Baixo.
+  \item Caption: \textbf{``Recomendação: (1) Programa de auxílio transporte para aumentar frequência em escolas públicas; (2) Engajamento parental para famílias de baixa renda; (3) Tutoria focada no quartil inferior.''}
+  \item Adicionem caixa de texto (\textbf{Drag > Text}) com a Big Idea final em destaque.
+\end{enumerate}
+
+\begin{SolvedBox}
+\textbf{Narrativa final:} ``Diretor, os dados mostram claramente: frequência é a alavanca. Para os alunos de renda baixa, a barreira é prática --- transporte, alimentação. Minha recomendação: (1) auxílio transporte, que pode aumentar presença em 20\%; (2) reuniões trimestrais com pais, que associamos a +10 pontos na nota; (3) tutoria após aula para o quartil inferior. Com essas 3 ações, projetamos melhoria de 15\% na taxa de aprovação.''
+\end{SolvedBox}
+
+Perguntem aos alunos: ``Vocês perceberam como a story guiou o diretor de 'temos um problema' até 'eis a solução'? Cada Story Point respondeu uma pergunta e avançou a narrativa. Isso é storytelling com dados.''
 
 \begin{BoardBox}
-\textbf{Elementos de storytelling}
-\begin{itemize}
-  \item Título: Big Idea (ex.: Frequência é chave para desempenho). \textbf{Por que?} Resume insight principal. \textbf{Alternativas:} Subtítulos (contextos), bullets (evidências).
-  \item Bullets: Evidências com gráficos. \textbf{Por que ideal?} Apoia Big Idea com dados. \textbf{Alternativas:} Annotations (setas), highlights (cores).
-  \item Conclusão: Decisão (ex.: Incentivar presença). \textbf{Por que?} Liga dados a ação. \textbf{Alternativas:} Calls to action (botões), summaries (resumos).
-  \item \textbf{Funções}: Navigator para fluxo; annotations para explicações. \textbf{Objetivo:} Narrativa convincente; esperamos alunos comunicando decisões educacionais.
-\end{itemize}
+\textbf{Estrutura da Story: 5 Story Points}
+\begin{enumerate}
+  \item \textbf{Panorama:} Histograma --- ``Como estão as notas?'' $\to$ 25\% em risco.
+  \item \textbf{Fator principal:} Box Plot --- ``O que mais influencia?'' $\to$ Frequência (r=0.58).
+  \item \textbf{Confirmação:} Scatter Plot --- ``Horas de estudo confirmam?'' $\to$ Sim, mas frequência é mais forte.
+  \item \textbf{Vulneráveis:} Dashboard filtrado --- ``Quem precisa de ajuda?'' $\to$ Escola pública + renda baixa.
+  \item \textbf{Decisão:} Bar Chart + texto --- ``O que fazer?'' $\to$ Transporte + pais + tutoria.
+\end{enumerate}
+\textbf{Big Idea:} ``Frequência é a chave --- investir em presença é a ação mais eficaz para melhorar desempenho acadêmico.''
 \end{BoardBox}
 
 \subsection{21:30--22:00: Atividades Práticas e Discussão}
