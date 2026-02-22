@@ -341,14 +341,47 @@ SELECT cidade, COUNT(*) AS qtd
 FROM alunos
 GROUP BY cidade;
 \end{lstlisting}
-
-\subsection*{Integração e Visualização}
-\begin{lstlisting}[language=SQL,caption={Junções entre tabelas}]
--- Join entre duas tabelas
-SELECT a.nome, a.idade, c.curso
-FROM alunos a
-JOIN cursos c ON a.id = c.aluno_id;
-\end{lstlisting}
 \end{appendices}
+
+\section*{Questões de Fixação}
+
+\begin{SolvedBox}[title=Questão de Fixação 1 - ETL e Qualidade de Dados]
+\textbf{Questão:} Uma consultoria recebeu um arquivo CSV com 38.921 registros e 12 colunas sobre atendimentos em postos de saúde. Antes de qualquer análise, eles precisam documentar o significado de cada coluna, tipos de dados e valores esperados. Qual documento deve ser criado?
+
+A) Dicionário de dados  
+B) Relatório de outliers  
+C) Dashboard executivo  
+D) Matriz de correlação  
+E) Histograma de frequências
+
+\textbf{Resposta:} \textbf{A}  
+\textbf{Explicação:} O dicionário de dados documenta cada coluna, essencial para AED e qualidade de dados.
+\end{SolvedBox}
+
+\begin{SolvedBox}[title=Questão de Fixação 2 - Qualidade de Dados]
+\textbf{Questão:} Um dataset de 38.921 registros tem problemas: coluna "salário" com valores "5000", "cinco mil" e NULL; coluna "email" com 18\% vazios. Quais tipos de problemas?
+
+A) Tipos inconsistentes e dados ausentes  
+B) Apenas outliers  
+C) Apenas dados duplicados  
+D) Dados ausentes e correlação  
+E) Histograma incorreto
+
+\textbf{Resposta:} \textbf{A}  
+\textbf{Explicação:} Tipos inconsistentes (formato variável) e dados ausentes (NULL e vazios) são problemas comuns de qualidade.
+\end{SolvedBox}
+
+\begin{SolvedBox}[title=Questão de Fixação 3 - Dicionário de Dados]
+\textbf{Questão:} Uma empresa precisa documentar colunas de um dataset. Qual documento descreve significado, tipo e domínio de cada coluna?
+
+A) Dicionário de dados  
+B) Relatório financeiro  
+C) Dashboard interativo  
+D) Matriz estatística  
+E) Gráfico de barras
+
+\textbf{Resposta:} \textbf{A}  
+\textbf{Explicação:} O dicionário de dados é fundamental para entender e validar a estrutura dos dados antes da análise.
+\end{SolvedBox}
 
 
