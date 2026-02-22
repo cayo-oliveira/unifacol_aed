@@ -1,12 +1,400 @@
-\chapter{Semana 06 (16/03--18/03) --- Trabalho 3 + Correlação}
+% =============================================================================
+% Semana 06 — Trabalho 3 + Correlação: Pearson, Scatter e Causalidade
+% Aula de 3 horas (19h–22h) | 18/03/2026
+% =============================================================================
 
-\section{Ritmo da aula}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Até 1h}: apresentações do Trabalho 3.
-  \item \textbf{Restante}: correlação, scatter, leitura sem causalidade.
+\chapter{Semana 06 (18/03/2026) — Correlação, Scatter e Causalidade}
+
+% ---------------------------------------------------------------------------
+\section{Objetivo da semana}
+% ---------------------------------------------------------------------------
+
+Pessoal, até aqui analisamos \emph{uma variável de cada vez} (análise
+univariada). Hoje damos um passo fundamental: vamos olhar para \textbf{dois
+atributos numéricos ao mesmo tempo} e perguntar — eles se movem juntos?
+Quando as vendas sobem, o tempo de entrega também sobe? À medida que o
+salário aumenta, a satisfação aumenta?
+
+Essa é a análise bivariada, e a ferramenta central é o \textbf{coeficiente
+de correlação de Pearson}. E vou adiantar a lição mais importante da aula:
+\textbf{correlação não é causalidade} — e confundir os dois já causou
+bilhões de reais em decisões erradas.
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–20h — \textbf{Apresentações:} Trabalho 3 (diagnóstico de dataset)
+  \item 20h–20h30 — \textbf{TEORIA:} Scatter plot — ler padrões, clusters e outliers visuais
+  \item 20h30–21h — \textbf{TEORIA:} Correlação de Pearson — fórmula, escala e interpretação
+  \item 21h–21h20 — \textbf{TEORIA:} Correlação $\neq$ Causalidade + exemplos clássicos
+  \item 21h20–21h45 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2
+  \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL}
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Leitura base:} Cap.\ 03 (Correlação) + Introdução ao Cap.\ 04 (scatter).
+Livro: \textit{Estatística Prática para Cientistas de Dados} (Bruce).
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Apresentações: Trabalho 3 (19h–20h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Checklist de avaliação T3 — Diagnóstico de dataset:}
+\begin{tabular}{|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Ponto} & \textbf{O que observar} \\
+\hline
+Dataset adequado & $\geq 50$ linhas, $\geq 3$ colunas numéricas \\
+Medidas de posição & Calculadas para todas as colunas numéricas \\
+Medidas de dispersão & DP + IQR + identificação de outliers por Tukey \\
+Missing tratado & Estratégia documentada (remover, imputar, flag) \\
+Vizualizações & Boxplot + histograma com interpretação \\
+Big Idea & 1 frase com dado, significado e decisão \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte II — Teoria: Correlação (20h–21h20)}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+\subsection{20h–20h30: Scatter Plot — lendo o gráfico de dispersão}
+% ---------------------------------------------------------------------------
+
+\begin{BoardBox}
+\textbf{O que é o scatter plot (para o quadro)}
+
+O scatter plot (gráfico de dispersão) coloca dois atributos nos eixos —
+X e Y — e plota cada observação como um ponto. O padrão visual dos pontos
+revela a relação entre as variáveis.
+
+\textbf{O que observar em um scatter plot:}
+\begin{itemize}
+  \item \textbf{Direção:} os pontos sobem da esquerda para a direita?
+  (relação positiva) Ou descem? (relação negativa) Não há padrão? (sem relação)
+  \item \textbf{Intensidade:} os pontos estão concentrados ao longo de uma
+  linha imaginária (forte) ou espalhados aleatoriamente (fraca)?
+  \item \textbf{Forma:} é linear? Curvilínea (ex.: crescimento exponencial)?
+  \item \textbf{Clusters:} há grupos distintos de pontos? (indicativo de subgrupos)
+  \item \textbf{Outliers:} pontos muito afastados do padrão geral — investigar!
+  \item \textbf{Cor por categoria:} pintar os pontos por uma terceira variável
+  (ex.: região, tipo de cliente) pode revelar que a relação só existe em um subgrupo.
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Exemplos de padrões em scatter plots:}
+\begin{itemize}
+  \item \textbf{Relação positiva forte:} horas de estudo × nota na prova.
+  \item \textbf{Relação positiva fraca:} temperatura × vendas de sorvete
+  (real, mas com muita variação).
+  \item \textbf{Relação negativa forte:} preço do produto × volume de vendas.
+  \item \textbf{Sem relação:} número do sapato × salário.
+  \item \textbf{Curvilínea:} dose de medicamento × resposta (sobe até um ponto,
+  depois cai — Pearson não captura isso!).
+  \item \textbf{Clusters:} scatter de IMC × pressão arterial separado por fumantes
+  e não-fumantes — revela dois padrões distintos no mesmo gráfico.
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\subsection{20h30–21h: Correlação de Pearson}
+% ---------------------------------------------------------------------------
+
+\begin{FormulaBox}{Coeficiente de correlação de Pearson ($r$)}
+\[
+r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}
+         {\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2} \cdot \sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}}
+\]
+\begin{itemize}
+  \item $r = +1$: correlação positiva perfeita (toda vez que X sobe, Y sobe na mesma proporção)
+  \item $r = -1$: correlação negativa perfeita
+  \item $r = 0$: sem correlação linear (pode ainda haver relação não-linear!)
+  \item Interpretação prática: $|r| < 0{,}3$ fraca; $0{,}3 \leq |r| < 0{,}7$ moderada;
+  $|r| \geq 0{,}7$ forte
+\end{itemize}
+\end{FormulaBox}
+
+\begin{SolvedBox}
+\textbf{Cálculo passo a passo de Pearson com 5 pontos:}
+
+Dados: horas de treino por semana (X) × performance (Y, escala 0–100)
+
+\begin{center}
+\begin{tabular}{|c|r|r|r|r|r|}
+\hline
+Aluno & $x_i$ & $y_i$ & $(x_i-\bar{x})$ & $(y_i-\bar{y})$ & $(x_i-\bar{x})(y_i-\bar{y})$ \\
+\hline
+A & 2 & 50 & $-4$ & $-20$ & $80$ \\
+B & 4 & 60 & $-2$ & $-10$ & $20$ \\
+C & 6 & 70 & $0$ & $0$ & $0$ \\
+D & 8 & 80 & $+2$ & $+10$ & $20$ \\
+E & 10 & 90 & $+4$ & $+20$ & $80$ \\
+\hline
+\textbf{Média} & $\bar{x}=6$ & $\bar{y}=70$ & & & \textbf{Soma} $= 200$ \\
+\hline
+\end{tabular}
+\end{center}
+
+$\sum(x_i - \bar{x})^2 = 16+4+0+4+16 = 40$\\
+$\sum(y_i - \bar{y})^2 = 400+100+0+100+400 = 1000$
+
+\[
+r = \frac{200}{\sqrt{40} \cdot \sqrt{1000}} = \frac{200}{\sqrt{40.000}} = \frac{200}{200} = 1{,}0
+\]
+
+Correlação perfeita — porque os dados foram criados exatamente assim.
+Na prática, $r = 0{,}85$ já é muito forte e raro.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Limitações do coeficiente de Pearson (para o quadro)}
+\begin{itemize}
+  \item Mede apenas \textbf{relação linear}. Uma relação curvilínea forte pode ter
+  $r \approx 0$.
+  \item É fortemente influenciado por \textbf{outliers}. Um único ponto extremo
+  pode elevar ou destruir a correlação calculada.
+  \item Não funciona bem com \textbf{variáveis ordinais} — use Spearman nesse caso.
+  \item Variáveis com distribuições fortemente assimétricas: transformação logarítmica
+  antes de calcular Pearson.
+  \item \textbf{Sempre olhe o scatter plot} antes de confiar no número de Pearson —
+  o Quarteto de Anscombe (1973) mostra quatro datasets com $r$ idêntico e padrões
+  completamente diferentes.
+\end{itemize}
+\end{BoardBox}
+
+% ---------------------------------------------------------------------------
+\subsection{21h–21h20: Correlação não é Causalidade}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{O argumento de causalidade:}
+
+Dizer que X \emph{causa} Y exige muito mais do que $r$ alto. Exige:
+\begin{enumerate}
+  \item \textbf{Precedência temporal:} X ocorre antes de Y.
+  \item \textbf{Co-variação:} quando X muda, Y muda.
+  \item \textbf{Ausência de variável confundidora:} não há Z que cause tanto X quanto Y
+  e crie a correlação artificialmente.
+  \item (Em pesquisa científica: experimento controlado ou desenho quasi-experimental.)
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Correlações espúrias clássicas (para o quadro — debate em sala)}
+\begin{itemize}
+  \item \textbf{Chocolate × Prêmio Nobel:} países que mais consomem chocolate per capita
+  têm mais ganhadores do Nobel. $r \approx 0{,}79$. Variável confundidora: riqueza
+  (países ricos comem mais chocolate E investem mais em ciência).
+  \item \textbf{Afogamentos × Sorvete:} mais afogamentos em meses de alta venda de sorvete.
+  Causa real: \emph{verão} (calor leva as pessoas tanto à praia quanto a comer sorvete).
+  \item \textbf{Storks × Birth rate (Países Baixos):} cidades com mais cegonhas têm mais
+  nascimentos. Causa real: cidades rurais têm mais cegonhas E mais nascimentos (menos
+  planejamento familiar). As cegonhas não trazem bebês — a ruralidade explica os dois.
+  \item \textbf{Exemplo local:} ``Lojas que vendem guarda-chuvas têm mais acidentes de
+  trânsito no mesmo dia.'' Causa real: chuva.
 \end{itemize}
 
-\section{Entrega (Trabalho 3)}
+\textbf{Pergunta para a turma:} \textit{``Se você descobrir que o número de funcionários
+de TI de uma empresa correlaciona positivamente com a receita, você recomendaria
+contratar mais funcionários de TI para aumentar a receita? O que mais poderia
+estar acontecendo?''}
+\end{BoardBox}
+
 \begin{SolvedBox}
-Diagnóstico (missing + outliers + distribuição) + 1 relação bivariada (scatter) + Big Idea.
+\textbf{Correlação de Spearman (menção complementar):}
+
+Quando as variáveis são ordinais ou a distribuição é muito assimétrica,
+usamos a correlação de \textbf{Spearman} ($\rho$), que calcula Pearson usando
+os \emph{postos} (ranks) dos valores, em vez dos valores absolutos.
+
+Exemplo: ranking de satisfação (1–5 estrelas) × ranking de retenção de clientes.
+Pearson seria inadequado porque as estrelas não têm intervalos iguais (salto de
+1 para 2 estrelas não é o mesmo que 4 para 5).
+
+Na prática em Python:
+\begin{itemize}
+  \item Pearson: \texttt{df[['x','y']].corr(method='pearson')}
+  \item Spearman: \texttt{df[['x','y']].corr(method='spearman')}
+\end{itemize}
 \end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — Prática em Dupla (21h20–21h45)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Tabela 1 — Horas de Treinamento × Performance de Vendedor}
+
+\medskip
+\begin{tabular}{|c|l|r|r|}
+\hline
+\textbf{ID} & \textbf{Vendedor} & \textbf{Horas trein./mês} & \textbf{Perf. (0–100)} \\
+\hline
+01 & Vendedor A & 2  & 45 \\
+02 & Vendedor B & 5  & 60 \\
+03 & Vendedor C & 8  & 72 \\
+04 & Vendedor D & 3  & 50 \\
+05 & Vendedor E & 10 & 85 \\
+06 & Vendedor F & 1  & 38 \\
+07 & Vendedor G & 7  & 68 \\
+08 & Vendedor H & 4  & 55 \\
+09 & Vendedor I & 9  & 80 \\
+10 & Vendedor J & 6  & 64 \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Calcule a média de X e Y.
+  \item Desenhe (esquematicamente) o scatter: há padrão? Qual direção?
+  \item A relação parece positiva, negativa ou ausente?
+  \item Calcule $r$ (pelo menos 3 linhas do somatório para demonstrar raciocínio).
+  \item Há outlier visual? Algum ponto que destoa do padrão?
+\end{enumerate}
+
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item $\bar{x} = 5{,}5$; $\bar{y} = 61{,}7$
+  \item Padrão: relação positiva forte — quanto mais treinamento, maior a performance
+  \item $r \approx 0{,}99$ — correlação muito forte (conjunto criado quase linearmente)
+  \item Sem outlier visual — todos os pontos seguem o padrão
+  \item \textbf{Cuidado com causalidade:} pode ser que vendedores com melhor performance
+  sejam escolhidos para mais treinamentos — não o contrário!
+\end{itemize}
+\end{BoardBox}
+
+\begin{BoardBox}
+\textbf{Tabela 2 — Temperatura × Vendas de Bebida Quente}
+
+\medskip
+\begin{tabular}{|c|r|r|}
+\hline
+\textbf{Dia} & \textbf{Temp. (°C)} & \textbf{Vendas (unidades)} \\
+\hline
+01 & 32 & 12  \\
+02 & 28 & 18  \\
+03 & 15 & 55  \\
+04 & 10 & 88  \\
+05 & 35 & 8   \\
+06 & 22 & 35  \\
+07 & 8  & 95  \\
+08 & 18 & 48  \\
+09 & 25 & 28  \\
+10 & 12 & 70  \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Calcule a média de X e Y.
+  \item Esboce o scatter. Qual é a direção da relação?
+  \item Calcule $r$. A correlação é positiva ou negativa? Forte ou fraca?
+  \item Isso constitui evidência de que temperatura \emph{causa} mudança nas vendas?
+  O que mais poderia estar influenciando?
+\end{enumerate}
+
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item $\bar{x} = 20{,}5$; $\bar{y} = 45{,}7$
+  \item Padrão: relação negativa clara — quando temperatura sobe, vendas caem
+  \item $r \approx -0{,}97$ — correlação negativa muito forte
+  \item Causalidade plausível (frio $\to$ desejo de quente) mas não provada.
+  Confundidor: feriados de inverno (mais movimento no café/restaurante em geral).
+  Melhor framing: \textit{``temperatura é um forte preditor de vendas de bebida
+  quente neste dataset — use-a para planejamento de estoque.''} Sem afirmar causa.
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte IV — Atividade Individual Final (21h45–22h)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Instruções:}
+\begin{enumerate}
+  \item Calcule médias de X e Y.
+  \item Descreva o padrão do scatter (direção, intensidade, outlier visual).
+  \item Calcule $r$ (mostre pelo menos o numerador e os dois somátorios do denominador).
+  \item Interprete em linguagem de negócio (sem usar a palavra ``correlação'').
+  \item Conclua: é possível afirmar causalidade com esses dados? Justifique.
+\end{enumerate}
+\textbf{Tempo:} 15 minutos.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 3 — Investimento em Marketing × Novos Clientes}
+
+\medskip
+\begin{tabular}{|c|r|r|}
+\hline
+\textbf{Mês} & \textbf{Invest. Marketing (R\$ mil)} & \textbf{Novos Clientes} \\
+\hline
+Jan & 10 & 42  \\
+Fev & 8  & 35  \\
+Mar & 15 & 58  \\
+Abr & 12 & 50  \\
+Mai & 5  & 22  \\
+Jun & 18 & 70  \\
+Jul & 20 & 75  \\
+Ago & 7  & 30  \\
+Set & 14 & 53  \\
+Out & 16 & 62  \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Gabarito (professor):}
+\begin{itemize}
+  \item $\bar{x} = 12{,}5$; $\bar{y} = 49{,}7$
+  \item Padrão visual: relação positiva forte; sem outlier aparente
+  \item $r \approx 0{,}996$ — correlação positiva muito forte
+  \item \textbf{Linguagem de negócio:} ``Meses com maior investimento em marketing
+  consistentemente apresentam maior captação de novos clientes — a relação é
+  quase linear.''
+  \item \textbf{Causalidade:} plausível, mas não provada. Possíveis confundidores:
+  sazonalidade (meses com mais investimento coincidem com alta temporada?),
+  eventos externos (lançamentos de produto?). Para estabelecer causalidade:
+  experimento A/B controlando o orçamento de marketing.
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Entrega — Trabalho 3 (lembrete)}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+Entrega: \textbf{25/03/2026 às 23h59} via AVA.\\
+Conteúdo: diagnóstico de dataset (missing + outliers + distribuição) + 1 scatter com análise
+de correlação + Big Idea (dado → significado → decisão ou pergunta de investigação).
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides: scatter plot animado; 4 padrões de correlação lado a lado
+  \item Quarteto de Anscombe para debate em sala
+  \item Tabelas 1, 2 e 3 impressas
+  \item Site \texttt{tylervigen.com/spurious-correlations} para debate sobre causalidade
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 07} fechamos a análise bivariada com variáveis
+\textbf{categóricas}: tabelas de contingência, proporções condicionais e
+gráficos de barras agrupadas/empilhadas. Em seguida fazemos a revisão
+completa para a \textbf{Prova I} (26 de março).
+
+Perguntem aos alunos: \textit{``Como vocês descobririam se há correlação
+entre a nota de satisfação do cliente (1–5 estrelas) e o prazo de entrega
+(dias)? Seria Pearson ou Spearman? E como representariam visualmente?''}

@@ -1,11 +1,253 @@
-\chapter{Semana 11 (11/05--13/05) --- Dashboards que forçam decisão}
+% =============================================================================
+% Semana 11 — Dashboards que Forçam Decisão + KPIs + Pitch de 3 minutos
+% Aula de 3 horas (19h–22h) | 13/05/2026
+% =============================================================================
 
+\chapter{Semana 11 (13/05/2026) — Dashboards que Forçam Decisão e o Pitch de 3 Minutos}
+
+% ---------------------------------------------------------------------------
 \section{Objetivo da semana}
-Eu ajudo o aluno a organizar narrativa + layout + consistência de métricas, pensando em decisão e próximo passo.
+% ---------------------------------------------------------------------------
 
-\section{Conteúdo}
-\begin{itemize}[leftmargin=*]
-  \item Estrutura: contexto, diagnóstico e recomendação.
-  \item Consistência de definições.
-  \item Pitch de 3 minutos.
+Pessoal, vocês já sabem criar visuais claros e interativos. Hoje a pergunta é:
+\textbf{o dashboard de vocês realmente força uma decisão?} Ou ele apenas
+\emph{exibe informação} sem deixar claro o que o usuário deve fazer?
+
+Um dashboard pode ser tecnicamente impecável e, ainda assim, não provocar
+nenhuma ação. O problema geralmente é de \textbf{estrutura narrativa} e
+de \textbf{clareza de KPIs}. E no final da aula, cada um vai apresentar
+a Big Idea do seu T6 em exatamente 3 minutos.
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–20h — \textbf{TEORIA:} Estrutura do dashboard decisório
+  \item 20h–20h40 — \textbf{TEORIA:} KPIs, targets e indicadores visuais de status
+  \item 20h40–21h — \textbf{TEORIA:} O Pitch de 3 minutos — estrutura e prática
+  \item 21h–21h40 — \textbf{PRÁTICA:} Revisão em par do T6 (peer review estruturado)
+  \item 21h40–22h — \textbf{Pitches rápidos:} Big Idea de cada aluno (1 min cada)
+\end{enumerate}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte I — Estrutura do Dashboard Decisório (19h–20h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{As três zonas de um dashboard decisório (para o quadro)}
+
+\textbf{Zona 1 — Contexto:} O que está acontecendo agora?
+\begin{itemize}
+  \item KPIs principais com comparação ao período anterior ou à meta.
+  \item Nenhuma interpretação ainda — apenas ``o estado atual''.
+  \item Deve ser lida em $<$ 5 segundos (Teste do Relance para KPIs).
 \end{itemize}
+
+\textbf{Zona 2 — Diagnóstico:} Por que está acontecendo?
+\begin{itemize}
+  \item Drill-down dos KPIs em alerta: por produto, região, período, segmento.
+  \item Permite formular hipóteses, não confirmar causas (isso é AED!).
+  \item Filtros ou ações de dashboard levam o usuário aqui após ver a Zona 1.
+\end{itemize}
+
+\textbf{Zona 3 — Recomendação:} O que fazer?
+\begin{itemize}
+  \item Síntese das evidências em 1–2 recomendações concretas.
+  \item Pode ser um painel de texto estático ou um visual de simulação
+  (ex.: parâmetro de meta que mostra ``se aumentarmos a meta em X\%, o impacto seria Y'').
+  \item O Call to Action deve ser claro: \emph{quem} faz \emph{o quê} até \emph{quando}.
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Dashboard decisório vs dashboard informativo — diferença crítica:}
+
+\begin{tabular}{|l|p{6cm}|p{5.5cm}|}
+\hline
+& \textbf{Informativo} & \textbf{Decisório} \\
+\hline
+Objetivo & Reportar o que aconteceu & Provocar uma ação específica \\
+KPI sem meta & Apenas o número & Número + meta + gap \\
+Título & ``Vendas do Mês'' & ``Vendas 18\% abaixo da meta — risco de fechamento'' \\
+Estrutura & Todos os dados disponíveis & Apenas o que suporta a decisão \\
+Call to Action & Ausente & Explícito na última tela \\
+\hline
+\end{tabular}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Anti-padrões de dashboard (erros clássicos a evitar)}
+\begin{itemize}
+  \item \textbf{Tudo em verde:} toda KPI sempre verde independente do contexto.
+  Cria conforto falso e impede decisões urgentes.
+  \item \textbf{Métricas sem definição:} ``Receita'' pode ser bruta, líquida,
+  recorrente mensal, anual. Sem definição explícita, cada pessoa lê diferente.
+  \item \textbf{Granularidade excessiva:} 50 KPIs na tela inicial. Onde o usuário
+  deve olhar primeiro?
+  \item \textbf{Falta de comparação:} um número isolado não tem significado.
+  R\$100.000 de vendas é ótimo ou péssimo? Comparado ao quê?
+  \item \textbf{Período sem contexto:} ``Jan'' — Jan de qual ano? É comparação YoY?
+  MTD? YTD?
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte II — KPIs, Targets e Indicadores de Status (20h–20h40)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Anatomia de um bom KPI em dashboard:}
+
+Um KPI sozinho não decide nada. Um KPI bem construído tem 5 componentes:
+\begin{enumerate}
+  \item \textbf{O valor atual:} o número real do período.
+  \item \textbf{A meta (target):} o que deveria ser — benchmark, histórico ou meta corporativa.
+  \item \textbf{O gap:} distância entre o atual e a meta (em valor absoluto e \%).
+  \item \textbf{A tendência:} está melhorando ou piorando? (seta ou sparkline)
+  \item \textbf{O período:} MTD (mês até hoje), YTD (ano até hoje), vs ano anterior.
+\end{enumerate}
+
+\textbf{Em Tableau:} KPI card com \texttt{IF [Atual] $\geq$ [Meta] THEN "\texttt{◆}" ELSE "\texttt{▼}" END}
+como indicador de status (verde/vermelho via cor condicional).
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tipos de visualização para métricas e targets (para o quadro)}
+
+\begin{tabular}{|l|p{6.5cm}|p{4cm}|}
+\hline
+\textbf{Visual} & \textbf{Quando usar} & \textbf{No Tableau} \\
+\hline
+KPI card & Meta de valor único (receita, NPS, churn) & Text viz + forma \\
+Bullet chart & Comparar atual vs meta vs bom/satisfatório & Gantt reproposto \\
+Gauge & Progresso percentual para audiência não técnica & Gráfico de rosca \\
+Sparkline & Tendência rápida sem detalhes de eixo & Linha em mini-tela \\
+Linha de referência & Meta no gráfico de linhas ou barras & Linha de referência calculada \\
+\hline
+\end{tabular}
+
+\textbf{Bullet chart} (Stephen Few) é o mais eficiente para comparação meta vs atual:
+uma barra representa o valor real; outra, mais fina e mais escura, a meta.
+Mais informação por centímetro quadrado do que qualquer gauge.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Consistência de definições — a causa invisível de dashboards inúteis:}
+
+Antes de construir qualquer KPI, documente:
+\begin{itemize}
+  \item \textbf{Nome exato:} ``Receita Líquida MRR'' — não ``Receita''.
+  \item \textbf{Cálculo:} fórmula ou regra de negócio completa.
+  \item \textbf{Período:} qual janela temporal e como atualiza (diário, semanal).
+  \item \textbf{Fonte:} de qual tabela/sistema o dado vem.
+  \item \textbf{Dono:} quem valida se o número está errado.
+\end{itemize}
+
+Sem isso, dois analistas apresentando ``Receita'' na mesma reunião podem
+apresentar números diferentes — e nenhum estará errado; estarão calculando
+coisas diferentes.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — O Pitch de 3 Minutos (20h40–21h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Estrutura do pitch de 3 minutos (para o quadro)}
+
+3 minutos $\approx$ 450 palavras $\approx$ 4 frases por bloco.
+
+\begin{enumerate}
+  \item \textbf{Situação (30 seg):} contexto factual que a audiência reconhece.
+  ``Nossa taxa de churn no Q1 foi de 22\% — acima dos 15\% históricos.''
+  \item \textbf{Complicação (45 seg):} o problema ou oportunidade que a situação revela.
+  ``Ao segmentar por canal, descobrimos que 80\% do churn vem de clientes
+  adquiridos via campanha de redes sociais no mesmo período.''
+  \item \textbf{Resolução (60 seg):} a evidência e a recomendação.
+  ``O custo de retenção via programa de onboarding é R\$15/cliente — vs
+  R\$180 para adquirir um novo. Recomendo redirecionar 30\% do orçamento
+  de aquisição para retenção dos primeiros 90 dias.''
+  \item \textbf{Próximo passo (45 seg):} pedido concreto à audiência.
+  ``Preciso da aprovação de vocês para testar esse programa em 500 clientes
+  no próximo mês e medir o impacto antes de escalar.''
+\end{enumerate}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Checklist do pitch eficaz:}
+\begin{itemize}
+  \item[$\square$] Começo com dado, não com contexto genérico
+  \item[$\square$] Big Idea está na primeira frase da complicação
+  \item[$\square$] A recomendação tem número concreto (não ``melhorar'' — sim ``aumentar em 15\%'')
+  \item[$\square$] O próximo passo tem: verbo + quem + prazo
+  \item[$\square$] Sem jargão técnico não essencial para o público
+  \item[$\square$] Cronometrado: paro quando bate 3 minutos, não quando termino
+\end{itemize}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte IV — Peer Review do T6 (21h–21h40)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Roteiro de peer review estruturado (em par — 20 min cada):}
+
+O revisor usa este checklist enquanto o colega apresenta o dashboard:
+
+\begin{tabular}{|p{5cm}|l|p{5.5cm}|}
+\hline
+\textbf{Critério} & \textbf{Sim/Não} & \textbf{Sugestão específica} \\
+\hline
+Big Idea clara na primeira tela? & & \\
+Todos os títulos são mensagem? & & \\
+Passa no Teste do Relance? & & \\
+KPIs têm meta + gap? & & \\
+Interatividade funciona? & & \\
+Estrutura: contexto→diag→reco? & & \\
+Call to action explícito? & & \\
+\hline
+\end{tabular}
+
+\textbf{Após o checklist,} o revisor dá 1 feedback de melhoria prioritária
+e 1 ponto forte genuíno. O aluno apresentado anota e tem tempo para ajustar
+antes da Semana 12.
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte V — Pitches Rápidos (21h40–22h)}
+% =============================================================================
+
+\begin{SolvedBox}
+Cada aluno apresenta a Big Idea do seu T6 em \textbf{1 minuto}:
+\begin{itemize}
+  \item 15 seg: situação + problema
+  \item 30 seg: evidência central
+  \item 15 seg: recomendação + call to action
+\end{itemize}
+
+A turma anota: ``Ficou clara a mensagem? O que faltou?''
+Feedback coletivo de 1 minuto após cada pitch.
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides: anatomia do KPI card; bullet chart (como construir no Tableau)
+  \item Formulário de peer review (impresso, 1 por par)
+  \item Cronômetro visível para os pitches
+  \item Exemplos de dashboards decisórios reais (Tableau Public gallery)
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 12} é a velika final: Apresentações do Trabalho 6
+(pitch completo de 3 min + demo do dashboard) + revisão para a Prova II.
+Cheguem com o dashboard no Tableau Public publicado e o link testado.
+
+Perguntem aos alunos: \textit{``Imaginem que o gerente da empresa que vocês
+estão analisando vai ver o dashboard pela primeira vez sem nenhuma explicação
+de vocês. Qual é a primeira ação que ele tomaria com base no que está na tela?
+Se vocês não souberem responder, o dashboard ainda não está pronto.''}

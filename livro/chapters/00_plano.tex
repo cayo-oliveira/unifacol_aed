@@ -316,3 +316,1555 @@ T6 & 12 & Dashboard final + pitch (3 min) + checklist \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+% ===========================================================================
+\section{Criando uma Biblioteca Python: da Ideia ao PyPI}
+% ===========================================================================
+
+Esta seção explica, passo a passo, como um conjunto de funções Python
+evolui de um módulo local para um \textbf{pacote instalável mundialmente}
+via \texttt{pip install}. É exatamente o que faremos com a biblioteca
+\texttt{aedtools} ao longo do semestre.
+
+\subsection*{Por que criar uma biblioteca?}
+
+Sem biblioteca, cada notebook repete as mesmas funções. Com uma
+biblioteca bem estruturada:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Reutilização:} qualquer notebook importa \texttt{from aedtools import calcular\_media}.
+  \item \textbf{Versão única da verdade:} corrigiu o bug uma vez, todos os notebooks se beneficiam.
+  \item \textbf{Documentação viva:} docstrings, tipos e exemplos ficam junto ao código.
+  \item \textbf{Colaboração:} equipes inteiras usam o mesmo toolkit sem copiar arquivos.
+\end{itemize}
+
+\subsection*{Estrutura de pastas obrigatória}
+
+O padrão moderno (recomendado pelo Python Packaging Authority) é o layout
+\textbf{src}:
+
+\begin{lstlisting}[language={}]
+aedtools/                    <- raiz do projeto (repositório Git)
++-- src/
+|   +-- aedtools/            <- pacote Python (nome real da lib)
+|       +-- __init__.py      <- exporta a API pública
+|       +-- estatistica.py   <- medidas de posição e dispersão
+|       +-- limpeza.py       <- nulos e imputação
+|       +-- transformacao.py <- normalização, encoding, ranking
+|       +-- correlacao.py    <- Pearson, métricas de erro, IC
+|       +-- visualizacao.py  <- gráficos (matplotlib / seaborn)
++-- tests/
+|   +-- __init__.py
+|   +-- test_estatistica.py  <- testes unitários (pytest)
+|   +-- test_limpeza.py
++-- pyproject.toml           <- metadados + dependências
++-- README.md                <- documentação mínima
++-- LICENSE                  <- MIT é a mais comum para código aberto
+\end{lstlisting}
+
+\begin{NoteBox}
+Por que \texttt{src/}? Evita que o Python importe acidentalmente o código
+do diretório de trabalho em vez do pacote instalado — um bug silencioso
+muito comum em projetos sem essa separação.
+\end{NoteBox}
+
+\subsection*{O arquivo \texttt{pyproject.toml}}
+
+Substitui o antigo \texttt{setup.py} e o \texttt{setup.cfg}. É o único
+arquivo de configuração necessário para projetos modernos:
+
+\begin{lstlisting}[language={}]
+[build-system]
+requires      = ["hatchling"]       # backend de build
+build-backend = "hatchling.build"
+
+[project]
+name            = "aedtools"        # nome no PyPI (deve ser único)
+version         = "0.1.0"           # semântica: MAJOR.MINOR.PATCH
+description     = "Biblioteca de AED para a turma UNIFACOL SI-8"
+readme          = "README.md"
+license         = {file = "LICENSE"}
+requires-python = ">=3.10"          # versão mínima do Python
+authors         = [{name = "Turma AED 2026-1", email = "aed@unifacol.edu.br"}]
+keywords        = ["AED", "estatística", "pandas", "visualização"]
+
+# Dependências que serão instaladas junto com a lib
+dependencies = [
+  "pandas>=2.0",
+  "numpy>=1.26",
+  "matplotlib>=3.7",
+  "seaborn>=0.13",
+  "scipy>=1.11",
+]
+
+[project.urls]
+Repository = "https://github.com/unifacol/aedtools"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aedtools"]         # de onde o wheel é construído
+\end{lstlisting}
+
+\subsection*{O arquivo \texttt{\_\_init\_\_.py} — a API pública}
+
+O \texttt{\_\_init\_\_.py} decide o que o usuário enxerga ao digitar
+\texttt{from aedtools import ...}:
+
+\begin{lstlisting}[language=Python]
+# src/aedtools/__init__.py
+# Importações que tornam "from aedtools import X" possível
+# sem precisar saber em qual módulo X está definido.
+
+from .estatistica import (
+    calcular_media, calcular_mediana, calcular_moda,
+    calcular_desvio_padrao, calcular_variancia, calcular_amplitude,
+    calcular_quartis, calcular_iqr, detectar_outliers_iqr,
+    calcular_skewness, calcular_kurtosis,
+)
+from .limpeza import (
+    contar_nulos, proporcao_nulos,
+    preencher_nulos_media, preencher_nulos_mediana,
+    remover_linhas_nulas,
+)
+from .transformacao import (
+    normalizar_min_max, padronizar_zscore,
+    contar_valores_unicos, calcular_frequencia,
+    converter_para_categorico, one_hot_encoding,
+    soma_acumulada, media_movel,
+    variacao_percentual, calcular_ranking,
+    identificar_tipos_colunas,
+)
+from .correlacao import (
+    calcular_correlacao, gerar_matriz_correlacao,
+    calcular_r2, calcular_mae, calcular_mse, calcular_rmse,
+    intervalo_confianca_media,
+)
+from .visualizacao import (
+    plotar_histograma, plotar_boxplot, plotar_scatterplot,
+    plotar_heatmap_correlacao,
+    plotar_barras_categorias, plotar_pizza_categorias,
+)
+
+# Versão acessível por aedtools.__version__
+__version__ = "0.1.0"
+__all__ = [
+    "calcular_media", "calcular_mediana", "calcular_moda",
+    # ... (lista completa de nomes exportados)
+]
+\end{lstlisting}
+
+\subsection*{Comandos de desenvolvimento — passo a passo}
+
+\begin{lstlisting}[language={}]
+# 1. Criar e ativar ambiente virtual isolado
+python -m venv .venv
+source .venv/bin/activate          # Linux/macOS
+# .venv\Scripts\activate           # Windows
+
+# 2. Instalar as ferramentas de build e testes
+pip install hatchling build twine pytest
+
+# 3. Instalar a própria lib em modo editável (editable install)
+#    Qualquer mudança no código src/ reflete imediatamente
+#    sem precisar reinstalar.
+pip install -e .
+
+# 4. Rodar os testes
+pytest tests/ -v
+
+# 5. Construir os artefatos distribuíveis
+python -m build
+#  Cria dois arquivos em dist/:
+#    aedtools-0.1.0.tar.gz    <- source distribution (sdist)
+#    aedtools-0.1.0-py3-none-any.whl <- wheel (instalação rápida)
+
+# 6. Conferir o pacote antes de publicar
+twine check dist/*
+
+# 7. Publicar no TestPyPI (ambiente de testes — gratuito)
+twine upload --repository testpypi dist/*
+#  Testar instalação:
+pip install --index-url https://test.pypi.org/simple/ aedtools
+
+# 8. Publicar no PyPI real (qualquer pessoa no mundo instala)
+twine upload dist/*
+#  Qualquer pessoa no planeta pode então usar:
+pip install aedtools
+\end{lstlisting}
+
+\begin{AttentionBox}
+Para publicar no PyPI você precisa de uma conta em \texttt{pypi.org} e
+configurar um \textbf{API token} (nunca username/senha em scripts).
+O token é gerado em Configurações de Conta $\to$ API tokens.
+Guarde-o em \texttt{\textasciitilde/.pypirc} ou como variável de ambiente
+\texttt{TWINE\_PASSWORD}.
+\end{AttentionBox}
+
+\subsection*{Diferença entre \texttt{.tar.gz} (sdist) e \texttt{.whl} (wheel)}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l p{5cm} p{5.5cm}@{}}
+\toprule
+& \textbf{.tar.gz (sdist)} & \textbf{.whl (wheel)} \\
+\midrule
+Conteúdo & Código-fonte completo & Código já pronto para instalação \\
+Build no cliente & Sim (pode precisar compilar) & Não (apenas descompactar) \\
+Instalação & Mais lenta & Muito mais rápida \\
+Portabilidade & Total (qualquer OS) & Depende da plataforma se há C/Cython \\
+Quando usar & Libs com extensões C & Libs puro-Python (como aedtools) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Boas práticas de desenvolvimento de biblioteca}
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Docstrings completas:} use o padrão NumPy ou Google.
+  Parâmetros, retorno, exceções e pelo menos 1 exemplo em \texttt{Examples}.
+  \item \textbf{Type hints obrigatórios:} \texttt{def calcular\_media(df: pd.DataFrame, coluna: str) -> float}
+  — permite IDE autocompletar para o usuário.
+  \item \textbf{Nunca modificar o DataFrame original:} sempre faça
+  \texttt{df = df.copy()} antes de qualquer mutação. Funções puras são previsíveis.
+  \item \textbf{Validar entradas:} cheque se a coluna existe, se é numérica etc.
+  Lance \texttt{ValueError} com mensagem clara — não deixe o erro do Pandas confundir o usuário.
+  \item \textbf{Testes unitários para cada função:} use \texttt{pytest}.
+  Cada função deve ter ao menos: caso normal, coluna com NaN, coluna vazia.
+  \item \textbf{Versionamento semântico:} MAJOR.MINOR.PATCH.
+  Bug fix $\to$ patch; nova função $\to$ minor; mudança de API quebra compatibilidade $\to$ major.
+  \item \textbf{CHANGELOG.md:} registre o que mudou em cada versão.
+  Usuários precisam saber o que a atualização traz.
+  \item \textbf{CI/CD (GitHub Actions):} automatize o \texttt{pytest} a cada push.
+  Não suba código que não passou nos testes.
+\end{enumerate}
+
+\subsection*{Como usar a biblioteca após instalação}
+
+\begin{lstlisting}[language=Python]
+# Instalação
+# pip install aedtools
+
+import pandas as pd
+from aedtools import (
+    calcular_media, calcular_mediana, detectar_outliers_iqr,
+    plotar_boxplot, calcular_frequencia,
+)
+
+# Carregar dados
+df = pd.read_csv("vendas.csv")
+
+# Usar as funções da biblioteca
+media   = calcular_media(df, "faturamento")
+mediana = calcular_mediana(df, "faturamento")
+outliers = detectar_outliers_iqr(df, "faturamento")
+
+print(f"Média: R$ {media:,.2f}")
+print(f"Mediana: R$ {mediana:,.2f}")
+print(f"Outliers encontrados: {len(outliers)} registros")
+
+freq = calcular_frequencia(df, "canal")
+print(freq)
+
+plotar_boxplot(df, "faturamento")
+\end{lstlisting}
+
+% ===========================================================================
+\section{\texttt{aedtools} — A Biblioteca da Turma: 40 Funções Implementadas}
+% ===========================================================================
+
+O nome \textbf{aedtools} (\textit{Análise Exploratória de Dados — Tools})
+foi escolhido por ser curto, sem acento, descritivo e disponível no PyPI.
+Cada uma das 40 funções abaixo está implementada com:
+comentários linha a linha, docstring completa, validação de entrada
+e exemplo de uso.
+
+% ---------------------------------------------------------------------------
+\subsection{Módulo \texttt{estatistica.py} — Medidas de Posição, Dispersão e Forma}
+% ---------------------------------------------------------------------------
+
+\begin{lstlisting}[language=Python]
+# src/aedtools/estatistica.py
+"""
+Medidas de posição (média, mediana, moda),
+dispersão (variância, DP, amplitude, quartis, IQR)
+e forma (skewness, kurtosis).
+"""
+
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+
+# ── Função 1 ────────────────────────────────────────────────────────────────
+def calcular_media(df: pd.DataFrame, coluna: str) -> float:
+    """
+    Calcula a média aritmética de uma coluna numérica.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame  — dataset de entrada
+    coluna : str           — nome da coluna numérica
+
+    Returns
+    -------
+    float — média aritmética ignorando NaN
+
+    Examples
+    --------
+    >>> calcular_media(df, "faturamento")
+    5432.1
+    """
+    # Verifica se a coluna existe no DataFrame
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada no DataFrame.")
+    # Verifica se a coluna é numérica
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    # Calcula a média ignorando valores nulos (skipna=True é padrão)
+    return float(df[coluna].mean())
+
+
+# ── Função 2 ────────────────────────────────────────────────────────────────
+def calcular_mediana(df: pd.DataFrame, coluna: str) -> float:
+    """
+    Calcula a mediana (percentil 50) de uma coluna numérica.
+    Robusta a outliers: não é afetada por valores extremos.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    float — mediana da coluna
+    """
+    # Validações de entrada
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    # median() ignora NaN automaticamente
+    return float(df[coluna].median())
+
+
+# ── Função 3 ────────────────────────────────────────────────────────────────
+def calcular_moda(df: pd.DataFrame, coluna: str) -> list:
+    """
+    Calcula a(s) moda(s) de uma coluna — funciona para numérica
+    e categórica. Retorna lista pois pode haver múltiplas modas.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    list — lista com os valores mais frequentes
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    # mode() retorna Series com todos os valores de máxima frequência
+    # tolist() converte para lista Python padrão
+    return df[coluna].mode().tolist()
+
+
+# ── Função 4 ────────────────────────────────────────────────────────────────
+def calcular_desvio_padrao(
+    df: pd.DataFrame, coluna: str, populacional: bool = False
+) -> float:
+    """
+    Calcula o desvio padrão amostral (ddof=1) ou populacional (ddof=0).
+
+    Parameters
+    ----------
+    df          : pd.DataFrame
+    coluna      : str
+    populacional: bool — se True usa N; se False usa N-1 (padrão amostral)
+
+    Returns
+    -------
+    float — desvio padrão
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    # ddof=0 -> divide por N (populacional)
+    # ddof=1 -> divide por N-1 (amostral — correcão de Bessel)
+    ddof = 0 if populacional else 1
+    return float(df[coluna].std(ddof=ddof))
+
+
+# ── Função 5 ────────────────────────────────────────────────────────────────
+def calcular_variancia(
+    df: pd.DataFrame, coluna: str, populacional: bool = False
+) -> float:
+    """
+    Calcula a variância amostral (ddof=1) ou populacional (ddof=0).
+    A variância é o quadrado do desvio padrão — sua unidade é o
+    quadrado da unidade original, portanto menos interpretável diretamente.
+
+    Parameters
+    ----------
+    df          : pd.DataFrame
+    coluna      : str
+    populacional: bool
+
+    Returns
+    -------
+    float — variância
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    ddof = 0 if populacional else 1
+    # var() segue a mesma lógica do std() com ddof
+    return float(df[coluna].var(ddof=ddof))
+
+
+# ── Função 6 ────────────────────────────────────────────────────────────────
+def calcular_amplitude(df: pd.DataFrame, coluna: str) -> float:
+    """
+    Calcula a amplitude total: diferença entre o valor máximo e mínimo.
+    Muito sensível a outliers — use apenas como primeira aproximação.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    float — amplitude (max - min)
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    # Ignora NaN ao calcular max e min
+    return float(df[coluna].max() - df[coluna].min())
+
+
+# ── Função 11 ───────────────────────────────────────────────────────────────
+def calcular_quartis(df: pd.DataFrame, coluna: str) -> dict:
+    """
+    Calcula Q1 (25%), Q2/mediana (50%), Q3 (75%) e IQR de uma coluna.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    dict — chaves: "Q1", "Q2", "Q3", "IQR"
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    serie = df[coluna].dropna()   # remove NaN antes do cálculo
+    q1 = float(serie.quantile(0.25))
+    q2 = float(serie.quantile(0.50))
+    q3 = float(serie.quantile(0.75))
+    iqr = q3 - q1                 # Intervalo Interquartil
+    return {"Q1": q1, "Q2": q2, "Q3": q3, "IQR": iqr}
+
+
+# ── Função 12 ───────────────────────────────────────────────────────────────
+def calcular_iqr(df: pd.DataFrame, coluna: str) -> float:
+    """
+    Retorna apenas o IQR (Q3 - Q1) — versão simplificada de calcular_quartis.
+    Útil quando somente o IQR é necessário (ex.: detecção de outliers).
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    float — IQR
+    """
+    # Reutiliza calcular_quartis para evitar duplicação de lógica
+    quartis = calcular_quartis(df, coluna)
+    return quartis["IQR"]
+
+
+# ── Função 13 ───────────────────────────────────────────────────────────────
+def detectar_outliers_iqr(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Detecta outliers pela Regra de Tukey (1,5 × IQR).
+    Retorna subconjunto do DataFrame com apenas as linhas outlier.
+
+    Limites:
+        Inferior = Q1 - 1.5 * IQR
+        Superior = Q3 + 1.5 * IQR
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    pd.DataFrame — linhas cujo valor está fora dos limites de Tukey
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    quartis = calcular_quartis(df, coluna)
+    q1, q3, iqr = quartis["Q1"], quartis["Q3"], quartis["IQR"]
+    # Calcula o limite inferior e superior da regra de Tukey
+    limite_inf = q1 - 1.5 * iqr
+    limite_sup = q3 + 1.5 * iqr
+    # Filtra as linhas que estão fora dos limites
+    mascara = (df[coluna] < limite_inf) | (df[coluna] > limite_sup)
+    return df[mascara].copy()   # .copy() evita SettingWithCopyWarning
+
+
+# ── Função 20 ───────────────────────────────────────────────────────────────
+def calcular_skewness(df: pd.DataFrame, coluna: str) -> float:
+    """
+    Calcula o coeficiente de assimetria (skewness) de Fisher.
+    Indica se a distribuição tem cauda mais longa à direita (>0)
+    ou à esquerda (<0). Valor 0 indica simetria perfeita.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    float — coeficiente de assimetria
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    # skew() do Pandas usa a fórmula ajustada de Fisher (bias=False internamente)
+    return float(df[coluna].skew())
+
+
+# ── Função 21 ───────────────────────────────────────────────────────────────
+def calcular_kurtosis(df: pd.DataFrame, coluna: str) -> float:
+    """
+    Calcula a curtose (excesso de curtose de Fisher) de uma coluna.
+    Acima de 0 (leptocúrtica): caudas pesadas, mais outliers.
+    Abaixo de 0 (platicúrtica): caudas leves.
+    0 = distribuição normal (mesocúrtica).
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    float — excesso de curtose
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    # kurt() retorna excesso de curtose (subtrai 3 da fórmula de Pearson)
+    return float(df[coluna].kurt())
+\end{lstlisting}
+
+% ---------------------------------------------------------------------------
+\subsection{Módulo \texttt{limpeza.py} — Nulos e Imputação}
+% ---------------------------------------------------------------------------
+
+\begin{lstlisting}[language=Python]
+# src/aedtools/limpeza.py
+"""
+Diagnóstico e tratamento de dados ausentes (missing values).
+"""
+
+import pandas as pd
+
+
+# ── Função 7 ────────────────────────────────────────────────────────────────
+def contar_nulos(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Retorna DataFrame com contagem absoluta de nulos por coluna,
+    valor diferente de proporcao_nulos que retorna percentuais.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame — colunas: ["coluna", "nulos", "total", "pct"]
+    """
+    # isnull().sum() conta os NaN de cada coluna
+    nulos = df.isnull().sum()
+    total = len(df)
+    resultado = pd.DataFrame({
+        "coluna": nulos.index,
+        "nulos":  nulos.values,
+        "total":  total,
+        # Arredonda para 2 casas decimais para legibilidade
+        "pct":    (nulos.values / total * 100).round(2),
+    })
+    # Ordena do mais nulo para o menos nulo
+    return resultado.sort_values("nulos", ascending=False).reset_index(drop=True)
+
+
+# ── Função 8 ────────────────────────────────────────────────────────────────
+def preencher_nulos_media(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Imputa NaN de uma coluna numérica com a média da própria coluna.
+    Use apenas quando a distribuição é simétrica e sem outliers graves,
+    pois a média é sensível a extremos.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — coluna numérica a ser imputada
+
+    Returns
+    -------
+    pd.DataFrame — cópia do DataFrame com NaN substituídos
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()           # nunca modifica o DataFrame original
+    media = df_out[coluna].mean()
+    # fillna substitui todos os NaN pelo valor informado
+    df_out[coluna] = df_out[coluna].fillna(media)
+    return df_out
+
+
+# ── Função 9 ────────────────────────────────────────────────────────────────
+def preencher_nulos_mediana(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Imputa NaN com a mediana da coluna — mais robusta a outliers
+    do que a imputação pela média. Preferível quando há assimetria.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    pd.DataFrame — cópia com NaN substituídos pela mediana
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()
+    mediana = df_out[coluna].median()
+    df_out[coluna] = df_out[coluna].fillna(mediana)
+    return df_out
+
+
+# ── Função 10 ───────────────────────────────────────────────────────────────
+def remover_linhas_nulas(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Remove todas as linhas que tenham ao menos um NaN em qualquer coluna.
+    Útil para MCAR com baixo percentual de nulos (<5%).
+    Não use se houver muitos nulos — perda de dados relevante.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame — cópia sem linhas com NaN
+    """
+    # dropna() remove linha se qualquer coluna tiver NaN (how='any' padrão)
+    return df.dropna().reset_index(drop=True)
+
+
+# ── Função 26 ───────────────────────────────────────────────────────────────
+def proporcao_nulos(df: pd.DataFrame) -> pd.Series:
+    """
+    Retorna a proporção (0 a 1) de valores nulos em cada coluna.
+    Versão compacta de contar_nulos — útil para filtragem rápida.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+
+    Returns
+    -------
+    pd.Series — índice = nome da coluna, valor = proporção de nulos
+    """
+    # isnull().mean() calcula a proporção pois True=1 e False=0
+    return df.isnull().mean().sort_values(ascending=False)
+\end{lstlisting}
+
+% ---------------------------------------------------------------------------
+\subsection{Módulo \texttt{transformacao.py} — Normalização, Encoding e Séries Temporais}
+% ---------------------------------------------------------------------------
+
+\begin{lstlisting}[language=Python]
+# src/aedtools/transformacao.py
+"""
+Transformações de escala (normalização, z-score), codificação de
+variáveis categóricas e cálculos em séries temporais.
+"""
+
+import pandas as pd
+import numpy as np
+
+
+# ── Função 14 ───────────────────────────────────────────────────────────────
+def normalizar_min_max(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Normaliza uma coluna para o intervalo [0, 1] por Min-Max Scaling.
+    Fórmula:  x_norm = (x - x_min) / (x_max - x_min)
+    Preserva o formato da distribuição original.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — coluna a normalizar
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna '{coluna}_norm' adicionada
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()
+    x_min = df_out[coluna].min()
+    x_max = df_out[coluna].max()
+    if x_max == x_min:
+        # Todos os valores iguais: normalização não é definida; retorna zeros
+        df_out[f"{coluna}_norm"] = 0.0
+    else:
+        df_out[f"{coluna}_norm"] = (df_out[coluna] - x_min) / (x_max - x_min)
+    return df_out
+
+
+# ── Função 15 ───────────────────────────────────────────────────────────────
+def padronizar_zscore(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Padroniza uma coluna para média 0 e desvio padrão 1 (z-score).
+    Fórmula:  z = (x - média) / DP
+    Essencial quando algoritmos de ML são sensíveis à escala.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna '{coluna}_z' adicionada
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()
+    media = df_out[coluna].mean()
+    desvio = df_out[coluna].std(ddof=1)   # desvio amostral
+    if desvio == 0:
+        df_out[f"{coluna}_z"] = 0.0       # todas as obs. iguais
+    else:
+        df_out[f"{coluna}_z"] = (df_out[coluna] - media) / desvio
+    return df_out
+
+
+# ── Função 22 ───────────────────────────────────────────────────────────────
+def contar_valores_unicos(df: pd.DataFrame, coluna: str) -> int:
+    """
+    Retorna a cardinalidade de uma coluna: quantos valores distintos existem.
+    Útil para decidir se uma coluna numérica deve ser tratada como categórica.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    int — número de valores únicos (excluindo NaN)
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    # nunique() conta valores únicos ignorando NaN por padrão
+    return int(df[coluna].nunique())
+
+
+# ── Função 23 ───────────────────────────────────────────────────────────────
+def calcular_frequencia(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Gera tabela de frequência absoluta, relativa e percentual de uma coluna.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — qualquer tipo (numérico ou categórico)
+
+    Returns
+    -------
+    pd.DataFrame — colunas: [coluna, "freq_abs", "freq_rel", "pct"]
+                   ordenado da categoria mais frequente para a menos frequente
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    # value_counts() retorna frequência absoluta ordenada
+    freq_abs = df[coluna].value_counts()
+    total = freq_abs.sum()
+    freq_rel = freq_abs / total            # proporção (0 a 1)
+    pct      = freq_rel * 100             # porcentagem (0 a 100)
+    resultado = pd.DataFrame({
+        coluna:     freq_abs.index,
+        "freq_abs": freq_abs.values,
+        "freq_rel": freq_rel.values.round(4),
+        "pct":      pct.values.round(2),
+    })
+    return resultado.reset_index(drop=True)
+
+
+# ── Função 24 ───────────────────────────────────────────────────────────────
+def converter_para_categorico(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Converte uma coluna para o tipo pd.Categorical do Pandas.
+    Reduz uso de memória e habilita ordenamento personalizado.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna convertida para Categorical
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    df_out = df.copy()
+    # pd.Categorical infere as categorias automaticamente
+    df_out[coluna] = pd.Categorical(df_out[coluna])
+    return df_out
+
+
+# ── Função 25 ───────────────────────────────────────────────────────────────
+def one_hot_encoding(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Aplica codificação one-hot (variáveis dummy) em uma coluna categórica.
+    Cada categoria vira nova coluna binária (0 ou 1).
+    drop_first=True evita multicolinearidade em modelos de regressão.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — coluna categórica a codificar
+
+    Returns
+    -------
+    pd.DataFrame — DataFrame com a coluna original removida e novas
+                   colunas binárias adicionadas
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    df_out = df.copy()
+    # get_dummies cria colunas booleanas para cada categoria
+    dummies = pd.get_dummies(df_out[coluna], prefix=coluna, drop_first=True)
+    # Remove coluna original e concatena as dummies
+    df_out = df_out.drop(columns=[coluna])
+    df_out = pd.concat([df_out, dummies], axis=1)
+    return df_out
+
+
+# ── Função 27 ───────────────────────────────────────────────────────────────
+def soma_acumulada(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Calcula a soma cumulativa de uma coluna linha por linha.
+    Útil para saldo ao longo do tempo ou estoque acumulado.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — coluna numérica
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna '{coluna}_acum' adicionada
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()
+    # cumsum() soma todos os valores anteriores mais o atual
+    df_out[f"{coluna}_acum"] = df_out[coluna].cumsum()
+    return df_out
+
+
+# ── Função 28 ───────────────────────────────────────────────────────────────
+def media_movel(df: pd.DataFrame, coluna: str, janela: int = 7) -> pd.DataFrame:
+    """
+    Calcula a média móvel simples com janela configurável.
+    Suaviza flutuações de curto prazo em séries temporais.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — série temporal numérica
+    janela : int — tamanho da janela (default: 7 períodos)
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna '{coluna}_mm{janela}' adicionada
+                   (NaN nas primeiras janela-1 linhas é esperado)
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    if janela < 1:
+        raise ValueError("Janela deve ser >= 1.")
+    df_out = df.copy()
+    # rolling(janela).mean() calcula a média dos últimos 'janela' valores
+    df_out[f"{coluna}_mm{janela}"] = df_out[coluna].rolling(window=janela).mean()
+    return df_out
+
+
+# ── Função 29 ───────────────────────────────────────────────────────────────
+def variacao_percentual(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Calcula a variação percentual entre linhas consecutivas.
+    Fórmula: (valor_t - valor_{t-1}) / valor_{t-1} * 100
+    Útil para séries de preços, receitas ou qualquer métrica temporal.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna '{coluna}_var_pct' adicionada
+                   (primeira linha será NaN pois não há anterior)
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()
+    # pct_change() calcula a variação % em relação ao valor anterior
+    df_out[f"{coluna}_var_pct"] = df_out[coluna].pct_change() * 100
+    return df_out
+
+
+# ── Função 30 ───────────────────────────────────────────────────────────────
+def calcular_ranking(
+    df: pd.DataFrame, coluna: str, crescente: bool = False
+) -> pd.DataFrame:
+    """
+    Adiciona colunas de ranking crescente e decrescente a partir de uma coluna.
+    Empates recebem o mesmo rank (method='min' — comportamento esportivo).
+
+    Parameters
+    ----------
+    df        : pd.DataFrame
+    coluna    : str — coluna numérica para rankear
+    crescente : bool — se True o rank 1 é o menor valor;
+                       se False (padrão) o rank 1 é o maior valor
+
+    Returns
+    -------
+    pd.DataFrame — cópia com coluna '{coluna}_rank' adicionada
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    df_out = df.copy()
+    # ascending=True -> menor valor recebe rank 1
+    # ascending=False -> maior valor recebe rank 1 (ranking de desempenho)
+    df_out[f"{coluna}_rank"] = df_out[coluna].rank(
+        ascending=crescente, method="min"
+    ).astype(int)
+    return df_out
+
+
+# ── Função 31 ───────────────────────────────────────────────────────────────
+def identificar_tipos_colunas(df: pd.DataFrame) -> dict:
+    """
+    Classifica as colunas do DataFrame em numéricas e categóricas.
+    Útil como primeiro passo de qualquer pipeline de AED.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+
+    Returns
+    -------
+    dict — chaves: "numericas" (list[str]), "categoricas" (list[str])
+    """
+    # select_dtypes filtra colunas por família de tipo
+    numericas   = df.select_dtypes(include=["number"]).columns.tolist()
+    categoricas = df.select_dtypes(
+        include=["object", "category", "bool"]
+    ).columns.tolist()
+    return {"numericas": numericas, "categoricas": categoricas}
+\end{lstlisting}
+
+% ---------------------------------------------------------------------------
+\subsection{Módulo \texttt{correlacao.py} — Correlação, Métricas e Intervalos}
+% ---------------------------------------------------------------------------
+
+\begin{lstlisting}[language=Python]
+# src/aedtools/correlacao.py
+"""
+Correlação de Pearson, matriz de correlação e métricas de avaliação
+de modelos preditivos (R², MAE, MSE, RMSE) e intervalo de confiança.
+"""
+
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+
+# ── Função 16 ───────────────────────────────────────────────────────────────
+def calcular_correlacao(
+    df: pd.DataFrame, col1: str, col2: str
+) -> float:
+    """
+    Calcula o coeficiente de correlação de Pearson entre duas colunas.
+    Mede apenas relação LINEAR. Use Spearman para variáveis ordinais.
+    Escala: -1 (negativa perfeita) a +1 (positiva perfeita). 0 = sem correlação linear.
+
+    Parameters
+    ----------
+    df   : pd.DataFrame
+    col1 : str — primeira coluna numérica
+    col2 : str — segunda coluna numérica
+
+    Returns
+    -------
+    float — r de Pearson
+    """
+    for col in [col1, col2]:
+        if col not in df.columns:
+            raise ValueError(f"Coluna '{col}' não encontrada.")
+        if not pd.api.types.is_numeric_dtype(df[col]):
+            raise TypeError(f"Coluna '{col}' não é numérica.")
+    # corr() ignora automaticamente as linhas com NaN em qualquer das colunas
+    return float(df[col1].corr(df[col2]))
+
+
+# ── Função 32 ───────────────────────────────────────────────────────────────
+def gerar_matriz_correlacao(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Gera a matriz de correlação de Pearson para todas as colunas numéricas.
+    Cada célula [i,j] é o r de Pearson entre a coluna i e a coluna j.
+    A diagonal principal é sempre 1.0 (correlação de uma variável consigo mesma).
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame — matriz quadrada de correlações (linhas = colunas = atributos)
+    """
+    # Seleciona apenas colunas numéricas antes de calcular
+    df_num = df.select_dtypes(include=["number"])
+    if df_num.empty:
+        raise ValueError("Nenhuma coluna numérica encontrada no DataFrame.")
+    # corr() aplica Pearson a cada par de colunas
+    return df_num.corr(method="pearson")
+
+
+# ── Função 34 ───────────────────────────────────────────────────────────────
+def calcular_r2(y_real: pd.Series, y_pred: pd.Series) -> float:
+    """
+    Coeficiente de Determinação R² — mede quanto da variância
+    em y_real é explicada pelo modelo (y_pred).
+    R²=1: ajuste perfeito. R²=0: modelo não melhor que a média.
+    R²<0: modelo pior que a média (possível overfitting ou dados ruins).
+
+    Parameters
+    ----------
+    y_real : pd.Series — valores reais observados
+    y_pred : pd.Series — valores preditos pelo modelo
+
+    Returns
+    -------
+    float — R² (pode ser negativo)
+    """
+    y_real = np.array(y_real)
+    y_pred = np.array(y_pred)
+    # SS_res: soma dos quadrados dos resíduos (erro do modelo)
+    ss_res = np.sum((y_real - y_pred) ** 2)
+    # SS_tot: soma dos quadrados totais (variância total de y_real)
+    ss_tot = np.sum((y_real - np.mean(y_real)) ** 2)
+    if ss_tot == 0:
+        return 1.0  # todos os valores reais são iguais: R² = 1 por convenção
+    return float(1 - ss_res / ss_tot)
+
+
+# ── Função 35 ───────────────────────────────────────────────────────────────
+def calcular_mae(y_real: pd.Series, y_pred: pd.Series) -> float:
+    """
+    Erro Absoluto Médio (MAE — Mean Absolute Error).
+    Mede o erro médio sem penalizar erros grandes — mais intuitivo.
+    Unidade: a mesma de y_real.
+
+    Parameters
+    ----------
+    y_real : pd.Series
+    y_pred : pd.Series
+
+    Returns
+    -------
+    float — MAE
+    """
+    y_real = np.array(y_real)
+    y_pred = np.array(y_pred)
+    # Diferença absoluta linha a linha, depois média
+    return float(np.mean(np.abs(y_real - y_pred)))
+
+
+# ── Função 36 ───────────────────────────────────────────────────────────────
+def calcular_mse(y_real: pd.Series, y_pred: pd.Series) -> float:
+    """
+    Erro Quadrático Médio (MSE — Mean Squared Error).
+    Penaliza erros grandes mais do que pequenos (eleva ao quadrado).
+    Unidade: quadrado da unidade de y_real — menos intuitivo que MAE.
+
+    Parameters
+    ----------
+    y_real : pd.Series
+    y_pred : pd.Series
+
+    Returns
+    -------
+    float — MSE
+    """
+    y_real = np.array(y_real)
+    y_pred = np.array(y_pred)
+    # Eleva o resíduo ao quadrado e calcula a média
+    return float(np.mean((y_real - y_pred) ** 2))
+
+
+# ── Função 37 ───────────────────────────────────────────────────────────────
+def calcular_rmse(y_real: pd.Series, y_pred: pd.Series) -> float:
+    """
+    Raiz do Erro Quadrático Médio (RMSE — Root Mean Squared Error).
+    Combina a penalidade dos erros grandes do MSE com a interpretabilidade
+    do MAE: está na mesma unidade de y_real.
+
+    Parameters
+    ----------
+    y_real : pd.Series
+    y_pred : pd.Series
+
+    Returns
+    -------
+    float — RMSE
+    """
+    # Simplesmente a raiz quadrada do MSE
+    return float(np.sqrt(calcular_mse(y_real, y_pred)))
+
+
+# ── Função 38 ───────────────────────────────────────────────────────────────
+def intervalo_confianca_media(
+    df: pd.DataFrame, coluna: str, alpha: float = 0.05
+) -> dict:
+    """
+    Calcula o intervalo de confiança para a média usando a distribuição t.
+    Para amostras grandes (n>30) converge para o IC normal. Para n<30 o
+    uso do t-Student é obrigatório.
+
+    Fórmula:  IC = x̄  ±  t_{α/2, n-1}  ×  (s / √n)
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    coluna : str — coluna numérica
+    alpha  : float — nível de significância (default 0.05 → IC de 95%)
+
+    Returns
+    -------
+    dict — chaves: "media", "limite_inf", "limite_sup", "confianca_pct"
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    serie = df[coluna].dropna()
+    n     = len(serie)
+    if n < 2:
+        raise ValueError("São necessárias ao menos 2 observações.")
+    media  = serie.mean()
+    erro_p = serie.sem()   # erro padrão da média = s / sqrt(n)
+    # t.ppf: quantil da distribuição t com graus de liberdade n-1
+    t_crit = stats.t.ppf(1 - alpha / 2, df=n - 1)
+    margem = t_crit * erro_p
+    return {
+        "media":         round(float(media), 4),
+        "limite_inf":    round(float(media - margem), 4),
+        "limite_sup":    round(float(media + margem), 4),
+        "confianca_pct": round((1 - alpha) * 100, 1),
+    }
+\end{lstlisting}
+
+% ---------------------------------------------------------------------------
+\subsection{Módulo \texttt{visualizacao.py} — Gráficos com Matplotlib e Seaborn}
+% ---------------------------------------------------------------------------
+
+\begin{lstlisting}[language=Python]
+# src/aedtools/visualizacao.py
+"""
+Funções de visualização: histograma, boxplot, scatter, heatmap,
+barras e pizza. Todas retornam o objeto fig para personalização
+posterior e evitam plt.show() automático (deixa o usuário decidir).
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+# ── Função 17 ───────────────────────────────────────────────────────────────
+def plotar_histograma(
+    df: pd.DataFrame, coluna: str, bins: int = 20,
+    titulo: str | None = None
+) -> plt.Figure:
+    """
+    Plota histograma com curva KDE de uma coluna numérica.
+    Inclui linhas verticais de média e mediana para comparação visual.
+
+    Parameters
+    ----------
+    df      : pd.DataFrame
+    coluna  : str
+    bins    : int — número de intervalos (default 20)
+    titulo  : str | None — título do gráfico (auto-gerado se None)
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        raise TypeError(f"Coluna '{coluna}' não é numérica.")
+    serie = df[coluna].dropna()
+    fig, ax = plt.subplots(figsize=(8, 4))
+    # histplot com kde=True sobrepõe curva de densidade suavizada
+    sns.histplot(serie, bins=bins, kde=True, ax=ax, color="steelblue", alpha=0.7)
+    # Linha vertical da média (tracejada vermelha)
+    ax.axvline(serie.mean(), color="red", linestyle="--", linewidth=1.5,
+               label=f"Média: {serie.mean():.2f}")
+    # Linha vertical da mediana (tracejada verde)
+    ax.axvline(serie.median(), color="green", linestyle="--", linewidth=1.5,
+               label=f"Mediana: {serie.median():.2f}")
+    ax.set_xlabel(coluna)
+    ax.set_ylabel("Contagem")
+    ax.set_title(titulo or f"Distribuição de {coluna}")
+    ax.legend()
+    # tight_layout evita corte de labels
+    fig.tight_layout()
+    return fig
+
+
+# ── Função 18 ───────────────────────────────────────────────────────────────
+def plotar_boxplot(
+    df: pd.DataFrame, coluna: str,
+    grupo: str | None = None,
+    titulo: str | None = None
+) -> plt.Figure:
+    """
+    Plota boxplot de uma coluna numérica, opcionalmente agrupado
+    por uma coluna categórica. Outliers são marcados como pontos.
+
+    Parameters
+    ----------
+    df      : pd.DataFrame
+    coluna  : str — variável numérica
+    grupo   : str | None — coluna categórica para split (opcional)
+    titulo  : str | None
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    fig, ax = plt.subplots(figsize=(8, 4))
+    # Se grupo informado, cria boxplot por categoria; senão, único boxplot
+    if grupo and grupo in df.columns:
+        sns.boxplot(data=df, x=grupo, y=coluna, ax=ax,
+                    palette="pastel", flierprops={"marker": "o"})
+        ax.set_title(titulo or f"Boxplot de {coluna} por {grupo}")
+    else:
+        sns.boxplot(data=df, y=coluna, ax=ax,
+                    color="steelblue", flierprops={"marker": "o"})
+        ax.set_title(titulo or f"Boxplot de {coluna}")
+    fig.tight_layout()
+    return fig
+
+
+# ── Função 19 ───────────────────────────────────────────────────────────────
+def plotar_scatterplot(
+    df: pd.DataFrame, col1: str, col2: str,
+    hue: str | None = None,
+    titulo: str | None = None
+) -> plt.Figure:
+    """
+    Scatter plot entre dois atributos numéricos com linha de tendência (regressão).
+    Parâmetro hue permite colorir pontos por uma terceira variável categórica.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    col1   : str — variável no eixo X
+    col2   : str — variável no eixo Y
+    hue    : str | None — coluna categórica para cor dos pontos (opcional)
+    titulo : str | None
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+    """
+    for col in [col1, col2]:
+        if col not in df.columns:
+            raise ValueError(f"Coluna '{col}' não encontrada.")
+    fig, ax = plt.subplots(figsize=(7, 5))
+    # scatterplot com hue opcional
+    sns.scatterplot(data=df, x=col1, y=col2, hue=hue,
+                    ax=ax, alpha=0.7, edgecolor="white")
+    # regplot adiciona linha de tendência linear sem sobrescrever os pontos
+    sns.regplot(data=df, x=col1, y=col2, scatter=False,
+                ax=ax, color="red", line_kws={"linewidth": 1.5})
+    # Calcular e exibir r de Pearson no título
+    r = df[col1].corr(df[col2])
+    ax.set_title(titulo or f"{col1} vs {col2}  (r = {r:.3f})")
+    ax.set_xlabel(col1)
+    ax.set_ylabel(col2)
+    fig.tight_layout()
+    return fig
+
+
+# ── Função 33 ───────────────────────────────────────────────────────────────
+def plotar_heatmap_correlacao(df: pd.DataFrame, titulo: str | None = None) -> plt.Figure:
+    """
+    Plota heatmap colorido da matriz de correlação para todas as colunas numéricas.
+    Usa diverging colormap (azul=negativo, branco=0, vermelho=positivo).
+    Anota cada célula com o valor de r arredondado a 2 casas.
+
+    Parameters
+    ----------
+    df     : pd.DataFrame
+    titulo : str | None
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+    """
+    # Importa a função do próprio módulo correlacao para consistência
+    from .correlacao import gerar_matriz_correlacao
+    matriz = gerar_matriz_correlacao(df)
+    n = len(matriz)
+    # Ajusta o tamanho da figura de acordo com o número de colunas
+    tamanho = max(6, n * 0.8)
+    fig, ax = plt.subplots(figsize=(tamanho, tamanho))
+    # annot=True: escreve o valor em cada célula; fmt=".2f": 2 casas decimais
+    sns.heatmap(
+        matriz, annot=True, fmt=".2f", ax=ax,
+        cmap="coolwarm", center=0,
+        vmin=-1, vmax=1,
+        linewidths=0.5, linecolor="white",
+        square=True,
+    )
+    ax.set_title(titulo or "Matriz de Correlação de Pearson")
+    fig.tight_layout()
+    return fig
+
+
+# ── Função 39 ───────────────────────────────────────────────────────────────
+def plotar_barras_categorias(
+    df: pd.DataFrame, coluna: str,
+    orientacao: str = "v",
+    titulo: str | None = None
+) -> plt.Figure:
+    """
+    Gráfico de barras com contagem por categoria, ordenado da mais
+    frequente para a menos frequente. Inclui rótulo numérico em cada barra.
+
+    Parameters
+    ----------
+    df          : pd.DataFrame
+    coluna      : str — coluna categórica
+    orientacao  : str — 'v' (vertical) ou 'h' (horizontal, melhor para labels longos)
+    titulo      : str | None
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    # value_counts() já retorna ordenado do mais frequente
+    contagem = df[coluna].value_counts()
+    fig, ax = plt.subplots(figsize=(8, 4))
+    if orientacao == "h":
+        # Barras horizontais — melhor para categorias com nomes longos
+        barras = ax.barh(contagem.index, contagem.values, color="steelblue")
+        ax.set_xlabel("Contagem")
+        # Rótulo numérico ao lado de cada barra
+        for b in barras:
+            ax.text(b.get_width() + 0.1, b.get_y() + b.get_height() / 2,
+                    str(int(b.get_width())), va="center", fontsize=9)
+    else:
+        # Barras verticais — padrão
+        barras = ax.bar(contagem.index, contagem.values, color="steelblue")
+        ax.set_ylabel("Contagem")
+        # Rótulo numérico acima de cada barra
+        for b in barras:
+            ax.text(b.get_x() + b.get_width() / 2, b.get_height() + 0.1,
+                    str(int(b.get_height())), ha="center", fontsize=9)
+    ax.set_xlabel(coluna)
+    ax.set_title(titulo or f"Frequência por {coluna}")
+    fig.tight_layout()
+    return fig
+
+
+# ── Função 40 ───────────────────────────────────────────────────────────────
+def plotar_pizza_categorias(
+    df: pd.DataFrame, coluna: str,
+    titulo: str | None = None,
+    max_fatias: int = 6
+) -> plt.Figure:
+    """
+    Gráfico de pizza com proporção por categoria.
+    Limita a max_fatias categorias (agrupa o resto em 'Outros')
+    para evitar visualmente mais de 6 fatias — limite cognitivo humano.
+
+    Parameters
+    ----------
+    df         : pd.DataFrame
+    coluna     : str — coluna categórica
+    titulo     : str | None
+    max_fatias : int — máximo de categorias exibidas individualmente (default 6)
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+    """
+    if coluna not in df.columns:
+        raise ValueError(f"Coluna '{coluna}' não encontrada.")
+    contagem = df[coluna].value_counts()
+    # Se há mais que max_fatias categorias, agrupa o resto em "Outros"
+    if len(contagem) > max_fatias:
+        top   = contagem.iloc[:max_fatias]
+        outros = contagem.iloc[max_fatias:].sum()
+        contagem = pd.concat([top, pd.Series([outros], index=["Outros"])])
+    fig, ax = plt.subplots(figsize=(6, 6))
+    # autopct: exibe a percentagem dentro de cada fatia
+    # startangle: começa do topo (90°) como calendário
+    ax.pie(
+        contagem.values,
+        labels=contagem.index,
+        autopct="%1.1f%%",
+        startangle=90,
+        pctdistance=0.82,
+        colors=sns.color_palette("pastel", n_colors=len(contagem)),
+    )
+    ax.set_title(titulo or f"Proporção por {coluna}")
+    fig.tight_layout()
+    return fig
+\end{lstlisting}
+
+\subsection*{Teste unitário — exemplo com \texttt{pytest}}
+
+\begin{lstlisting}[language=Python]
+# tests/test_estatistica.py
+"""
+Testes unitários para o módulo estatistica.py.
+Execute com: pytest tests/ -v
+"""
+
+import pytest
+import pandas as pd
+import numpy as np
+from aedtools import (
+    calcular_media, calcular_mediana, calcular_moda,
+    calcular_amplitude, detectar_outliers_iqr,
+    calcular_quartis,
+)
+
+
+# Fixture: DataFrame reutilizado em todos os testes deste módulo
+@pytest.fixture
+def df_simples():
+    """Dataset mínimo com valores conhecidos para testes determinísticos."""
+    return pd.DataFrame({
+        "valores": [1.0, 2.0, 3.0, 4.0, 100.0],  # 100 é outlier intencional
+        "categoria": ["A", "B", "A", "C", "A"],
+    })
+
+
+def test_calcular_media(df_simples):
+    """Média de [1,2,3,4,100] deve ser 22.0"""
+    assert calcular_media(df_simples, "valores") == pytest.approx(22.0)
+
+
+def test_calcular_mediana(df_simples):
+    """Mediana de [1,2,3,4,100] deve ser 3.0"""
+    assert calcular_mediana(df_simples, "valores") == pytest.approx(3.0)
+
+
+def test_calcular_moda_categorico(df_simples):
+    """Moda da categoria deve ser 'A' (aparece 3x)"""
+    assert calcular_moda(df_simples, "categoria") == ["A"]
+
+
+def test_calcular_amplitude(df_simples):
+    """Amplitude de [1,2,3,4,100] deve ser 99"""
+    assert calcular_amplitude(df_simples, "valores") == pytest.approx(99.0)
+
+
+def test_detectar_outliers_iqr(df_simples):
+    """100 deve ser detectado como outlier pela regra de Tukey"""
+    outliers = detectar_outliers_iqr(df_simples, "valores")
+    assert 100.0 in outliers["valores"].values
+    assert len(outliers) == 1
+
+
+def test_coluna_inexistente_levanta_valueerror(df_simples):
+    """Passar coluna que não existe deve levantar ValueError"""
+    with pytest.raises(ValueError, match="não encontrada"):
+        calcular_media(df_simples, "nao_existe")
+
+
+def test_funcao_nao_modifica_original(df_simples):
+    """Funções não devem modificar o DataFrame original (imutabilidade)"""
+    df_original = df_simples.copy()
+    calcular_amplitude(df_simples, "valores")
+    pd.testing.assert_frame_equal(df_simples, df_original)
+\end{lstlisting}
+
+\begin{TipBox}
+\textbf{Dica de workflow para a turma:}
+\begin{enumerate}[leftmargin=*]
+  \item Clone o repositório: \texttt{git clone https://github.com/unifacol/aedtools}
+  \item Crie seu branch: \texttt{git checkout -b feat/funcao-XX-seu-nome}
+  \item Implemente a sua função no módulo correto.
+  \item Adicione pelo menos 3 testes em \texttt{tests/}.
+  \item Abra um Pull Request — o professor revisa e aprova o merge.
+  \item Após aprovação, a função entra oficialmente na \texttt{v0.X.0} da biblioteca.
+\end{enumerate}
+Ao final do semestre, a biblioteca tem 40 funções testadas, documentadas e
+publicadas no PyPI — um portfólio real para o LinkedIn e o currículo.
+\end{TipBox}

@@ -1,15 +1,292 @@
-\chapter{Semana 08 (20/04) --- Trabalho 4 + Storytelling}
+% =============================================================================
+% Semana 08 — Trabalho 4 + Storytelling: Big Idea e Storyboard
+% Aula de 3 horas (19h–22h) | 20/04/2026 — somente segunda-feira
+% =============================================================================
 
-\section{Observação do calendário}
-Aula concentrada (apenas segunda-feira).
+\chapter{Semana 08 (20/04/2026) — Storytelling com Dados: Big Idea e Storyboard}
 
-\section{Ritmo da aula}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Até 1h}: apresentações do Trabalho 4.
-  \item \textbf{Restante}: Big Idea, storyboard e narrativa.
+% ---------------------------------------------------------------------------
+\section{Objetivo da semana}
+% ---------------------------------------------------------------------------
+
+Pessoal, bem-vindos à Unidade II! A Unidade I nos deu as ferramentas para
+\textbf{entender} os dados. Agora a pergunta central muda:
+
+\begin{center}
+\textit{``Como eu conto essa história para que alguém tome uma decisão?''}
+\end{center}
+
+Análise exploratória serve ao analista. Análise explanatória serve ao
+\textbf{tomador de decisão}. Hoje aprendemos a diferença e os primeiros
+blocos de qualquer apresentação de dados eficaz: a \textbf{Big Idea} e
+o \textbf{Storyboard}.
+
+\begin{NoteBox}
+\textbf{Calendário:} aula concentrada — somente segunda-feira (20/04).
+Roteiro adaptado para 3 horas incluindo apresentações do T4.
+\end{NoteBox}
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–20h — \textbf{Apresentações:} Trabalho 4 (primeiro contato com Tableau)
+  \item 20h–20h20 — \textbf{TEORIA:} AED vs Explanatória — a virada de perspectiva
+  \item 20h20–21h — \textbf{TEORIA:} Big Idea Framework (Nancy Duarte)
+  \item 21h–21h30 — \textbf{TEORIA:} Estrutura narrativa e Storyboard
+  \item 21h30–21h50 — \textbf{PRÁTICA:} Escrever Big Idea + montar storyboard de 3 telas
+  \item 21h50–22h — \textbf{Correção coletiva + lançamento do T5}
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Livro de referência para a Unidade II:} \textit{Datastory} de Nancy Duarte
+(2019). Capítulos 1–3 para esta semana.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Apresentações: Trabalho 4 (19h–20h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Checklist de avaliação T4 — Primeiro contato com Tableau:}
+\begin{tabular}{|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Ponto} & \textbf{O que observar} \\
+\hline
+Dataset importado & Dados carregados corretamente no Tableau \\
+Pelo menos 1 visual & Gráfico funcional e com título significativo \\
+Título que é mensagem & Não ``Gráfico de Barras'' — sim ``Produto X lidera vendas em SP'' \\
+Big Idea presente & 1 frase com ponto de vista + contexto \\
+Wireframe/esboço & 3 telas planejadas (mesmo manual/papel) \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte II — Teoria: AED vs Explanatória (20h–20h20)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{A virada de perspectiva:}
+
+\textbf{Análise Exploratória (AED):}
+\begin{itemize}
+  \item Você como analista explorando os dados.
+  \item Objetivo: entender o dataset, encontrar padrões, detectar anomalias.
+  \item Centenas de visuais gerados; a maioria descartada.
+  \item Linguagem: ``O dado mostra $X$.''
+  \item Audiência: você mesmo.
 \end{itemize}
 
-\section{Entrega (Trabalho 4)}
-\begin{SolvedBox}
-Roteiro curto (Big Idea + 3 evidências) + wireframe de dashboard + 1 visual no Tableau.
+\textbf{Análise Explanatória:}
+\begin{itemize}
+  \item Você como comunicador levando uma descoberta para o tomador de decisão.
+  \item Objetivo: mudar uma crença ou provocar uma ação específica.
+  \item Apenas os visuais que servem à \emph{mensagem} são apresentados.
+  \item Linguagem: ``Como este dado muda o que você deveria fazer?''
+  \item Audiência: CEO, gerente, cliente, investidor.
+\end{itemize}
+
+\textbf{Erro mais comum de analistas:} mostrar todo o processo exploratório
+para uma audiência executiva. O resultado: confusão, perda de tempo, e a
+sua descoberta mais importante se perde no meio de 30 gráficos.
 \end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — Big Idea Framework (20h20–21h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{O que é a Big Idea? (para o quadro)}
+
+A Big Idea é uma única frase que captura a essência da sua mensagem.
+Ela deve conter \textbf{três elementos obrigatórios}:
+
+\begin{enumerate}
+  \item \textbf{Ponto de vista:} uma afirmação, não uma observação neutra.
+  (``O dado mostra X'' não é Big Idea. ``Devemos fazer Y porque X'' é
+  Big Idea.)
+  \item \textbf{Tensão:} o que está em jogo? Qual o risco de não agir?
+  Qual a oportunidade desperdiçada?
+  \item \textbf{Stake:} por que a audiência deveria se importar? O que a
+  afeta diretamente?
+\end{enumerate}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Big Ideas boas vs. ruins:}
+
+\begin{tabular}{|p{6cm}|p{7cm}|}
+\hline
+\textbf{Ruim (observação sem direção)} & \textbf{Boa (Big Idea com tensão)} \\
+\hline
+``A taxa de cancelamento subiu 12\% no Q3.'' &
+``Se não corrigirmos o onboarding até setembro, perderemos R\$1,2M em receita
+recorrente nos próximos 12 meses.'' \\
+\hline
+``Clientes Premium têm NPS mais alto.'' &
+``Convertendo 15\% dos clientes Standard para Premium podemos aumentar o NPS
+médio em 8 pontos e reduzir o churn em 22\%.'' \\
+\hline
+``O canal online representa 60\% das vendas.'' &
+``O canal físico gera 40\% das vendas com 70\% do custo — precisamos decidir
+sua continuidade antes do próximo trimestre.'' \\
+\hline
+\end{tabular}
+
+\textbf{Teste da Big Idea:} leia para alguém que não viu os dados.
+Se a resposta for ``interessante'' sem que a pessoa saiba o que fazer,
+a Big Idea não está pronta.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{A Pergunta de Decisão (complemento da Big Idea)}
+
+Toda boa apresentação de dados responde a uma \textbf{pergunta de decisão}:
+uma questão que a audiência precisa responder \emph{ao final da apresentação}.
+
+\textbf{Exemplos de Perguntas de Decisão:}
+\begin{itemize}
+  \item ``Devemos expandir para o canal digital ou reforçar o físico?''
+  \item ``Qual produto descontinuamos no próximo trimestre?''
+  \item ``Aprovamos o orçamento para o novo sistema de CRM?''
+\end{itemize}
+
+O analista não precisa ter a resposta — mas precisa apresentar os dados que
+tornam a resposta possível.
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte IV — Estrutura Narrativa e Storyboard (21h–21h30)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Estrutura narrativa clássica adaptada para dados (Nancy Duarte):}
+
+\begin{enumerate}
+  \item \textbf{Contexto — O que é:} mostre o estado atual. Dados reais.
+  A situação é X. A audiência reconhece esse mundo.
+  \item \textbf{Conflito — O que poderia ser:} introduza a tensão. O mundo
+  \emph{poderia} ser Y — mas algo impede isso. Ou: o mundo \emph{está indo} para Z,
+  e isso é um problema.
+  \item \textbf{Resolução — O que proponho:} sua proposta de ação.
+  Com base nos dados, recomendo W.
+  \item \textbf{Call to action — O que peço:} qual decisão específica
+  você quer da audiência até quando?
+\end{enumerate}
+
+\textbf{Em uma apresentação de dados, isso se traduz em:}
+\begin{itemize}
+  \item Tela 1: contexto (KPIs atuais, cenário)
+  \item Tela 2: problema/oportunidade (o dado que revela a tensão)
+  \item Tela 3: análise/evidências
+  \item Tela 4: recomendação + próximo passo concreto
+\end{itemize}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Storyboard: planejando antes de abrir o Tableau (para o quadro)}
+
+Storyboard é o rascunho da apresentação — desenhado no papel ou em qualquer
+ferramenta simples — antes de qualquer visual ser produzido.
+
+\textbf{Por que fazer storyboard antes?}
+\begin{itemize}
+  \item Força a pensar na \emph{mensagem} antes de pensar no gráfico.
+  \item Evita criar visuais que não servem à narrativa.
+  \item Alinha expectativas com a audiência sem custo de produção.
+\end{itemize}
+
+\textbf{Cada tela do storyboard deve ter:}
+\begin{enumerate}
+  \item Título que é mensagem (ex.: ``Canal físico custa 4× mais por venda'')
+  \item Tipo de visual proposto (barras, linha, mapa, etc.)
+  \item O que o dado vai mostrar (esboço manual)
+  \item A transição lógica (``por isso, na próxima tela, veja...'')
+\end{enumerate}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte V — Prática: Big Idea + Storyboard (21h30–21h50)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Cenário:} você é analista de dados de uma rede de academias.
+O dataset mostra:
+\begin{itemize}
+  \item Taxa de retenção de alunos: \textbf{62\%}
+  \item Taxa de retenção de alunos que usam o app: \textbf{89\%}
+  \item Apenas \textbf{28\%} dos alunos instalaram o app
+  \item Custo de aquisição de novo aluno: R\$ 180
+  \item Custo de retenção via campanha de app: R\$ 12 por aluno
+\end{itemize}
+
+\textbf{Tarefa:}
+\begin{enumerate}
+  \item Escreva a Big Idea (1 frase: ponto de vista + tensão + stake).
+  \item Escreva a Pergunta de Decisão.
+  \item Monte um storyboard de 3–4 telas (pode ser manual):
+  título de cada tela + tipo de visual + transição.
+\end{enumerate}
+\textbf{Tempo:} 20 minutos. Individual.
+\end{SolvedBox}
+
+\begin{SolvedBox}
+\textbf{Gabarito orientativo (professor):}
+
+\textbf{Big Idea:} ``Aumentar a adoção do app de 28\% para 70\% pode elevar
+a taxa de retenção de 62\% para mais de 80\% — com custo 15× menor do que
+adquirir novos alunos para repor os que cancelam.''
+
+\textbf{Pergunta de Decisão:} ``Aprovamos a campanha de adoção do app no próximo mês?''
+
+\textbf{Storyboard:}
+\begin{enumerate}
+  \item \textbf{Tela 1} — ``62\% de retenção: estamos perdendo 38 em cada 100 alunos ao ano''
+  (visual: KPI grande + linha temporal). Transição: ``Mas há um grupo diferente...''
+  \item \textbf{Tela 2} — ``Quem usa o app fica: 89\% de retenção vs 62\%''
+  (visual: barras comparativas, destacando a diferença de 27pp). Transição: ``O problema: poucos usam.''
+  \item \textbf{Tela 3} — ``Apenas 28\% instalaram o app'' (visual: gauge ou pizza impactante).
+  Transição: ``E o custo de mudar isso é irrisório.''
+  \item \textbf{Tela 4} — ``Campanha de app: R\$12/aluno vs R\$180 para substituir um que cancela''
+  (visual: comparação de barras custo ×). \textbf{Call to action:} aprovação até 30/04.
+\end{enumerate}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Lançamento — Trabalho 5}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{Trabalho 5 — Storytelling com Dados (entrega: 29/04/2026 às 23h59):}
+\begin{itemize}
+  \item[$\square$] Big Idea (1 frase completa com ponto de vista, tensão e stake)
+  \item[$\square$] Pergunta de Decisão explícita
+  \item[$\square$] Storyboard de 4–6 telas (manual ou digital)
+  \item[$\square$] Pelo menos 2 visuais no Tableau
+  \item[$\square$] Títulos que são mensagens (não rótulos de tipo de gráfico)
+  \item[$\square$] Script de apresentação de 3 min (por escrito)
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides: comparativo AED vs Explanatória; fórmula visual da Big Idea
+  \item Folha de storyboard em branco (4 retângulos por folha — impressa para cada aluno)
+  \item Exemplos de Big Ideas boas e ruins (slides com quiz rápido)
+  \item Transcrição do TED Talk de Nancy Duarte ``The secret structure of great talks''
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 09} aprofundamos o \textbf{design de informação}: o Teste do
+Relance, princípios de pré-atenção (cor, tamanho, posição), título que carrega
+a mensagem e como transformar visuais ruins em comunicação clara.
+
+Perguntem aos alunos: \textit{``Olhando para o storyboard que vocês fizeram
+hoje, qual das 4 telas é a mais importante? Se vocês tivessem apenas 30 segundos
+para apresentar — qual tela mostrariam e por quê?''}

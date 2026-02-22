@@ -1,11 +1,300 @@
-\chapter{Semana 09 (27/04--29/04) --- Design de informação}
+% =============================================================================
+% Semana 09 — Design de Informação: Pré-atenção, Hierarquia Visual e Chartjunk
+% Aula de 3 horas (19h–22h) | 29/04/2026
+% =============================================================================
 
+\chapter{Semana 09 (29/04/2026) — Design de Informação: do Visual Correto ao Visual Claro}
+
+% ---------------------------------------------------------------------------
 \section{Objetivo da semana}
-Eu ensino como transformar um visual correto em um visual \textbf{claro}, com hierarquia e consistência.
+% ---------------------------------------------------------------------------
 
-\section{Conteúdo}
-\begin{itemize}[leftmargin=*]
-  \item Teste do Relance (título-mensagem).
-  \item Hierarquia visual: cor, espaço em branco, alinhamento.
-  \item Padrões para dashboards.
+Pessoal, um gráfico pode estar tecnicamente correto e ainda assim falhar
+completamente na comunicação. O leitor não consegue encontrar o que importa,
+os eixos são confusos, as cores não têm propósito. Hoje aprendemos a
+transformar visuais corretos em visuais \textbf{claros} — onde a mensagem é
+imediata, a hierarquia é evidente e cada elemento visual ganha seu espaço
+por um motivo.
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–19h30 — \textbf{TEORIA:} Pré-atenção — como o cérebro lê um gráfico
+  \item 19h30–20h — \textbf{TEORIA:} Teste do Relance + Título que é mensagem
+  \item 20h–20h30 — \textbf{TEORIA:} Chartjunk (Tufte) — o que remover e por quê
+  \item 20h30–21h — \textbf{TEORIA:} Hierarquia visual — cor, tamanho, posição, espaço
+  \item 21h–21h40 — \textbf{PRÁTICA:} Antes e Depois — reformular 3 visuais ruins
+  \item 21h40–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL} + revisão do storyboard do T5
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Leitura base:} \textit{Datastory}, Nancy Duarte — Cap.\ 4 e 5 (design de slides e hierarquia visual).\\
+\textbf{Leitura complementar:} \textit{The Visual Display of Quantitative Information}, Edward Tufte — conceito de data-ink ratio e chartjunk.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Pré-atenção (19h–19h30)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{O que é pré-atenção?}
+
+Antes de ler deliberadamente qualquer coisa em um gráfico, o cérebro
+humano \emph{automaticamente} detecta certos atributos visuais em menos
+de 250 milissegundos — sem esforço consciente. Esses são os atributos
+\textbf{pré-atencionais}.
+
+Se você usa esses atributos para destacar o que importa, o leitor chega
+à mensagem antes mesmo de ler o título. Se você os usa aleatoriamente
+(tudo em cores diferentes, tamanhos mistos), o leitor fica desorientado.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Atributos pré-atencionais — os mais úteis em visualização de dados}
+
+\begin{tabular}{|l|p{5.5cm}|p{5cm}|}
+\hline
+\textbf{Atributo} & \textbf{O que faz} & \textbf{Uso recomendado} \\
+\hline
+\textbf{Cor} & Agrupa, destaca e emociona & Usar 1 cor de destaque; resto em cinza/neutro \\
+\textbf{Tamanho} & Indica magnitude & Barra maior = valor maior; consistência obrigatória \\
+\textbf{Posição} & Organiza hierarquia & Elemento mais importante no canto superior esquerdo \\
+\textbf{Intensidade} & Contraste claro-escuro & Tom mais escuro = mais importante \\
+\textbf{Forma} & Diferencia categorias & Formas distintas (círculo vs quadrado) para subgrupos \\
+\textbf{Enclosure} & Agrupa com borda ou área & Caixa ao redor de um grupo de dados relacionados \\
+\hline
+\end{tabular}
+
+\textbf{Regra de ouro:} use, no máximo, \textbf{2 atributos pré-atencionais} por visual.
+Mais do que isso e a hierarquia colapsa — o olho não sabe para onde ir.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Princípio da cor com propósito:}
+
+\begin{itemize}
+  \item \textbf{Cor semântica:} vermelho = alerta/negativo; verde = positivo/ok;
+  amarelo = atenção. Use onde há convenção estabelecida — não inverta sem motivo.
+  \item \textbf{Cor de destaque:} 1 cor viva para o elemento que carrega a mensagem;
+  tudo mais em cinza. O contraste leva o olho diretamente ao dado importante.
+  \item \textbf{Cor para categorias:} máximo de 6 cores distintas. Acima disso, o leitor
+  perde a associação cor-categoria.
+  \item \textbf{Acessibilidade:} 8\% dos homens têm daltonismo vermelho-verde.
+  Evite depender exclusivamente dessa combinação como único diferenciador.
 \end{itemize}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte II — Teste do Relance e Título-Mensagem (19h30–20h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{O Teste do Relance (3 segundos)}
+
+Mostre seu gráfico por 3 segundos e cubra. Pergunte à audiência:
+\begin{enumerate}
+  \item O que esse gráfico está mostrando?
+  \item Qual é a mensagem principal?
+  \item O que você deveria fazer com essa informação?
+\end{enumerate}
+
+Se a audiência não conseguir responder à Q2 em 3 segundos, o visual falhou —
+não o leitor. O problema está no design.
+
+\textbf{Diagnóstico do fracasso no Teste do Relance:}
+\begin{itemize}
+  \item Título descritivo/neutro: ``Dados de Vendas 2025'' — não passa informação.
+  \item Excesso de elementos: o olho não sabe onde pousar primeiro.
+  \item Cores sem propósito: todas as barras em cores diferentes sem razão.
+  \item Legenda separada: o leitor precisa desviar o olhar para decodificar.
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Títulos rótulo vs títulos mensagem:}
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Título rótulo (ruim)} & \textbf{Título mensagem (bom)} \\
+\hline
+``Vendas por Região'' & ``Região Sul concentra 58\% das vendas'' \\
+``Evolução Mensal'' & ``Churn caiu 34\% após o programa de fidelidade'' \\
+``Satisfação de Clientes'' & ``NPS Premium é 2× superior ao do plano Básico'' \\
+``Comparativo de Custos'' & ``Canal físico custa R\$12 por venda; digital, R\$0,80'' \\
+\hline
+\end{tabular}
+
+\textbf{Fórmula do título mensagem:} [Sujeito do dado] + [verbo de tendência/comparação]
++ [magnitude/contexto]. Ex.: ``Retenção \textbf{aumentou} 22pp com o app'' —
+sujeito (retenção) + verbo (aumentou) + magnitude (22pp).
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — Chartjunk: o que remover (20h–20h30)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Data-ink ratio (Tufte) — para o quadro}
+
+Edward Tufte (1983) propõe o conceito de \textbf{data-ink ratio}:
+
+\[
+\text{Data-ink ratio} = \frac{\text{Tinta usada para representar dados}}{\text{Tinta total do gráfico}}
+\]
+
+Maximize esse ratio. Todo elemento visual que não carrega dado é candidato
+à remoção.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Exemplos de Chartjunk — o que remover:}
+
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\textbf{Elemento} & \textbf{Por que remover?} \\
+\hline
+Grades pesadas & O olho vai para as linhas, não para os dados \\
+3D em barras/pizzas & Distorce o tamanho percebido; pizza 3D é enganosa \\
+Sombras e reflexos & Decoração — não carrega informação \\
+Eixo Y com zero forçado & Às vezes necessário; às vezes esconde variação real \\
+Legendas redundantes & Se cada barra já tem rótulo, a legenda é ruim \\
+Ícones temáticos & Uma pizza com ícone de comida não passa mais informação \\
+Gradientes de cor & Cor sem propósito semântico confunde \\
+Mais de 3 casas decimais & Precisão falsa — dados de negócio raramente justificam \\
+\hline
+\end{tabular}
+
+\textbf{Princípio:} duvide de cada elemento. Pergunte: ``Se eu remover isso,
+o gráfico fica menos claro?'' Se a resposta for não, remova.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte IV — Hierarquia Visual (20h30–21h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Os quatro pilares da hierarquia visual (para o quadro)}
+
+\textbf{1. Tamanho:} o elemento mais importante deve ser o maior.
+Título $>$ subtítulo $>$ rótulo de dado $>$ nota de rodapé.
+Nunca título menor que os rótulos nos eixos.
+
+\textbf{2. Peso (negrito):} use negrito para o número que carrega a mensagem.
+Um único número em negrito em meio a texto regular atrai o olho imediatamente.
+
+\textbf{3. Cor:} 1 cor de destaque; resto em cinza ou neutro.
+O elemento com a cor de destaque é o primeiro que o olho lê.
+
+\textbf{4. Posição:} a leitura ocidental começa no canto superior esquerdo
+e vai para a direita-baixo em Z. Coloque o dado mais importante no início
+desse caminho, não no rodapé.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Consistência — o princípio silencioso:}
+
+Consistência é o que transforma um conjunto de visuais em uma
+\emph{apresentação coesa}. Ela elimina o esforço cognitivo de
+decodificar o ``sistema de design'' a cada nova tela.
+
+\begin{itemize}
+  \item \textbf{Eixos:} se três gráficos mostram a mesma métrica em escalas
+  diferentes, a comparação é impossível. Padronize o eixo Y para comparáveis.
+  \item \textbf{Cores:} Região Sul é sempre azul em todas as telas.
+  Nunca verde em uma tela e amarelo em outra.
+  \item \textbf{Fontes:} máximo de 2 famílias tipográficas. Títulos numa,
+  corpo noutra.
+  \item \textbf{Animações/transições:} só se adicionarem informação
+  (ex.: mostrar evolução temporal). Animação puramente decorativa distrai.
+\end{itemize}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte V — Prática: Antes e Depois (21h–21h40)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Exercício de reformulação — 3 visuais ruins (em dupla)}
+
+Para cada visual abaixo (descrito em texto), identifique os problemas e
+proponha como ele deveria ser redesenhado.
+
+\textbf{Visual 1 — Barras em 3D, 6 cores diferentes, título ``Vendas por Produto'':}
+\begin{itemize}
+  \item Problemas: 3D distorce; cores sem propósito; título rótulo.
+  \item Redesenho: barras planas horizontais (mais fácil de ler rótulos longos);
+  cor única; ordenar do maior para menor; título: ``Produto B é o líder com 42\% das vendas''.
+\end{itemize}
+
+\textbf{Visual 2 — Linha temporal com 12 séries coloridas, legenda separada, grade pesada:}
+\begin{itemize}
+  \item Problemas: impossível identificar qual linha é qual sem consultar a legenda; grade pesada poluí; 12 cores excedem capacidade de distinção.
+  \item Redesenho: anotação direta em cada linha (elimina legenda); remover grade ou usar grade muito suave; destacar apenas 2–3 séries relevantes; destacar o ponto de inflexão com cor.
+\end{itemize}
+
+\textbf{Visual 3 — Mapa de calor sem título, escala de cor não explicada, dados sem unidade:}
+\begin{itemize}
+  \item Problemas: o leitor não sabe o que a cor representa; sem título de mensagem; sem unidade impossibilita interpretação.
+  \item Redesenho: título mensagem; legenda da escala com unidade e âncoras (``branco = 0 vendas; azul escuro = 500+ vendas''); nota de rodapé com fontes e período.
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte VI — Atividade Individual Final (21h40–22h)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Instruções:}
+
+Dado o cenário a seguir, faça:
+\begin{enumerate}
+  \item Escreva o título-mensagem para o visual (fórmula: sujeito + verbo + magnitude).
+  \item Liste 3 elementos de chartjunk que você \textbf{não} incluiria neste visual.
+  \item Descreva qual atributo pré-atencional usaria para destacar a informação principal e por quê.
+  \item Esboce (manual) o visual final — mínimo de elementos, máxima clareza.
+\end{enumerate}
+
+\textbf{Cenário:} comparação de tempo médio de atendimento entre 4 canais
+(Chat, Telefone, Email, WhatsApp). Chat = 8 min; WhatsApp = 9 min;
+Telefone = 22 min; Email = 48 min. Meta da empresa: $\leq 15$ min.
+
+\textbf{Hora de entrega:} folha ou foto no AVA ao final da aula.
+\end{SolvedBox}
+
+\begin{SolvedBox}
+\textbf{Gabarito orientativo (professor):}
+\begin{itemize}
+  \item \textbf{Título:} ``Telefone e Email superam em 3× a meta de 15 min — ação imediata necessária''
+  \item \textbf{Chartjunk para evitar:} barras em 3D; gradiente de cor; legendas separadas (rótulo direto nas barras).
+  \item \textbf{Atributo pré-atencional:} cor — barras Chat e WhatsApp em verde (abaixo da meta);
+  Telefone e Email em vermelho (acima da meta). A linha da meta (15 min) em tracejado cinza.
+  O olho vai imediatamente ao vermelho — já sabe onde está o problema.
+  \item \textbf{Esboço:} barras horizontais ordenadas (menor para maior);
+  rótulos com os valores diretamente nas barras; linha vertical da meta; título com a mensagem.
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides com galeria de ``Antes e Depois'' (8 exemplos reais)
+  \item Handout: checklist de design de informação (10 itens)
+  \item Folha de atividade individual impressa com o cenário
+  \item Link: Viz of the Day — Tableau Public (exemplos de excelente design)
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 10} chegam as apresentações do Trabalho 5 e aprofundamos
+o Tableau: filtros contextuais, parâmetros e ações de dashboard. Vamos
+construir dashboards que não apenas mostram dados — mas que forçam a
+interação e levam à decisão.
+
+Perguntem aos alunos: \textit{``Pensem no último relatório ou dashboard que
+vocês receberam no trabalho ou estágio. Ele passaria no Teste do Relance?
+O título dizia a mensagem ou era apenas um rótulo? O que vocês fariam
+diferente agora?''}

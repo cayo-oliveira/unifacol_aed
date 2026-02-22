@@ -1,11 +1,428 @@
-\chapter{Semana 05 (09/03--11/03) --- Distribuições e dados ausentes}
+% =============================================================================
+% Semana 05 — Histogramas, Distribuições e Dados Ausentes
+% Aula de 3 horas (19h–22h) | 11/03/2026
+% =============================================================================
 
+\chapter{Semana 05 (11/03/2026) — Histogramas, Distribuições e Dados Ausentes}
+
+% ---------------------------------------------------------------------------
 \section{Objetivo da semana}
-Eu ensino o aluno a ler o ``formato'' dos dados (histograma, caudas, assimetria) e a tomar decisões sobre missing.
+% ---------------------------------------------------------------------------
 
-\section{Conteúdo}
-\begin{itemize}[leftmargin=*]
-  \item Histogramas e leitura de distribuição.
-  \item Missing: remover, imputar, sinalizar.
-  \item Preparar dados para viz (tipos, categorias, datas).
+Pessoal, nas últimas duas semanas calculamos \emph{onde} os dados estão
+(posição) e \emph{quão espalhados} eles estão (dispersão). Hoje vamos olhar
+para o \textbf{formato} dos dados: o histograma. Com ele respondemos perguntas
+como — ``o comportamento é simétrico ou enviesado?'', ``há uma cauda
+longa de valores extremos?'', ``a distribuição tem um pico ou dois?''
+
+Depois enfrentamos o problema mais frequente na vida real: \textbf{dados
+faltando}. Missing values não são só uma inconveniência técnica — a ausência
+de um dado carrega informação e a decisão de como tratá-la afeta completamente
+as análises subsequentes.
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–19h20 — \textbf{TEORIA:} O que é um histograma e como ler bins
+  \item 19h20–20h — \textbf{TEORIA:} Assimetria, caudas e distribuição normal
+  \item 20h–20h30 — \textbf{PRÁTICA EM DUPLA:} Tabela 1 — construir e interpretar histograma
+  \item 20h30–21h — \textbf{TEORIA:} Dados ausentes — tipos, diagnóstico e estratégias
+  \item 21h–21h30 — \textbf{PRÁTICA EM DUPLA:} Tabela 2 — diagnóstico e tratamento de missing
+  \item 21h30–21h45 — \textbf{TEORIA:} Preparação final para Tableau (tipos, datas, categorias)
+  \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL}
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Leitura base:} Cap.\ 02 (seções de histograma e distribuição) + Cap.\ 01
+(seção de dados ausentes). Livro: \textit{Estatística Prática para Cientistas de Dados} (Bruce).
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Histogramas e Distribuições (19h–20h)}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+\subsection{19h–19h20: O que é um histograma e como ler bins}
+% ---------------------------------------------------------------------------
+
+Pessoal, o histograma é o gráfico mais honesto que existe. Ele mostra
+\textbf{exatamente como os dados se distribuem} — sem suavizar, sem resumir
+em um único número.
+
+\begin{BoardBox}
+\textbf{Definição e anatomia do histograma (para o quadro)}
+
+\textbf{O que é:} o histograma agrupa os dados em intervalos (\textbf{bins})
+e mostra quantas observações caem em cada intervalo. O eixo X é o
+valor da variável; o eixo Y é a contagem (ou frequência relativa).
+
+\textbf{Por que é diferente de um gráfico de barras?}
+\begin{itemize}
+  \item Barras: variável categórica (A, B, C). Barras não se tocam.
+  \item Histograma: variável numérica contínua. Barras se tocam — porque
+  o intervalo de um bin começa onde o anterior termina.
 \end{itemize}
+
+\textbf{Escolha do número de bins:}
+\begin{itemize}
+  \item Poucos bins: esconde padrões, tudo parece uniforme.
+  \item Muitos bins: ruído visual, impossível ver padrão.
+  \item Regra de Sturges: $k = 1 + 3{,}3 \cdot \log_{10}(n)$ — ponto de partida.
+  \item Na prática: experimente 10–20 bins e ajuste pelo contexto.
+\end{itemize}
+
+\textbf{Exemplo:} 50 salários entre R\$1.000 e R\$12.000, com bins de R\$1.000:\\
+Bin [1000–2000): 18 funcionários\\
+Bin [2000–3000): 14 funcionários\\
+Bin [3000–4000): 9 funcionários\\
+$\ldots$ (poucos acima de R\$8.000)\\
+Leitura: maioria concentrada na faixa de menor renda.
+\end{BoardBox}
+
+% ---------------------------------------------------------------------------
+\subsection{19h20–20h: Assimetria, caudas e distribuição normal}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{Formas de distribuição — o vocabulário essencial:}
+
+\textbf{1. Distribuição simétrica / Normal (Gaussiana):}
+\begin{itemize}
+  \item Forma de sino. Média $\approx$ Mediana $\approx$ Moda.
+  \item A maioria dos dados concentra-se no centro.
+  \item \textbf{Regra empírica (68-95-99,7):} em uma distribuição normal,
+  aproximadamente 68\% dos dados caem dentro de $\pm 1\sigma$, 95\% dentro
+  de $\pm 2\sigma$, e 99,7\% dentro de $\pm 3\sigma$.
+\end{itemize}
+
+\textbf{2. Assimetria positiva (cauda à direita):}
+\begin{itemize}
+  \item A maioria dos dados está à esquerda; há uma cauda de valores altos.
+  \item Média $>$ Mediana. Ex.: renda, preço de imóveis, tempo de resolução de bugs.
+  \item A média é ``puxada'' pelos extremos: usar mediana é mais representativo.
+\end{itemize}
+
+\textbf{3. Assimetria negativa (cauda à esquerda):}
+\begin{itemize}
+  \item Maioria à direita; há uma cauda de valores baixos.
+  \item Média $<$ Mediana. Ex.: notas de prova difícil, tempo até falha de equipamento.
+\end{itemize}
+
+\textbf{4. Distribuição bimodal:}
+\begin{itemize}
+  \item Dois picos — indica a existência de dois subgrupos distintos.
+  \item Ex.: pesquisar todos os salários de uma empresa que mistura estagiários
+  e sêniors. A análise correta exige separar os grupos.
+\end{itemize}
+\end{SolvedBox}
+
+\begin{FormulaBox}{Coeficiente de assimetria (Skewness)}
+\[
+g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}
+\]
+\begin{itemize}
+  \item $g_1 > 0$: assimetria positiva (cauda direita)
+  \item $g_1 = 0$: distribuição simétrica
+  \item $g_1 < 0$: assimetria negativa (cauda esquerda)
+\end{itemize}
+Na prática, o valor importa menos do que a direção. Valores $|g_1| > 1$
+já indicam assimetria relevante.
+\end{FormulaBox}
+
+\begin{BoardBox}
+\textbf{Regra de ouro da assimetria + escolha de medida central (para o quadro)}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Distribuição} & \textbf{Use como centro} & \textbf{Use como dispersão} \\
+\hline
+Simétrica, sem outliers & Média & Desvio Padrão \\
+Assimétrica ou com outliers & Mediana & IQR \\
+Bimodal & Descreva os dois grupos & DP de cada grupo \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+Perguntem aos alunos: \textit{``O histograma de renda de um país geralmente
+tem assimetria positiva intensa. O que isso significa sobre a representatividade
+de usar a `renda média' como indicador oficial? Que número seria mais honesto?''}
+
+% =============================================================================
+\section{Parte II — Prática em Dupla 1 (20h–20h30)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Tabela 1 — Tempo de Resolução de Chamados de TI (em minutos)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Chamado} & \textbf{Tempo (min)} & \textbf{Tipo} \\
+\hline
+01 & CH-001 & 8   & Nível 1 \\
+02 & CH-002 & 12  & Nível 1 \\
+03 & CH-003 & 180 & Nível 3 \\
+04 & CH-004 & 9   & Nível 1 \\
+05 & CH-005 & 15  & Nível 2 \\
+06 & CH-006 & 11  & Nível 1 \\
+07 & CH-007 & 240 & Nível 3 \\
+08 & CH-008 & 10  & Nível 1 \\
+09 & CH-009 & 14  & Nível 2 \\
+10 & CH-010 & 13  & Nível 1 \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Calcule a média e a mediana do tempo total.
+  \item Estime visualmente: se você desenhasse um histograma com bins
+  $[0{-}20)$, $[20{-}100)$, $[100{-}200)$, $[200{-}300)$, quantas observações
+  cairiam em cada bin?
+  \item A distribuição tem assimetria positiva ou negativa? Como a média
+  se compara à mediana?
+  \item Qual medida central você reportaria para o SLA de atendimento?
+\end{enumerate}
+
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Soma: $8+12+180+9+15+11+240+10+14+13 = 512$ \quad \textbf{Média:} $51{,}2$ min
+  \item Ordenados: $8,9,10,11,12,13,14,15,180,240$ \quad \textbf{Mediana:} $(12+13)/2 = 12{,}5$ min
+  \item Bins: $[0{-}20)$: 8 chamados; $[100{-}200)$: 1; $[200{-}300)$: 1 — forte assimetria positiva
+  \item Média (51,2) $\gg$ Mediana (12,5): média distorcida por Nível 3
+  \item \textbf{Reportar:} Mediana = 12,5 min (honesto para Nível 1 e 2); investigar Nível 3 separadamente
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte III — Dados Ausentes (20h30–21h)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Por que dados ausentes importam?}
+
+Dados ausentes não são apenas ``campos em branco''. Eles podem indicar:
+\begin{itemize}
+  \item Falha de sistema (campo que deveria ser preenchido mas não foi).
+  \item Comportamento do respondente (pessoas omitem renda por vergonha).
+  \item Processo seletivo (clientes que cancelam antes de completar pesquisa).
+\end{itemize}
+
+A forma como os dados estão ausentes muda \textbf{completamente} a estratégia correta.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Os três tipos de missing (para o quadro)}
+
+\textbf{1. MCAR — Missing Completely At Random (Ausente Completamente ao Acaso)}
+\begin{itemize}
+  \item A ausência não tem relação com nenhuma variável do dataset.
+  \item Ex.: perda aleatória de conexão durante o preenchimento online.
+  \item Estratégia: pode remover a linha sem introduzir viés significativo.
+\end{itemize}
+
+\textbf{2. MAR — Missing At Random (Ausente ao Acaso — mas relacionado a outra variável)}
+\begin{itemize}
+  \item A ausência está relacionada a outras variáveis observáveis, mas não à
+  variável em si.
+  \item Ex.: homens tendem a não responder perguntas sobre saúde mental em
+  pesquisas — não por terem mais ou menos problemas, mas por gênero.
+  \item Estratégia: imputar usando a variável relacionada (ex.: média do grupo de gênero).
+\end{itemize}
+
+\textbf{3. MNAR — Missing Not At Random (Ausente por razão relacionada ao próprio valor)}
+\begin{itemize}
+  \item A ausência está relacionada ao valor que deveria estar lá.
+  \item Ex.: clientes insatisfeitos pulam a pergunta ``como foi sua experiência?'';
+  funcionários não informam salário quando é muito alto ou muito baixo.
+  \item Estratégia: \textbf{não impute sem entender o mecanismo}. Crie uma variável
+  flag (\texttt{nota\_ausente = 1}) e analise o padrão de ausência separadamente.
+  \item Este é o tipo mais perigoso — imputar leva a viés sistemático nas conclusões.
+\end{itemize}
+\end{BoardBox}
+
+\begin{FormulaBox}{Estratégias de tratamento de dados ausentes}
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Estratégia} & \textbf{Quando usar} & \textbf{Risco} \\
+\hline
+Remover a linha & MCAR; $<\!5\%$ de ausências & Perde dados; viés se MAR/MNAR \\
+Imputar pela média & Numérica simétrica, MCAR & Reduz variância; mascara distribuição \\
+Imputar pela mediana & Numérica assimétrica ou com outliers & Idem, mas mais robusto \\
+Imputar pela moda & Categórica & Pode criar dominância artificial \\
+Criar flag + imputar & MNAR suspeito & Preserva o sinal da ausência \\
+Imputação por grupo & MAR & Precisa da variável relacionada \\
+\hline
+\end{tabular}
+\end{FormulaBox}
+
+\begin{NoteBox}
+\textbf{Documentação é obrigatória:} cada decisão sobre missing deve ser
+registrada no relatório. Le leitor precisa saber: quantos valores foram
+tratados, qual estratégia foi usada e por quê. Sem documentação, o dado
+tratado é suspeito.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte IV — Prática em Dupla 2 (21h–21h30)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Tabela 2 — Pesquisa de Satisfação de Funcionários (com valores ausentes)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|r|}
+\hline
+\textbf{ID} & \textbf{Nome} & \textbf{Nota (1–10)} & \textbf{Dept} & \textbf{Salário (R\$)} \\
+\hline
+01 & Ana     & 8    & TI      & 6.200 \\
+02 & Bruno   & ---  & RH      & 4.800 \\
+03 & Carla   & 7    & TI      & 6.100 \\
+04 & Diego   & 2    & Vendas  & 3.200 \\
+05 & Elena   & 9    & TI      & 7.800 \\
+06 & Felipe  & ---  & Vendas  & ---   \\
+07 & Giovana & 6    & RH      & 4.500 \\
+08 & Hugo    & 8    & TI      & 6.400 \\
+09 & Isabela & ---  & Vendas  & 3.100 \\
+10 & João    & 5    & RH      & 4.600 \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Quantos valores ausentes há em cada coluna? Qual a porcentagem?
+  \item Para Nota: qual tipo de missing você suspeita (MCAR, MAR ou MNAR)?
+  Justifique olhando para o departamento e nota de Diego.
+  \item Para Salário: o que a ausência do salário de Felipe sugere?
+  \item Proponha uma estratégia de imputação para Nota e documente-a.
+  \item Calcule a média de Nota antes e depois da imputação — mudou?
+\end{enumerate}
+
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Nota: 3 ausências (Bruno, Felipe, Isabela) — 30\%
+  \item Salário: 1 ausência (Felipe) — 10\%
+  \item Nota de Vendas: Diego = 2. Bruno e Isabela também são de Vendas (RH) e
+  Vendas respectivamente. \textbf{Suspeita de MNAR:} insatisfeitos omitiram a resposta.
+  Imputar pela média geral (7{,}0) criaria viés — subestimaria a insatisfação do Vendas.
+  Estratégia correta: \textbf{criar flag} (\texttt{nota\_ausente = 1}) e imputar
+  pela mediana do departamento Vendas (= 2).
+  \item Salário de Felipe: ausência isolada, possivelmente MCAR (erro de sistema).
+  Imputar pela mediana de Vendas (média entre 3.100 e 3.200 = 3.150).
+  \item Média de Nota (sem ausentes): $(8+7+2+9+6+8+5)/7 = 6{,}43$
+  \item Com imputação ingênua (média geral = 6,43 para os 3 ausentes): média geral
+  permanece 6,43 — mas esconde a realidade de Vendas.
+  \item Com imputação por grupo (Vendas = 2): média geral $\approx 5{,}7$ — mais honesta.
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte V — Preparação de Dados para Visualização (21h30–21h45)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Checklist de preparação de dados para Tableau/Power BI (para o quadro)}
+
+Antes de importar qualquer dataset em uma ferramenta de visualização:
+
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Ponto de verificação} & \textbf{O que fazer} \\
+\hline
+Tipos de dados corretos & Números como número (não texto). Datas como data (não texto). Categorias sem espaços extras.\\
+Nomes de colunas limpos & Sem acento, sem espaço, sem caractere especial: \texttt{tempo\_min} não \texttt{Tempo (min)} \\
+Datas no formato padrão & \texttt{YYYY-MM-DD} é o mais seguro internacionalmente. Evitar \texttt{DD/MM/AAAA} em inglês \\
+Nulos tratados ou explícitos & Decidir: remover, imputar ou manter (com flag). Nunca deixar `?` ou `` `0` '' como proxy de nulo. \\
+Unidades explícitas & Separar valor e unidade em colunas distintas: \texttt{valor\_reais}, \texttt{valor\_dolar} \\
+Categorias padronizadas & ``SP'', ``São Paulo'', ``S.Paulo'' são três categorias diferentes para a ferramenta \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Regra de ouro para Python/Pandas:} nunca deixe ``limpeza'' para o
+último momento. Cada vez que você modifica um dataset sem documentação,
+cria um arquivo que ninguém mais consegue reproduzir.\\
+Pipeline recomendado: carrega $\to$ inspeciona $\to$ limpa $\to$ salva ($\to$ documenta).
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte VI — Atividade Individual Final (21h45–22h)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Instruções:}
+\begin{enumerate}
+  \item Calcule a média e mediana dos dados e compare-as.
+  \item Identifique o tipo de assimetria (olhe para qual direção a cauda aponta).
+  \item Identifique os missing values. Classifique cada um como MCAR, MAR ou MNAR.
+  \item Proponha uma estratégia de imputação e calcule o valor imputado.
+  \item Redija 1 insight: \emph{o dado mostra X, isso significa Y, portanto Z.}
+\end{enumerate}
+\textbf{Tempo:} 15 minutos. Entrega: folha ou foto no AVA.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 3 — Tempo de Resposta de Proposta Comercial (em horas)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Consultor} & \textbf{Tempo (h)} & \textbf{Porte do cliente} \\
+\hline
+01 & Rafael   & 2   & PME \\
+02 & Simone   & 4   & PME \\
+03 & Tiago    & --- & Enterprise \\
+04 & Ursula   & 3   & PME \\
+05 & Vitor    & 2   & PME \\
+06 & Wanda    & 96  & Enterprise \\
+07 & Xande    & 3   & PME \\
+08 & Yasmin   & 5   & PME \\
+09 & Zé       & --- & Enterprise \\
+10 & Amábile  & 4   & PME \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Gabarito (professor):}
+\begin{itemize}
+  \item Valores presentes: $2+4+3+2+96+3+5+4 = 119$ h; $n=8$; \textbf{Média:} $14{,}9$ h
+  \item Ordenados: $2,2,3,3,4,4,5,96$ \quad \textbf{Mediana:} $(3+4)/2 = 3{,}5$ h
+  \item Média (14,9) $\gg$ Mediana (3,5) $\Rightarrow$ assimetria positiva intensa (causada por Wanda/96h)
+  \item \textbf{Missing de Tiago e Zé:} ambos Enterprise. Suspeita de \textbf{MNAR} — respostas
+  a Enterprise podem demorar tanto que nunca foram registradas (ou o consultor evitou reportar).
+  Estratégia: criar flag \texttt{atrasado\_enterprise = 1} + imputar pela mediana de Enterprise
+  (que seria 96h, o único valor disponível).
+  \item \textbf{Insight esperado:} ``O dado mostra que o tempo mediano de resposta para
+  PME é 3,5h — dentro do SLA. Porém, clientes Enterprise têm ausência de dado (provável
+  atraso não reportado) e o único caso registrado (96h) é 27× maior que a mediana PME.
+  Portanto, recomendo investigar o processo de proposta para Enterprise antes de reportar
+  uma taxa de cumprimento de SLA que ignora esses casos.''
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides com animação: histograma construído bin a bin
+  \item Galeria de distribuições (normal, positiva, negativa, bimodal)
+  \item Tabelas 1, 2 e 3 impressas
+  \item Notebook base (\texttt{semana05\_distribuicoes.ipynb}) com dados carregados
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 06} chegam as apresentações do Trabalho 3 e entramos
+na análise \textbf{bivariada}: o que acontece quando duas variáveis numéricas
+se movem juntas? Correlação de Pearson, scatter plots e — o tema mais
+mal interpretado em dados — a diferença entre correlação e causalidade.
+
+Perguntem aos alunos: \textit{``Se eu te disser que países com mais
+televisores por domicílio têm maior expectativa de vida, o que você
+concluiría? Faz sentido distribuir televisores para aumentar a expectativa
+de vida? O que essa correlação realmente está capturando?''}

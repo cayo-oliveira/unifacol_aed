@@ -1,12 +1,510 @@
-\chapter{Semana 04 (02/03--04/03) --- Trabalho 2 + Variabilidade}
+% =============================================================================
+% Semana 04 — Infográficos de Função + Estatística Descritiva II: Variabilidade
+% Aula de 3 horas (19h–22h) | 04/03/2026
+% =============================================================================
 
-\section{Ritmo da aula}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Até 1h}: apresentações do Trabalho 2.
-  \item \textbf{Restante}: variância, desvio-padrão, IQR, boxplot.
+\chapter{Semana 04 (04/03/2026) — Estatística Descritiva II: Variabilidade e Dispersão}
+
+% ---------------------------------------------------------------------------
+\section{Objetivo da semana}
+% ---------------------------------------------------------------------------
+
+Olá pessoal! Na semana passada calculamos onde os dados estão (média, mediana,
+moda). Hoje vamos responder a segunda pergunta fundamental: \textbf{quão
+espalhados eles estão?} Um grupo com média R\$5.000 pode ter todo mundo
+ganhando entre R\$4.800 e R\$5.200 — ou ter metade ganhando R\$1.000 e metade
+ganhando R\$9.000. A média é a mesma; a \emph{história} é completamente diferente.
+
+Dispersão é o que revela isso. E na primeira parte da aula, vocês vão apresentar
+os \textbf{infográficos das funções Python} — a biblioteca da turma começa a crescer!
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–20h — \textbf{Apresentações:} Infográficos de Função (2 min por aluno)
+  \item 20h–20h30 — \textbf{TEORIA:} Amplitude, Variância e Desvio Padrão
+  \item 20h30–21h — \textbf{TEORIA:} IQR, Regra dos 1,5×IQR e Boxplot
+  \item 21h–21h20 — \textbf{TEORIA:} Quando usar DP vs IQR + Comparação entre grupos
+  \item 21h20–21h45 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2 (10 linhas cada)
+  \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL} + lançamento do T2
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Leitura base:} Cap.\ 02 (Análise Univariada) — seções de variabilidade,
+desvio padrão e boxplot. Livro: \textit{Estatística Prática para Cientistas de Dados} (Bruce).
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Apresentações: Infográficos de Função (19h–20h)}
+% =============================================================================
+
+Pessoal, 2 minutos por aluno. Obrigatório mostrar no Jupyter ao vivo. Se o
+código não rodar em sala, a análise crítica salva — mas o código precisa
+estar funcional para a nota completa.
+
+\begin{BoardBox}
+\textbf{Checklist do professor durante as apresentações:}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Ponto} & \textbf{O que observar} \\
+\hline
+Função correta      & Nome e assinatura exatamente conforme a lista \\
+Docstring presente  & Parâmetros, retorno e exemplo descritos \\
+Código comentado    & Ao menos uma linha de comentário por bloco lógico \\
+Saída com dataset   & Screenshot ou live: rodando com dados reais da aula \\
+Análise crítica     & Número + o que significa + limitação + recomendação \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Após as apresentações — consolidação coletiva:}
+
+Vamos listar no quadro as funções apresentadas e criar o
+\textbf{índice da biblioteca da turma}. A partir de hoje,
+qualquer notebook da disciplina pode usar \texttt{from biblioteca\_turma import calcular\_media}
+e evitar reescrever código toda semana. Isso é colaboração real de
+equipe de dados.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte II — Teoria: Medidas de Dispersão (20h–21h20)}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+\subsection{20h–20h30: Amplitude, Variância e Desvio Padrão}
+% ---------------------------------------------------------------------------
+
+Pessoal, medidas de posição nos dizem \emph{onde} os valores estão.
+Medidas de dispersão nos dizem \emph{o quanto eles variam em torno desse centro}.
+Vamos do mais simples para o mais robusto.
+
+\subsubsection*{Amplitude}
+
+\begin{BoardBox}
+\textbf{Amplitude (para o quadro)}
+\[
+\text{Amplitude} = x_{\max} - x_{\min}
+\]
+
+\textbf{Exemplo:} salários = \{1.200, 4.500, 8.000, 15.000, 35.000\}
+\[
+\text{Amplitude} = 35.000 - 1.200 = R\$\;33.800
+\]
+
+\textbf{Vantagem:} cálculo imediato, fácil de comunicar.\\
+\textbf{Problema grave:} depende exclusivamente dos dois extremos. Um único
+outlier distorce completamente. Se o CEO ganhar R\$999.000, a amplitude sobe
+para R\$997.800 — mas nada mudou para os outros quatro funcionários.\\
+\textbf{Uso:} apenas como primeira verificação rápida. Nunca como única medida.
+\end{BoardBox}
+
+\subsubsection*{Variância}
+
+\begin{SolvedBox}
+\textbf{O que é a variância?} A variância mede a dispersão média dos desvios
+quadráticos em relação à média. Elevamos ao quadrado para eliminar sinais
+negativos e penalizar desvios grandes mais do que desvios pequenos.
+
+\begin{FormulaBox}{Variância amostral}
+\[
+s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}
+\]
+\end{FormulaBox}
+
+\textbf{Por que $n-1$ e não $n$?} Porque estamos estimando a variância da
+\emph{população} a partir de uma \emph{amostra}. Dividir por $n-1$ (Correção
+de Bessel) corrige o viés que ocorre quando a amostra é pequena. Em
+populações grandes isso faz pouca diferença; em amostras pequenas, faz muita.
+
+\textbf{Problema da variância:} a unidade fica ao quadrado.
+Variância de salários em R\$ sai em R\$² — impossível de interpretar diretamente.
+É por isso que usamos o desvio padrão.
+\end{SolvedBox}
+
+\subsubsection*{Desvio Padrão}
+
+\begin{BoardBox}
+\textbf{Cálculo completo — Desvio Padrão de Vendas (quadro)}
+
+Dados (Tabela 0 da semana passada): 4.200, 6.000, 4.200, 9.800, 4.200\\
+Média: $\bar{x} = 5.680$
+
+\begin{center}
+\begin{tabular}{|r|r|r|}
+\hline
+$x_i$ & $x_i - \bar{x}$ & $(x_i - \bar{x})^2$ \\
+\hline
+4.200 & $-1.480$ & $2.190.400$ \\
+6.000 & $+320$   & $102.400$   \\
+4.200 & $-1.480$ & $2.190.400$ \\
+9.800 & $+4.120$ & $16.974.400$ \\
+4.200 & $-1.480$ & $2.190.400$ \\
+\hline
+\textbf{Soma} & & $23.648.000$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\[
+s^2 = \frac{23.648.000}{5-1} = 5.912.000
+\qquad
+s = \sqrt{5.912.000} \approx R\$\;2.432
+\]
+
+\textbf{Interpretação:} as vendas se afastam, em média, R\$2.432 da média
+de R\$5.680. Diego (R\$9.800) e os três empatados em R\$4.200 criam essa
+dispersão alta.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Como interpretar o desvio padrão em contexto de negócio:}
+\begin{itemize}
+  \item \textbf{DP pequeno em relação à média:} dados homogêneos, previsíveis.
+  Ex.: tempo de atendimento com média 9 min e DP 0,5 min → processo estável.
+  \item \textbf{DP grande em relação à média:} dados heterogêneos, imprevisíveis.
+  Ex.: tempo de atendimento com média 9 min e DP 12 min → há casos muito fora do padrão.
+  \item \textbf{Comparação entre grupos com DP:} o grupo com menor DP é mais consistente,
+  independentemente da média. Um time de vendas com média R\$5.000 e DP R\$500 é mais
+  confiável que outro com média R\$6.000 e DP R\$3.000.
+\end{itemize}
+\end{SolvedBox}
+
+Perguntem aos alunos: \textit{``Entre dois fornecedores com o mesmo preço médio,
+qual vocês escolheriam: o com DP maior ou menor? Por quê isso muda dependendo
+do contexto?''}
+
+% ---------------------------------------------------------------------------
+\subsection{20h30–21h: IQR, Regra dos 1,5×IQR e Boxplot}
+% ---------------------------------------------------------------------------
+
+\subsubsection*{Quartis e IQR}
+
+\begin{BoardBox}
+\textbf{Quartis e IQR (para o quadro)}
+
+Quartis dividem os dados ordenados em quatro partes iguais:
+\begin{itemize}
+  \item $Q_1$ (1º quartil / P25): 25\% dos dados estão abaixo.
+  \item $Q_2$ (mediana / P50): 50\% dos dados estão abaixo.
+  \item $Q_3$ (3º quartil / P75): 75\% dos dados estão abaixo.
+  \item $\text{IQR} = Q_3 - Q_1$: intervalo que contém os 50\% centrais dos dados.
 \end{itemize}
 
-\section{Entrega (Trabalho 2)}
+\textbf{Cálculo com os dados de vendas:}
+Ordenados: $4200,\; 4200,\; 4200,\; 6000,\; 9800$
+
+\begin{itemize}
+  \item $Q_1$: mediana da metade inferior $\{4200, 4200\} = 4200$
+  \item $Q_2$: mediana geral $= 4200$
+  \item $Q_3$: mediana da metade superior $\{6000, 9800\} = 7900$
+  \item $\text{IQR} = 7900 - 4200 = R\$\;3.700$
+\end{itemize}
+
+\textbf{Quando $n$ é par,} a metade inferior e a superior são divididas
+exatamente ao meio. Quando $n$ é ímpar, o valor central ($Q_2$) pode ser
+incluído ou excluído dependendo da convenção — o Python usa interpolação.
+\end{BoardBox}
+
+\subsubsection*{Regra dos 1,5×IQR — Detecção formal de outliers}
+
 \begin{SolvedBox}
-Mini-relatório AED (posição + dispersão) + 2 visuais (boxplot + histograma) + Big Idea.
+\textbf{A regra de Tukey (1,5×IQR):}
+
+\[
+\text{Limite inferior} = Q_1 - 1{,}5 \times \text{IQR}
+\qquad
+\text{Limite superior} = Q_3 + 1{,}5 \times \text{IQR}
+\]
+
+Qualquer valor fora desses limites é classificado como \textbf{outlier}.
+
+\textbf{Aplicando nos dados de vendas:}
+\[
+\text{LI} = 4200 - 1{,}5 \times 3700 = 4200 - 5550 = -1350
+\]
+\[
+\text{LS} = 7900 + 1{,}5 \times 3700 = 7900 + 5550 = 13.450
+\]
+
+Nenhum valor está fora de $[-1350,\; 13450]$ $\Rightarrow$ sem outlier pela regra
+de Tukey neste conjunto pequeno.
+
+\textbf{Mas e se houvesse um erro de digitação de R\$98.000?}
+$98.000 > 13.450$ $\Rightarrow$ \textbf{outlier confirmado} pela regra.
+
+\textbf{Importante:} a regra sinaliza o valor para investigação — não ordena
+a remoção automática.
 \end{SolvedBox}
+
+\subsubsection*{Boxplot — a visualização da dispersão}
+
+\begin{BoardBox}
+\textbf{Como ler um boxplot (para o quadro)}
+
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Elemento} & \textbf{O que representa} \\
+\hline
+Linha central da caixa & Mediana ($Q_2$) \\
+Borda inferior da caixa & $Q_1$ (25\% dos dados) \\
+Borda superior da caixa & $Q_3$ (75\% dos dados) \\
+Altura da caixa & IQR (50\% centrais dos dados) \\
+Bigodes (whiskers) & Dados dentro de $1{,}5 \times \text{IQR}$ \\
+Pontos isolados & Outliers (além dos bigodes) \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{O que um boxplot revela rapidamente:}
+\begin{itemize}
+  \item Caixa pequena + bigodes curtos $\Rightarrow$ dados concentrados, previsíveis.
+  \item Caixa grande + bigodes longos $\Rightarrow$ dados muito dispersos.
+  \item Mediana deslocada para cima da caixa $\Rightarrow$ assimetria negativa (cauda esquerda).
+  \item Mediana deslocada para baixo da caixa $\Rightarrow$ assimetria positiva (cauda direita).
+  \item Pontos isolados $\Rightarrow$ investigar outliers individualmente.
+\end{itemize}
+\end{BoardBox}
+
+Perguntem aos alunos: \textit{``Quando o boxplot de um grupo A tem caixa menor
+que o do grupo B mas mesma mediana, o que isso diz sobre a gestão de cada grupo?''}
+
+% ---------------------------------------------------------------------------
+\subsection{21h–21h20: Quando usar DP vs IQR + Comparação de grupos}
+% ---------------------------------------------------------------------------
+
+\begin{BoardBox}
+\textbf{Guia de decisão: DP ou IQR? (para o quadro)}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Situação} & \textbf{Use} & \textbf{Por quê} \\
+\hline
+Distribuição simétrica, sem outliers & Desvio Padrão & Usa todas as observações; mais eficiente \\
+Há outliers ou assimetria clara & IQR & Robusto; não distorce com extremos \\
+Comparação de grupos diferentes & Ambos & DP para magnitude; IQR para simetria \\
+Comunicação executiva & IQR + Boxplot & Mais intuitivo para não-estatísticos \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Comparação de dispersão entre grupos — Exemplo:}
+
+Dois times de suporte com mesmo tempo médio (9 min):
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Time} & \textbf{Média} & \textbf{DP} & \textbf{IQR} & \textbf{Interpretação} \\
+\hline
+Time A & 9 min & 0,8 min & 1,2 min & Muito consistente — processo padronizado \\
+Time B & 9 min & 6,5 min & 8,0 min & Muito variável — há casos extremamente rápidos e lentos \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Decisão de negócio:} se a meta é previsibilidade (SLA), Time A é melhor.
+Se o objetivo é ter \emph{alguns} atendentes muito rápidos (para triagem), Time B pode
+ser valioso — mas precisa de investigação dos casos lentos.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — Prática em Dupla (21h20–21h45)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Instruções:}
+\begin{enumerate}
+  \item Calcule Amplitude, Variância, Desvio Padrão para a coluna numérica.
+  \item Calcule Q1, Q3 e IQR.
+  \item Aplique a regra de Tukey — há outlier?
+  \item Compare two grupos usando DP e IQR.
+  \item Escreva 1 frase de interpretação para cada resultado.
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 1 — Tempo de Entrega por Transportadora (calcule dispersão)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Pedido} & \textbf{Dias para entrega} & \textbf{Transportadora} \\
+\hline
+01 & Pedido A & 3  & LogRápida \\
+02 & Pedido B & 5  & FreteJá  \\
+03 & Pedido C & 4  & LogRápida \\
+04 & Pedido D & 3  & LogRápida \\
+05 & Pedido E & 21 & FreteJá  \\
+06 & Pedido F & 4  & FreteJá  \\
+07 & Pedido G & 3  & LogRápida \\
+08 & Pedido H & 6  & FreteJá  \\
+09 & Pedido I & 4  & LogRápida \\
+10 & Pedido J & 5  & FreteJá  \\
+\hline
+\end{tabular}
+
+\smallskip
+\textbf{Calcule (coluna Dias para entrega):} Amplitude · Média · Mediana · Variância · DP · Q1 · Q3 · IQR · Limites Tukey
+
+\textbf{Compare:} média e DP de cada Transportadora separadamente.
+
+\smallskip
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Soma: $3+5+4+3+21+4+3+6+4+5 = 58$ \quad \textbf{Média:} $58 \div 10 = 5{,}8$ dias
+  \item Ordenados: $3,3,3,4,4,4,5,5,6,21$ \quad \textbf{Mediana:} $\frac{4+4}{2} = 4$ dias
+  \item $Q_1 = 3$; $Q_3 = 5$; $\text{IQR} = 2$ \quad \textbf{Amplitude:} $21-3=18$
+  \item $\text{LI} = 3 - 3 = 0$; $\text{LS} = 5 + 3 = 8$ $\Rightarrow$ \textbf{21 dias é outlier!}
+  \item Variância: $\approx 27{,}5$; DP $\approx 5{,}2$ dias (distorcido pelo outlier)
+  \item \textbf{LogRápida:} média $= (3+4+3+3+4)/5 = 3{,}4$ dias, DP $\approx 0{,}5$
+  \item \textbf{FreteJá:} média $= (5+21+4+6+5)/5 = 8{,}2$ dias, DP $\approx 6{,}7$
+  \item \textbf{Decisão:} FreteJá tem outlier real (21 dias — provavelmente extravio);
+  LogRápida é 2,4× mais rápida E 13× mais consistente (DP). Contratar LogRápida.
+\end{itemize}
+\end{BoardBox}
+
+\begin{BoardBox}
+\textbf{Tabela 2 — Pontuação de Clientes por Avaliação (calcule dispersão)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Cliente} & \textbf{NPS (0–100)} & \textbf{Plano} \\
+\hline
+01 & Cliente 01 & 85 & Premium \\
+02 & Cliente 02 & 42 & Básico  \\
+03 & Cliente 03 & 90 & Premium \\
+04 & Cliente 04 & 78 & Premium \\
+05 & Cliente 05 & 15 & Básico  \\
+06 & Cliente 06 & 88 & Premium \\
+07 & Cliente 07 & 60 & Básico  \\
+08 & Cliente 08 & 91 & Premium \\
+09 & Cliente 09 & 35 & Básico  \\
+10 & Cliente 10 & 83 & Premium \\
+\hline
+\end{tabular}
+
+\smallskip
+\textbf{Calcule:} Média · Mediana · DP · Q1 · Q3 · IQR · Limites Tukey para NPS total.\\
+\textbf{Compare:} média e DP de NPS por Plano (Premium vs Básico).
+
+\smallskip
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Soma: $85+42+90+78+15+88+60+91+35+83 = 667$ \quad \textbf{Média:} $66{,}7$
+  \item Ordenados: $15,35,42,60,78,83,85,88,90,91$ \quad \textbf{Mediana:} $(78+83)/2 = 80{,}5$
+  \item $Q_1 = 42$; $Q_3 = 88$; $\text{IQR} = 46$; $\text{LI} = 42 - 69 = -27$; $\text{LS} = 88 + 69 = 157$
+  \item Sem outliers; DP $\approx 27{,}4$ — alta dispersão para uma métrica de 0–100
+  \item \textbf{Premium:} média $= (85+90+78+88+91+83)/6 = 85{,}8$; DP $\approx 4{,}7$
+  \item \textbf{Básico:} média $= (42+15+60+35)/4 = 38{,}0$; DP $\approx 18{,}8$
+  \item \textbf{Insight:} diferença de 47,8 pontos de NPS entre planos; Básico tem 4×
+  mais variabilidade — experiência inconsistente. Média geral (66,7) mascara os dois grupos.
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte IV — Atividade Individual Final (21h45–22h)}
+% =============================================================================
+
+Pessoal, última parte da noite — individual, sem consulta ao colega.
+Apliquem tudo de hoje: amplitude, DP, IQR, regra de Tukey e comparação entre grupos.
+
+\begin{SolvedBox}
+\textbf{Instruções:}
+\begin{enumerate}
+  \item Calcule Amplitude, Variância, Desvio Padrão para a coluna Faturamento.
+  \item Calcule Q1, Q3 e IQR. Aplique a regra de Tukey — há outlier?
+  \item Compare Faturamento por Região: calcule média E DP de cada grupo.
+  \item Identifique qual região é mais consistente e qual tem maior dispersão.
+  \item Redija 1 insight: \emph{``O dado mostra X, que significa Y, portanto Z.''
+}\end{enumerate}
+\textbf{Tempo:} 15 minutos. Entrega: folha ou foto no AVA.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 3 — Faturamento Mensal por Representante}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Representante} & \textbf{Faturamento (R\$ mil)} & \textbf{Região} \\
+\hline
+01 & Rep 01 & 42 & Norte \\
+02 & Rep 02 & 38 & Sul   \\
+03 & Rep 03 & 45 & Norte \\
+04 & Rep 04 & 41 & Norte \\
+05 & Rep 05 & 120 & Sul  \\
+06 & Rep 06 & 39 & Sul   \\
+07 & Rep 07 & 43 & Norte \\
+08 & Rep 08 & 37 & Sul   \\
+09 & Rep 09 & 44 & Norte \\
+10 & Rep 10 & 40 & Sul   \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Gabarito (professor — não mostrar antes da correção):}
+
+\textbf{Geral:}
+\begin{itemize}
+  \item Soma: $42+38+45+41+120+39+43+37+44+40 = 489$ mil
+  \item \textbf{Média:} $48{,}9$ mil \quad Ordenados: $37,38,39,40,41,42,43,44,45,120$
+  \item \textbf{Mediana:} $(41+42)/2 = 41{,}5$ mil \quad $Q_1 = 39$; $Q_3 = 44$; $\text{IQR} = 5$
+  \item $\text{LS} = 44 + 7{,}5 = 51{,}5$ $\Rightarrow$ \textbf{Rep 05 (R\$120 mil) é outlier}
+  \item DP $\approx 24{,}8$ — fortemente inflado pelo outlier
+\end{itemize}
+
+\textbf{Por região:}
+\begin{itemize}
+  \item \textbf{Norte} (Rep 01,03,04,07,09): média $= (42+45+41+43+44)/5 = 43$; DP $\approx 1{,}6$
+  \item \textbf{Sul} (Rep 02,05,06,08,10): média $= (38+120+39+37+40)/5 = 54{,}8$; DP $\approx 31{,}9$
+\end{itemize}
+
+\textbf{Insight esperado:} ``O dado mostra que o Sul tem faturamento médio
+R\$11,8 mil acima do Norte, mas um DP 20× maior (31,9 vs 1,6). Isso significa
+que o resultado do Sul depende de um único representante (Rep 05, R\$120 mil).
+Sem ele, o Sul médio seria R\$38,5 mil — abaixo do Norte. Portanto, recomendo
+mapear a carteira do Rep 05 como risco de concentração e capacitar os demais.''
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Entrega — Trabalho 2 (lance em sala)}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{Trabalho 2 — Mini-relatório AED (entrega: 11/03/2026 às 23h59 via AVA):}
+\begin{itemize}
+  \item[$\square$] Dataset próprio ou do Kaggle com pelo menos 50 linhas e 3 colunas numéricas
+  \item[$\square$] Calcule Média, Mediana, Moda, DP e IQR para cada coluna numérica
+  \item[$\square$] Identifique e investigue outliers pela regra de Tukey
+  \item[$\square$] Compare pelo menos 2 grupos usando média + DP
+  \item[$\square$] 2 visuais: 1 boxplot + 1 histograma (Python, Tableau ou Excel)
+  \item[$\square$] Big Idea (1 frase): o que o dado revela e que decisão ele apoia
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides: fórmulas animadas passo a passo (variância → DP → IQR → boxplot)
+  \item Tabelas 1, 2 e 3 impressas (uma por dupla/individual)
+  \item Dataset da aula disponível no AVA (\texttt{semana04\_vendas.csv})
+  \item Notebook base com tabelas carregadas + esqueleto das funções do aluno
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 05} vamos olhar para o \textbf{formato} dos dados —
+histogramas, simetria, assimetria e caudas. Também vamos enfrentar o problema
+mais chato da vida de um analista: os \textbf{dados ausentes} (missing).
+Como identificar, como decidir o que fazer e como documentar a decisão.
+
+Perguntem aos alunos: \textit{``Se vocês fossem calcular o DP dos salários
+de uma empresa com 1 CEO e 99 funcionários de base, qual seria o resultado?
+O DP seria um número útil para apresentar ao RH? O que vocês usariam no lugar?''}

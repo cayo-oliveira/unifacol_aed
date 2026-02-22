@@ -1,17 +1,1019 @@
-\chapter{Semana 03 (23/02--25/02) --- Estatística descritiva I (posição)}
+% =============================================================================
+% Semana 03 — Estatística Descritiva I: Medidas de Posição e Leitura Crítica
+% Aula de 3 horas (19h–22h) | 25/02/2026
+% =============================================================================
 
+\chapter{Semana 03 (25/02/2026) — Estatística Descritiva I: Medidas de Posição e Leitura Crítica}
+
+% ---------------------------------------------------------------------------
 \section{Objetivo da semana}
-Eu ensino medidas de posição (média, mediana, moda) com foco na intuição e em como isso vira insight na AED.
+% ---------------------------------------------------------------------------
 
-\section{Conteúdo}
-\begin{itemize}[leftmargin=*]
-  \item Média, mediana e moda: quando usar.
-  \item Resumos com Pandas (\texttt{describe}, \texttt{value\_counts}, \texttt{groupby}).
-  \item Leitura crítica: assimetria e outliers.
+Olá pessoal, bom trabalho nas semanas anteriores! Hoje saímos do mundo das
+ferramentas e entramos na \textbf{matemática que sustenta qualquer análise
+séria}. Vamos trabalhar com as três medidas de posição mais usadas no mercado
+— \textbf{média, mediana e moda} — e, principalmente, aprender a
+\textbf{ler criticamente} o que esses números revelam e o que eles escondem.
+
+Sabe quando uma empresa anuncia ``o salário médio dos nossos funcionários é
+R\$10.000''? Pode ser verdade e ainda assim mentira. Hoje vocês vão entender
+por que isso acontece — e como qualquer analista de dados sério detecta isso
+em segundos.
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–19h30 — \textbf{TEORIA:} Tipos de variáveis + Tabela de frequência
+  \item 19h30–20h10 — \textbf{TEORIA:} Média, mediana e moda (Tabela do Professor no quadro)
+  \item 20h10–20h30 — \textbf{TEORIA:} Outliers + Comparação entre grupos
+  \item 20h30–21h — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2 (10 linhas cada)
+  \item 21h–21h10 — Correção coletiva
+  \item 21h10–21h30 — \textbf{TEORIA:} Leitura crítica e assimetria (Tabela do Professor)
+  \item 21h30–21h45 — \textbf{PRÁTICA EM DUPLA:} Tabelas 3 e 4
+  \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL} + distribuição das funções
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Por que hoje?} Antes de qualquer modelo, visualização ou dashboard,
+o analista precisa resumir o dado com uma única pergunta: \emph{``onde estão
+os valores?''}. Média, mediana e moda são as três respostas possíveis —
+e cada uma é certa em um contexto diferente. \textbf{Leitura:} Cap.\ 02
+(Análise Univariada — medidas de posição e tipos de variáveis).
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Teoria e Prática de Medidas de Posição (19h–21h10)}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+\subsection{19h–19h15: Tipos de variáveis — por que isso vem primeiro}
+% ---------------------------------------------------------------------------
+
+Pessoal, antes de calcular qualquer coisa, precisamos saber \emph{o que
+estamos calculando}. O tipo da variável determina qual métrica faz sentido.
+Calcular a média do CPF é um erro clássico — e mais comum do que parece em
+times de dados iniciantes.
+
+\begin{BoardBox}
+\textbf{Quadro-resumo: tipos de variáveis e métricas válidas}
+\begin{tabular}{|p{3.0cm}|p{3.0cm}|p{3.2cm}|p{3.4cm}|}
+\hline
+\textbf{Tipo} & \textbf{Exemplo} & \textbf{Métricas válidas} & \textbf{Gráfico indicado} \\
+\hline
+Quantitativa contínua  & Salário (R\$), Nota       & Média, mediana, DP         & Histograma, boxplot        \\
+\hline
+Quantitativa discreta  & N.º de filhos, faltas      & Média, mediana             & Barras, histograma         \\
+\hline
+Qualitativa nominal    & Bairro, Curso, Canal       & Moda, frequência           & Barras, pizza              \\
+\hline
+Qualitativa ordinal    & Satisfação (1–5), Grau     & Moda, mediana ordinal      & Barras ordenadas           \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Regra de ouro:} Se a variável não tem \emph{soma com significado},
+não calcule média. Média de CEP, de código de produto ou de ID não possui
+nenhum sentido de negócio — mesmo que o software calcule sem reclamar.
+
+\textbf{Exemplo clássico de erro (que qualquer ferramenta faz sem avisar):}
+\begin{itemize}
+  \item Coluna \texttt{codigo\_regiao} com valores 1, 2, 3 — parece número, mas é nome\break disfarçado. Calcular a média (ex.: 2,4) não serve para nada.
+  \item Coluna \texttt{salario} com valores 3000, 5000, 8000 — número real,\break soma e média têm significado.
 \end{itemize}
 
-\section{No quadro (exemplo)}
+\textbf{Teste prático:} Antes de calcular, pergunte: \emph{``faz sentido somar esses dois valores?''} Se não fizer, não calcule média.
+\end{SolvedBox}
+
+Perguntem aos alunos: \textit{``No dataset do projeto de vocês, quais colunas
+são numéricas de verdade e quais são categóricas disfarçadas de número?''}
+
+% ---------------------------------------------------------------------------
+\subsection{19h15–19h30: Tabela de frequência — resumindo o que se repete}
+% ---------------------------------------------------------------------------
+
+Além de média e mediana (que veremos a seguir), toda análise univariada começa
+com a \textbf{tabela de frequência}. Ela responde a uma pergunta simples:
+\emph{``cada valor aparece quantas vezes?''} É a ferramenta número 1 para
+variáveis categóricas — e essencial antes de qualquer visualização.
+
 \begin{BoardBox}
-\textbf{Eu escrevo:}
-\[\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i\qquad\tilde{x}=\text{valor central (dados ordenados)}\]
+\textbf{Tipos de frequência (para o quadro)}
+\begin{tabular}{|l|p{5.5cm}|p{5.5cm}|}
+\hline
+\textbf{Tipo} & \textbf{Definição} & \textbf{Fórmula} \\
+\hline
+Frequência absoluta $(f_i)$ & Quantidade de vezes que o valor aparece & Contagem direta \\
+\hline
+Frequência relativa $(fr_i)$ & Proporção em relação ao total & $fr_i = \dfrac{f_i}{n}$ \\
+\hline
+Frequência relativa (\%) & Em porcentagem & $fr_i \times 100$ \\
+\hline
+Frequência acumulada $(F_i)$ & Soma das frequências até aquele ponto & $F_i = f_1 + f_2 + \cdots + f_i$ \\
+\hline
+\end{tabular}
 \end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Exemplo resolvido — Tabela de frequência da coluna Região (Tabela 0):}
+
+Dados: Norte (Ana, Diego), Sul (Bruno, Elisa), Leste (Carla) $\Rightarrow$ $n = 5$
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Região} & \textbf{Freq.~absoluta} $(f_i)$ & \textbf{Freq.~relativa} $(fr_i)$ & \textbf{Freq.~relativa (\%)} \\
+\hline
+Norte & 2 & $2/5 = 0{,}40$ & 40\% \\
+Sul   & 2 & $2/5 = 0{,}40$ & 40\% \\
+Leste & 1 & $1/5 = 0{,}20$ & 20\% \\
+\hline
+\textbf{Total} & \textbf{5} & \textbf{1,00} & \textbf{100\%} \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Leitura imediata:} Norte e Sul concentram 80\% dos vendedores.
+Leste tem apenas 20\% da equipe — possível sub-investimento na região.
+
+\textbf{Regra de ouro:} a coluna de frequência relativa (\%) sempre
+soma 100\% — use isso para checar se não errou nenhuma contagem.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Quando usar tabela de frequência:}
+\begin{itemize}
+  \item \textbf{Variáveis categóricas} (sempre): região, canal, status, categoria.
+  \item \textbf{Variáveis numéricas discretas} com poucos valores distintos: n.º de filhos, nota inteira.
+  \item \textbf{Antes de qualquer gráfico de barras ou pizza}: a tabela de frequência
+  \emph{é} o dado por trás desses gráficos.
+  \item \textbf{Para detectar desequilíbrio}: quando uma categoria domina ($> 80\%$),
+  os dados estão desbalanceados e isso afeta análises e modelos.
+\end{itemize}
+\end{BoardBox}
+
+Perguntem aos alunos: \textit{``Se uma categoria tiver 95\% das ocorrências
+e outra 5\%, o que isso diz sobre a análise? O que pode estar errado nos dados?''}
+
+% ---------------------------------------------------------------------------
+\subsection{19h30–20h10: Média, mediana e moda com a Tabela do Professor}
+% ---------------------------------------------------------------------------
+
+Vamos trabalhar com uma tabela de \textbf{desempenho de vendedores} de uma
+empresa fictícia de televendas. Cinco linhas, dados simples — porque aqui o
+objetivo é entender a \emph{lógica}, não correr com a calculadora.
+
+\begin{BoardBox}
+\textbf{Tabela 0 — Desempenho de Vendedores (Professor resolve no quadro)}
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Vendedor} & \textbf{Vendas do mês (R\$)} & \textbf{Região} \\
+\hline
+1 & Ana     & 4.200 & Norte \\
+2 & Bruno   & 6.000 & Sul   \\
+3 & Carla   & 4.200 & Leste \\
+4 & Diego   & 9.800 & Norte \\
+5 & Elisa   & 4.200 & Sul   \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\subsubsection*{Média aritmética}
+
+\begin{SolvedBox}
+\textbf{O que é a média?} A média aritmética é o valor que cada observação
+\emph{teria} se todas fossem iguais — é o ponto de equilíbrio matemático do
+conjunto. Usamos quando a distribuição é aproximadamente simétrica e sem
+valores extremos.
+
+\begin{FormulaBox}{Fórmula da média}
+\[
+\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}
+\]
+\end{FormulaBox}
+
+\textbf{Aplicando na Tabela 0:}
+\[
+\bar{x} = \frac{4200 + 6000 + 4200 + 9800 + 4200}{5}
+= \frac{28400}{5}
+= \mathbf{R\$\;5.680}
+\]
+
+\textbf{Interpretação imediata:} a receita média por vendedor foi R\$5.680.
+Mas tres vendedores (Ana, Carla, Elisa) venderam R\$4.200 — bem abaixo da
+média. Diego puxou o resultado para cima sozinho com R\$9.800. Já percebem
+o problema?
+\end{SolvedBox}
+
+\subsubsection*{Mediana}
+
+\begin{SolvedBox}
+\textbf{O que é a mediana?} A mediana é o valor que divide o conjunto ao
+meio quando os dados estão ordenados. Metade dos valores fica abaixo, metade
+acima. Ela \textbf{não é afetada por valores extremos} — esta é a sua grande
+vantagem sobre a média.
+
+\textbf{Passo 1 — Ordenar os valores:}
+\[
+4200,\quad 4200,\quad 4200,\quad 6000,\quad 9800
+\]
+
+\textbf{Passo 2 — Posição central:}
+$n = 5$ (ímpar) $\;\Rightarrow\;$ posição central $= \dfrac{n+1}{2} = 3$
+
+\[
+\text{Mediana} = x_{(3)} = \mathbf{R\$\;4.200}
+\]
+
+\textbf{Comparação:} Média = R\$5.680 $\neq$ Mediana = R\$4.200. A diferença
+de quase R\$1.500 acontece porque Diego é um outlier. A mediana representa
+melhor o vendedor \textbf{típico}.
+
+\medskip
+\textbf{Quando $n$ é par:} a mediana é a média dos dois valores centrais.
+\[
+\text{Ex.:}\;\{3,\;5,\;7,\;9\}
+\;\Rightarrow\;
+\text{Mediana} = \frac{5+7}{2} = 6
+\]
+\end{SolvedBox}
+
+\subsubsection*{Moda}
+
+\begin{SolvedBox}
+\textbf{O que é a moda?} A moda é o valor que \emph{aparece com maior
+frequência}. É a única medida válida para variáveis qualitativas nominais
+(como Região). Um conjunto pode ser:
+\begin{itemize}
+  \item \textbf{Amodal:} todos os valores diferentes — sem moda.
+  \item \textbf{Unimodal:} um único valor se repete mais.
+  \item \textbf{Bimodal ou multimodal:} dois ou mais valores empatam na
+  frequência máxima.
+\end{itemize}
+
+\textbf{Moda da coluna Vendas (R\$):}
+\begin{itemize}
+  \item R\$4.200 aparece \textbf{3 vezes} (Ana, Carla, Elisa)
+  \item R\$6.000 e R\$9.800 aparecem 1 vez cada
+\end{itemize}
+$\Rightarrow$ \textbf{Moda = R\$4.200} — unimodal.
+
+\textbf{Moda da coluna Região:}
+\begin{itemize}
+  \item Norte: 2$\times$ (Ana, Diego) \quad Sul: 2$\times$ (Bruno, Elisa) \quad Leste: 1$\times$ (Carla)
+\end{itemize}
+$\Rightarrow$ \textbf{Modas = Norte e Sul} — bimodal. Leste tem apenas
+1 representante: possível sub-cobertura da região.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Resumo comparativo — Tabela 0 (para o quadro)}
+\begin{tabular}{|l|c|p{7.5cm}|}
+\hline
+\textbf{Medida} & \textbf{Resultado} & \textbf{Interpretação direta} \\
+\hline
+Média       & R\$5.680 & Equilíbrio matemático — distorcido por Diego \\
+Mediana     & R\$4.200 & Vendedor típico — mais representativa \\
+Moda Vendas & R\$4.200 & Valor mais frequente — coincide com mediana \\
+Moda Região & Norte / Sul & Regiões mais presentes; Leste sub-representada \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Regra prática rápida:}
+\begin{itemize}
+  \item $\bar{x} \approx$ Mediana $\;\Rightarrow\;$ distribuição simétrica, use média.
+  \item $\bar{x} \gg$ Mediana $\;\Rightarrow\;$ cauda direita (outlier positivo), prefira mediana.
+  \item $\bar{x} \ll$ Mediana $\;\Rightarrow\;$ cauda esquerda (outlier negativo), prefira mediana.
+\end{itemize}
+\end{BoardBox}
+
+Perguntem aos alunos: \textit{``Se vocês fossem o gerente dessa equipe, qual
+número apresentariam para o diretor: a média ou a mediana? Por quê?''}
+
+% ---------------------------------------------------------------------------
+\subsection{20h10–20h30: Outliers e comparação entre grupos}
+% ---------------------------------------------------------------------------
+
+\subsubsection*{Outliers: o que são e por que importam}
+
+Pessoal, calculamos médias e medianas — mas e quando um valor é tão diferente
+dos demais que distorce tudo? Esse valor se chama \textbf{outlier} (valor atípico).
+Saber identificá-lo \emph{visualmente e conceitualmente} é obrigação de todo
+analista antes de calcular qualquer coisa.
+
+\begin{BoardBox}
+\textbf{O que é um outlier (para o quadro)}
+\begin{itemize}
+  \item \textbf{Definição simples:} valor que se afasta muito dos demais
+  na distribuição. Pode ser para cima (positivo) ou para baixo (negativo).
+  \item \textbf{Como identificar sem fórmula:} compare com a maioria.
+  Se um valor faz a média ser muito diferente da mediana, há outlier.
+  \item \textbf{Dois tipos de origem:}
+  \begin{itemize}
+    \item \textbf{Legítimo:} o CEO que ganha R\$35.000 numa empresa onde\break
+    todos ganham menos que R\$15.000 — é real, não é erro.
+    \item \textbf{Erro de dados:} um tempo de atendimento de 450 minutos\break
+    quando a média é 9 minutos — provavelmente digitação errada.
+  \end{itemize}
+  \item \textbf{O que \emph{nunca} fazer:} remover outlier sem investigar.\break
+  Sempre pergunte: \emph{``esse valor faz sentido no contexto?''}
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Diagnóstico rápido de outlier — sem fórmula:}
+\begin{center}
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Coluna} & \textbf{Média} & \textbf{Mediana} & \textbf{Diagnóstico} \\
+\hline
+Tempo de atendimento & 13 min & 9,5 min & Outlier alto (Agente 04 com 45 min) \\
+Notas por módulo & 7,23 & 8,75 & Outliers baixos (módulos abandonados) \\
+Vendas — Tabela 1 & R\$4.550 & R\$4.200 & Outlier leve (Rafael, R\$7.500) \\
+Salários (Tabela 0B) & R\$12.740 & R\$8.000 & Outlier forte (CEO, R\$35.000) \\
+\hline
+\end{tabular}
+\end{center}
+\textbf{Regra:} diferença de mais de 20\% entre média e mediana é sinal de alerta.
+\end{SolvedBox}
+
+\subsubsection*{Comparação entre grupos}
+
+Um dos gestos mais poderosos da análise descritiva é \textbf{calcular a mesma
+medida dentro de cada grupo} e comparar. Isso transforma um número agregado
+(``a média geral é X'') em uma história (``o grupo A tem média X e o grupo B
+tem média Y — e a diferença é X-Y'').
+
+\begin{BoardBox}
+\textbf{Lógica de comparação entre grupos (para o quadro)}
+
+Passos:
+\begin{enumerate}
+  \item Separe as linhas pelo valor da variável categórica (grupo).
+  \item Calcule média (ou mediana) de cada grupo separadamente.
+  \item Compare os resultados e pergunte: \emph{qual grupo performou melhor? Por quê?}
+\end{enumerate}
+
+\textbf{Exemplo com a Tabela 0:}
+\begin{center}
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Região} & \textbf{Vendedores} & \textbf{Média de Vendas} & \textbf{Insight imediato} \\
+\hline
+Norte & Ana (4.200), Diego (9.800) & R\$7.000 & Muito puxada por Diego \\
+Sul   & Bruno (6.000), Elisa (4.200) & R\$5.100 & Mais equilibrada \\
+Leste & Carla (4.200) & R\$4.200 & Só 1 vendedor — pouco confiável \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Insight:} a ``média do Norte'' (R\$7.000) esconde que 1 dos 2
+vendedores está na média da empresa. Se Diego sair, o Norte cai para R\$4.200
+— idêntico ao Leste. Nunca reporte médias de grupos sem informar o\break
+tamanho do grupo.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Regra de ouro da comparação entre grupos:}
+\begin{itemize}
+  \item Sempre informe \textbf{n} (tamanho do grupo) ao lado da média.
+  \item Grupos com $n < 5$ devem ser interpretados com cautela extra.
+  \item A pergunta certa não é ``qual grupo tem a maior média?'' mas\break
+  ``\emph{a diferença de médias é grande o suficiente para tomar uma decisão?}''
+  \item Complementar com frequência: quantos registros cada grupo tem?
+\end{itemize}
+\end{SolvedBox}
+
+Perguntem aos alunos: \textit{``O que acontece com a média de um grupo quando
+temos apenas 1 ou 2 observações? Por que isso é perigoso em análises de mercado?''}
+
+% ---------------------------------------------------------------------------
+\subsection{20h30–21h: Prática em dupla — Tabelas 1 e 2}
+% ---------------------------------------------------------------------------
+
+Pessoal, dois exercícios para calcular \emph{na mão}, em dupla. Calculadora
+pode — fórmula no papel é obrigatória. Ao final, cada dupla apresenta os
+resultados em 1 minuto.
+
+\begin{SolvedBox}
+\textbf{Instruções para a prática:}
+\begin{enumerate}
+  \item Calcule Média, Mediana e Moda para cada coluna numérica.
+  \item Calcule a Moda para cada coluna categórica.
+  \item Escreva \textbf{1 frase de interpretação} para cada resultado.
+  \item Responda: \emph{Qual medida representa melhor os dados desta tabela? Por quê?}
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 1 — Vendas por Representante (calcule e interprete)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|l|}
+\hline
+\textbf{ID} & \textbf{Representante} & \textbf{Vendas (R\$)} & \textbf{Região} & \textbf{Meta atingida?} \\
+\hline
+01 & Carlos  & 4.200 & Norte & Sim \\
+02 & Liana   & 3.800 & Sul   & Não \\
+03 & Marcos  & 5.100 & Norte & Sim \\
+04 & Priya   & 3.800 & Leste & Não \\
+05 & Rafael  & 7.500 & Sul   & Sim \\
+06 & Sofia   & 4.200 & Norte & Sim \\
+07 & Tiago   & 3.200 & Leste & Não \\
+08 & Úlia    & 4.200 & Sul   & Sim \\
+09 & Vera    & 6.000 & Norte & Sim \\
+10 & William & 3.500 & Leste & Não \\
+\hline
+\end{tabular}
+
+\smallskip
+\textbf{Calcule:} (a) Média de Vendas \quad (b) Mediana de Vendas \quad
+(c) Moda de Vendas \quad (d) Moda de Região \quad (e) Moda de Meta Atingida.
+
+\smallskip
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Soma: $4200+3800+5100+3800+7500+4200+3200+4200+6000+3500 = 45500$
+  \item \textbf{Média:} $45500 \div 10 = R\$4.550$
+  \item Ordenados: $3200, 3500, 3800, 3800, \mathbf{4200, 4200}, 4200, 5100, 6000, 7500$
+  \item \textbf{Mediana:} $\dfrac{4200+4200}{2} = R\$4.200$
+  \item \textbf{Moda Vendas:} R\$4.200 ($3\times$) \quad
+    \textbf{Moda Região:} Norte ($4\times$) \quad
+    \textbf{Moda Meta:} Sim ($6\times$)
+  \item Média e mediana próximas (diferença R\$350) $\Rightarrow$ distribuição
+  razoavelmente OK; Rafael (R\$7.500) é o único ponto de atenção alta.
+\end{itemize}
+\end{BoardBox}
+
+\begin{BoardBox}
+\textbf{Tabela 2 — Tempo de Atendimento por Agente (calcule e interprete)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Agente} & \textbf{Tempo de Atendimento (min)} & \textbf{Canal} \\
+\hline
+01 & Agente 01 &  8 & Chat     \\
+02 & Agente 02 & 12 & Telefone \\
+03 & Agente 03 &  7 & Chat     \\
+04 & Agente 04 & 45 & Telefone \\
+05 & Agente 05 &  9 & Chat     \\
+06 & Agente 06 & 11 & E-mail   \\
+07 & Agente 07 &  8 & Chat     \\
+08 & Agente 08 & 10 & Telefone \\
+09 & Agente 09 & 13 & E-mail   \\
+10 & Agente 10 &  7 & Chat     \\
+\hline
+\end{tabular}
+
+\smallskip
+\textbf{Calcule:} (a) Média \quad (b) Mediana \quad
+(c) Moda de Tempo \quad (d) Moda de Canal.
+
+\smallskip
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Soma: $8+12+7+45+9+11+8+10+13+7 = 130$
+  \item \textbf{Média:} $130 \div 10 = 13{,}0$ min
+  \item Ordenados: $7, 7, 8, 8, \mathbf{9, 10}, 11, 12, 13, 45$
+  \item \textbf{Mediana:} $\dfrac{9+10}{2} = 9{,}5$ min
+  \item \textbf{Moda Tempo:} 7 e 8 min (empate, $2\times$ cada)
+    \quad \textbf{Moda Canal:} Chat ($4\times$)
+  \item Média $13{,}0 \gg$ Mediana $9{,}5$ $\Rightarrow$ Agente 04 (45 min) é
+  \textbf{outlier}. Use mediana! Meta baseada na média desperdiçaria capacidade
+  e prejudicaria a equipe.
+\end{itemize}
+\end{BoardBox}
+
+% ---------------------------------------------------------------------------
+\subsection{21h–21h10: Correção coletiva e transição}
+% ---------------------------------------------------------------------------
+
+Pessoal, vamos corrigir juntos. Cada dupla apresenta um resultado — quem
+acertou, levanta a mão. O ponto mais importante desta correção:
+
+\begin{SolvedBox}
+\textbf{Padrão de resposta esperado (cobra este formato na prova e apresentação):}
+\begin{enumerate}
+  \item \textbf{O número:} ``A mediana é 9,5 min.''
+  \item \textbf{O que significa:} ``Metade dos atendimentos termina em menos de 9,5 min.''
+  \item \textbf{Por que importa:} ``Se usarmos a média (13 min) como meta, superestimamos
+  o tempo e perdemos capacidade; a mediana gera uma meta mais justa.''
+\end{enumerate}
+Número sem contexto e sem recomendação não vale nada na análise de dados.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte II — Leitura Crítica e Geração de Insights (21h10–21h45)}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+\subsection{21h10–21h30: O que os números \emph{não} dizem}
+% ---------------------------------------------------------------------------
+
+Pessoal, agora a parte mais importante — e a que separa quem \emph{sabe
+calcular} de quem \emph{sabe analisar}. Qualquer software calcula média. O
+insight, a interpretação e a decisão de negócio são de vocês.
+
+\begin{SolvedBox}
+\textbf{Leitura crítica em 5 perguntas:}
+\begin{enumerate}
+  \item \textbf{A média representa bem os dados?} Compare com a mediana.
+  Diferença grande $\Rightarrow$ assimetria ou outlier.
+  \item \textbf{Quem puxa os extremos?} Identifique os valores muito altos ou
+  baixos — eles contam uma história própria.
+  \item \textbf{O que a moda revela?} O valor mais frequente é o
+  ``comportamento padrão''. Se a moda difere muito da média, há grupos distintos.
+  \item \textbf{O que está faltando?} Um resumo esconde variações e grupos.
+  Sempre pergunte: \emph{``qual subgrupo tem comportamento diferente?''}
+  \item \textbf{Qual a decisão?} Toda análise termina com uma recomendação
+  concreta: ``O dado sugere X, portanto proponho Y.''
+\end{enumerate}
+\end{SolvedBox}
+
+\subsubsection*{Assimetria: quando a média ``mente''}
+
+\begin{BoardBox}
+\textbf{Os três cenários de distribuição (para o quadro)}
+
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Cenário} & \textbf{Relação} & \textbf{Cauda} & \textbf{Use} \\
+\hline
+Simétrico           & $\bar{x} \approx$ Mediana & Sem cauda       & Média    \\
+Assimetria positiva & $\bar{x} >$ Mediana       & Cauda à direita & Mediana  \\
+Assimetria negativa & $\bar{x} <$ Mediana       & Cauda à esquerda & Mediana \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Exemplos reais:}
+\begin{itemize}
+  \item \textit{Salários no Brasil:} assimetria positiva — poucos ganham muito,
+  maioria ganha pouco. Mediana é mais justa.
+  \item \textit{Notas em prova difícil:} assimetria negativa — maioria tirou
+  nota baixa. Mediana revela isso.
+  \item \textit{Temperatura em São Paulo:} aproximadamente simétrica. Média
+  funciona bem.
+\end{itemize}
+\end{BoardBox}
+
+\subsubsection*{Tabela do Professor — Leitura crítica de salários}
+
+Vamos usar uma situação que todo mundo já viu: uma empresa que anuncia a média
+salarial e deixa o candidato empolgado — até ele descobrir o salário real do
+cargo.
+
+\begin{BoardBox}
+\textbf{Tabela 0B — Salários por Cargo (Professor resolve e interpreta)}
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Cargo} & \textbf{Salário (R\$)} & \textbf{Setor} \\
+\hline
+1 & Estagiário &  1.200 & TI            \\
+2 & Analista   &  4.500 & Financeiro    \\
+3 & Gerente    &  8.000 & TI            \\
+4 & Diretor    & 15.000 & Financeiro    \\
+5 & CEO        & 35.000 & Administração \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Professor resolve no quadro — roteiro de leitura crítica:}
+
+\textbf{Passo 1 — Média:}
+\[
+\bar{x} = \frac{1200 + 4500 + 8000 + 15000 + 35000}{5}
+= \frac{63700}{5} = R\$\;12.740
+\]
+
+\textbf{Passo 2 — Mediana:}
+Dados já ordenados: $1200,\; 4500,\; 8000,\; 15000,\; 35000$
+\[
+\text{Mediana} = x_{(3)} = R\$\;8.000
+\]
+
+\textbf{Passo 3 — Moda:}
+Nenhum salário se repete $\Rightarrow$ \textbf{sem moda numérica}.\\
+Setor: TI ($2\times$) e Financeiro ($2\times$) $\Rightarrow$ bimodal.
+
+\textbf{Passo 4 — Leitura crítica:}
+\begin{itemize}
+  \item Média = R\$12.740. Mas \textbf{4 dos 5} funcionários ganham
+  \emph{abaixo} da média.
+  \item O CEO (R\$35.000) puxa a média para cima sozinho — é um outlier com
+  alto impacto.
+  \item Mediana = R\$8.000 (o gerente) — mais honesta para representar
+  a ``maioria'' da empresa.
+  \item $\bar{x} = 12.740 \gg \text{Mediana} = 8.000$ $\Rightarrow$
+  \textbf{assimetria positiva forte.}
+\end{itemize}
+
+\textbf{Passo 5 — Recomendação (o insight que vira decisão):}
+
+\begin{center}
+\textit{``Com base na análise salarial, recomendo que a empresa reporte a
+\textbf{mediana} (R\$8.000) e o intervalo por cargo. A média de R\$12.740
+é tecnicamente correta, mas distorce a percepção e pode gerar insatisfação
+e turnover entre analistas e estagiários.''}
+\end{center}
+
+\textbf{Observe o padrão:} número $\rightarrow$ problema identificado
+$\rightarrow$ contexto $\rightarrow$ recomendação acionável.
+\end{SolvedBox}
+
+Perguntem aos alunos: \textit{``Em que outro contexto vocês já viram a média
+sendo usada de forma enganosa — intencional ou não?''}
+
+% ---------------------------------------------------------------------------
+\subsection{21h30–21h45: Prática crítica em dupla — apresentações ao vivo}
+% ---------------------------------------------------------------------------
+
+Agora vocês vão \textbf{calcular e interpretar} — e no final cada dupla
+\textbf{apresenta seus insights} em \textbf{2 minutos}. Não basta dizer o
+número: precisa dizer o que ele significa e que decisão ele suporta.
+
+\begin{SolvedBox}
+\textbf{Roteiro obrigatório de apresentação (2 min por dupla):}
+\begin{enumerate}
+  \item \textbf{Os números:} média, mediana, moda (30 s)
+  \item \textbf{A história:} o que está acontecendo nos dados? (40 s)
+  \item \textbf{O problema:} há outlier? Assimetria? Grupo diferente? (30 s)
+  \item \textbf{A recomendação:} qual ação concreta o dado sugere? (20 s)
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 3 — Notas por Módulo em Curso EAD (calcule e gere insights)}
+
+\medskip
+\begin{tabular}{|c|l|r|l|}
+\hline
+\textbf{ID} & \textbf{Módulo} & \textbf{Nota Média dos Alunos} & \textbf{Status} \\
+\hline
+01 & Módulo A &  9,2 & Concluído  \\
+02 & Módulo B &  8,7 & Concluído  \\
+03 & Módulo C &  4,5 & Abandonado \\
+04 & Módulo D &  9,0 & Concluído  \\
+05 & Módulo E &  2,1 & Abandonado \\
+06 & Módulo F &  8,5 & Concluído  \\
+07 & Módulo G &  8,9 & Concluído  \\
+08 & Módulo H &  9,4 & Concluído  \\
+09 & Módulo I &  3,2 & Abandonado \\
+10 & Módulo J &  8,8 & Concluído  \\
+\hline
+\end{tabular}
+
+\smallskip
+\textbf{Calcule:}
+(a) Média geral \quad
+(b) Mediana \quad
+(c) Moda de Status \quad
+(d) Média dos módulos Concluídos \quad
+(e) Média dos módulos Abandonados.
+
+\smallskip
+\textbf{Gere pelo menos 3 insights e proponha 1 ação de negócio.}
+
+\smallskip
+\textbf{Respostas e insights esperados:}
+\begin{itemize}
+  \item Soma: $9{,}2+8{,}7+4{,}5+9{,}0+2{,}1+8{,}5+8{,}9+9{,}4+3{,}2+8{,}8 = 72{,}3$
+  \item \textbf{Média geral:} $72{,}3 \div 10 = 7{,}23$
+  \item Ordenados: $2{,}1;\; 3{,}2;\; 4{,}5;\; 8{,}5;\; \mathbf{8{,}7;\; 8{,}8};\; 8{,}9;\;9{,}0;\; 9{,}2;\; 9{,}4$
+  \item \textbf{Mediana:} $\dfrac{8{,}7+8{,}8}{2} = 8{,}75$
+  \item \textbf{Moda Status:} Concluído ($7\times$)
+  \item Média Concluídos: $\dfrac{9{,}2+8{,}7+9{,}0+8{,}5+8{,}9+9{,}4+8{,}8}{7} \approx 8{,}93$
+    \quad Média Abandonados: $\dfrac{4{,}5+2{,}1+3{,}2}{3} \approx 3{,}27$
+  \item \textbf{Insight 1:} Média geral $7{,}23 \ll$ Mediana $8{,}75$ — os 3 módulos
+  abandonados arrastam a média e mascaram que 7 módulos vão excelentemente.
+  \item \textbf{Insight 2:} A distribuição é \textbf{bimodal}: grupo A
+  (concluídos) com nota $\approx 8{,}9$ e grupo B (abandonados) com nota
+  $\approx 3{,}3$. A média geral não representa nenhum dos dois grupos.
+  \item \textbf{Insight 3:} 30\% dos módulos foram abandonados — taxa preocupante
+  que pode indicar conteúdo difícil, carga horária excessiva ou falta de pré-requisitos.
+  \item \textbf{Ação recomendada:} implementar alerta automático quando a nota
+  média do módulo cair abaixo de 5,0 e criar trilha de revisão antes dos
+  Módulos C, E e I.
+\end{itemize}
+\end{BoardBox}
+
+\begin{BoardBox}
+\textbf{Tabela 4 — Gastos de Marketing vs.\ Vendas por Campanha (calcule e gere insights)}
+
+\medskip
+\begin{tabular}{|c|l|r|r|l|}
+\hline
+\textbf{ID} & \textbf{Campanha} & \textbf{Gasto Mkt (R\$)} & \textbf{Vendas (R\$)} & \textbf{Canal} \\
+\hline
+01 & Janeiro   &  5.000 & 42.000 & Online  \\
+02 & Fevereiro &  4.500 & 38.000 & Online  \\
+03 & Março     &  8.000 & 51.000 & Offline \\
+04 & Abril     &  3.000 & 29.000 & Online  \\
+05 & Maio      & 12.000 & 48.000 & Offline \\
+06 & Junho     &  5.500 & 43.000 & Online  \\
+07 & Julho     &  4.800 & 40.000 & Online  \\
+08 & Agosto    &  9.000 & 55.000 & Offline \\
+09 & Setembro  &  6.000 & 44.000 & Online  \\
+10 & Outubro   &  7.500 & 52.000 & Offline \\
+\hline
+\end{tabular}
+
+\smallskip
+\textbf{Calcule:}
+(a) Média de Gasto Mkt \quad
+(b) Média de Vendas \quad
+(c) Mediana de Gasto Mkt \quad
+(d) Mediana de Vendas \quad
+(e) Moda de Canal. \\
+\textbf{Extra:} calcule a média de Vendas e de Gasto Mkt por Canal
+(Online vs.\ Offline) e o ROI de cada ($\text{ROI} = \text{Vendas} \div \text{Gasto}$).
+
+\smallskip
+\textbf{Gere pelo menos 3 insights e proponha 1 decisão de alocação de budget.}
+
+\smallskip
+\textbf{Respostas e insights esperados:}
+\begin{itemize}
+  \item \textbf{Média Gasto:} $\dfrac{5000+4500+8000+3000+12000+5500+4800+9000+6000+7500}{10} = R\$6.530$
+  \item \textbf{Média Vendas:} $\dfrac{42000+38000+51000+29000+48000+43000+40000+55000+44000+52000}{10} = R\$44.200$
+  \item Gasto ordenado: $3000, 4500, 4800, 5000, 5500, 6000, 7500, 8000, 9000, 12000$
+    $\Rightarrow$ \textbf{Mediana Gasto:} $\dfrac{5500+6000}{2} = R\$5.750$
+  \item Vendas ordenadas: $29000, 38000, 40000, 42000, 43000, 44000, 48000, 51000, 52000, 55000$
+    $\Rightarrow$ \textbf{Mediana Vendas:} $\dfrac{43000+44000}{2} = R\$43.500$
+  \item \textbf{Moda Canal:} Online ($6\times$)
+  \item ROI Online: Vendas $\approx R\$39.333$, Gasto $R\$4.800$ $\Rightarrow$ ROI $\approx 8{,}2\times$
+  \item ROI Offline: Vendas $\approx R\$51.500$, Gasto $R\$9.125$ $\Rightarrow$ ROI $\approx 5{,}6\times$
+  \item \textbf{Insight 1:} Online tem ROI $8{,}2\times$ vs.\ $5{,}6\times$ do Offline —
+  apesar de gerar menos vendas absolutas, converte mais por real investido.
+  \item \textbf{Insight 2:} Média Gasto (R\$6.530) $>$ Mediana (R\$5.750) $\Rightarrow$
+  Maio e Agosto puxam o gasto médio para cima. A maioria das campanhas gasta menos que a média.
+  \item \textbf{Insight 3:} Maio (R\$12.000 gasto, R\$48.000 vendas) tem o pior
+  ROI Offline ($4\times$) — campanha cara com retorno abaixo do padrão do canal.
+  \item \textbf{Decisão:} realocar 20\% do budget de Offline para Online e
+  investigar Maio antes de aprovar propostas de alto investimento Offline.
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Rubrica de avaliação das apresentações (2 min):}
+\begin{tabular}{|p{3.5cm}|p{9.5cm}|}
+\hline
+\textbf{Critério} & \textbf{O que o professor observa} \\
+\hline
+Cálculos corretos & Média, mediana, moda calculados sem erro grosseiro \\
+Medida adequada   & Justificou por que usou média ou mediana \\
+Insight real      & Identificou padrão ou problema além do óbvio (outlier, grupo, assimetria) \\
+Recomendação      & Propôs ação concreta e viável, não vaga \\
+Clareza           & Apresentou em 2 minutos sem leitura de papel \\
+\hline
+\end{tabular}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — Atividade Individual Final (21h45–22h)}
+% =============================================================================
+
+Pessoal, a última tarefa da noite é \textbf{individual} — sem consulta ao
+colega, sem correção ao lado. O objetivo é simples: você vai aplicar
+\textbf{tudo} que vimos hoje em uma única tabela e entregar um insight acionável.
+Quem terminar antes do tempo revisa a resposta e verifica se o insight está
+concreto o suficiente para um gestor tomar uma decisão.
+
+\begin{SolvedBox}
+\textbf{Instruções da Atividade Individual Final:}
+\begin{enumerate}
+  \item \textbf{Classifique} cada coluna (tipo de variável).
+  \item \textbf{Monte a tabela de frequência} da coluna categórica (freq.\ absoluta, relativa e \%).
+  \item \textbf{Calcule} Média, Mediana e Moda para cada coluna numérica.
+  \item \textbf{Compare} Média vs.\ Mediana: há outlier? Qual a direção da assimetria?
+  \item \textbf{Compare entre grupos:} calcule a média de Ticket por Turno e por Canal.
+  \item \textbf{Redija 1 insight} no formato: \emph{``O dado mostra X, o que significa Y,
+  portanto recomendo Z.''}
+\end{enumerate}
+\textbf{Tempo:} 15 minutos. Entrega: folha de papel ou foto no AVA até meia-noite de hoje.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Tabela 5 — Atendimentos de Suporte ao Cliente — Atividade Individual Final}
+
+\medskip
+\begin{tabular}{|c|l|r|l|l|l|}
+\hline
+\textbf{ID} & \textbf{Atendente} & \textbf{Ticket (R\$)} & \textbf{Turno} & \textbf{Canal} & \textbf{Resolvido?} \\
+\hline
+01 & Ana       &  320 & Manhã  & Chat     & Sim \\
+02 & Bruno     &  580 & Tarde  & Telefone & Sim \\
+03 & Carla     &  210 & Manhã  & Chat     & Não \\
+04 & Diego     & 1.950 & Noite & Telefone & Sim \\
+05 & Elisa     &  430 & Tarde  & E-mail   & Sim \\
+06 & Fábio     &  310 & Manhã  & Chat     & Não \\
+07 & Gisele    &  490 & Noite  & E-mail   & Sim \\
+08 & Henrique  &  350 & Tarde  & Telefone & Não \\
+09 & Isabela   &  280 & Manhã  & Chat     & Sim \\
+10 & João      &  620 & Noite  & Telefone & Sim \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Gabarito (professor — não mostrar até a correção):}
+
+\textbf{1. Tipos de variável:}
+\begin{itemize}
+  \item Ticket (R\$): quantitativa contínua
+  \item Turno: qualitativa nominal
+  \item Canal: qualitativa nominal
+  \item Resolvido: qualitativa nominal (binária)
+\end{itemize}
+
+\textbf{2. Tabela de frequência — Canal:} $n = 10$
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Canal} & $f_i$ & $fr_i$ & \textbf{\%} \\
+\hline
+Chat     & 4 & 0,40 & 40\% \\
+Telefone & 4 & 0,40 & 40\% \\
+E-mail   & 2 & 0,20 & 20\% \\
+\hline
+Total    & 10 & 1,00 & 100\% \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{3. Média e Mediana de Ticket (R\$):}
+\[
+\bar{x} = \frac{320+580+210+1950+430+310+490+350+280+620}{10}
+= \frac{5540}{10} = R\$554
+\]
+Ordenados: $210, 280, 310, 320, \mathbf{350, 430}, 490, 580, 620, 1950$
+\[
+\text{Mediana} = \frac{350+430}{2} = R\$390
+\]
+Moda de Ticket: sem moda (todos distintos).\quad
+Moda de Canal: Chat e Telefone (4$\times$ cada).\quad
+Moda de Resolvido: Sim (7$\times$).
+
+\textbf{4. Diagnóstico de outlier:}
+$\bar{x} = 554 \gg \text{Mediana} = 390$ $\Rightarrow$ \textbf{assimetria positiva}.
+Diego (R\$1.950) é outlier claro — 3,5$\times$ a mediana. Investigar se é erro
+ou ticket de alta complexidade.
+
+\textbf{5. Comparação entre grupos — Média de Ticket por Turno:}
+\begin{center}
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Turno} & $n$ & \textbf{Média Ticket} & \textbf{Leitura} \\
+\hline
+Manhã & 4 & $\frac{320+210+310+280}{4} = R\$280$ & Tickets mais simples/baratos \\
+Tarde & 3 & $\frac{580+430+350}{3} = R\$453$ & Complexidade intermediária \\
+Noite & 3 & $\frac{1950+490+620}{3} = R\$1.020$ & Muito puxada por Diego \\
+\hline
+\end{tabular}
+\end{center}
+\textit{Nota: sem Diego, Noite cai para $\frac{490+620}{2} = R\$555$ — mais próximo do Tarde.}
+
+\textbf{6. Insight esperado (exemplo):}
+\begin{center}
+\textit{``O dado mostra que o turno da noite apresenta ticket médio de R\$1.020 —
+83\% acima da tarde e 264\% acima da manhã. Isso ocorre porque o atendimento de
+Diego (R\$1.950) é um outlier que distorce a média. Usando a mediana geral
+(R\$390), a diferença entre os turnos diminui. Recomendo investigar se os
+tickets noturnos são estruturalmente mais complexos ou se há erro de registro,
+antes de alocar mais recursos para a noite.''}  
+\end{center}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte IV — Distribuição das 40 Funções Python (22h — rápido!)}
+% =============================================================================
+
+Pessoal, última parte da noite! Cada um vai receber \textbf{uma função} para
+implementar até a \textbf{Semana 04} com apoio do \textbf{GitHub Copilot}.
+Essa função entra na \textbf{biblioteca do curso} — um pacote Python que vamos
+construir juntos ao longo do semestre.
+
+Na Semana 04 vocês me entregam um \textbf{infográfico} com:
+\begin{itemize}
+  \item O \textbf{código} da função (bem documentado, com docstring);
+  \item A \textbf{saída} rodando num dataset real (qualquer tabela desta aula serve);
+  \item Uma \textbf{análise crítica} escrita explicando o que o resultado
+  significa e que decisão ele apoiaria — usando o padrão de hoje.
+\end{itemize}
+
+\begin{SolvedBox}
+\textbf{O que entregar na Semana 04 (Infográfico de Função):}
+\begin{enumerate}
+  \item \textbf{Nome e assinatura} exatos da função (conforme a lista abaixo)
+  \item \textbf{Docstring} completa: o que faz, parâmetros, retorno e exemplo
+  \item \textbf{Código} com comentário acima de cada linha relevante
+  \item \textbf{Screenshot} do Jupyter executando a função com o dataset da aula
+  \item \textbf{Análise crítica:} interprete o número, aponte limitação e recomende ação
+  \item \textbf{Infográfico} A4 digital (PDF ou PNG) legível e organizado
+\end{enumerate}
+\textbf{Ferramenta obrigatória:} GitHub Copilot para gerar e refinar a função.\\
+\textbf{Data de entrega:} 03/03/2026 às 23h59 via AVA.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Lista de 40 funções — sorteio ao vivo (1 por aluno):}
+\begin{enumerate}
+  \item \texttt{calcular\_media(df, coluna)} — média aritmética de uma coluna numérica
+  \item \texttt{calcular\_mediana(df, coluna)} — mediana robusta a outliers
+  \item \texttt{calcular\_moda(df, coluna)} — moda (pode retornar múltiplos valores)
+  \item \texttt{calcular\_desvio\_padrao(df, coluna)} — DP amostral e populacional
+  \item \texttt{calcular\_variancia(df, coluna)} — variância com e sem correção de Bessel
+  \item \texttt{calcular\_amplitude(df, coluna)} — máximo menos mínimo
+  \item \texttt{contar\_nulos(df)} — contagem e porcentagem de NaN por coluna
+  \item \texttt{preencher\_nulos\_media(df, coluna)} — imputação pela média
+  \item \texttt{preencher\_nulos\_mediana(df, coluna)} — imputação pela mediana
+  \item \texttt{remover\_linhas\_nulas(df)} — remove linhas com qualquer NaN
+  \item \texttt{calcular\_quartis(df, coluna)} — Q1, Q2, Q3 e IQR
+  \item \texttt{calcular\_iqr(df, coluna)} — Intervalo Interquartil
+  \item \texttt{detectar\_outliers\_iqr(df, coluna)} — retorna DataFrame só com outliers
+  \item \texttt{normalizar\_min\_max(df, coluna)} — escala valores para $[0, 1]$
+  \item \texttt{padronizar\_zscore(df, coluna)} — centraliza e divide pelo DP
+  \item \texttt{calcular\_correlacao(df, col1, col2)} — correlação de Pearson entre 2 colunas
+  \item \texttt{plotar\_histograma(df, coluna)} — histograma com bins e curva KDE
+  \item \texttt{plotar\_boxplot(df, coluna)} — boxplot com IQR e outliers marcados
+  \item \texttt{plotar\_scatterplot(df, col1, col2)} — dispersão com linha de tendência
+  \item \texttt{calcular\_skewness(df, coluna)} — assimetria da distribuição
+  \item \texttt{calcular\_kurtosis(df, coluna)} — curtose (caudas da distribuição)
+  \item \texttt{contar\_valores\_unicos(df, coluna)} — cardinalidade de uma coluna
+  \item \texttt{calcular\_frequencia(df, coluna)} — tabela de freq.\ absoluta e relativa
+  \item \texttt{converter\_para\_categorico(df, coluna)} — transforma em \texttt{pd.Categorical}
+  \item \texttt{one\_hot\_encoding(df, coluna)} — codificação one-hot com Pandas
+  \item \texttt{proporcao\_nulos(df)} — proporção de nulos em \% por coluna
+  \item \texttt{soma\_acumulada(df, coluna)} — soma cumulativa (ex.: saldo no tempo)
+  \item \texttt{media\_movel(df, coluna, janela)} — média móvel com janela configurável
+  \item \texttt{variacao\_percentual(df, coluna)} — variação \% entre linhas consecutivas
+  \item \texttt{calcular\_ranking(df, coluna)} — ranking crescente e decrescente
+  \item \texttt{identificar\_tipos\_colunas(df)} — retorna dict com numéricas e categóricas
+  \item \texttt{gerar\_matriz\_correlacao(df)} — correlação entre todas as colunas numéricas
+  \item \texttt{plotar\_heatmap\_correlacao(df)} — heatmap colorido da matriz de correlação
+  \item \texttt{calcular\_r2(y\_real, y\_pred)} — coeficiente de determinação $R^2$
+  \item \texttt{calcular\_mae(y\_real, y\_pred)} — erro absoluto médio (MAE)
+  \item \texttt{calcular\_mse(y\_real, y\_pred)} — erro quadrático médio (MSE)
+  \item \texttt{calcular\_rmse(y\_real, y\_pred)} — raiz do erro quadrático médio (RMSE)
+  \item \texttt{intervalo\_confianca\_media(df, coluna, alpha)} — IC de 95\% para a média
+  \item \texttt{plotar\_barras\_categorias(df, coluna)} — barras com contagem por categoria
+  \item \texttt{plotar\_pizza\_categorias(df, coluna)} — pizza com proporções por categoria
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Dica para o infográfico:} Canva, Notion ou PDF exportado do Jupyter
+funcionam bem. O visual não precisa ser bonito — precisa ser \emph{claro}.
+Quem não conseguir ao menos um \texttt{print()} funcionando com o dataset da
+aula não passa na checklist de entrega. Copilot é obrigatório: mostrem no
+infográfico o comando que usaram para gerar o código.
+\end{NoteBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides: tipos de variáveis + três medidas de posição (com animações passo a passo)
+  \item Tabelas 0, 0B, 1, 2, 3 e 4 impressas em folha A4 (uma por dupla)
+  \item Dataset da aula disponível no AVA como \texttt{semana03\_datasets.csv}
+  \item Template de infográfico no Canva (link no AVA)
+  \item Notebook base com as 4 tabelas já carregadas em \texttt{pd.DataFrame}
+  \item Lista de 40 funções em PDF (para sorteio físico em sala)
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Entrega — Infográfico de Função (03/03/2026)}
+% ---------------------------------------------------------------------------
+\begin{SolvedBox}
+\textbf{Checklist de entrega — 03/03/2026, 23h59 via AVA:}
+\begin{itemize}
+  \item[$\square$] Função com nome exatamente igual à lista do sorteio
+  \item[$\square$] Docstring completa: o que faz, parâmetros, retorno e exemplo de uso
+  \item[$\square$] Código com comentário acima de cada linha relevante
+  \item[$\square$] Screenshot do Jupyter executando a função com o dataset da aula
+  \item[$\square$] Análise crítica: interprete o número, aponte uma limitação e recomende ação
+  \item[$\square$] Evidência de uso do GitHub Copilot (print do prompt ou sugestão aceita)
+  \item[$\square$] Infográfico A4 digital (PDF ou PNG) legível e organizado
+  \item[$\square$] Enviado pelo AVA até 03/03/2026 às 23h59
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 04}, começamos com as apresentações dos infográficos —
+máximo 2 minutos por aluno, com demonstração ao vivo no Jupyter. Em seguida
+avançamos para \textbf{Estatística Descritiva II}: variância, desvio padrão,
+amplitude, IQR e detecção formal de outliers. Vamos também construir os
+primeiros \textbf{boxplots e histogramas} para visualizar tudo o que calculamos
+à mão hoje. Tragam a função pronta e o Jupyter aberto!
+
+Perguntem aos alunos: \textit{``Qual função vocês receberam? Já tentaram pedir
+para o Copilot gerar o esqueleto? O que aconteceu quando vocês rodaram com os
+dados de hoje?''}
+

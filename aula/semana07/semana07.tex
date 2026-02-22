@@ -1,11 +1,326 @@
-\chapter{Semana 07 (23/03--25/03) --- Categóricas e revisão para Prova I}
+% =============================================================================
+% Semana 07 — Variáveis Categóricas + Revisão para Prova I
+% Aula de 3 horas (19h–22h) | 25/03/2026
+% =============================================================================
 
+\chapter{Semana 07 (25/03/2026) — Variáveis Categóricas e Revisão para Prova I}
+
+% ---------------------------------------------------------------------------
 \section{Objetivo da semana}
-Eu fecho a Unidade I, consolidando leitura de variáveis categóricas e revisão guiada.
+% ---------------------------------------------------------------------------
 
-\section{Conteúdo}
-\begin{itemize}[leftmargin=*]
-  \item Tabelas de frequência e proporções.
-  \item Gráficos de barras e escolhas de visual.
-  \item Revisão para Prova I Unidade.
+Pessoal, esta é a última aula da Unidade I. Fechamos com a análise de
+\textbf{variáveis categóricas}: tabelas de contingência, proporções
+condicionais e visualizações de frequência. Depois fazemos uma
+\textbf{revisão completa e integrada} de tudo que vimos desde a semana 01
+para vocês chegarem confiantes na Prova I.
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–19h30 — \textbf{TEORIA:} Tabela de frequência simples para categóricas
+  \item 19h30–20h — \textbf{TEORIA:} Tabela de contingência e proporções condicionais
+  \item 20h–20h20 — \textbf{TEORIA:} Gráficos de barras — simples, agrupadas, empilhadas
+  \item 20h20–20h50 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2
+  \item 20h50–21h50 — \textbf{REVISÃO:} Unidade I — resumo integrativo + simulado
+  \item 21h50–22h — \textbf{Dúvidas finais e orientação para a Prova I}
+\end{enumerate}
+\end{BoardBox}
+
+\begin{NoteBox}
+A Prova I está prevista para \textbf{26 de março (quinta-feira)}.
+Revisem a biblioteca de funções Python da turma — algumas questões pedem
+que o aluno interprete saídas de código.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Teoria: Variáveis Categóricas (19h–20h20)}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+\subsection{19h–19h30: Tabela de Frequência para Categóricas}
+% ---------------------------------------------------------------------------
+
+\begin{BoardBox}
+\textbf{Frequência simples de variável categórica (para o quadro)}
+
+Para variáveis categóricas (nominal ou ordinal), a tabela de frequência
+conta \emph{quantas vezes cada categoria aparece} e calcula a proporção.
+
+\begin{center}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Categoria} & \textbf{Freq. Absoluta ($f_i$)} & \textbf{Freq. Relativa ($f_i/n$)} \\
+\hline
+Básico    & 120 & 40\% \\
+Standard  & 105 & 35\% \\
+Premium   &  75 & 25\% \\
+\hline
+\textbf{Total} & 300 & 100\% \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{O que observar:}
+\begin{itemize}
+  \item Distribuição equilibrada ou há dominância de uma categoria?
+  \item A proporção da menor categoria é suficiente para análise confiável?
+  (categorias com $< 5\%$ são instáveis em comparações)
+  \item Ordem das categorias: nominal (sem ordem natural) ou ordinal (ex.:
+  ``ruim/regular/bom/ótimo'' — deve respeitar a ordem).
 \end{itemize}
+\end{BoardBox}
+
+% ---------------------------------------------------------------------------
+\subsection{19h30–20h: Tabela de Contingência}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{O que é uma tabela de contingência (crosstab)?}
+
+Ao cruzar \textbf{duas variáveis categóricas}, obtemos uma tabela de
+dupla entrada que mostra a distribuição conjunta. Cada célula mostra
+a frequência de observações com aquela combinação de categorias.
+
+\textbf{Exemplo:} Canal de Venda × Plano do Cliente
+
+\begin{center}
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+& \textbf{Básico} & \textbf{Standard} & \textbf{Premium} & \textbf{Total} \\
+\hline
+Online & 80 & 60 & 20 & 160 \\
+Presencial & 40 & 45 & 55 & 140 \\
+\hline
+\textbf{Total} & 120 & 105 & 75 & 300 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Proporções condicionais por linha (leitura de decisão):}
+\begin{center}
+\begin{tabular}{|l|r|r|r|}
+\hline
+& \textbf{Básico} & \textbf{Standard} & \textbf{Premium} \\
+\hline
+Online & 50\% & 37,5\% & 12,5\% \\
+Presencial & 28,6\% & 32,1\% & 39,3\% \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Leitura:} clientes online preferem fortemente o plano Básico (50\%).
+Clientes presenciais têm distribuição mais equilibrada, com forte presença
+Premium (39\%). Isso sugere que o canal influencia — ou é influenciado por —
+o tipo de contratação.
+
+\textbf{Proporções por coluna} respondem a outra pergunta: ``Dentro dos que
+contratam Premium, qual canal é mais frequente?'' Depende da pergunta de negócio.
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\subsection{20h–20h20: Gráficos de Barras}
+% ---------------------------------------------------------------------------
+
+\begin{BoardBox}
+\textbf{Quando usar barras simples, agrupadas ou empilhadas (para o quadro)}
+
+\begin{tabular}{|l|p{5cm}|p{5.5cm}|}
+\hline
+\textbf{Tipo} & \textbf{Quando usar} & \textbf{Limitação} \\
+\hline
+Barras simples & 1 variável categórica × frequência & Não compara subgrupos \\
+Barras agrupadas & 2 categorias, comparação lado a lado & Fica poluído com $>4$ grupos \\
+Barras empilhadas & Composição interna de um total & Difícil comparar categorias intermediárias \\
+Barras empilhadas (100\%) & Proporção relativa por grupo & Não mostra volume absoluto \\
+\hline
+\end{tabular}
+
+\textbf{Regra de ouro:} barras agrupadas para \emph{comparar} categorias;
+barras empilhadas 100\% para \emph{mostrar composição}.
+\textbf{Pizza nunca} quando há mais de 3 fatias ou diferenças sutis — o olho humano
+não consegue comparar ângulos com precisão acima de 3 fatias.
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte II — Prática em Dupla (20h20–20h50)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Tabela 1 — Atendimentos por Canal e Resultado}
+
+\medskip
+\begin{tabular}{|c|l|l|l|}
+\hline
+\textbf{ID} & \textbf{Canal} & \textbf{Resultado} & \textbf{Turno} \\
+\hline
+01 & Chat    & Resolvido   & Manhã  \\
+02 & Telefone & Escalado   & Tarde  \\
+03 & Chat    & Resolvido   & Manhã  \\
+04 & Email   & Resolvido   & Manhã  \\
+05 & Telefone & Resolvido  & Tarde  \\
+06 & Chat    & Escalado    & Tarde  \\
+07 & Email   & Escalado    & Manhã  \\
+08 & Chat    & Resolvido   & Tarde  \\
+09 & Telefone & Resolvido  & Tarde  \\
+10 & Email   & Resolvido   & Manhã  \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Construa a tabela de frequência de Canal (absoluta + relativa).
+  \item Construa a tabela de contingência Canal × Resultado.
+  \item Calcule a proporção de ``Escalado'' por canal (prop. condicional por linha).
+  \item Qual canal tem maior taxa de escalamento? O que isso sugere?
+\end{enumerate}
+
+\textbf{Respostas esperadas:}
+\begin{itemize}
+  \item Canal: Chat 4×(40\%), Telefone 3×(30\%), Email 3×(30\%)
+  \item Contingência: Chat (3R, 1E); Telefone (2R, 1E); Email (2R, 1E)
+  \item Taxa de escalamento: Chat = 25\%; Telefone = 33\%; Email = 33\%
+  \item Telefone e Email têm taxa de escalamento 1,3× maior que Chat.
+  Sugestão: investigar se tickets escalados via Telefone/Email têm complexidade
+  maior ou se é falta de capacitação no atendimento assíncrono.
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte III — Revisão Integrada: Unidade I (20h50–21h50)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Mapa mental da Unidade I — para o quadro}
+
+\textbf{Semana 01–02:} contexto AED; ciclo de análise; tipos de variável;
+tabela de frequência; importação de dados em Python.\\
+\textbf{Semana 03:} medidas de posição — média, mediana, moda;
+leitura crítica; quando cada uma é mais representativa.\\
+\textbf{Semana 04:} medidas de dispersão — amplitude, variância, DP, IQR;
+detecção de outliers (regra de Tukey); boxplot.\\
+\textbf{Semana 05:} histograma e distribuições; assimetria positiva e negativa;
+dados ausentes (MCAR, MAR, MNAR) e estratégias de tratamento.\\
+\textbf{Semana 06:} correlação de Pearson; scatter plot; correlação $\neq$ causalidade;
+variáveis confundidoras.\\
+\textbf{Semana 07:} tabelas de contingência; proporções condicionais;
+gráficos de barras agrupadas e empilhadas.
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Simulado — 10 questões (20 min para responder, 10 min para correção)}
+
+\textbf{Q1.} Um dataset de salários tem Média = R\$12.000 e Mediana = R\$4.500.
+O que isso indica sobre a distribuição? Qual medida de posição você reportaria?
+
+\textbf{Q2.} Duas turmas têm Média = 7,0. Turma A: DP = 0,3. Turma B: DP = 3,1.
+O que isso significa? Em qual turma o processo de ensino parece mais consistente?
+
+\textbf{Q3.} Dado o conjunto $\{5, 7, 8, 10, 45\}$:
+(a) Calcule $Q_1$, $Q_3$ e IQR.
+(b) Determine se 45 é outlier pela regra de Tukey.
+
+\textbf{Q4.} Um histograma de tempo de espera mostra dois picos — um em torno de
+5 minutos e outro em torno de 35 minutos. O que isso sugere sobre a população analisada?
+
+\textbf{Q5.} Você tem 15\% de missing na coluna ``renda mensal'' de uma pesquisa
+de satisfação. Ao investigar, percebe que clientes de baixa renda tendem a não
+responder. Que tipo de missing é esse? Qual estratégia de tratamento?
+
+\textbf{Q6.} $r = 0,82$ entre horas de sono e nota acadêmica. Você pode afirmar
+que dormir mais \emph{causa} notas maiores? Justifique com dois argumentos.
+
+\textbf{Q7.} Qual a diferença entre barras agrupadas e barras empilhadas 100\%?
+Dê um exemplo de quando usar cada uma.
+
+\textbf{Q8.} Um analista calcula a média de tempo de atendimento incluindo um
+outlier de 8 horas (os demais variam entre 8 e 15 minutos). Como isso afeta a
+média? O que você faria antes de reportar?
+
+\textbf{Q9.} Você quer comparar o NPS (\textit{Net Promoter Score}, escala 1–10)
+de dois grupos de clientes: Premium e Básico. Que medidas de posição e dispersão
+você calcularia? Que visual usaria?
+
+\textbf{Q10.} Um dataset de 200 pedidos tem 3 valores em branco na coluna
+``data de entrega''. Os pedidos faltantes são de clientes aleatórios, sem relação
+com região ou plano. Que tipo de missing? O que você faz?
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Gabaritos do Simulado (professor):}
+
+\textbf{Q1.} Assimetria positiva intensa (cauda de altos salários puxa a média para cima).
+Reportar mediana (R\$4.500 — mais representativa da maioria).
+
+\textbf{Q2.} Mesma média, performances completamente diferentes. Turma A: homogênea,
+processo consistente. Turma B: enorme variação — alguns alunos excelentes, outros muito abaixo.
+
+\textbf{Q3.} Ordenados: $5,7,8,10,45$. $Q_1=6$; $Q_3=27{,}5$; $\text{IQR}=21{,}5$.
+$\text{LS} = 27{,}5 + 32{,}25 = 59{,}75$. 45 $<$ 59,75 $\Rightarrow$ 45 \textbf{não é outlier} pela regra de Tukey neste conjunto.
+
+\textbf{Q4.} Distribuição bimodal: dois subgrupos distintos no dataset (ex.: atendimentos
+simples vs. complexos). Analisar cada subgrupo separadamente.
+
+\textbf{Q5.} MNAR (ausência relacionada ao valor da variável em si — renda baixa omite renda).
+Estratégia: criar flag \texttt{renda\_ausente} + imputar pelo percentil baixo do grupo com
+padrão similar (ex.: escolaridade baixa).
+
+\textbf{Q6.} Não. (1) Causalidade reversa possível: pessoas saudáveis dormem mais
+\emph{e} têm melhor desempenho acadêmico — saúde pode causar os dois. (2) Variável
+confundidora: gestão de tempo—quem gerencia bem o tempo dorme em horas regulares
+\emph{e} estuda melhor.
+
+\textbf{Q7.} Agrupadas: comparar valores absolutos de subcategorias lado a lado.
+Ex.: receita de Produto A vs B por trimestre. Empilhadas 100\%: mostrar composição
+proporcional. Ex.: share de mercado de cada canal por região.
+
+\textbf{Q8.} A média é distorcida para cima — inutilizável como SLA. Antes de reportar:
+identificar se 8h é erro de dado ou ocorrência real; se real, reportar mediana + mencionar
+o outlier separadamente com contexto.
+
+\textbf{Q9.} Posição: mediana por grupo (NPS pode ter outliers e assimetria).
+Dispersão: IQR. Visual: boxplot lado a lado (Premium × Básico) — compara
+distribuição completa, não apenas a média.
+
+\textbf{Q10.} MCAR (ausência sem relação com nenhuma variável). Com apenas 1,5\% de
+missing (3/200), pode remover as 3 linhas sem impacto material na análise.
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Orientações finais — Prova I}
+% ---------------------------------------------------------------------------
+
+\begin{NoteBox}
+\textbf{Para a Prova I (26/03):}
+\begin{itemize}
+  \item Fórmulas fornecidas: média, mediana, variância, DP, IQR, limites de Tukey, Pearson.
+  \item Não é necessário memorizar fórmulas — é necessário saber interpretá-las e escolher
+  a medida certa para cada contexto.
+  \item Questões discursivas exigem: número + o que significa + limitação/risco + recomendação.
+  \item Python: pode aparecer uma saída de \texttt{df.describe()} ou \texttt{df.corr()} para
+  interpretação — não pedem para escrever código.
+  \item Calculadora simples é permitida.
+\end{itemize}
+\end{NoteBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Slides: resumo visual de toda a Unidade I (1 slide por tópico)
+  \item Tabela 1 impressa para a prática
+  \item Simulado impresso (1 folha por aluno)
+  \item Gabarito do simulado para exibição após correção coletiva
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Após a Prova I, abrimos a \textbf{Unidade II: Análise Explanatória e
+Storytelling com Dados}. A pergunta muda de \emph{``o que os dados mostram?''}
+para \emph{``como eu conto essa história para que alguém tome uma decisão?''}
+
+Livro novo: \textit{Datastory} (Nancy Duarte). A \textbf{Semana 08} (20/04)
+traz as Apresentações do Trabalho 4 + a estrutura da Big Idea e do Storyboard.

@@ -1,15 +1,239 @@
-\chapter{Semana 10 (04/05--06/05) --- Trabalho 5 + Tableau interativo}
+% =============================================================================
+% Semana 10 — Trabalho 5 + Tableau Interativo: Filtros, Parâmetros e Ações
+% Aula de 3 horas (19h–22h) | 06/05/2026
+% Observação: 06/05 é feriado (Vitória de Santo Antão) — aula somente segunda (04/05)
+% =============================================================================
 
-\section{Observação do calendário}
-06/05 é feriado (Vitória de Santo Antão): ajustar dinâmica para caber no tempo.
+\chapter{Semana 10 (06/05/2026) — Tableau Interativo: Filtros, Parâmetros e Ações}
 
-\section{Ritmo da aula}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Até 1h}: apresentações do Trabalho 5.
-  \item \textbf{Restante}: filtros, parâmetros, ações e interatividade.
+% ---------------------------------------------------------------------------
+\section{Objetivo da semana}
+% ---------------------------------------------------------------------------
+
+Pessoal, até aqui construímos visuais estáticos com narrativa clara.
+Hoje aprendemos como torná-los \textbf{interativos} — dashboards que
+respondem às perguntas do usuário em tempo real, sem precisar criar uma
+versão diferente para cada recorte.
+
+Filtros, parâmetros e ações são os mecanismos que transformam um dashboard
+de relatório para \textbf{ferramenta de exploração}.
+
+\begin{NoteBox}
+\textbf{Calendário:} 06/05 é feriado de Vitória de Santo Antão.
+Aula concentrada na segunda-feira (04/05).
+\end{NoteBox}
+
+\begin{BoardBox}
+\textbf{Roteiro da aula (19h–22h)}
+\begin{enumerate}
+  \item 19h–20h — \textbf{Apresentações:} Trabalho 5 (storytelling + Tableau)
+  \item 20h–20h30 — \textbf{TEORIA:} Filtros no Tableau — tipos e hierarquia
+  \item 20h30–21h — \textbf{TEORIA:} Parâmetros — criação e uso em campos calculados
+  \item 21h–21h30 — \textbf{TEORIA:} Ações de Dashboard — filter, highlight, URL, navigate
+  \item 21h30–21h50 — \textbf{PRÁTICA GUIADA:} Construção ao vivo de um dashboard interativo
+  \item 21h50–22h — \textbf{Lançamento do T6 + orientações finais}
+\end{enumerate}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte I — Apresentações: Trabalho 5 (19h–20h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Checklist de avaliação T5 — Storytelling com Dados:}
+\begin{tabular}{|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Ponto} & \textbf{O que observar} \\
+\hline
+Big Idea presente & 1 frase: ponto de vista + tensão + stake \\
+Pergunta de Decisão & Explicitada no início da apresentação \\
+Storyboard executado & Visual segue a sequência planejada \\
+Títulos-mensagem & Nenhum título genérico (ex.: ``Gráfico 1'') \\
+Hierarquia visual & 1 elemento de destaque por tela; cor com propósito \\
+Tableau funcional & Pelo menos 2 visuais interativos \\
+Pitch 3 min & Apresentação dentro do tempo; call to action ao final \\
+\hline
+\end{tabular}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte II — Filtros no Tableau (20h–20h30)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Hierarquia de filtros no Tableau (para o quadro)}
+
+O Tableau executa filtros em uma ordem específica. Entender essa ordem
+evita resultados inesperados:
+
+\begin{enumerate}
+  \item \textbf{Extract filter:} aplicado na extração dos dados — filtra antes de carregar.
+  \item \textbf{Data source filter:} filtra no nível da fonte de dados.
+  \item \textbf{Context filter:} define um subconjunto de dados que outros filtros
+  vão usar como base. Essencial para filtros dependentes (Top N dentro de uma região).
+  \item \textbf{Dimension filter:} filtra dimensões (categorias).
+  \item \textbf{Measure filter / Table calculation filter:} filtros sobre métricas
+  e cálculos de tabela.
+\end{enumerate}
+
+\textbf{Tipo mais comum de confusão:} Top N sem Context Filter.
+O Tableau calcula o Top N sobre o dataset inteiro, mesmo que você já tenha
+aplicado um filtro de região. A solução: adicionar o filtro de região como
+\emph{Context Filter} antes.
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Tipos de filtros para o usuário final (Quick Filters):}
+
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\textbf{Tipo} & \textbf{Quando usar} \\
+\hline
+Lista (checkbox) & Categoria com poucos valores; seleção múltipla \\
+Lista suspensa & Categoria com muitos valores; seleção única \\
+Controle deslizante & Variável numérica (ex.: ano, faixa de valor) \\
+Data relativa & Datas (hoje, últimos 7 dias, mês corrente) \\
+Pesquisa & Categoria com muitos valores únicos (busca por texto) \\
+\hline
+\end{tabular}
+
+\textbf{Boas práticas:}
+\begin{itemize}
+  \item Nunca exponha mais de 4–5 filtros simultâneos para o usuário — excesso paralisa.
+  \item Dê nomes claros: ``Período de Análise'' em vez de ``Order Date''.
+  \item Defina um valor padrão que já mostre um recorte útil ao abrir o dashboard.
+\end{itemize}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte III — Parâmetros (20h30–21h)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{O que é um parâmetro no Tableau? (para o quadro)}
+
+Um parâmetro é um \textbf{valor dinâmico controlado pelo usuário} que pode ser
+usado em campos calculados, filtros e eixos de referência. Diferente de um filtro
+(que inclui/exclui linhas), um parâmetro \textbf{muda o cálculo} do campo.
+
+\textbf{Exemplos de uso:}
+\begin{itemize}
+  \item Parâmetro de ``Top N'': usuário escolhe ver Top 5, Top 10 ou Top 20 produtos.
+  \item Parâmetro de meta: usuário insere a meta de vendas e o dashboard mostra quais
+  regiões estão acima ou abaixo dinamicamente.
+  \item Parâmetro de granularidade: alternar entre visão por dia, semana ou mês.
+  \item Parâmetro de métrica: usuário escolhe visualizar por Receita ou por Quantidade.
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Como criar um parâmetro básico (passo a passo):}
+
+\begin{enumerate}
+  \item No painel de dados, clique com o botão direito $\to$ ``Criar Parâmetro''.
+  \item Defina: tipo (inteiro/float/string/data), faixa de valores ou lista.
+  \item Clique em ``Exibir Controle'' para mostrar o seletor ao usuário.
+  \item No campo calculado: use \texttt{[Nome do Parâmetro]} como um valor dinâmico.
+\end{enumerate}
+
+\textbf{Exemplo de campo calculado com parâmetro de meta:}\\
+\texttt{IF [Vendas] >= [Meta Vendas] THEN "Atingiu" ELSE "Abaixo" END}
+
+O campo \texttt{[Meta Vendas]} é um parâmetro. O usuário ajusta a meta em
+tempo real e o gráfico de desempenho atualiza imediatamente.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte IV — Ações de Dashboard (21h–21h30)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Tipos de ações no Tableau (para o quadro)}
+
+Ações transformam o dashboard em uma \textbf{experiência de exploração dirigida}.
+O usuário clica em um elemento e o dashboard reage.
+
+\begin{tabular}{|l|p{5.5cm}|p{4.5cm}|}
+\hline
+\textbf{Tipo} & \textbf{O que faz} & \textbf{Exemplo} \\
+\hline
+Filter Action & Clique num elemento filtra os outros gráficos & Clicar em ``SP'' no mapa filtra todos os KPIs por SP \\
+Highlight Action & Destaca o elemento selecionado em todos os gráficos & Clicar em produto A ilumina todas as suas ocorrências \\
+URL Action & Abre um link externo com parâmetros dinâmicos & Clicar num cliente abre o CRM naquele registro \\
+Navigate Action & Navega para outro sheet/dashboard & Botão ``Ver detalhes'' vai para uma tela de drill-down \\
+\hline
+\end{tabular}
+
+\textbf{Boas práticas de ações:}
+\begin{itemize}
+  \item Configure Run on: \texttt{Select} (mais intuitivo que \texttt{Hover}).
+  \item Deixe claro visualmente que o elemento é clicável (tooltip ou ícone).
+  \item Defina o comportamento ao desmarcar: ``Mostrar todos'' ou ``Excluir tudo''
+  — nunca deixe o usuário preso num estado vazio sem saber como desfazer.
+\end{itemize}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte V — Prática Guiada: Dashboard Interativo (21h30–21h50)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Construção ao vivo — ``Dashboard de Desempenho de Vendas'':}
+
+\textbf{Dataset:} \texttt{semana10\_vendas\_regional.csv} (disponível no AVA)
+
+\textbf{Passo 1:} Criar Sheet 1 — mapa coroplético de vendas por estado.\\
+\textbf{Passo 2:} Criar Sheet 2 — barras de Top N produtos (com parâmetro N).\\
+\textbf{Passo 3:} Criar Sheet 3 — linha temporal de receita mensal.\\
+\textbf{Passo 4:} Montar Dashboard. Adicionar:
+\begin{itemize}
+  \item Context filter por Região (Quick Filter visível).
+  \item Parâmetro de meta de receita mensal.
+  \item Filter action: clique no estado no mapa filtra barras e linha temporal.
+  \item Linha de referência dinâmica: receita da meta no gráfico de linha.
+\end{itemize}
+\textbf{Passo 5:} Testar o Teste do Relance. Cada visual passa?
+
+\textbf{Resultado esperado:} dashboard com 3 visuais interconectados, onde
+clicar em qualquer estado imediatamente recorta os produtos e a evolução
+temporal para aquele estado.
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Lançamento — Trabalho 6}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{Trabalho 6 — Dashboard Final (entrega: 20/05/2026):}
+\begin{itemize}
+  \item[$\square$] Dashboard no Tableau Public (link público obrigatório)
+  \item[$\square$] Mínimo de 3 sheets integrados no dashboard
+  \item[$\square$] Pelo menos 1 parâmetro e 1 filter action implementados
+  \item[$\square$] Todos os títulos são mensagens (testados pelo Teste do Relance)
+  \item[$\square$] Big Idea visível no dashboard (texto ou KPI principal)
+  \item[$\square$] Pitch ao vivo de 3 minutos na Semana 12
+\end{itemize}
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\section{Materiais Preparados}
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Dataset \texttt{semana10\_vendas\_regional.csv} no AVA
+  \item Tableau Workbook de referência (.twbx) com os 3 sheets base
+  \item Slides: hierarquia de filtros animada; passo a passo de parâmetro
+  \item Checklist de interatividade para o T6
 \end{itemize}
 
-\section{Entrega (Trabalho 5)}
-\begin{SolvedBox}
-Dashboard com 1 a 2 mecanismos de interatividade + título-mensagem + checklist do Teste do Relance.
-\end{SolvedBox}
+% ---------------------------------------------------------------------------
+\section{Próximo passo}
+% ---------------------------------------------------------------------------
+
+Na \textbf{Semana 11} trabalhamos \textbf{dashboards que forçam decisão}:
+estrutura contexto→diagnóstico→recomendação, KPIs com targets, e o
+\textbf{pitch de 3 minutos} — como apresentar sua análise para um executivo
+em menos tempo do que um intervalo comercial.
+
+Perguntem aos alunos: \textit{``Se o CEO da empresa que vocês estão analisando
+tivesse 5 minutos para ver o dashboard de vocês, quais 3 perguntas ele faria?
+O dashboard de vocês responde a essas 3 perguntas sem precisar de explicação?''}
