@@ -188,6 +188,73 @@ não consegue comparar ângulos com precisão acima de 3 fatias.
 \end{BoardBox}
 
 % =============================================================================
+\section{Revisão Semanal — Questão tipo Prova I (Q5)}
+% =============================================================================
+
+\begin{NoteBox}
+Antes do simulado geral, vamos resolver uma questão focada no conteúdo
+de hoje: \textbf{análise de variáveis categóricas}, que é o tema da
+\textbf{Questão 5} da prova.
+\end{NoteBox}
+
+\begin{SolvedBox}
+\textbf{Cenário (estilo Q5 da Prova I):}
+
+Uma operadora de plano de saúde registrou 1.200 cancelamentos no último
+trimestre. Os dados segmentados por plano são:
+
+\begin{center}
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Plano} & \textbf{Ativos} & \textbf{Cancelados} & \textbf{Total} \\
+\hline
+Básico    & 2.800 & 700 & 3.500 \\
+Standard  & 2.100 & 350 & 2.450 \\
+Premium   & 1.050 & 150 & 1.200 \\
+\hline
+\textbf{Total} & 5.950 & 1.200 & 7.150 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Questão:}
+\begin{enumerate}
+  \item Calcule a \textbf{taxa de cancelamento} (proporção condicional) de
+  cada plano.
+  \item Compare as taxas. Qual plano exige ação prioritária?
+  \item A diretoria afirma: \textit{``O plano Básico cancela mais porque
+  custa menos.''} Você concorda? Que \textbf{variável adicional} pediria
+  para validar essa hipótese?
+\end{enumerate}
+
+\textbf{Resolução:}
+\begin{enumerate}
+  \item \textbf{Taxas de cancelamento:}
+  \begin{itemize}
+    \item Básico: $700 / 3.500 = 20{,}0\%$
+    \item Standard: $350 / 2.450 \approx 14{,}3\%$
+    \item Premium: $150 / 1.200 = 12{,}5\%$
+  \end{itemize}
+  
+  \item \textbf{Comparação:} o plano Básico tem taxa 1,6× maior que o
+  Premium. Ação prioritária: investigar e intervir no plano Básico.
+  
+  \item \textbf{Análise crítica:} afirmar que ``custa menos'' é a causa do
+  cancelamento é \emph{correlação, não causalidade}. Possíveis confundidores:
+  \begin{itemize}
+    \item \textbf{Faixa etária:} clientes jovens (mais frequentes no Básico)
+    podem ter menor fidelidade.
+    \item \textbf{Tempo de contrato:} clientes recentes cancelam mais, e o
+    Básico pode ter mais clientes novos.
+    \item \textbf{Sinistralidade:} clientes que mais usam o plano tendem a
+    permanecer — e o Premium pode ter cobertura que gera mais uso.
+  \end{itemize}
+  \textbf{Variável solicitada:} faixa etária (para crosstab Plano × Faixa
+  Etária × Cancelamento) ou tempo de contrato.
+\end{enumerate}
+\end{SolvedBox}
+
+% =============================================================================
 \section{Parte III — Revisão Integrada: Unidade I (20h50–21h50)}
 % =============================================================================
 

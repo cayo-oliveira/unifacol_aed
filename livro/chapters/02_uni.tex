@@ -139,6 +139,128 @@ Esse processo garante que a caixa represente a maior parte dos dados (50\% entre
 Assim, o boxplot é uma ferramenta robusta contra outliers, diferentemente da média e do desvio-padrão.
 
 
+\section{Tipos de Distribuição e Forma dos Dados}
+
+Além das medidas de posição e dispersão, a \textbf{forma da distribuição} de uma variável é fundamental para escolher a medida resumo mais representativa e identificar padrões ocultos nos dados.
+
+\subsection*{Histograma — a ferramenta visual}
+
+O \textbf{histograma} agrupa valores numéricos em \emph{faixas} (bins) e mostra a frequência de dados em cada faixa. Diferente de um gráfico de barras (que compara categorias), o histograma revela a \textbf{forma da distribuição} de uma variável contínua.
+
+\textbf{Regra prática para número de bins:}
+\begin{itemize}[leftmargin=*]
+  \item Regra de Sturges: $k = 1 + 3{,}322 \log_{10}(n)$
+  \item Na prática: entre 5 e 20 bins para a maioria dos datasets
+  \item Poucos bins demais $\to$ esconde padrões; bins demais $\to$ ruído visual
+\end{itemize}
+
+\subsection*{Distribuição Simétrica (Normal)}
+
+Em uma distribuição simétrica, os dados se concentram ao redor da média, que coincide aproximadamente com a mediana. A curva forma um ``sino'' equilibrado.
+
+\begin{itemize}[leftmargin=*]
+  \item Média $\approx$ Mediana $\approx$ Moda
+  \item A média é uma boa medida resumo
+  \item Exemplo: alturas de adultos em uma população homogênea
+\end{itemize}
+
+\subsection*{Assimetria Positiva (Cauda à Direita)}
+
+A distribuição tem uma \emph{cauda longa} para a direita --- poucos valores muito altos ``puxam'' a média para cima.
+
+\begin{itemize}[leftmargin=*]
+  \item Média $>$ Mediana
+  \item A \textbf{mediana} é mais representativa
+  \item Exemplo: salários, preços de imóveis, valores de transações financeiras
+  \item Na prova: se o histograma mostra assimetria à direita, a medida recomendada é a mediana
+\end{itemize}
+
+\subsection*{Assimetria Negativa (Cauda à Esquerda)}
+
+A distribuição tem cauda longa para a esquerda --- poucos valores muito baixos ``puxam'' a média para baixo.
+
+\begin{itemize}[leftmargin=*]
+  \item Média $<$ Mediana
+  \item A \textbf{mediana} é mais representativa
+  \item Exemplo: notas em uma prova fácil (maioria alta, poucos alunos com nota muito baixa)
+\end{itemize}
+
+\begin{FormulaBox}
+\textbf{Coeficiente de assimetria (Skewness):}
+\[
+g_1 = \frac{1}{n}\sum_{i=1}^{n}\left(\frac{x_i - \bar{x}}{s}\right)^3
+\]
+\begin{itemize}
+  \item $g_1 > 0$: assimetria positiva (cauda à direita)
+  \item $g_1 < 0$: assimetria negativa (cauda à esquerda)
+  \item $g_1 \approx 0$: distribuição aproximadamente simétrica
+\end{itemize}
+\end{FormulaBox}
+
+\subsection*{Distribuição Bimodal}
+
+Apresenta \textbf{dois picos} distintos no histograma, indicando que a amostra provavelmente contém \textbf{dois subgrupos} com comportamentos diferentes.
+
+\begin{itemize}[leftmargin=*]
+  \item Exemplo: tempo de atendimento com picos em 5~min e 35~min $\to$ atendimentos simples vs.\ complexos
+  \item Exemplo: idade dos clientes com picos em 25 e 55 anos $\to$ dois perfis de consumo
+  \item \textbf{Ação recomendada:} investigar a causa dos dois picos e, se possível, analisar cada subgrupo separadamente
+\end{itemize}
+
+\subsection*{Regra Prática para Escolha da Medida}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Forma da Distribuição} & \textbf{Medida de Posição} & \textbf{Medida de Dispersão} \\
+\hline
+Simétrica (normal) & Média & Desvio Padrão \\
+Assimétrica & Mediana & IQR \\
+Bimodal & Mediana de cada subgrupo & IQR de cada subgrupo \\
+Com outliers extremos & Mediana & IQR \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Dados Ausentes (Missing Data)}
+
+Em datasets reais, é comum encontrar valores faltantes.  A forma como lidamos com eles afeta diretamente a qualidade da análise.
+
+\subsection*{Tipos de Missing}
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{MCAR} (\textit{Missing Completely at Random}): a ausência não tem relação com nenhuma variável --- é completamente aleatória. \\
+  Exemplo: 3 de 200 registros com data de entrega em branco, sem padrão identificável. \\
+  \textit{Estratégia:} se o percentual for baixo ($<5\%$), pode-se remover as linhas sem impacto material.
+
+  \item \textbf{MAR} (\textit{Missing at Random}): a ausência depende de outra variável observada, mas não do valor ausente em si. \\
+  Exemplo: campo ``segmento'' vazio em 22\% dos registros, mas concentrado em clientes que entraram por um canal específico. \\
+  \textit{Estratégia:} criar uma categoria ``Não informado'' ou imputar com base no grupo similar.
+
+  \item \textbf{MNAR} (\textit{Missing Not at Random}): a ausência está relacionada ao próprio valor da variável ausente. \\
+  Exemplo: clientes de alta renda evitam informar a renda em pesquisas. \\
+  \textit{Estratégia:} criar flag binária \texttt{variavel\_ausente}, imputar pelo percentil do grupo similar, documentar o viés.
+\end{itemize}
+
+\subsection*{Estratégias de Tratamento}
+
+\begin{center}
+\begin{tabular}{|l|p{4cm}|p{5.5cm}|}
+\hline
+\textbf{Tipo} & \textbf{Quando usar} & \textbf{Risco} \\
+\hline
+Remover linhas & MCAR, $<5\%$ do total & Perda de dados se \% alto \\
+Imputar pela mediana & Distribuição assimétrica & Pode subestimar a variância \\
+Imputar pela média & Distribuição simétrica & Sensível a outliers \\
+Criar categoria/flag & MAR ou MNAR & Pode criar padrão artificial \\
+Não corrigir & --- & Análise enviesada \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Regra de ouro:} sempre \textbf{documentar} o percentual de missing, o tipo identificado e a estratégia adotada. Transparência é mais importante do que a técnica perfeita.
+
+
 \section{Problemas Resolvidos — Questões 2 e 3}
 
 \subsection*{Questão 2 — Cálculo de média, mediana, variância e desvio-padrão}

@@ -215,6 +215,58 @@ temporal para aquele estado.
 \end{itemize}
 \end{SolvedBox}
 
+% =============================================================================
+\section{Revisão Semanal — Questão tipo Prova II (Q3)}
+% =============================================================================
+
+\begin{NoteBox}
+Hoje revisamos o conteúdo da \textbf{Questão 3} da Prova II:
+filtros, parâmetros e ações de dashboard no Tableau.
+\end{NoteBox}
+
+\begin{SolvedBox}
+\textbf{Cenário (estilo Q3 da Prova II):}
+
+Uma rede de restaurantes tem 30 unidades em 5 estados do Nordeste.
+O gerente de operações quer um dashboard que permita:
+\begin{enumerate}
+  \item Ver apenas as unidades de um estado específico.
+  \item Alternar a métrica exibida entre ``ticket médio'' e ``satisfação''.
+  \item Ao clicar em uma unidade no mapa, ver os detalhes dela em um
+  gráfico adjacente.
+\end{enumerate}
+
+\textbf{Questão:} Para cada necessidade, indique se deve usar
+\textbf{Filtro}, \textbf{Parâmetro} ou \textbf{Ação de dashboard}.
+Justifique.
+
+\textbf{Resolução:}
+\begin{enumerate}
+  \item \textbf{Filtro} — selecionar um subconjunto dos dados (estado)
+  é o uso clássico de filtro. Pode ser exposto como dropdown no dashboard.
+  \item \textbf{Parâmetro} — alternar entre métricas é uma decisão do
+  \emph{usuário} que controla a lógica do cálculo (campo calculado que
+  referencia o parâmetro). Não é um filtro porque não remove dados,
+  apenas muda o que é exibido.
+  \item \textbf{Ação de dashboard (filtro)} — clicar em um elemento
+  visual para filtrar outro sheet é uma ação de filtro interativa.
+  Configurada em Dashboard $\to$ Actions $\to$ Filter.
+\end{enumerate}
+
+\textbf{Resumo:}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Necessidade} & \textbf{Recurso} & \textbf{Por quê?} \\
+\hline
+Selecionar estado & Filtro & Subconjunto de dados \\
+Alternar métrica & Parâmetro & Controla lógica, não dados \\
+Clique interativo & Ação de dashboard & Filtragem entre sheets \\
+\hline
+\end{tabular}
+\end{center}
+\end{SolvedBox}
+
 % ---------------------------------------------------------------------------
 \section{Materiais Preparados}
 % ---------------------------------------------------------------------------

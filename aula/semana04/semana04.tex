@@ -18,15 +18,22 @@ ganhando R\$9.000. A média é a mesma; a \emph{história} é completamente dife
 Dispersão é o que revela isso. E na primeira parte da aula, vocês vão apresentar
 os \textbf{infográficos das funções Python} — a biblioteca da turma começa a crescer!
 
+\begin{NoteBox}
+\textbf{Atenção — aula compactada:} faltei na aula de quarta da semana passada,
+então hoje vamos cobrir conteúdo acumulado. O ritmo será mais rápido que o
+normal para garantir que tudo o que cai na Prova I esteja coberto.
+\end{NoteBox}
+
 \begin{BoardBox}
 \textbf{Roteiro da aula (19h–22h)}
 \begin{enumerate}
-  \item 19h–20h — \textbf{Apresentações:} Infográficos de Função (2 min por aluno)
-  \item 20h–20h30 — \textbf{TEORIA:} Amplitude, Variância e Desvio Padrão
-  \item 20h30–21h — \textbf{TEORIA:} IQR, Regra dos 1,5×IQR e Boxplot
-  \item 21h–21h20 — \textbf{TEORIA:} Quando usar DP vs IQR + Comparação entre grupos
-  \item 21h20–21h45 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2 (10 linhas cada)
-  \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL} + lançamento do T2
+  \item 19h–19h40 — \textbf{Apresentações:} Infográficos de Função (ritmo acelerado)
+  \item 19h40–20h10 — \textbf{CATCH-UP:} Covariância, Correlação de Pearson e Scatter Plot
+  \item 20h10–20h40 — \textbf{TEORIA:} Amplitude, Variância e Desvio Padrão
+  \item 20h40–21h10 — \textbf{TEORIA:} IQR, Regra dos 1,5×IQR e Boxplot
+  \item 21h10–21h25 — \textbf{TEORIA:} Quando usar DP vs IQR + Comparação entre grupos
+  \item 21h25–21h45 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2 (10 linhas cada)
+  \item 21h45–22h — \textbf{REVISÃO SEMANAL:} Questão tipo Prova I + lançamento do T2
 \end{enumerate}
 \end{BoardBox}
 
@@ -69,7 +76,108 @@ equipe de dados.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte II — Teoria: Medidas de Dispersão (20h–21h20)}
+\section{Parte I-B — Catch-up: Covariância, Correlação e Scatter Plot (19h40–20h10)}
+% =============================================================================
+
+Pessoal, esse bloco é um adiantamento rápido da análise bivariada que será
+aprofundada na Semana 06. Estou trazendo agora porque faltei na última quarta
+e precisamos cobrir tudo que cai na Prova I. Aqui o objetivo é:
+\textbf{entender o conceito}, \textbf{saber interpretar} e \textbf{distinguir
+correlação de causalidade}.
+
+% ---------------------------------------------------------------------------
+\subsection{Scatter Plot — visão rápida}
+% ---------------------------------------------------------------------------
+
+\begin{BoardBox}
+\textbf{O que é o scatter plot (para o quadro)}
+
+O scatter plot coloca dois atributos nos eixos X e Y e plota cada observação
+como um ponto. O padrão visual revela a relação entre as variáveis.
+
+\textbf{O que observar:}
+\begin{itemize}
+  \item \textbf{Direção:} pontos sobem (positiva) ou descem (negativa)?
+  \item \textbf{Intensidade:} concentrados ao longo de uma linha (forte) ou espalhados (fraca)?
+  \item \textbf{Outliers:} pontos muito afastados do padrão geral.
+  \item \textbf{Cor por categoria:} pintar por uma terceira variável pode revelar subgrupos.
+\end{itemize}
+\end{BoardBox}
+
+% ---------------------------------------------------------------------------
+\subsection{Covariância}
+% ---------------------------------------------------------------------------
+
+\begin{SolvedBox}
+\textbf{O que é a covariância?} Mede o grau em que duas variáveis variam
+conjuntamente. Se valores altos de $X$ acompanham valores altos de $Y$,
+a covariância é positiva.
+
+\begin{FormulaBox}{Covariância amostral}
+\[
+\mathrm{Cov}(X,Y) = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})
+\]
+\end{FormulaBox}
+
+\textbf{Exemplo rápido (dados da Semana 03):}
+
+\begin{center}
+\begin{tabular}{|c|r|r|r|r|r|}
+\hline
+Vendedor & $x_i$ (Vendas) & $y_i$ (Meta) & $(x_i-\bar{x})$ & $(y_i-\bar{y})$ & Produto \\
+\hline
+Ana   & 4.200 & 4.000 & $-1.480$ & $-1.200$ & $1.776.000$ \\
+Bruno & 6.000 & 5.500 & $+320$   & $+300$   & $96.000$    \\
+Carla & 4.200 & 3.800 & $-1.480$ & $-1.400$ & $2.072.000$ \\
+Diego & 9.800 & 8.000 & $+4.120$ & $+2.800$ & $11.536.000$ \\
+Elisa & 4.200 & 4.700 & $-1.480$ & $-500$   & $740.000$   \\
+\hline
+\multicolumn{5}{|r|}{\textbf{Soma}} & $\mathbf{16.220.000}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+$\bar{x} = 5.680$, $\bar{y} = 5.200$
+
+\[
+\mathrm{Cov}(X,Y) = \frac{16.220.000}{4} = 4.055.000
+\]
+
+Covariância positiva $\Rightarrow$ vendas e metas variam na mesma direção.
+
+\textbf{Limitação:} o valor depende da escala. Usamos a \textbf{correlação} para normalizar.
+\end{SolvedBox}
+
+% ---------------------------------------------------------------------------
+\subsection{Correlação de Pearson}
+% ---------------------------------------------------------------------------
+
+\begin{FormulaBox}{Correlação de Pearson ($r$)}
+\[
+r = \frac{\mathrm{Cov}(X,Y)}{s_X \cdot s_Y}, \quad r \in [-1, 1]
+\]
+\begin{itemize}
+  \item $|r| < 0{,}3$: fraca \quad $0{,}3 \leq |r| < 0{,}7$: moderada \quad $|r| \geq 0{,}7$: forte
+  \item $r > 0$: positiva (X sobe, Y sobe) \quad $r < 0$: negativa (X sobe, Y desce)
+\end{itemize}
+\end{FormulaBox}
+
+\begin{BoardBox}
+\textbf{REGRA DE OURO — Correlação $\neq$ Causalidade (para o quadro)}
+
+Um $r$ alto mostra que as variáveis \textbf{andam juntas}, mas \textbf{não
+prova} que uma causa a outra. Pode haver uma terceira variável (confundidor)
+causando as duas.
+
+\textbf{Exemplo clássico:} venda de sorvete e afogamentos têm $r > 0{,}7$.
+Causa? Não — o \textbf{verão} causa os dois.
+
+\textbf{Para provar causalidade:} precedência temporal + co-variação +
+ausência de confundidor + (idealmente) experimento controlado.
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte II — Teoria: Medidas de Dispersão (20h10–21h25)}
 % =============================================================================
 
 % ---------------------------------------------------------------------------
@@ -468,6 +576,57 @@ R\$11,8 mil acima do Norte, mas um DP 20× maior (31,9 vs 1,6). Isso significa
 que o resultado do Sul depende de um único representante (Rep 05, R\$120 mil).
 Sem ele, o Sul médio seria R\$38,5 mil — abaixo do Norte. Portanto, recomendo
 mapear a carteira do Rep 05 como risco de concentração e capacitar os demais.''
+\end{SolvedBox}
+
+% =============================================================================
+\section{Revisão Semanal — Questão Tipo Prova I}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Questão de Revisão (Semana 04) — Mediana, Outliers e Dispersão}
+
+Uma rede de supermercados com 8 lojas na Região Metropolitana do Recife coletou
+o faturamento mensal (em R\$) do setor de hortifrúti em janeiro de 2026:
+
+\begin{center}
+\begin{tabular}{|l|l|r|}
+\hline
+\textbf{Loja} & \textbf{Localização} & \textbf{Faturamento (R\$)} \\
+\hline
+L1 & Boa Viagem  & 45.000 \\
+L2 & Casa Forte  & 52.000 \\
+L3 & Olinda      & 38.000 \\
+L4 & Paulista    & 41.000 \\
+L5 & Piedade     & 39.000 \\
+L6 & Jaboatão    & 36.000 \\
+L7 & Camaragibe  & 35.000 \\
+L8 & Derby       & 142.000 \\
+\hline
+\end{tabular}
+\end{center}
+
+O estagiário calculou a média aritmética: R\$53.500. O analista sênior argumentou
+que a mediana é mais representativa. Além disso:
+$Q_1 = 37.000$, $Q_3 = 48.500$, $\text{IQR} = 11.500$.
+
+\textbf{Pergunta:} Calcule a mediana, verifique se L8 é outlier pelo critério
+$1{,}5 \times \text{IQR}$, e justifique a escolha entre média e mediana.
+
+\medskip
+\textbf{Resolução:}
+
+Ordenados: $35.000,\; 36.000,\; 38.000,\; 39.000,\; 41.000,\; 45.000,\; 52.000,\; 142.000$
+
+$n = 8$ (par) $\Rightarrow$ Mediana $= \dfrac{39.000 + 41.000}{2} = \mathbf{R\$\;40.000}$
+
+Limite superior: $Q_3 + 1{,}5 \times \text{IQR} = 48.500 + 17.250 = \mathbf{R\$\;65.750}$
+
+$142.000 > 65.750$ $\Rightarrow$ \textbf{L8 é outlier.}
+
+\textbf{Justificativa:} A mediana (R\$40.000) é preferível porque é resistente a
+valores extremos e representa melhor o faturamento típico das 7 lojas ``normais''.
+A média (R\$53.500) é inflada pelo outlier L8 e não representa nenhuma loja
+individualmente.
 \end{SolvedBox}
 
 % ---------------------------------------------------------------------------

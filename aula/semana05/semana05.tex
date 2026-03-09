@@ -403,6 +403,59 @@ Pipeline recomendado: carrega $\to$ inspeciona $\to$ limpa $\to$ salva ($\to$ do
 \end{itemize}
 \end{SolvedBox}
 
+% =============================================================================
+\section{Revisão Semanal — Questão Tipo Prova I}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Questão de Revisão (Semana 05) — Distribuições, Histogramas e Dados Ausentes}
+
+Uma fintech que oferece microcrédito para empreendedores do Nordeste está
+analisando sua base de 15.000 clientes. As variáveis principais são:
+
+\begin{center}
+\begin{tabular}{|l|l|c|l|}
+\hline
+\textbf{Variável} & \textbf{Tipo} & \textbf{\% Missing} & \textbf{Distribuição} \\
+\hline
+\texttt{renda\_mensal}       & Numérica    & 8\%  & Assimétrica à direita \\
+\texttt{tempo\_negocio}      & Numérica    & 15\% & Bimodal (picos em 6 e 36 meses) \\
+\texttt{segmento}            & Categórica  & 22\% & Alimentação 40\%, Vestuário 25\%, Serviços 35\% \\
+\hline
+\end{tabular}
+\end{center}
+
+A analista construiu histogramas e observou:
+\begin{itemize}
+  \item \texttt{renda\_mensal}: maioria entre R\$1.000 e R\$3.000, cauda até R\$25.000.
+  \item \texttt{tempo\_negocio}: dois picos — 6 meses (iniciantes) e 36 meses (estabelecidos).
+\end{itemize}
+
+O gerente argumenta que os 22\% de missing em \texttt{segmento} são problemáticos
+porque essa variável é essencial para segmentar dashboards.
+
+\textbf{Pergunta:} Qual medida é mais representativa para \texttt{renda\_mensal}?
+O que significa a bimodalidade de \texttt{tempo\_negocio}? Qual a melhor
+estratégia para os 22\% de missing em \texttt{segmento}?
+
+\medskip
+\textbf{Resolução:}
+
+\begin{enumerate}
+  \item \textbf{Renda:} distribuição assimétrica à direita $\Rightarrow$ média $>$ mediana.
+  A \textbf{mediana} é mais representativa porque não é distorcida pela cauda de rendas altas.
+
+  \item \textbf{Tempo de negócio:} a distribuição bimodal indica \textbf{dois subgrupos distintos}
+  — empreendedores iniciantes ($\approx$ 6 meses) e estabelecidos ($\approx$ 36 meses).
+  Analisar conjuntamente mascara ambos; o correto é segmentar.
+
+  \item \textbf{Segmento:} criar uma categoria \textbf{``Não informado''} e incluí-la
+  como filtro no Tableau, permitindo análises com e sem esses registros.
+  Imputar com a moda (``Alimentação'') distorceria a distribuição real.
+  Remover 22\% dos registros descartaria dados valiosos das demais variáveis.
+\end{enumerate}
+\end{SolvedBox}
+
 % ---------------------------------------------------------------------------
 \section{Materiais Preparados}
 % ---------------------------------------------------------------------------

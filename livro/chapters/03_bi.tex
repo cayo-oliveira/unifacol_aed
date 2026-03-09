@@ -99,6 +99,109 @@ Isso indica uma \textbf{forte correlação positiva}: mais horas de estudo estã
   \item \textbf{Correlação}: padroniza a covariância, facilitando a interpretação ($-1 \leq r \leq 1$).  
 \end{itemize}
 
+\section{Análise de Variáveis Categóricas}
+
+Nem toda análise bivariada envolve duas variáveis numéricas. Em muitos cenários de negócio, a pergunta central envolve comparar \textbf{proporções entre categorias}: taxas de cancelamento por plano, conversão por canal de venda, satisfação por região.
+
+\subsection*{Tabela de Frequência para Categóricas}
+
+A tabela de frequência conta quantas vezes cada categoria aparece e calcula a proporção relativa.
+
+\begin{center}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Plano} & \textbf{Freq.\ Absoluta ($f_i$)} & \textbf{Freq.\ Relativa} \\
+\hline
+Básico   & 400 & 40\% \\
+Standard & 350 & 35\% \\
+Premium  & 250 & 25\% \\
+\hline
+\textbf{Total} & 1000 & 100\% \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{O que observar:}
+\begin{itemize}[leftmargin=*]
+  \item Distribuição equilibrada ou há dominância de uma categoria?
+  \item Categorias com $<5\%$ são instáveis para comparações --- considerar agrupar.
+  \item Ordem: nominal (sem hierarquia) ou ordinal (ruim/regular/bom/ótimo)?
+\end{itemize}
+
+\subsection*{Tabela de Contingência (Crosstab)}
+
+Ao cruzar \textbf{duas variáveis categóricas}, obtemos uma tabela de dupla entrada mostrando a distribuição conjunta.
+
+\textbf{Exemplo:} Plano $\times$ Status de Cancelamento
+
+\begin{center}
+\begin{tabular}{|l|r|r|r|}
+\hline
+& \textbf{Ativo} & \textbf{Cancelado} & \textbf{Total} \\
+\hline
+Básico   & 300 & 100 & 400 \\
+Standard & 290 &  60 & 350 \\
+Premium  & 230 &  20 & 250 \\
+\hline
+\textbf{Total} & 820 & 180 & 1000 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Proporções Condicionais}
+
+As proporções condicionais revelam o comportamento \emph{dentro} de cada categoria:
+
+\begin{center}
+\begin{tabular}{|l|r|l|}
+\hline
+\textbf{Plano} & \textbf{Taxa de Cancelamento} & \textbf{Interpretação} \\
+\hline
+Básico   & $100/400 = 25\%$ & Maior taxa \\
+Standard & $60/350 \approx 17\%$ & Taxa intermediária \\
+Premium  & $20/250 = 8\%$ & Menor taxa \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Leitura de negócio:} a taxa de cancelamento é \textbf{3 vezes maior} no plano Básico do que no Premium. Isso sugere que clientes com menor vínculo (menor investimento) abandonam com mais facilidade. A decisão pode ser investir em retenção no Básico ou incentivar upgrade para Standard/Premium.
+
+\subsection*{Análise Comparativa Segmentada}
+
+A análise categórica ganha profundidade quando cruzamos o resultado com uma \textbf{terceira variável} de segmentação.
+
+\textbf{Exemplo:} Taxa de cancelamento por plano \textbf{e} faixa etária
+
+\begin{center}
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Faixa Etária} & \textbf{Básico} & \textbf{Standard} & \textbf{Premium} \\
+\hline
+18--30 anos & 35\% & 22\% & 12\% \\
+31--50 anos & 20\% & 15\% & 6\% \\
+$>$50 anos  & 15\% & 10\% & 4\% \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Insight:} jovens no plano Básico têm a maior taxa de cancelamento (35\%). Isso permite uma ação mais específica: campanha de retenção direcionada a clientes jovens do plano Básico.
+
+\subsection*{Visualizações Recomendadas}
+
+\begin{center}
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Gráfico} & \textbf{Quando usar} & \textbf{Limitação} \\
+\hline
+Barras simples & 1 categórica $\times$ frequência & Não compara subgrupos \\
+Barras agrupadas & 2 categóricas, comparação lado a lado & Poluído com $>4$ grupos \\
+Barras empilhadas 100\% & Composição proporcional por grupo & Não mostra volume absoluto \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Dica:} nunca use gráfico de pizza com mais de 3 fatias --- o olho humano não compara ângulos com precisão.
+
 
 \section{Problema Resolvido — Relação entre horas de estudo e notas}
 
