@@ -23,12 +23,13 @@ as análises subsequentes.
 \begin{BoardBox}
 \textbf{Roteiro da aula (19h–22h)}
 \begin{enumerate}
-  \item 19h–19h20 — \textbf{TEORIA:} O que é um histograma e como ler bins
-  \item 19h20–20h — \textbf{TEORIA:} Assimetria, caudas e distribuição normal
-  \item 20h–20h30 — \textbf{PRÁTICA EM DUPLA:} Tabela 1 — construir e interpretar histograma
+  \item 19h–19h25 — \textbf{REVISÃO NO QUADRO:} Média, mediana, variância, outlier, covariância, correlação
+  \item 19h25–19h45 — \textbf{TEORIA:} O que é um histograma e como ler bins
+  \item 19h45–20h10 — \textbf{TEORIA:} Assimetria, caudas e distribuição normal
+  \item 20h10–20h30 — \textbf{PRÁTICA EM DUPLA:} Tabela 1 — construir e interpretar histograma
   \item 20h30–21h — \textbf{TEORIA:} Dados ausentes — tipos, diagnóstico e estratégias
   \item 21h–21h30 — \textbf{PRÁTICA EM DUPLA:} Tabela 2 — diagnóstico e tratamento de missing
-  \item 21h30–21h45 — \textbf{TEORIA:} Preparação final para Tableau (tipos, datas, categorias)
+  \item 21h30–21h45 — \textbf{TEORIA:} Preparação final para Tableau
   \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL}
 \end{enumerate}
 \end{BoardBox}
@@ -37,6 +38,136 @@ as análises subsequentes.
 \textbf{Leitura base:} Cap.\ 02 (seções de histograma e distribuição) + Cap.\ 01
 (seção de dados ausentes). Livro: \textit{Estatística Prática para Cientistas de Dados} (Bruce).
 \end{NoteBox}
+
+% =============================================================================
+\section{Revisão no Quadro — Conteúdos das Semanas 01–04}
+% =============================================================================
+
+\begin{NoteBox}
+Antes do conteúdo novo, vamos revisar os fundamentos das semanas
+anteriores com questões resolvidas no quadro. Foco: média, mediana,
+moda, variância, desvio padrão, outlier, covariância e correlação.
+\end{NoteBox}
+
+\begin{SolvedBox}
+\textbf{Q1 — Média, Mediana e Moda}
+
+Uma loja de departamentos registrou vendas diárias (R\$ mil) em 7 dias:\\
+$\{12,\; 15,\; 14,\; 13,\; 60,\; 15,\; 16\}$
+
+\begin{enumerate}
+  \item Calcule média, mediana e moda.
+  \item Qual medida é mais representativa? Por quê?
+\end{enumerate}
+
+\textbf{Resolução:}
+
+\textbf{Média:} $\bar{x} = \frac{12+15+14+13+60+15+16}{7} = \frac{145}{7} \approx 20{,}7$
+
+\textbf{Ordenados:} $12, 13, 14, \mathbf{15}, 15, 16, 60$ \quad
+$\Rightarrow$ \textbf{Mediana} $= 15$ \quad (4\textsuperscript{a} posição, $n=7$)
+
+\textbf{Moda:} 15 (aparece 2$\times$)
+
+A \textbf{mediana} (R\$ 15 mil) é mais representativa. O valor atípico de
+R\$ 60 mil (provavelmente uma promoção) puxa a média para cima — a média
+de R\$ 20,7 mil não reflete nenhum dia ``normal''.
+\end{SolvedBox}
+
+\begin{SolvedBox}
+\textbf{Q2 — Variância, Desvio Padrão e Outlier}
+
+Duas filiais de uma franquia registraram vendas (R\$ mil) em 5 dias:
+
+\begin{center}
+\begin{tabular}{|l|r|r|r|r|r|c|}
+\hline
+& Dia 1 & Dia 2 & Dia 3 & Dia 4 & Dia 5 & $\bar{x}$ \\
+\hline
+Filial A & 10 & 11 & 10 & 12 & 12 & 11 \\
+Filial B & 5 & 20 & 8 & 15 & 7 & 11 \\
+\hline
+\end{tabular}
+\end{center}
+
+(a) Calcule o desvio padrão de cada filial.\\
+(b) Qual filial é mais previsível?\\
+(c) Para a Filial B, com $Q_1 = 6{,}0$ e $Q_3 = 17{,}5$: o valor 20 é outlier?
+
+\textbf{Resolução:}
+
+\textbf{Filial A} ($\bar{x}=11$): desvios$^2 = 1+0+1+1+1 = 4$ \quad
+$s_A^2 = 4/4 = 1{,}0$ \quad $s_A = 1{,}0$
+
+\textbf{Filial B} ($\bar{x}=11$): desvios$^2 = 36+81+9+16+16 = 158$ \quad
+$s_B^2 = 158/4 = 39{,}5$ \quad $s_B \approx 6{,}3$
+
+\textbf{(b)} Filial A ($s=1{,}0$) é muito mais previsível. Mesma média,
+comportamentos completamente diferentes.
+
+\textbf{(c)} $IQR = 17{,}5 - 6{,}0 = 11{,}5$ \quad
+$LS = Q_3 + 1{,}5 \times IQR = 17{,}5 + 17{,}25 = 34{,}75$\\
+$20 < 34{,}75$ $\Rightarrow$ 20 \textbf{não é outlier} pela regra de Tukey.
+\end{SolvedBox}
+
+\begin{SolvedBox}
+\textbf{Q3 — Covariância e Correlação de Pearson}
+
+Uma equipe mediu horas de treinamento ($X$) e unidades produzidas ($Y$)
+em 4 meses:
+
+\begin{center}
+\begin{tabular}{|c|r|r|}
+\hline
+\textbf{Mês} & \textbf{Treino ($X$)} & \textbf{Produção ($Y$)} \\
+\hline
+Jan & 3 & 20 \\
+Fev & 5 & 30 \\
+Mar & 7 & 50 \\
+Abr & 9 & 40 \\
+\hline
+\end{tabular}
+\end{center}
+
+(a) Calcule $\bar{x}$, $\bar{y}$ e a covariância.\\
+(b) Calcule $r$ (Pearson) e interprete.\\
+(c) Podemos afirmar que mais treinamento \emph{causa} mais produção?
+
+\textbf{Resolução:}
+
+$\bar{x} = 6$, \quad $\bar{y} = 35$
+
+\begin{center}
+\begin{tabular}{|r|r|r|r|c|}
+\hline
+$(x_i{-}6)$ & $(y_i{-}35)$ & $(x{-}\bar{x})^2$ & $(y{-}\bar{y})^2$ & Produto \\
+\hline
+$-3$ & $-15$ & 9 & 225 & 45 \\
+$-1$ & $-5$  & 1 & 25  & 5  \\
+$+1$ & $+15$ & 1 & 225 & 15 \\
+$+3$ & $+5$  & 9 & 25  & 15 \\
+\hline
+\multicolumn{2}{|r|}{\textbf{Soma}} & 20 & 500 & \textbf{80} \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{(a)} $\text{Cov}(X,Y) = \frac{80}{3} \approx 26{,}7$ (positiva: sobem juntas)
+
+\textbf{(b)} $s_X = \sqrt{20/3} \approx 2{,}58$; \quad
+$s_Y = \sqrt{500/3} \approx 12{,}91$
+
+\[
+r = \frac{26{,}7}{2{,}58 \times 12{,}91} = \frac{26{,}7}{33{,}3} \approx 0{,}80
+\]
+
+Correlação positiva \textbf{forte} — meses com mais horas de treinamento
+estão associados a maior produção.
+
+\textbf{(c)} Não. Correlação $\neq$ causalidade. A produção pode ter subido
+por outros fatores (sazonalidade, motivação, novos equipamentos). Para
+afirmar causalidade, seria preciso um experimento controlado.
+\end{SolvedBox}
 
 % =============================================================================
 \section{Parte I — Histogramas e Distribuições (19h–20h)}
@@ -146,6 +277,36 @@ Bimodal & Descreva os dois grupos & DP de cada grupo \\
 Perguntem aos alunos: \textit{``O histograma de renda de um país geralmente
 tem assimetria positiva intensa. O que isso significa sobre a representatividade
 de usar a `renda média' como indicador oficial? Que número seria mais honesto?''}
+
+\begin{SolvedBox}
+\textbf{Questão para o Quadro — Identificando a Forma da Distribuição}
+
+O histograma de valores de empréstimos de um banco digital mostra:
+
+\begin{center}
+\begin{tabular}{|l|r|}
+\hline
+\textbf{Faixa (R\$ mil)} & \textbf{Contratos} \\
+\hline
+1–5     & 450 \\
+5–10    & 280 \\
+10–20   & 150 \\
+20–50   & 80  \\
+50–200  & 40  \\
+\hline
+\end{tabular}
+\end{center}
+
+(a) Que forma de distribuição é essa?\\
+(b) A média será maior ou menor que a mediana?\\
+(c) Que medida de centro você reportaria ao regulador do Banco Central?
+
+\textbf{Resolução:}\\
+(a) \textbf{Assimetria positiva} — concentração na faixa baixa, cauda longa à direita.\\
+(b) \textbf{Média $>$ Mediana} — a cauda de empréstimos altos puxa a média para cima.\\
+(c) \textbf{Mediana} — representa melhor o contrato ``típico''. A média seria
+inflada pelos poucos empréstimos de alto valor.
+\end{SolvedBox}
 
 % =============================================================================
 \section{Parte II — Prática em Dupla 1 (20h–20h30)}
@@ -263,6 +424,32 @@ tratados, qual estratégia foi usada e por quê. Sem documentação, o dado
 tratado é suspeito.
 \end{NoteBox}
 
+\begin{SolvedBox}
+\textbf{Questão para o Quadro — Classificando Tipos de Missing}
+
+Um hospital registrou dados de pacientes em pesquisa pós-operatória.
+Classifique cada caso como \textbf{MCAR, MAR ou MNAR} e proponha a estratégia:
+
+\begin{enumerate}[label=\alph*)]
+  \item 5 de 300 formulários foram perdidos por falha no servidor.
+  \item Pacientes idosos ($>$70 anos) tendem a não responder por
+  dificuldade com o formulário digital.
+  \item Pacientes com complicações pós-operatórias evitam avaliar a
+  experiência cirúrgica.
+\end{enumerate}
+
+\textbf{Resolução:}
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{MCAR} — perda aleatória (falha de sistema), sem relação com
+  variáveis do paciente. Com 1,7\%, pode remover as linhas.
+  \item \textbf{MAR} — ausência relacionada a outra variável observável
+  (idade), não ao valor da resposta. Imputar pela mediana do grupo $>$70.
+  \item \textbf{MNAR} — ausência ligada ao que seria respondido (avaliação
+  negativa). \textbf{Não impute!} Criar flag \texttt{avaliacao\_ausente = 1}
+  e investigar separadamente.
+\end{enumerate}
+\end{SolvedBox}
+
 % =============================================================================
 \section{Parte IV — Prática em Dupla 2 (21h–21h30)}
 % =============================================================================
@@ -346,6 +533,33 @@ Categorias padronizadas & ``SP'', ``São Paulo'', ``S.Paulo'' são três categor
 cria um arquivo que ninguém mais consegue reproduzir.\\
 Pipeline recomendado: carrega $\to$ inspeciona $\to$ limpa $\to$ salva ($\to$ documenta).
 \end{NoteBox}
+
+\begin{SolvedBox}
+\textbf{Questão para o Quadro — Diagnóstico de Qualidade de Dados}
+
+Você recebeu um CSV e encontrou os seguintes problemas. Para cada um,
+indique a correção:
+
+\begin{center}
+\begin{tabular}{|p{5.5cm}|p{7cm}|}
+\hline
+\textbf{Problema} & \textbf{Correção} \\
+\hline
+Coluna ``receita'' com texto ``R\$~3.500'' & Remover ``R\$'', converter para numérico \\
+\hline
+Datas: ``15/03/2026'' e ``2026-03-15'' & Padronizar: \texttt{YYYY-MM-DD} \\
+\hline
+Cidade: ``Recife'', ``recife'', ``RECIFE'' & \texttt{.str.title()} $\to$ ``Recife'' \\
+\hline
+Campo ``idade'' com valor $-5$ & Erro de digitação? Tratar como missing + documentar \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Regra:} cada problema encontrado deve ser documentado \emph{antes}
+de ser corrigido. O relatório deve registrar: \textit{o quê} foi
+encontrado, \textit{quantos} registros afetados, e \textit{como} foi tratado.
+\end{SolvedBox}
 
 % =============================================================================
 \section{Parte VI — Atividade Individual Final (21h45–22h)}

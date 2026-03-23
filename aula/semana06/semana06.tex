@@ -223,6 +223,47 @@ Na prática em Python:
 \end{itemize}
 \end{SolvedBox}
 
+\begin{SolvedBox}
+\textbf{Questão para o Quadro — Interpretando Scatter e Pearson}
+
+Um analista de RH quer verificar se avaliação de desempenho e
+salário se movem juntos. Dados de 6 funcionários:
+
+\begin{center}
+\begin{tabular}{|c|r|r|}
+\hline
+\textbf{Func.} & \textbf{Avaliação (0–100)} & \textbf{Salário (R\$ mil)} \\
+\hline
+A & 40 & 3{,}2 \\
+B & 55 & 4{,}0 \\
+C & 70 & 5{,}5 \\
+D & 85 & 7{,}0 \\
+E & 90 & 6{,}8 \\
+F & 30 & 8{,}0 \\
+\hline
+\end{tabular}
+\end{center}
+
+O software calculou $r = 0{,}52$.
+
+(a) Esboce mentalmente o scatter. Há outlier visual?\\
+(b) Interprete o valor de $r$.\\
+(c) O gerente diz: ``Então basta aumentar o salário para melhorar o
+desempenho.'' Critique essa afirmação.
+
+\textbf{Resolução:}\\
+(a) Funcionários A--E seguem tendência positiva, mas \textbf{F é outlier
+visual} (avaliação baixa, salário alto). Provavelmente um funcionário
+com tempo de casa mas baixo desempenho recente.\\
+(b) $r = 0{,}52$: correlação \textbf{moderada}. Existe associação positiva,
+mas não é forte. O outlier F pode estar reduzindo o $r$.\\
+(c) Correlação $\neq$ causalidade. Possíveis confundidores: (1)~anos de
+experience \textrightarrow\ promovidos ganham mais E têm skills melhores;
+(2)~área de atuação \textrightarrow\ áreas técnicas pagam mais e têm
+métricas de desempenho diferentes. Aumentar salário sem contexto não
+garante melhoria de desempenho.
+\end{SolvedBox}
+
 % =============================================================================
 \section{Parte III — Prática em Dupla (21h20–21h45)}
 % =============================================================================

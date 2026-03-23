@@ -173,6 +173,40 @@ Navigate Action & Navega para outro sheet/dashboard & Botão ``Ver detalhes'' va
 \end{itemize}
 \end{BoardBox}
 
+\begin{SolvedBox}
+\textbf{Questão para o Quadro — Filtro, Parâmetro ou Ação?}
+
+Uma varejista com 25 lojas quer um dashboard no Tableau que permita:
+\begin{enumerate}
+  \item Ver vendas apenas de uma região (Norte, Nordeste, Sul\ldots).
+  \item Alternar a métrica principal entre ``receita'' e ``margem \%''.
+  \item Ao clicar em uma loja no mapa, ver o detalhamento dela no
+  gráfico de barras ao lado.
+\end{enumerate}
+
+Para cada necessidade, indique: \textbf{Filtro}, \textbf{Parâmetro}
+ou \textbf{Ação de dashboard}?
+
+\textbf{Resolução:}
+\begin{center}
+\begin{tabular}{|l|l|p{6.5cm}|}
+\hline
+\textbf{Necessidade} & \textbf{Recurso} & \textbf{Justificativa} \\
+\hline
+Selecionar região & Filtro & Subconjunto de dados (dropdown exposto) \\
+\hline
+Alternar métrica & Parâmetro & Controla lógica de cálculo, não dados \\
+\hline
+Clique no mapa & Ação & Filtragem interativa entre sheets \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Dica:} Filtro = ``quero ver menos dados''. Parâmetro =
+``quero mudar \emph{o que} é calculado''. Ação = ``quero que clicar
+aqui mude algo ali''.
+\end{SolvedBox}
+
 % =============================================================================
 \section{Parte V — Prática Guiada: Dashboard Interativo (21h30–21h50)}
 % =============================================================================
