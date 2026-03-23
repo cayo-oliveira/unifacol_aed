@@ -26,9 +26,10 @@ bilhões de reais em decisões erradas.
   \item 19h–20h — \textbf{Apresentações:} Trabalho 3 (diagnóstico de dataset)
   \item 20h–20h30 — \textbf{TEORIA:} Scatter plot — ler padrões, clusters e outliers visuais
   \item 20h30–21h — \textbf{TEORIA:} Correlação de Pearson — fórmula, escala e interpretação
-  \item 21h–21h20 — \textbf{TEORIA:} Correlação $\neq$ Causalidade + exemplos clássicos
-  \item 21h20–21h45 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2
-  \item 21h45–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL}
+  \item 21h–21h30 — \textbf{TEORIA:} Significância estatística — amostra mínima e p-valor
+  \item 21h30–21h40 — \textbf{TEORIA:} Correlação $\neq$ Causalidade + exemplos clássicos
+  \item 21h40–21h55 — \textbf{PRÁTICA EM DUPLA:} Tabelas 1 e 2
+  \item 21h55–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL}
 \end{enumerate}
 \end{BoardBox}
 
@@ -58,7 +59,7 @@ Big Idea & 1 frase com dado, significado e decisão \\
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte II — Teoria: Correlação (20h–21h20)}
+\section{Parte II — Teoria: Correlação (20h–21h40)}
 % =============================================================================
 
 % ---------------------------------------------------------------------------
@@ -168,7 +169,957 @@ Na prática, $r = 0{,}85$ já é muito forte e raro.
 \end{BoardBox}
 
 % ---------------------------------------------------------------------------
-\subsection{21h–21h20: Correlação não é Causalidade}
+\subsection{21h–21h30: Significância Estatística — Amostra Mínima e p-valor}
+% ---------------------------------------------------------------------------
+
+Até agora vimos como calcular e interpretar o coeficiente de Pearson.
+Mas será que todo $r$ calculado merece confiança?
+Nesta parte, vamos entender por que o tamanho da amostra importa tanto
+quanto o valor de~$r$, e como usar o \textbf{p-valor} para decidir se
+uma correlação é real ou mero acaso.
+A ideia central é simples: um número sozinho não basta — precisamos
+saber se ele se sustenta quando aumentamos ou mudamos os dados.
+
+\begin{BoardBox}
+\textbf{O problema: $r$ sozinho pode ser enganoso (para o quadro)}
+
+Imaginem dois cenários:
+\begin{itemize}
+  \item \textbf{Cenário A:} analisei 500 clientes e achei $r = 0{,}35$.
+  \item \textbf{Cenário B:} analisei 5 clientes e achei $r = 0{,}88$.
+\end{itemize}
+
+Qual achado é mais confiável? O segundo parece mais impressionante,
+mas baseia-se em \textbf{apenas 5 observações} — qualquer coincidência
+aleatória pode gerar um $r$ alto. O primeiro é modesto, mas com 500
+observações é quase impossível que seja acaso.
+
+Para responder ``esse $r$ é real ou pode ser pura coincidência?'',
+precisamos de um \textbf{teste de significância} — e é aí que entra
+o \textbf{p-valor}.
+\end{BoardBox}
+
+Percebam que o problema central é a \emph{quantidade} de dados.
+Com poucos pontos, qualquer padrão pode ser coincidência.
+Isso nos leva à próxima pergunta natural: afinal, quantos dados
+são suficientes para confiar no resultado?
+
+\begin{SolvedBox}
+\textbf{A dúvida natural: ``quantos dados eu preciso?''}
+
+Ao ver o cenário de 500 vs 5 observações, a primeira pergunta que
+surge é: \textit{``Existe um número mínimo para eu confiar no meu resultado?''}
+
+A resposta depende de três coisas:
+\begin{enumerate}
+  \item \textbf{Nível de confiança:} quanta certeza você quer? (geralmente 95\%)
+  \item \textbf{Margem de erro:} quanta imprecisão você tolera?
+  \item \textbf{Variabilidade dos dados:} quanto os dados oscilam?
+\end{enumerate}
+
+Antes de chegar à fórmula, precisamos entender o que significa
+esse ``95\% de confiança'' — porque é o mesmo conceito que vai aparecer
+no teste de significância logo a seguir.
+\end{SolvedBox}
+
+Para responder ``quantos dados eu preciso?'', primeiro temos que
+entender um conceito fundamental: o \textbf{nível de confiança}.
+Ele aparece em toda análise estatística e vai ser a ponte entre
+amostragem e significância.
+Quando alguém diz ``pesquisa com 95\% de confiança'', o que exatamente
+isso quer dizer?
+
+\begin{BoardBox}
+\textbf{Nível de confiança — o que significa 95\%? (para o quadro)}
+
+Imaginem que eu repita a mesma pesquisa 100 vezes, com 100 amostras
+diferentes da mesma população. Se eu usar nível de confiança de 95\%:
+
+\begin{itemize}
+  \item Em \textbf{95 dessas 100 pesquisas}, o intervalo que eu calcular
+  vai conter o valor real da população.
+  \item Em \textbf{5 dessas 100 pesquisas}, por azar, o intervalo vai
+  errar — não vai conter o valor real.
+\end{itemize}
+
+\textbf{Tradução prática:} ``Aceito 5\% de chance de estar errado.''
+
+\medskip
+\begin{tabular}{|c|c|c|l|}
+\hline
+\textbf{Confiança} & \textbf{Chance de erro ($\alpha$)} & \textbf{$Z$} & \textbf{Quando usar} \\
+\hline
+90\% & 10\% ($\alpha = 0{,}10$) & 1,645 & Pesquisas exploratórias, decisões reversíveis \\
+95\% & 5\% ($\alpha = 0{,}05$) & 1,960 & Padrão em negócios e ciências sociais \\
+99\% & 1\% ($\alpha = 0{,}01$) & 2,576 & Medicina, engenharia, decisões irreversíveis \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Conexão fundamental:} o $\alpha = 0{,}05$ que define o nível de
+confiança de 95\% é \textbf{o mesmo $\alpha = 0{,}05$} que vamos usar como
+limiar de significância para o p-valor. São dois lados da mesma moeda.
+\end{BoardBox}
+
+Mas de onde vêm esses números $\alpha$ e $Z$? Não são arbitrários.
+Eles vêm da \textbf{curva normal} (a famosa ``curva em sino'', ou
+distribuição de Gauss) --- a mesma curva que vocês já viram quando
+falamos de distribuição de dados.
+
+\begin{SolvedBox}
+\textbf{De onde vêm o $\alpha$ e o $Z$? --- A curva normal}
+
+A lógica é visual.
+Imagem a curva normal (sino) centrada na média da população:
+
+\begin{enumerate}
+  \item A curva mostra todas as médias possíveis que eu poderia obter
+  se repetisse a pesquisa infinitas vezes.
+  \item A \textbf{área total sob a curva} vale 1 (= 100\%).
+  \item Quando eu digo ``95\% de confiança'', estou dizendo que quero
+  que 95\% da área fique \textbf{dentro} do meu intervalo. Os 5\% que
+  sobram (o $\alpha$) são divididos igualmente nas duas caudas:
+  2{,}5\% à esquerda e 2{,}5\% à direita.
+  \item O valor \textbf{$Z$} é o ponto na curva que separa a área
+  central da área das caudas. Para 95\%, esse ponto é $Z = 1{,}96$:
+  tudo entre $-1{,}96$ e $+1{,}96$ desvios-padrão da média corresponde
+  a 95\% da área.
+\end{enumerate}
+
+\textbf{Na prática:}
+\begin{itemize}
+  \item \textbf{90\% de confiança} $\Rightarrow$ $\alpha = 0{,}10$
+  $\Rightarrow$ sobram 5\% em cada cauda $\Rightarrow$ $Z = 1{,}645$.
+  \item \textbf{95\% de confiança} $\Rightarrow$ $\alpha = 0{,}05$
+  $\Rightarrow$ sobram 2{,}5\% em cada cauda $\Rightarrow$ $Z = 1{,}960$.
+  \item \textbf{99\% de confiança} $\Rightarrow$ $\alpha = 0{,}01$
+  $\Rightarrow$ sobram 0{,}5\% em cada cauda $\Rightarrow$ $Z = 2{,}576$.
+\end{itemize}
+
+Quanto mais confiança eu quero, mais largo precisa ser o intervalo
+(maior $Z$), e portanto mais dados eu preciso coletar.
+
+\textbf{Resumo em uma frase:}
+$\alpha$ é a fatia de erro que eu aceito; $Z$ é a distância
+em desvios-padrão que delimita essa fatia na curva normal.
+Os dois são determinados \textbf{um pelo outro} --- escolheu
+a confiança, $\alpha$ e $Z$ ficam definidos.
+\end{SolvedBox}
+
+Com o conceito de nível de confiança claro e sabendo de onde vêm $\alpha$
+e $Z$, agora podemos apresentar a fórmula que transforma essas ideias
+em um número concreto: o \textbf{tamanho mínimo da amostra}.
+Na prática, é a resposta para ``quantas pessoas eu preciso entrevistar?''
+ou ``quantas observações eu preciso coletar?''.
+
+A fórmula calcula primeiro um valor chamado $n_0$.
+O que é $n_0$? É o tamanho de amostra \textbf{ideal para uma população
+infinita} --- ou seja, o número de observações que eu precisaria se a
+população fosse tão grande que nunca ``acabasse''.
+No mundo real a população tem um tamanho finito~$N$ (por exemplo,
+2.000 clientes), então depois aplicamos uma \textbf{correção} que
+reduz $n_0$ para o valor final $n$.
+Pensem assim: $n_0$ é o ponto de partida (cenário mais exigente),
+e a correção traz o número para a realidade.
+
+\begin{FormulaBox}{Tamanho mínimo de amostra (para estimar uma média)}
+\[
+n_0 = \left(\frac{Z_{\alpha/2} \cdot \sigma}{e}\right)^2
+\]
+\begin{itemize}
+  \item $n_0$ = tamanho de amostra para população infinita (ponto de partida)
+  \item $Z_{\alpha/2}$ = valor $Z$ para o nível de confiança desejado (vem da curva normal)
+  \item $\sigma$ = desvio-padrão estimado da população (de estudos anteriores ou piloto)
+  \item $e$ = margem de erro tolerável (em unidades da variável)
+\end{itemize}
+
+\textbf{Para populações finitas} (quando $N$ é conhecido e pequeno):
+\[
+n = \frac{n_0}{1 + \dfrac{n_0 - 1}{N}}
+\]
+onde $N$ = tamanho total da população e $n$ = amostra final corrigida.
+
+\textbf{Observação:} quando $N$ é muito grande ($N \gg n_0$), a correção
+é desprezível e $n \approx n_0$ --- por isso $n_0$ sozinho já serve como
+boa estimativa para populações grandes.
+\end{FormulaBox}
+
+A fórmula pode parecer abstrata à primeira vista, mas na prática é
+bem direta.
+Vamos aplicá-la a um caso concreto de uma rede varejista para ver
+como cada peça se encaixa.
+
+\begin{SolvedBox}
+\textbf{Exemplo: quantos clientes preciso pesquisar?}
+
+Uma rede varejista tem $N = 2.000$ clientes ativos e quer estimar o
+ticket médio com 95\% de confiança e margem de erro de R\$~10.
+Um estudo piloto indicou $\sigma \approx$ R\$~50.
+
+\textbf{Passo 1 — Amostra sem correção:}
+\[
+n_0 = \left(\frac{1{,}96 \times 50}{10}\right)^2
+    = \left(\frac{98}{10}\right)^2
+    = 9{,}8^2
+    = 96{,}04
+    \approx 97
+\]
+
+\textbf{Passo 2 — Correção para população finita ($N = 2.000$):}
+\[
+n = \frac{97}{1 + \dfrac{97 - 1}{2000}}
+  = \frac{97}{1 + 0{,}048}
+  = \frac{97}{1{,}048}
+  \approx 93
+\]
+
+\textbf{Resultado:} precisa de no mínimo \textbf{93 clientes}.
+
+\textbf{E se quisesse 99\% de confiança?}
+\[
+n_0 = \left(\frac{2{,}576 \times 50}{10}\right)^2
+    = 12{,}88^2
+    \approx 166
+\quad\Rightarrow\quad
+n = \frac{166}{1 + \frac{165}{2000}} \approx 153
+\]
+Mais confiança $\Rightarrow$ mais dados necessários.
+\end{SolvedBox}
+
+Esse cálculo de amostra mínima vale para estimar médias, proporções
+ou qualquer parâmetro.
+Mas e no nosso contexto específico de \emph{correlação}?
+A pergunta é ligeiramente diferente: \textit{``quantas observações preciso
+para detectar uma correlação como significante?''}
+A resposta depende do tamanho do próprio $r$ — correlações mais fracas
+exigem mais dados para serem confirmadas.
+
+\begin{BoardBox}
+\textbf{E para correlação? Quantas observações eu preciso? (para o quadro)}
+
+Para detectar se uma correlação é significante, o $n$ mínimo depende
+do tamanho do efeito (o próprio $|r|$). Quanto menor a correlação que
+você quer detectar, mais dados precisa.
+
+\textbf{$|r|$ mínimo para significância a $\alpha = 0{,}05$ (bilateral):}
+
+\medskip
+\begin{tabular}{|r|c|l|}
+\hline
+\textbf{$n$} & \textbf{$|r|$ mínimo} & \textbf{Interpretação} \\
+\hline
+3  & 0,997 & Quase impossível detectar qualquer coisa \\
+4  & 0,950 & Só correlação quase perfeita \\
+5  & 0,878 & Precisa de correlação muito forte \\
+6  & 0,811 & Ainda exige correlação forte \\
+8  & 0,707 & Começa a ser viável para correlações fortes \\
+10 & 0,632 & Mínimo razoável para análises exploratórias \\
+15 & 0,514 & Detecta correlações moderadas a fortes \\
+20 & 0,444 & Bom para investigações iniciais \\
+30 & 0,361 & Detecta correlações moderadas \\
+50 & 0,279 & Detecta correlações fracas a moderadas \\
+100 & 0,197 & Detecta correlações fracas \\
+500 & 0,088 & Detecta correlações muito fracas \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Leitura da tabela:} com $n = 5$ e $r = 0{,}86$, o $r$ não
+atinge o mínimo de 0,878 $\Rightarrow$ não é significante.
+Com $n = 500$ e $r = 0{,}35$, o $r$ supera facilmente o
+mínimo de 0,088 $\Rightarrow$ é significante.
+
+\textbf{É por isso} que o cenário de 500 clientes com $r = 0{,}35$ é
+mais confiável que 5 clientes com $r = 0{,}88$.
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Regra prática para estudos com correlação:}
+\begin{itemize}
+  \item Para detectar correlação \textbf{forte} ($|r| \geq 0{,}7$): tenha pelo menos $n = 10$
+  \item Para detectar correlação \textbf{moderada} ($|r| \geq 0{,}4$): tenha pelo menos $n = 25$
+  \item Para detectar correlação \textbf{fraca} ($|r| \geq 0{,}2$): tenha pelo menos $n = 100$
+  \item Na dúvida: \textbf{mais dados é sempre melhor}. Se possível, $n \geq 30$.
+\end{itemize}
+\end{NoteBox}
+
+Agora que entendemos quantos dados precisamos e por que o tamanho da
+amostra importa, vamos ao \textbf{teste formal} que responde à pergunta
+central: ``essa correlação é estatisticamente significante?''.
+A ferramenta para isso é o \textbf{p-valor} — um número entre 0 e 1
+que mede a chance de o resultado que observamos ser puro acaso.
+Vamos primeiro entender a lógica por trás, de forma intuitiva, antes
+de entrar na fórmula.
+
+\begin{BoardBox}
+\textbf{O que é a Hipótese Nula ($H_0$)? (para o quadro)}
+
+Antes de qualquer teste estatístico, precisamos definir o que estamos
+testando. A ideia é a seguinte:
+
+\begin{enumerate}
+  \item Começamos \textbf{assumindo que não existe efeito nenhum} — essa
+  suposição se chama \textbf{hipótese nula ($H_0$)}.
+  \item Depois usamos os dados para tentar \textbf{derrubar} essa suposição.
+  \item Se os dados forem fortes o suficiente para contradizer $H_0$, nós
+  a \textbf{rejeitamos}. Se não forem, \textbf{não rejeitamos} — o que não
+  significa que $H_0$ é verdade, apenas que não temos prova suficiente.
+\end{enumerate}
+
+\textbf{Analogia jurídica:} funciona como um julgamento.
+O réu é considerado \textbf{inocente até que se prove o contrário}.
+A ``inocência'' é a hipótese nula. As ``provas'' são os dados.
+Se as provas forem fortes ($p < 0{,}05$), condenamos (rejeitamos $H_0$).
+Se as provas forem fracas ($p \geq 0{,}05$), absolvemos — mas isso não
+significa que o réu é de fato inocente, apenas que não houve evidência
+suficiente para condenar.
+\end{BoardBox}
+
+Esse conceito de ``assumir que nada existe até provar o contrário'' é a
+base de toda estatística inferencial.
+Parece contraintuitivo no começo — por que começar negando? 
+Porque é mais fácil provar que algo \emph{existe} do que provar que algo
+\emph{não existe}.
+Vejamos exemplos concretos para diferentes situações:
+
+\begin{SolvedBox}
+\textbf{Exemplos de $H_0$ e $H_1$ em diferentes contextos:}
+
+\textbf{1. Correlação} (o nosso caso):
+\begin{itemize}
+  \item $H_0$: $\rho = 0$ — ``Não existe correlação entre X e Y na população.''
+  \item $H_1$: $\rho \neq 0$ — ``Existe correlação entre X e Y.''
+  \item \textit{Exemplo:} ``Horas de treino e performance não têm relação nenhuma''
+  vs ``têm relação''.
+\end{itemize}
+
+\textbf{2. Comparação de médias:}
+\begin{itemize}
+  \item $H_0$: $\mu_A = \mu_B$ — ``A média dos dois grupos é igual.''
+  \item $H_1$: $\mu_A \neq \mu_B$ — ``As médias são diferentes.''
+  \item \textit{Exemplo:} ``O salário médio de homens e mulheres na empresa
+  é o mesmo'' vs ``é diferente''.
+\end{itemize}
+
+\textbf{3. Proporção:}
+\begin{itemize}
+  \item $H_0$: $p = 0{,}50$ — ``A moeda é justa (50\% cara, 50\% coroa).''
+  \item $H_1$: $p \neq 0{,}50$ — ``A moeda é viciada.''
+  \item \textit{Exemplo:} ``A taxa de clique do botão vermelho e do azul é
+  igual'' vs ``é diferente'' (teste A/B).
+\end{itemize}
+
+\textbf{Padrão:} $H_0$ é sempre ``nada acontece / não há diferença / não
+há efeito''. $H_1$ é ``algo acontece''. O teste verifica se os dados
+são fortes o suficiente para derrubar o $H_0$.
+\end{SolvedBox}
+
+Com a hipótese nula entendida, agora podemos falar do p-valor — que é
+justamente a ferramenta que mede se os dados são fortes o suficiente
+para rejeitar $H_0$.
+
+\begin{SolvedBox}
+\textbf{A lógica do p-valor — explicação intuitiva:}
+
+O raciocínio completo é:
+\begin{enumerate}
+  \item \textbf{Definimos $H_0$:} ``A correlação na população é zero.
+  Não existe associação real entre X e Y.''
+  \item \textbf{Calculamos $r$} a partir da nossa amostra.
+  \item \textbf{Perguntamos:} se $H_0$ fosse verdade (correlação zero na
+  população), qual a probabilidade de observarmos um $r$ tão extremo
+  quanto o que calculamos, \emph{por puro acaso}?
+  \item \textbf{Essa probabilidade é o p-valor.}
+\end{enumerate}
+
+\textbf{Analogia da moeda:} imagine uma moeda que você suspeita ser viciada.
+\begin{itemize}
+  \item $H_0$: a moeda é honesta (50\% cara, 50\% coroa).
+  \item Você joga 10 vezes e dá 7 caras.
+  O p-valor é $\approx 0{,}17$ (17\% de chance de isso acontecer por acaso
+  com moeda honesta). \textbf{Não rejeita $H_0$} — pode ser azar.
+  \item Você joga 1.000 vezes e dá 700 caras.
+  O p-valor é praticamente 0. \textbf{Rejeita $H_0$} — a moeda é viciada.
+\end{itemize}
+
+O mesmo vale para correlação: $r$ alto com poucos dados pode ser ``azar''.
+$r$ alto com muitos dados quase certamente não é.
+
+\textbf{Regra de decisão:}
+\begin{itemize}
+  \item \textbf{p $<$ 0,05:} ``É muito improvável ($<$ 5\%) que esse resultado
+  seja acaso. Rejeitamos $H_0$ — a correlação é \textbf{estatisticamente
+  significante}.''
+  \item \textbf{p $\geq$ 0,05:} ``A chance de ser acaso é alta demais para
+  concluir. Não rejeitamos $H_0$ — a correlação \textbf{não é significante}
+  (o que não significa que não existe — apenas que não temos evidência
+  suficiente).''
+\end{itemize}
+
+\textbf{Cuidado com a linguagem:} nunca dizemos ``aceitamos $H_0$''.
+Dizemos ``não rejeitamos $H_0$'' — assim como no tribunal: absolver não
+é o mesmo que provar inocência.
+\end{SolvedBox}
+A intuição ficou clara: o p-valor mede a probabilidade de o resultado
+ser acaso.
+Mas como calculá-lo na prática?
+Para a correlação de Pearson, usamos um \textbf{teste~$t$} — uma fórmula
+simples que transforma $r$ e $n$ em um valor que podemos comparar com
+uma tabela de referência.
+
+Mas antes de ver a fórmula, preciso que vocês entendam \emph{o que é}
+esse valor $t$ e por que ele funciona como ``régua de surpresa''.
+
+\begin{SolvedBox}
+\textbf{O que o valor $t$ mede? — A régua de surpresa}
+
+Pensem assim: o $t$ calculado mede \textbf{quão surpreendente} é o
+resultado que obtivemos, \emph{assumindo que $H_0$ é verdade}
+(ou seja, assumindo que a correlação real é zero).
+
+\begin{itemize}
+  \item $t$ \textbf{perto de 0:} ``Esse resultado não tem nada de especial.
+  É exatamente o que esperaríamos por acaso.'' $\Rightarrow$ Não rejeita $H_0$.
+  \item $t$ \textbf{moderado} (por exemplo 1,5): ``Hmm, ligeiramente
+  incomum, mas ainda pode ser coincidência.'' $\Rightarrow$ Não rejeita $H_0$.
+  \item $t$ \textbf{grande} (por exemplo 3,0): ``Isso seria muito raro
+  se não houvesse correlação nenhuma. Provavelmente existe algo real aqui.''
+  $\Rightarrow$ Rejeita $H_0$.
+\end{itemize}
+
+\textbf{Analogia:} imagine que alguém diz que é bom jogador de basquete.
+\begin{itemize}
+  \item Faz 6 de 10 cestas livres $\Rightarrow$ ``ok, pode ser sorte'' ($t$ baixo).
+  \item Faz 9 de 10 cestas livres $\Rightarrow$ ``difícil ser só sorte'' ($t$ alto).
+  \item Faz 95 de 100 cestas livres $\Rightarrow$ ``certeza que é bom'' ($t$ muito alto).
+\end{itemize}
+
+O número de tentativas (os dados) importa tanto quanto o resultado.
+É por isso que a fórmula do $t$ combina o $r$ (o resultado) com o $n$
+(a quantidade de dados).
+\end{SolvedBox}
+
+\begin{FormulaBox}{Teste $t$ para significância da correlação}
+\[
+t = r \cdot \sqrt{\frac{n - 2}{1 - r^2}}
+\]
+\begin{itemize}
+  \item $r$ = coeficiente de correlação de Pearson calculado
+  \item $n$ = número de observações (pares de dados)
+  \item Graus de liberdade: $\text{gl} = n - 2$
+  \item Compare $|t_{\text{calc}}|$ com $t_{\text{crítico}}(\alpha = 0{,}05;\; \text{gl})$
+  \item Se $|t_{\text{calc}}| > t_{\text{crítico}}$ $\Rightarrow$ $r$ é significante
+  \item O p-valor é obtido da tabela $t$ ou do software
+\end{itemize}
+\end{FormulaBox}
+
+Vamos entender cada peça dessa fórmula para que não fique decoreba:
+
+\begin{SolvedBox}
+\textbf{Lendo a fórmula do $t$ peça por peça:}
+
+\[
+t = \underbrace{r}_{\text{sinal}} \cdot
+    \sqrt{\frac{\overbrace{n - 2}^{\text{dados livres}}}
+               {\underbrace{1 - r^2}_{\text{sobra não explicada}}}}
+\]
+
+\begin{itemize}
+  \item \textbf{O $r$ na frente:} quanto maior o $r$ (a correlação),
+  maior o $t$. Faz sentido --- correlação forte gera mais ``surpresa''.
+  \item \textbf{O $n - 2$ no numerador:} são os graus de liberdade
+  (dados livres). Quanto mais dados, maior o $t$. Faz sentido ---
+  mais dados dão mais confiança.
+  \item \textbf{O $1 - r^2$ no denominador:} é a parte da variação que
+  a correlação \emph{não} explica. Se $r = 0{,}88$, então $r^2 = 0{,}77$
+  e $1 - r^2 = 0{,}23$ --- sobram 23\% sem explicação. Quanto menor
+  essa sobra (correlação mais forte), menor o denominador, e maior o $t$.
+\end{itemize}
+
+\textbf{Em resumo:} o $t$ fica grande quando a correlação é forte ($r$
+alto), a amostra é grande ($n$ alto) e há pouca sobra inexplicada
+($1 - r^2$ baixo). É exatamente quando devemos ter mais confiança.
+\end{SolvedBox}
+
+\begin{NoteBox}
+\textbf{O limiar $\alpha = 0{,}05$:} é o nível de significância padrão —
+aceita 5\% de chance de concluir que a correlação existe quando na verdade
+não existe (erro tipo I). Em áreas de alto risco (medicina, engenharia)
+pode-se exigir $\alpha = 0{,}01$ (apenas 1\% de chance de erro).
+\end{NoteBox}
+
+Agora, para usar a fórmula do teste $t$, precisamos consultar uma
+\textbf{tabela} para saber qual é o ``limite'' ($t_{\text{crítico}}$) que
+separa ``pode ser acaso'' de ``provavelmente não é acaso''.
+Essa tabela depende de um conceito chamado \textbf{graus de liberdade}.
+Soa complicado, mas é bem simples — vamos por partes.
+
+\begin{BoardBox}
+\textbf{O que são Graus de Liberdade ($\text{gl}$)? (para o quadro)}
+
+Graus de liberdade é o número de valores que \textbf{podem variar
+livremente} depois que fixamos alguma restrição (como a média).
+
+\textbf{Analogia concreta:}
+imagine que eu tenho 5 números e sei que a média deles é 10
+(ou seja, a soma é 50). Quantos desses 5 números eu posso escolher
+livremente?
+
+\begin{itemize}
+  \item Posso escolher o 1º: digamos 8. Faltam 42 para distribuir.
+  \item Posso escolher o 2º: digamos 12. Faltam 30.
+  \item Posso escolher o 3º: digamos 15. Faltam 15.
+  \item Posso escolher o 4º: digamos 7. Faltam 8.
+  \item O 5º \textbf{não tenho escolha}: tem que ser 8 (para a soma dar 50).
+\end{itemize}
+
+Ou seja: de 5 valores, apenas \textbf{4 são livres}. O último está
+``preso'' pela restrição da média.
+$\text{gl} = 5 - 1 = 4$.
+
+\textbf{Para correlação:} temos $n$ pares de dados e estimamos 2 parâmetros
+(as médias de X e de Y), então: $\text{gl} = n - 2$.
+
+\medskip
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Situação} & \textbf{gl} & \textbf{Exemplo} \\
+\hline
+Correlação & $n - 2$ & 6 pares $\Rightarrow$ gl $= 4$ \\
+Média de 1 grupo & $n - 1$ & 10 dados $\Rightarrow$ gl $= 9$ \\
+Comparar 2 médias & $n_1 + n_2 - 2$ & 8+12 dados $\Rightarrow$ gl $= 18$ \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Por que isso importa?} Porque com poucos graus de liberdade
+(pouca informação livre nos dados), precisamos de um $t$ maior para
+convencer que o resultado não é acaso. Com muitos graus de liberdade,
+um $t$ menor já basta.
+\end{BoardBox}
+
+Percebam: quanto menos dados, menos graus de liberdade, e mais difícil
+é provar que o resultado é significante. Faz sentido — com poucos dados,
+precisamos de evidência mais forte.
+
+Agora vamos à tabela em si. Mas antes, uma pergunta importante:
+\textbf{de onde essa tabela veio?} Quem criou esses números e por quê?
+
+\begin{SolvedBox}
+\textbf{A história e a lógica por trás da tabela $t$ de Student}
+
+Em 1908, William Sealy Gosset trabalhava como estatístico na cervejaria
+Guinness, em Dublin. O problema dele era prático: a cervejaria fazia
+testes de qualidade com \textbf{amostras pequenas} (poucos barris por lote).
+A curva normal ($Z$) funcionava bem para amostras grandes, mas com
+amostras pequenas os resultados ``oscilavam demais'' --- a curva normal
+subestimava a incerteza.
+
+Gosset percebeu que com poucos dados, a curva precisa ser \textbf{mais
+achatada e com caudas mais largas} (mais espalhada) para refletir a
+incerteza maior. Ele derivou matematicamente uma nova família de curvas
+--- uma para cada valor de graus de liberdade. Publicou sob o pseudônimo
+``Student'' (a Guinness não permitia publicações com nome real).
+
+\textbf{A ideia visual:}
+\begin{itemize}
+  \item Imagine a curva normal (sino) que já conhecemos.
+  \item Agora imagine que com \textbf{poucos dados} ($\text{gl}$ baixo),
+  a curva fica mais \textbf{baixa e larga} --- as caudas ficam ``gordas'',
+  significando que valores extremos são mais prováveis por acaso.
+  \item Com \textbf{muitos dados} ($\text{gl}$ alto), a curva vai se
+  afinando e ficando cada vez mais parecida com a normal.
+  \item Com $\text{gl} = \infty$, a curva $t$ \textbf{se torna} a
+  curva normal --- são a mesma coisa.
+\end{itemize}
+
+\textbf{Por que as caudas importam?}
+O $t_{\text{crítico}}$ é o ponto que corta as caudas.
+Se as caudas são gordas (poucos dados), esse ponto fica mais longe do
+centro $\Rightarrow$ o $t_{\text{crítico}}$ é \textbf{maior}
+$\Rightarrow$ é mais difícil rejeitar $H_0$.
+Se as caudas são finas (muitos dados), o ponto fica mais perto
+$\Rightarrow$ o $t_{\text{crítico}}$ é \textbf{menor}
+$\Rightarrow$ é mais fácil rejeitar $H_0$.
+
+\textbf{É por isso que a tabela existe:} cada linha é uma curva diferente,
+e cada valor na tabela é o ponto de corte daquela curva específica.
+Gosset calculou esses pontos de corte para que não precisássemos refazer
+a matemática toda vez --- basta consultar a tabela.
+\end{SolvedBox}
+
+Resumindo: a tabela $t$ de Student é um \textbf{catálogo de limites de
+surpresa}. Para cada quantidade de dados (graus de liberdade) e para
+cada nível de exigência ($\alpha$), ela nos diz: ``o seu $t$ calculado
+precisa ser maior que \emph{este valor} para você poder dizer que o
+resultado não é acaso.''
+
+Agora vamos ver a tabela em si e aprender a consultá-la.
+
+\begin{BoardBox}
+\textbf{A Tabela $t$ de Student — como ler (para o quadro)}
+
+A tabela funciona como uma consulta em duas dimensões:
+\begin{itemize}
+  \item \textbf{Linha:} graus de liberdade ($\text{gl} = n - 2$ para correlação)
+  \item \textbf{Coluna:} nível de significância ($\alpha$)
+\end{itemize}
+
+Nós vamos usar o caso mais comum: $\alpha = 0{,}05$ bilateral.
+
+\textbf{O que significa ``bilateral''?}
+Bilateral quer dizer que estamos testando se a correlação é
+\textbf{diferente de zero} --- pode ser positiva ou negativa.
+Por isso dividimos o $\alpha$ em duas metades: 2{,}5\% na cauda
+esquerda (correlação negativa extrema) e 2{,}5\% na cauda direita
+(correlação positiva extrema). Se testássemos apenas um lado
+(``é positiva?''), seria \textit{unilateral} --- mas para correlação,
+bilateral é o padrão.
+
+O valor na interseção linha $\times$ coluna é o $t_{\text{crítico}}$.
+
+\medskip
+\textbf{Tabela $t$ crítico (bilateral) — recorte para o quadro:}
+
+\medskip
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{gl} & $\alpha = 0{,}10$ & $\alpha = 0{,}05$ & $\alpha = 0{,}01$ \\
+\hline
+1  & 6,314 & 12,706 & 63,657 \\
+2  & 2,920 & 4,303  & 9,925 \\
+3  & 2,353 & 3,182  & 5,841 \\
+4  & 2,132 & 2,776  & 4,604 \\
+5  & 2,015 & 2,571  & 4,032 \\
+6  & 1,943 & 2,447  & 3,707 \\
+8  & 1,860 & 2,306  & 3,355 \\
+10 & 1,812 & 2,228  & 3,169 \\
+15 & 1,753 & 2,131  & 2,947 \\
+20 & 1,725 & 2,086  & 2,845 \\
+30 & 1,697 & 2,042  & 2,750 \\
+60 & 1,671 & 2,000  & 2,660 \\
+120 & 1,658 & 1,980  & 2,617 \\
+$\infty$ & 1,645 & 1,960 & 2,576 \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\textbf{Como usar:}
+\begin{enumerate}
+  \item Calcule gl: $\text{gl} = n - 2$.
+  \item Escolha a coluna de $\alpha$ (geralmente 0,05).
+  \item Encontre o $t_{\text{crítico}}$ na interseção.
+  \item Se $|t_{\text{calc}}| > t_{\text{crítico}}$: significante.
+  Se $|t_{\text{calc}}| \leq t_{\text{crítico}}$: não significante.
+\end{enumerate}
+
+\textbf{Exemplo rápido de consulta:}
+tenho $n = 8$ pares de dados e calculei $t = 2{,}50$.
+\begin{enumerate}
+  \item $\text{gl} = 8 - 2 = 6$.
+  \item Coluna $\alpha = 0{,}05$.
+  \item Na linha $\text{gl} = 6$: $t_{\text{crítico}} = 2{,}447$.
+  \item $2{,}50 > 2{,}447$ $\Rightarrow$ \textbf{significante!}
+  (por pouco, mas passou.)
+\end{enumerate}
+Se eu usasse $\alpha = 0{,}01$ (mais exigente), o $t_{\text{crítico}}$
+seria $3{,}707$ --- e $2{,}50 < 3{,}707$, ou seja, \textbf{não seria
+significante} ao nível de 1\%. O mesmo resultado pode ser significante a
+5\% mas não a 1\% --- depende de quanto risco de erro você aceita.
+\end{BoardBox}
+
+Percebam dois padrões importantes na tabela:
+
+Primeiro: à medida que os graus de liberdade \textbf{aumentam} (mais dados),
+o $t_{\text{crítico}}$ \textbf{diminui}. Isso significa que com mais dados,
+um valor de $t$ menor já é suficiente para provar significância.
+Faz sentido: mais dados = mais confiança = menos exigência.
+
+Segundo: a última linha diz $\text{gl} = \infty$.
+O que é isso?
+
+\begin{SolvedBox}
+\textbf{O que significa $\text{gl} = \infty$ na tabela?}
+
+Quando o número de graus de liberdade é muito grande (muitos dados),
+a \textbf{distribuição $t$} se torna idêntica à \textbf{distribuição
+normal} ($Z$) que já vimos antes.
+
+Ou seja: $t_{\text{crítico}}(\text{gl} = \infty)$ é o próprio $Z$!
+
+Vejam a coincidência (que não é coincidência):
+\begin{itemize}
+  \item $t_{\text{crítico}}(\text{gl} = \infty,\; \alpha = 0{,}10) = 1{,}645 = Z_{90\%}$
+  \item $t_{\text{crítico}}(\text{gl} = \infty,\; \alpha = 0{,}05) = 1{,}960 = Z_{95\%}$
+  \item $t_{\text{crítico}}(\text{gl} = \infty,\; \alpha = 0{,}01) = 2{,}576 = Z_{99\%}$
+\end{itemize}
+
+\textbf{São exatamente os mesmos valores $Z$} da tabela de nível de
+confiança que vimos antes!
+
+\textbf{Tradução prática:}
+\begin{itemize}
+  \item Com poucos dados ($n \leq 30$): use a tabela $t$ (mais exigente).
+  \item Com muitos dados ($n > 120$): pode usar $Z$ — dá quase no mesmo.
+  \item Na dúvida: a tabela $t$ sempre funciona (o $Z$ é um caso particular).
+\end{itemize}
+\end{SolvedBox}
+
+Para fixar a leitura da tabela, vamos praticar com vários cenários
+diferentes. Quero que vocês consigam consultar a tabela com naturalidade,
+assim como consultamos uma tabela de preços.
+
+\begin{BoardBox}
+\textbf{Exercícios de consulta na tabela $t$ (para o quadro)}
+
+Para cada cenário abaixo, identifique: (a) os graus de liberdade,
+(b) o $t_{\text{crítico}}$ para $\alpha = 0{,}05$, e
+(c) se o resultado é significante.
+
+\medskip
+\begin{tabular}{|r|c|c|c|c|l|}
+\hline
+\textbf{Cenário} & $n$ & $r$ & $t_{\text{calc}}$ & $\text{gl}$ & \textbf{Significante?} \\
+\hline
+A & 4  & 0,92 & 3,58 & ? & ? \\
+B & 7  & 0,75 & 2,45 & ? & ? \\
+C & 12 & 0,60 & 2,40 & ? & ? \\
+D & 22 & 0,45 & 2,27 & ? & ? \\
+E & 32 & 0,38 & 2,24 & ? & ? \\
+\hline
+\end{tabular}
+
+\textbf{Resolução:}
+\begin{itemize}
+  \item \textbf{A:} $\text{gl} = 4 - 2 = 2$;
+  $t_{\text{crítico}} = 4{,}303$.
+  $3{,}58 < 4{,}303$ $\Rightarrow$ \textbf{NÃO significante}.
+  (Mesmo com $r = 0{,}92$! Com apenas 4 dados, o limiar é altíssimo.)
+
+  \item \textbf{B:} $\text{gl} = 7 - 2 = 5$;
+  $t_{\text{crítico}} = 2{,}571$.
+  $2{,}45 < 2{,}571$ $\Rightarrow$ \textbf{NÃO significante}.
+  (Por muito pouco! Faltou um dado a mais para virar significante.)
+
+  \item \textbf{C:} $\text{gl} = 12 - 2 = 10$;
+  $t_{\text{crítico}} = 2{,}228$.
+  $2{,}40 > 2{,}228$ $\Rightarrow$ \textbf{Significante}.
+  (Aqui já tem dados suficientes.)
+
+  \item \textbf{D:} $\text{gl} = 22 - 2 = 20$;
+  $t_{\text{crítico}} = 2{,}086$.
+  $2{,}27 > 2{,}086$ $\Rightarrow$ \textbf{Significante}.
+  (Notem que o limiar caiu — com mais dados, ficou mais fácil.)
+
+  \item \textbf{E:} $\text{gl} = 32 - 2 = 30$;
+  $t_{\text{crítico}} = 2{,}042$.
+  $2{,}24 > 2{,}042$ $\Rightarrow$ \textbf{Significante}.
+  (Com 30 gl o limiar já é baixo; $r = 0{,}38$ modesto mas real.)
+\end{itemize}
+
+\textbf{Lição da tabela:} percebam como o cenário~A tem $r = 0{,}92$ e
+não é significante, enquanto o cenário~E tem $r = 0{,}38$ e é.
+É o tamanho da amostra (e portanto os graus de liberdade) que faz
+toda a diferença. Mais dados $\Rightarrow$ $t_{\text{crítico}}$ menor
+$\Rightarrow$ mais fácil de provar significância.
+\end{BoardBox}
+
+Com a tabela dominada, vamos agora aplicar tudo isso em dois exemplos
+completos, passo a passo.
+O primeiro mostra um caso em que a correlação \emph{é} significante;
+o segundo, um caso em que \emph{não é} — mesmo com $r$ alto.
+A diferença entre os dois vai ficar óbvia: é o tamanho da amostra.
+
+\begin{SolvedBox}
+\textbf{Cálculo passo a passo — exemplo significante:}
+
+Um gestor quer saber se horas de treinamento e performance estão
+correlacionadas na empresa. Dados de \textbf{6 funcionários}: $r = 0{,}88$.
+
+\textbf{Passo 1 — Formular hipóteses:}
+\begin{itemize}
+  \item $H_0$: $\rho = 0$ (não há correlação na população)
+  \item $H_1$: $\rho \neq 0$ (há correlação na população)
+\end{itemize}
+
+\textbf{Passo 2 — Calcular $t$:}
+\[
+t = 0{,}88 \cdot \sqrt{\frac{6 - 2}{1 - 0{,}88^2}}
+  = 0{,}88 \cdot \sqrt{\frac{4}{1 - 0{,}7744}}
+  = 0{,}88 \cdot \sqrt{\frac{4}{0{,}2256}}
+  = 0{,}88 \cdot \sqrt{17{,}73}
+  = 0{,}88 \times 4{,}21
+  = 3{,}70
+\]
+
+\textbf{Passo 3 — Consultar $t_{\text{crítico}}$:}\\
+Graus de liberdade: $\text{gl} = 6 - 2 = 4$.\\
+Consultando a tabela $t$ do quadro, na linha $\text{gl} = 4$, coluna
+$\alpha = 0{,}05$:\\
+$t_{\text{crítico}} = 2{,}776$
+
+\textbf{Passo 4 — Decisão:}\\
+$|t_{\text{calc}}| = 3{,}70 > t_{\text{crítico}} = 2{,}776$
+
+$\Rightarrow$ \textbf{Rejeitamos $H_0$}.
+A correlação $r = 0{,}88$ é \textbf{estatisticamente significante} ao nível
+de 5\%. O p-valor correspondente é $\approx 0{,}005$ ($< 0{,}05$).
+
+\textbf{Interpretação em linguagem de negócio:}
+``A associação entre horas de treinamento e performance é forte
+($r = 0{,}88$) e estatisticamente significante ($p = 0{,}005$) — é muito
+improvável que esse resultado seja mero acaso.''
+\end{SolvedBox}
+
+Agora vejam o que acontece quando o $r$ é alto, mas a amostra é muito
+pequena.
+O número muda completamente a conclusão:
+
+\begin{SolvedBox}
+\textbf{Cálculo passo a passo — exemplo NÃO significante:}
+
+Uma consultora analisou a relação entre orçamento de marketing e NPS
+em \textbf{4 filiais}: $r = 0{,}86$.
+
+\textbf{Passo 1 — Hipóteses:} $H_0$: $\rho = 0$; $H_1$: $\rho \neq 0$
+
+\textbf{Passo 2 — Calcular $t$:}
+\[
+t = 0{,}86 \cdot \sqrt{\frac{4 - 2}{1 - 0{,}86^2}}
+  = 0{,}86 \cdot \sqrt{\frac{2}{1 - 0{,}7396}}
+  = 0{,}86 \cdot \sqrt{\frac{2}{0{,}2604}}
+  = 0{,}86 \cdot \sqrt{7{,}68}
+  = 0{,}86 \times 2{,}77
+  = 2{,}38
+\]
+
+\textbf{Passo 3 — Consultar $t_{\text{crítico}}$:}\\
+$\text{gl} = 4 - 2 = 2$;
+$t_{\text{crítico}}(\alpha = 0{,}05;\; \text{gl} = 2) = 4{,}303$
+
+\textbf{Passo 4 — Decisão:}\\
+$|t_{\text{calc}}| = 2{,}38 < t_{\text{crítico}} = 4{,}303$
+
+$\Rightarrow$ \textbf{Não rejeitamos $H_0$}.
+Mesmo com $r = 0{,}86$ — um valor visualmente alto — a correlação
+\textbf{não é significante} ao nível de 5\%. O p-valor é $\approx 0{,}14$
+($> 0{,}05$).
+
+\textbf{Por quê?} Porque com apenas 4 observações, uma correlação de 0,86
+pode facilmente surgir por acaso. Precisamos de mais dados para ter
+confiança.
+
+\textbf{Interpretação:}
+``Os dados sugerem uma tendência positiva entre marketing e NPS
+($r = 0{,}86$), mas com apenas 4 filiais, não temos evidência estatística
+suficiente para afirmar que a associação é real ($p = 0{,}14$).
+Recomendação: ampliar a análise para mais filiais antes de tomar decisão.''
+\end{SolvedBox}
+
+Esses dois exemplos deixam claro que $r$ e $n$ trabalham juntos.
+Um $r$ alto com amostra pequena pode não significar nada;
+um $r$ modesto com amostra grande pode ser altamente confiável.
+Para consolidar, vamos organizar as combinações possíveis em um
+quadro-resumo que vocês podem consultar sempre que precisarem
+interpretar uma correlação.
+
+\begin{BoardBox}
+\textbf{Quadro-resumo: como reportar $r$ com significância (para o quadro)}
+
+\medskip
+\begin{tabular}{|c|c|c|l|}
+\hline
+\textbf{$r$} & \textbf{$n$} & \textbf{$p$} & \textbf{Interpretação} \\
+\hline
+$0{,}88$ & 6 & $0{,}005$ & Forte e significante — confiável \\
+$0{,}86$ & 4 & $0{,}14$ & Forte mas NÃO significante — amostra pequena \\
+$0{,}25$ & 500 & $< 0{,}001$ & Fraca mas significante — real, porém irrelevante \\
+$0{,}95$ & 3 & $0{,}20$ & Fortíssimo mas NÃO significante — apenas 3 pontos \\
+\hline
+\end{tabular}
+
+\medskip
+\textbf{Regra prática:}
+\begin{itemize}
+  \item \textbf{Sempre} reporte $r$ \emph{e} $p$ juntos — nunca um sem o outro.
+  \item $r$ alto + $p$ baixo: ``forte e confiável'' — ação justificada.
+  \item $r$ alto + $p$ alto: ``parece forte mas pode ser acaso'' — precisa de mais dados.
+  \item $r$ baixo + $p$ baixo: ``fraco mas real'' — a correlação existe, mas o efeito
+  prático é pequeno.
+  \item $r$ baixo + $p$ alto: ``nada encontrado'' — sem evidência de relação.
+\end{itemize}
+\end{BoardBox}
+
+Com a teoria completa, vamos testar se vocês conseguem aplicar tudo
+isso a um caso novo.
+A questão a seguir mistura cenários com amostras diferentes — prestem
+atenção ao $n$ e ao $p$ de cada unidade, porque a resposta muda
+completamente dependendo desses valores.
+
+\begin{SolvedBox}
+\textbf{Questão para o Quadro — Interpretando $r$ e $p$}
+
+Uma rede de academias pesquisou a relação entre frequência semanal
+de treinos e perda de peso (kg) em 3 meses. Resultados:
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+\textbf{Grupo} & \textbf{$n$} & \textbf{$r$} & \textbf{$p$} & \textbf{Significante?} \\
+\hline
+Unidade Centro & 8 & $0{,}82$ & $0{,}013$ & ? \\
+Unidade Boa Vista & 120 & $0{,}21$ & $0{,}022$ & ? \\
+Unidade Piedade & 5 & $0{,}90$ & $0{,}083$ & ? \\
+\hline
+\end{tabular}
+\end{center}
+
+Para cada unidade: (a) a correlação é significante? (b) qual sua
+recomendação gerencial?
+
+\textbf{Resolução:}
+\begin{itemize}
+  \item \textbf{Centro (n=8, r=0,82, p=0,013):} Significante (p $<$ 0,05).
+  Correlação forte e confiável. Recomendação: investir em programas de
+  aumento de frequência — há evidência de associação com resultados.
+  \item \textbf{Boa Vista (n=120, r=0,21, p=0,022):} Significante
+  (p $<$ 0,05), mas correlação fraca. A associação existe (amostra grande
+  confirma), porém o efeito prático é pequeno — frequência sozinha explica
+  pouco da perda de peso. Recomendação: investigar outros fatores (dieta,
+  tipo de treino).
+  \item \textbf{Piedade (n=5, r=0,90, p=0,083):} \textbf{NÃO significante}
+  (p $>$ 0,05). Mesmo com $r$ alto, 5 observações são insuficientes para
+  descartar o acaso. Recomendação: coletar mais dados antes de concluir.
+\end{itemize}
+
+\textbf{Lição:} significância e magnitude são coisas diferentes.
+Um $r$ pequeno pode ser significante (com $n$ grande). Um $r$ grande
+pode não ser significante (com $n$ pequeno). Reporte \textbf{ambos}.
+\end{SolvedBox}
+
+Na prática profissional, vocês não vão calcular o $t$ na mão — o
+software faz isso.
+Mas é fundamental entender o que está por trás, para interpretar os
+resultados corretamente e não aceitar cegamente o que o computador
+retorna.
+Aqui vai como obter tudo em uma única linha de Python:
+
+\begin{NoteBox}
+\textbf{Em Python — como obter $r$ e $p$ juntos:}
+
+\texttt{from scipy.stats import pearsonr}\\
+\texttt{r, p = pearsonr(df['x'], df['y'])}\\
+\texttt{print(f'r = \{r:.2f\}, p = \{p:.4f\}')}
+
+O \texttt{df.corr()} do Pandas retorna apenas $r$ — \textbf{sem o p-valor}.
+Para decisões que dependam de significância, use sempre o \texttt{pearsonr}
+do \texttt{scipy}.
+\end{NoteBox}
+
+% ---------------------------------------------------------------------------
+\subsection{21h30–21h40: Correlação não é Causalidade}
 % ---------------------------------------------------------------------------
 
 \begin{SolvedBox}
@@ -265,7 +1216,7 @@ garante melhoria de desempenho.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte III — Prática em Dupla (21h20–21h45)}
+\section{Parte III — Prática em Dupla (21h40–21h55)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -354,7 +1305,7 @@ garante melhoria de desempenho.
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte IV — Atividade Individual Final (21h45–22h)}
+\section{Parte IV — Atividade Individual Final (21h55–22h)}
 % =============================================================================
 
 \begin{SolvedBox}
