@@ -26,17 +26,50 @@ Aula concentrada na segunda-feira (04/05).
 \begin{BoardBox}
 \textbf{Roteiro da aula (19h–22h)}
 \begin{enumerate}
-  \item 19h–20h — \textbf{Apresentações:} Trabalho 5 (storytelling + Tableau)
-  \item 20h–20h30 — \textbf{TEORIA:} Filtros no Tableau — tipos e hierarquia
-  \item 20h30–21h — \textbf{TEORIA:} Parâmetros — criação e uso em campos calculados
-  \item 21h–21h30 — \textbf{TEORIA:} Ações de Dashboard — filter, highlight, URL, navigate
-  \item 21h30–21h50 — \textbf{PRÁTICA GUIADA:} Construção ao vivo de um dashboard interativo
-  \item 21h50–22h — \textbf{Lançamento do T6 + orientações finais}
+  \item 19h–19h40 — \textbf{Apresentações:} Trabalho 5 (storytelling + Tableau)
+  \item 19h40–20h10 — \textbf{TEORIA:} Filtros no Tableau — tipos e hierarquia
+  \item 20h10–20h40 — \textbf{TEORIA:} Parâmetros — criação e uso em campos calculados
+  \item 20h40–21h — \textbf{TEORIA:} Ações de Dashboard — filter, highlight, URL, navigate
+  \item 21h–21h40 — \textbf{PRÁTICA GUIADA:} Dashboard interativo com World Happiness Report
+  \item 21h40–21h50 — \textbf{ESTUDO ESTATÍSTICO:} Correlação PIB × felicidade + outliers
+  \item 21h50–22h — \textbf{Lançamento do T6 + revisão Q3}
 \end{enumerate}
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte I — Apresentações: Trabalho 5 (19h–20h)}
+\section{Dataset da Semana — World Happiness Report (Kaggle)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Base de dados da semana:} \textit{World Happiness Report}
+
+\textbf{Link para download:}
+\url{https://www.kaggle.com/datasets/unsdsn/world-happiness}
+
+\textbf{Sobre o dataset:}
+\begin{itemize}
+  \item $\approx$ 150 países com índice de felicidade e fatores contribuintes
+  \item \textbf{Colunas principais:} Country, Region, Happiness Score,
+  GDP per Capita, Social Support, Healthy Life Expectancy, Freedom,
+  Generosity, Perceptions of Corruption
+  \item Dados limpos, sem joins necessários — perfeito para mapas e filtros
+  \item Componente geográfico: ideal para mapa coroplético no Tableau
+\end{itemize}
+
+\textbf{Pergunta de negócio da semana:}
+\textit{``Quais fatores mais impactam a felicidade de um país?
+ PIB é suficiente ou outros fatores são mais relevantes?''}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Importação no Tableau:} File $\to$ Open $\to$ Text file $\to$
+\texttt{2019.csv} (ou o ano mais recente). Verificar se \texttt{Country}
+é reconhecido como Geographic Role (Country/Region). Se não:
+clique direito em Country $\to$ Geographic Role $\to$ Country.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Apresentações: Trabalho 5 (19h–19h40)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -57,7 +90,7 @@ Pitch 3 min & Apresentação dentro do tempo; call to action ao final \\
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte II — Filtros no Tableau (20h–20h30)}
+\section{Parte II — Filtros no Tableau (19h40–20h10)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -106,7 +139,7 @@ Pesquisa & Categoria com muitos valores únicos (busca por texto) \\
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte III — Parâmetros (20h30–21h)}
+\section{Parte III — Parâmetros (20h10–20h40)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -144,7 +177,97 @@ tempo real e o gráfico de desempenho atualiza imediatamente.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte IV — Ações de Dashboard (21h–21h30)}
+\section{LOD Expressions — Introdução (complemento de Parâmetros)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{O que são LOD Expressions? (Level of Detail)}
+
+No Tableau, a granularidade do cálculo normalmente depende das dimensões
+na view. As \textbf{LOD expressions} permitem calcular métricas em um
+nível de detalhe \textbf{diferente} do que está na tela.
+
+\textbf{Os 3 tipos:}
+\begin{tabular}{|l|p{5cm}|p{5.5cm}|}
+\hline
+\textbf{LOD} & \textbf{O que faz} & \textbf{Exemplo} \\
+\hline
+\texttt{FIXED} & Calcula no nível especificado,
+ignorando filtros da view &
+\texttt{\{FIXED [Department] : AVG([Salary])\}} —
+média salarial por departamento, independente de filtros \\
+\hline
+\texttt{INCLUDE} & Adiciona uma dimensão ao
+cálculo (mais granular) &
+\texttt{\{INCLUDE [Product] : SUM([Sales])\}} —
+total por produto, mesmo que a view mostre só categoria \\
+\hline
+\texttt{EXCLUDE} & Remove uma dimensão do
+cálculo (menos granular) &
+\texttt{\{EXCLUDE [Month] : AVG([Revenue])\}} —
+média anual, mesmo que a view mostre mensal \\
+\hline
+\end{tabular}
+
+\textbf{Quando usar:}
+\begin{itemize}
+  \item KPI de contexto que não deve mudar com filtros $\to$ \texttt{FIXED}
+  \item Percentual do total por subgrupo $\to$ \texttt{FIXED} + cálculo de tabela
+  \item Métrica por cliente independente da exibição $\to$ \texttt{FIXED [Customer]}
+\end{itemize}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Exemplo prático com World Happiness (professor demonstra):}
+
+Calcular a média de felicidade por Region \textbf{fixa}, para usar como
+benchmark mesmo quando o usuário filtra países individuais:
+
+\texttt{\{FIXED [Region] : AVG([Happiness Score])\}}
+
+Aplicação: adicionar como linha de referência no scatter PIB vs Felicidade.
+Quando o usuário filtra para ``Latin America'', a linha de referência
+continua mostrando a média da região completa, não apenas dos países
+filtrados.
+\end{SolvedBox}
+
+% =============================================================================
+\section{Dados Ausentes no Tableau (NULLs)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Como o Tableau trata NULLs (para o quadro)}
+
+Na Unidade I vimos dados ausentes (missing) no Python. No Tableau, os
+mesmos problemas aparecem:
+
+\begin{itemize}
+  \item \textbf{NULLs em dimensões:} o Tableau cria uma categoria ``Null''
+na visualização. Pode confundir ou esconder registros.
+  \item \textbf{NULLs em medidas:} o Tableau ignora NULLs em
+agregações (SUM, AVG). \texttt{AVG} de \{5, NULL, 10\} = 7.5
+(não 5.0!). Isso pode ser enganoso se o NULL deveria ser 0.
+  \item \textbf{NULLs em linhas temporais:} o Tableau pula datas
+com NULL, criando ``buracos'' na linha. Solução:
+Show Missing Values $\to$ marca as lacunas.
+\end{itemize}
+
+\textbf{Como investigar missingness no Tableau:}
+\begin{enumerate}
+  \item Campo calculado: \texttt{ISNULL([Campo])} retorna True/False
+  \item Contar NULLs: \texttt{SUM(IF ISNULL([Campo]) THEN 1 ELSE 0 END)}
+  \item Substituir NULL por valor:
+  \texttt{IFNULL([Campo], 0)} ou \texttt{ZN([Campo])} (zero se null)
+  \item \textbf{Visual de completude:} barras com \% de preenchimento
+  por coluna — útil como primeira sheet de qualquer dashboard de AED
+\end{enumerate}
+
+\textbf{Regra de ouro:} documente a decisão. Se substituiu NULL por 0,
+registre que fez isso e por quê. A audiência precisa saber.
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte IV — Ações de Dashboard (20h40–21h)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -208,30 +331,85 @@ aqui mude algo ali''.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte V — Prática Guiada: Dashboard Interativo (21h30–21h50)}
+\section{Parte V — Construção Guiada: Dashboard Interativo com World Happiness (21h–21h40)}
 % =============================================================================
 
 \begin{SolvedBox}
-\textbf{Construção ao vivo — ``Dashboard de Desempenho de Vendas'':}
+\textbf{Construção guiada — ``Dashboard: O que Faz um País Feliz?''}
 
-\textbf{Dataset:} \texttt{semana10\_vendas\_regional.csv} (disponível no AVA)
+\textbf{Sheet 1 — Mapa Coroplético de Felicidade (10 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{Country} para Detail (Tableau cria mapa automático)
+  \item Arrastar \texttt{Happiness Score} para Color
+  \item Paleta: sequencial (vermelho claro $\to$ verde escuro)
+  \item \textbf{Título-mensagem:} ``Países nórdicos lideram o ranking de
+  felicidade — países da África Subsaariana estão na base''
+  \item Tooltip: país + score + GDP + Freedom
+\end{enumerate}
 
-\textbf{Passo 1:} Criar Sheet 1 — mapa coroplético de vendas por estado.\\
-\textbf{Passo 2:} Criar Sheet 2 — barras de Top N produtos (com parâmetro N).\\
-\textbf{Passo 3:} Criar Sheet 3 — linha temporal de receita mensal.\\
-\textbf{Passo 4:} Montar Dashboard. Adicionar:
-\begin{itemize}
-  \item Context filter por Região (Quick Filter visível).
-  \item Parâmetro de meta de receita mensal.
-  \item Filter action: clique no estado no mapa filtra barras e linha temporal.
-  \item Linha de referência dinâmica: receita da meta no gráfico de linha.
-\end{itemize}
-\textbf{Passo 5:} Testar o Teste do Relance. Cada visual passa?
+\textbf{Sheet 2 — Scatter: PIB per Capita vs Felicidade (10 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{GDP per Capita} para Columns,
+  \texttt{Happiness Score} para Rows
+  \item \texttt{Country} em Detail, \texttt{Region} em Color
+  \item Analytics $\to$ Trend Line (linear)
+  \item \textbf{Título:} ``Mais PIB = mais felicidade?
+  A relação existe, mas satura nos países ricos''
+  \item Anotar outliers: Costa Rica (feliz com PIB moderate),
+  Qatar (rico mas não tão feliz)
+\end{enumerate}
 
-\textbf{Resultado esperado:} dashboard com 3 visuais interconectados, onde
-clicar em qualquer estado imediatamente recorta os produtos e a evolução
-temporal para aquele estado.
+\textbf{Sheet 3 — Barras: Ranking Top 10 e Bottom 10 com Parâmetro (10 min):}
+\begin{enumerate}
+  \item Criar parâmetro \texttt{p\_métrica} (String, lista:
+  Happiness Score, GDP, Social Support, Freedom, Generosity)
+  \item Campo calculado \texttt{m\_din}:
+  \texttt{CASE [p\_métrica] WHEN ``Happiness Score'' THEN [Happiness Score]
+  WHEN ``GDP'' THEN [GDP per Capita] \ldots END}
+  \item Barras horizontais por Country, ordenadas por \texttt{m\_din}
+  \item Filtro Top 10 / Bottom 10 (usando Sets ou Index())
+  \item O usuário alterna a métrica no parâmetro
+\end{enumerate}
+
+\textbf{Montar o Dashboard Interativo (10 min):}
+\begin{enumerate}
+  \item Mapa no topo (largura total)
+  \item Scatter (esquerda) + Barras ranking (direita)
+  \item Quick Filter por Region (dropdown)
+  \item Filter Action: clique em região no mapa filtra scatter + barras
+  \item Exibir controle do parâmetro \texttt{p\_métrica}
+  \item Testar: clicar em ``Western Europe'' no mapa $\to$
+  scatter mostra só países europeus
+\end{enumerate}
 \end{SolvedBox}
+
+% =============================================================================
+\section{Estudo Estatístico com World Happiness (21h40–21h50)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Estudo Estatístico (para o quadro — discutir com os dados no Tableau)}
+
+\begin{enumerate}
+  \item \textbf{Correlação:} No scatter PIB vs Felicidade, qual o
+  $R^2$ da trend line? A correlação é linear ou parece logarítmica?
+  Troque para Social Support vs Felicidade — a correlação é mais forte?
+
+  \item \textbf{Outliers:} Identifique 2 países que são outliers
+  positivos (mais felizes do que o PIB sugere) e 2 negativos
+  (menos felizes do que o PIB sugere). Por que isso importa para
+  políticas públicas?
+
+  \item \textbf{Comparação regional:} Use o filtro de Region.
+  A média de felicidade da América Latina é mais alta que a da
+  Ásia, apesar do PIB menor. Qual fator explica isso?
+  (Dica: olhe Social Support e Freedom.)
+
+  \item \textbf{Parâmetro de métrica:} Alterne entre Generosity
+  e Corruption. Qual tem correlação mais forte com Happiness?
+  Correlação não implica causalidade — mas sugere hipóteses.
+\end{enumerate}
+\end{BoardBox}
 
 % ---------------------------------------------------------------------------
 \section{Lançamento — Trabalho 6}
@@ -305,7 +483,7 @@ Clique interativo & Ação de dashboard & Filtragem entre sheets \\
 \section{Materiais Preparados}
 % ---------------------------------------------------------------------------
 \begin{itemize}
-  \item Dataset \texttt{semana10\_vendas\_regional.csv} no AVA
+  \item Dataset World Happiness Report no AVA (link Kaggle também disponível)
   \item Tableau Workbook de referência (.twbx) com os 3 sheets base
   \item Slides: hierarquia de filtros animada; passo a passo de parâmetro
   \item Checklist de interatividade para o T6

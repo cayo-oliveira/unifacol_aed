@@ -29,12 +29,13 @@ Roteiro adaptado para 3 horas incluindo apresentações do T4.
 \begin{BoardBox}
 \textbf{Roteiro da aula (19h–22h)}
 \begin{enumerate}
-  \item 19h–20h — \textbf{Apresentações:} Trabalho 4 (primeiro contato com Tableau)
-  \item 20h–20h20 — \textbf{TEORIA:} AED vs Explanatória — a virada de perspectiva
-  \item 20h20–21h — \textbf{TEORIA:} Big Idea Framework (Nancy Duarte)
-  \item 21h–21h30 — \textbf{TEORIA:} Estrutura narrativa e Storyboard
-  \item 21h30–21h50 — \textbf{PRÁTICA:} Escrever Big Idea + montar storyboard de 3 telas
-  \item 21h50–22h — \textbf{Correção coletiva + lançamento do T5}
+  \item 19h–19h40 — \textbf{Apresentações:} Trabalho 4 (primeiro contato com Tableau)
+  \item 19h40–20h — \textbf{TEORIA:} AED vs Explanatória — a virada de perspectiva
+  \item 20h–20h30 — \textbf{TEORIA:} Big Idea Framework + Storyboard (Nancy Duarte)
+  \item 20h30–20h50 — \textbf{DATASET:} Importar Supermarket Sales no Tableau
+  \item 20h50–21h30 — \textbf{PRÁTICA GUIADA:} Primeiro dashboard — barras, KPI e treemap
+  \item 21h30–21h50 — \textbf{PRÁTICA:} Escrever Big Idea a partir dos dados + estudo estatístico
+  \item 21h50–22h — \textbf{Lançamento do T5 + revisão Q1}
 \end{enumerate}
 \end{BoardBox}
 
@@ -44,7 +45,36 @@ Roteiro adaptado para 3 horas incluindo apresentações do T4.
 \end{NoteBox}
 
 % =============================================================================
-\section{Parte I — Apresentações: Trabalho 4 (19h–20h)}
+\section{Dataset da Semana — Supermarket Sales (Kaggle)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Base de dados da semana:} \textit{Supermarket Sales}
+
+\textbf{Link para download:}
+\url{https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales}
+
+\textbf{Sobre o dataset:}
+\begin{itemize}
+  \item $\approx$ 1.000 transações de 3 filiais de supermercado em Myanmar
+  \item \textbf{Colunas principais:} Branch (A/B/C), City, Customer Type (Member/Normal),
+  Gender, Product Line, Unit Price, Quantity, Total, Date, Time, Payment, Rating
+  \item Dados limpos, sem necessidade de tratamento — pronto para importar no Tableau
+\end{itemize}
+
+\textbf{Pergunta de negócio da semana:}
+\textit{``Qual linha de produto devemos priorizar na próxima campanha de marketing?''}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Importação no Tableau:} File $\to$ Open $\to$ Text File (.csv) $\to$
+selecionar \texttt{supermarket\_sales.csv}. O Tableau detecta automaticamente
+os tipos de dados. Verificar se \texttt{Date} é reconhecida como data e
+\texttt{Total/Rating} como medidas.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte I — Apresentações: Trabalho 4 (19h–19h40)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -63,7 +93,7 @@ Wireframe/esboço & 3 telas planejadas (mesmo manual/papel) \\
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte II — Teoria: AED vs Explanatória (20h–20h20)}
+\section{Parte II — Teoria: AED vs Explanatória (19h40–20h)}
 % =============================================================================
 
 \begin{SolvedBox}
@@ -93,7 +123,7 @@ sua descoberta mais importante se perde no meio de 30 gráficos.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte III — Big Idea Framework (20h20–21h)}
+\section{Parte III — Big Idea Framework + Storyboard (20h–20h30)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -157,7 +187,7 @@ tornam a resposta possível.
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte IV — Estrutura Narrativa e Storyboard (21h–21h30)}
+\section{Estrutura Narrativa e Storyboard (complemento — para o quadro)}
 % =============================================================================
 
 \begin{SolvedBox}
@@ -165,14 +195,9 @@ tornam a resposta possível.
 
 \begin{enumerate}
   \item \textbf{Contexto — O que é:} mostre o estado atual. Dados reais.
-  A situação é X. A audiência reconhece esse mundo.
-  \item \textbf{Conflito — O que poderia ser:} introduza a tensão. O mundo
-  \emph{poderia} ser Y — mas algo impede isso. Ou: o mundo \emph{está indo} para Z,
-  e isso é um problema.
+  \item \textbf{Conflito — O que poderia ser:} introduza a tensão.
   \item \textbf{Resolução — O que proponho:} sua proposta de ação.
-  Com base nos dados, recomendo W.
-  \item \textbf{Call to action — O que peço:} qual decisão específica
-  você quer da audiência até quando?
+  \item \textbf{Call to action — O que peço:} decisão específica até quando?
 \end{enumerate}
 
 \textbf{Em uma apresentação de dados, isso se traduz em:}
@@ -187,15 +212,7 @@ tornam a resposta possível.
 \begin{BoardBox}
 \textbf{Storyboard: planejando antes de abrir o Tableau (para o quadro)}
 
-Storyboard é o rascunho da apresentação — desenhado no papel ou em qualquer
-ferramenta simples — antes de qualquer visual ser produzido.
-
-\textbf{Por que fazer storyboard antes?}
-\begin{itemize}
-  \item Força a pensar na \emph{mensagem} antes de pensar no gráfico.
-  \item Evita criar visuais que não servem à narrativa.
-  \item Alinha expectativas com a audiência sem custo de produção.
-\end{itemize}
+Storyboard é o rascunho da apresentação — desenhado no papel.
 
 \textbf{Cada tela do storyboard deve ter:}
 \begin{enumerate}
@@ -207,50 +224,132 @@ ferramenta simples — antes de qualquer visual ser produzido.
 \end{BoardBox}
 
 \begin{SolvedBox}
-\textbf{Questão para o Quadro — AED vs. Análise Explanatória}
+\textbf{Questão rápida — AED vs. Análise Explanatória}
 
-Classifique cada frase como \textbf{AED} (exploratória) ou
-\textbf{Explanatória} (storytelling com dados):
+Classifique cada frase como \textbf{AED} ou \textbf{Explanatória}:
 
 \begin{enumerate}[label=\alph*)]
   \item ``O histograma mostra distribuição bimodal no tempo de entrega.''
   \item ``Devemos priorizar a rota Sul porque ela concentra 72\% dos
   atrasos e custa R\$ 1,8M em multas anuais.''
-  \item ``A correlação entre investimento e leads é $r = 0{,}87$.''
-  \item ``Recomendo investir R\$ 200k no canal digital porque cada
-  R\$ 1 investido gera R\$ 4,20 em leads qualificados.''
 \end{enumerate}
 
-\textbf{Resolução:}\\
-(a) \textbf{AED} — descreve o que o dado mostra, sem ação.\\
-(b) \textbf{Explanatória} — direciona decisão com dado + impacto.\\
-(c) \textbf{AED} — reporta uma métrica, sem recomendação.\\
-(d) \textbf{Explanatória} — Big Idea com ação específica + ROI.
-
-\textbf{Regra:} AED pergunta ``o que os dados mostram?''.
-Explanatória pergunta ``que decisão devemos tomar com base nisso?''.
+\textbf{Resolução:}
+(a) \textbf{AED} — descreve o que o dado mostra, sem ação.
+(b) \textbf{Explanatória} — direciona decisão com dado + impacto.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte V — Prática: Big Idea + Storyboard (21h30–21h50)}
+\section{Parte IV — Importar Dataset + Construção Guiada no Tableau (20h30–21h30)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Passo 0 — Importar o Supermarket Sales no Tableau (5 min)}
+
+\begin{enumerate}
+  \item Abrir Tableau Public $\to$ Connect $\to$ Text file $\to$
+  selecionar \texttt{supermarket\_sales.csv}
+  \item Verificar tipos: \texttt{Date} como data, \texttt{Total} e
+  \texttt{Rating} como medidas, \texttt{Branch/Product line/Payment}
+  como dimensões
+  \item Clicar em ``Sheet 1'' para começar a explorar
+\end{enumerate}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Construção guiada — Dashboard ``Panorama de Vendas do Supermercado''}
+
+Vamos construir juntos, passo a passo, o primeiro dashboard
+da Unidade~II. Cada visual responde a uma pergunta de negócio.
+
+\textbf{Sheet 1 — KPI Cards (10 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{Total} para Texto $\to$ mudar agregação para SUM
+  \item Duplicar a sheet: uma para Receita Total, outra para
+  Ticket Médio (\texttt{AVG(Total)}), outra para Rating Médio (\texttt{AVG(Rating)})
+  \item Formatar: fonte grande (20pt+), prefixo ``R\$'' onde aplicável
+  \item \textbf{Título-mensagem:} ``Receita total: R\$ 322.966 em 1.000 transações''
+\end{enumerate}
+
+\textbf{Sheet 2 — Barras Horizontais por Product Line (10 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{Product line} para Rows, \texttt{Total} (SUM)
+  para Columns
+  \item Ordenar decrescente $\to$ a linha mais vendida sobe para o topo
+  \item Cor: cinza para todas as barras, \textbf{azul destaque} para
+  a barra líder
+  \item \textbf{Título-mensagem:}
+  ``Food and beverages lidera com 18\% da receita''
+  \item Rótulo direto na barra (Label $\to$ SUM(Total))
+\end{enumerate}
+
+\textbf{Sheet 3 — Treemap de Receita por Customer Type × Payment (10 min):}
+\begin{enumerate}
+  \item Show Me $\to$ Treemap
+  \item Arrastar \texttt{Customer type} e \texttt{Payment} para Detail
+  \item Cor por \texttt{Customer type}, tamanho por \texttt{SUM(Total)}
+  \item \textbf{Título-mensagem:}
+  ``Members respondem por 51\% da receita — Ewallet é o pagamento mais usado''
+\end{enumerate}
+
+\textbf{Sheet 4 — Linha Temporal de Vendas Diárias (10 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{Date} para Columns (contínuo, dia),
+  \texttt{Total} (SUM) para Rows
+  \item Adicionar \texttt{AVG(Total)} como linha de referência
+  (Analytics $\to$ Reference Line $\to$ Entire Table $\to$ Average)
+  \item \textbf{Título-mensagem:}
+  ``Vendas diárias oscilam de R\$ 500 a R\$ 7.000 — média de R\$ 3.230''
+\end{enumerate}
+
+\textbf{Montar o Dashboard (10 min):}
+\begin{enumerate}
+  \item New Dashboard $\to$ tamanho Automático
+  \item Linha 1: 3 KPI cards lado a lado (contêiner horizontal)
+  \item Linha 2: barras (esquerda) + treemap (direita)
+  \item Linha 3: linha temporal (largura total)
+  \item Adicionar título geral: Big Idea da análise
+  \item Exportar / capturar tela
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Estudo Estatístico com o Supermarket Sales (para o quadro)}
+
+Enquanto constroem o dashboard, respondam com os dados do Tableau:
+
+\begin{enumerate}
+  \item \textbf{Média vs Mediana:} No Sheet 2, compare
+  \texttt{AVG(Rating)} e \texttt{MEDIAN(Rating)} por Product Line.
+  Há linhas onde a média e a mediana divergem? O que isso indica
+  sobre a distribuição das avaliações?
+
+  \item \textbf{Comparação entre filiais:} Crie um bar chart com
+  \texttt{Branch} e \texttt{AVG(Rating)}. A diferença entre as
+  filiais é grande o suficiente para ser relevante? (Dica: use a
+  linha de referência com a média geral como benchmark.)
+
+  \item \textbf{Composição:} Qual \texttt{Customer type}
+  (Member vs Normal) gera mais receita por transação?
+  Calcule \texttt{AVG(Total)} para cada tipo. A diferença é
+  expressiva?
+\end{enumerate}
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte V — Prática: Big Idea a partir do Dashboard (21h30–21h50)}
 % =============================================================================
 
 \begin{SolvedBox}
-\textbf{Cenário:} você é analista de dados de uma rede de academias.
-O dataset mostra:
-\begin{itemize}
-  \item Taxa de retenção de alunos: \textbf{62\%}
-  \item Taxa de retenção de alunos que usam o app: \textbf{89\%}
-  \item Apenas \textbf{28\%} dos alunos instalaram o app
-  \item Custo de aquisição de novo aluno: R\$ 180
-  \item Custo de retenção via campanha de app: R\$ 12 por aluno
-\end{itemize}
+\textbf{Tarefa:} com base no dashboard que acabamos de construir com os dados
+do Supermarket Sales, faça:
 
-\textbf{Tarefa:}
 \begin{enumerate}
-  \item Escreva a Big Idea (1 frase: ponto de vista + tensão + stake).
-  \item Escreva a Pergunta de Decisão.
-  \item Monte um storyboard de 3–4 telas (pode ser manual):
+  \item \textbf{Escreva a Big Idea} (1 frase: ponto de vista + tensão + stake)
+  usando os padrões que você encontrou nos dados reais.
+  \item \textbf{Escreva a Pergunta de Decisão} que o gerente do supermercado
+  deveria responder ao ver seu dashboard.
+  \item \textbf{Monte um storyboard de 3 telas} (pode ser manual):
   título de cada tela + tipo de visual + transição.
 \end{enumerate}
 \textbf{Tempo:} 20 minutos. Individual.
@@ -259,22 +358,25 @@ O dataset mostra:
 \begin{SolvedBox}
 \textbf{Gabarito orientativo (professor):}
 
-\textbf{Big Idea:} ``Aumentar a adoção do app de 28\% para 70\% pode elevar
-a taxa de retenção de 62\% para mais de 80\% — com custo 15× menor do que
-adquirir novos alunos para repor os que cancelam.''
+\textbf{Big Idea:} ``Food and beverages lidera em receita, mas Electronics
+tem o maior ticket médio — se direcionarmos a campanha de marketing para
+Electronics com foco em Members, podemos aumentar a receita em até 20\%
+sem expandir a base de clientes.''
 
-\textbf{Pergunta de Decisão:} ``Aprovamos a campanha de adoção do app no próximo mês?''
+\textbf{Pergunta de Decisão:} ``Devemos priorizar Food and beverages (volume)
+ou Electronics (ticket médio) na próxima campanha?''
 
 \textbf{Storyboard:}
 \begin{enumerate}
-  \item \textbf{Tela 1} — ``62\% de retenção: estamos perdendo 38 em cada 100 alunos ao ano''
-  (visual: KPI grande + linha temporal). Transição: ``Mas há um grupo diferente...''
-  \item \textbf{Tela 2} — ``Quem usa o app fica: 89\% de retenção vs 62\%''
-  (visual: barras comparativas, destacando a diferença de 27pp). Transição: ``O problema: poucos usam.''
-  \item \textbf{Tela 3} — ``Apenas 28\% instalaram o app'' (visual: gauge ou pizza impactante).
-  Transição: ``E o custo de mudar isso é irrisório.''
-  \item \textbf{Tela 4} — ``Campanha de app: R\$12/aluno vs R\$180 para substituir um que cancela''
-  (visual: comparação de barras custo ×). \textbf{Call to action:} aprovação até 30/04.
+  \item \textbf{Tela 1} — ``R\$ 322k em 1.000 transações: panorama geral''
+  (visual: KPI cards + barras por Product Line). Transição: ``Mas nem toda
+  linha é igual...''
+  \item \textbf{Tela 2} — ``Electronics: menor volume, maior ticket médio''
+  (visual: scatter Product Line × AVG(Total) × COUNT). Transição: ``E quem
+  está comprando?''
+  \item \textbf{Tela 3} — ``Members gastam mais em Electronics via Ewallet''
+  (visual: treemap segmentado). \textbf{Call to action:} campanha digital
+  focada em Members para Electronics.
 \end{enumerate}
 \end{SolvedBox}
 

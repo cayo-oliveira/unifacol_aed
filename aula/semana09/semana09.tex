@@ -21,10 +21,11 @@ por um motivo.
 \begin{enumerate}
   \item 19h–19h30 — \textbf{TEORIA:} Pré-atenção — como o cérebro lê um gráfico
   \item 19h30–20h — \textbf{TEORIA:} Teste do Relance + Título que é mensagem
-  \item 20h–20h30 — \textbf{TEORIA:} Chartjunk (Tufte) — o que remover e por quê
-  \item 20h30–21h — \textbf{TEORIA:} Hierarquia visual — cor, tamanho, posição, espaço
-  \item 21h–21h40 — \textbf{PRÁTICA:} Antes e Depois — reformular 3 visuais ruins
-  \item 21h40–22h — \textbf{ATIVIDADE INDIVIDUAL FINAL} + revisão do storyboard do T5
+  \item 20h–20h20 — \textbf{TEORIA:} Chartjunk (Tufte) + Hierarquia visual
+  \item 20h20–20h40 — \textbf{DATASET:} Importar Video Game Sales no Tableau
+  \item 20h40–21h30 — \textbf{PRÁTICA GUIADA:} Dashboard de vendas de games — linha, scatter, heatmap
+  \item 21h30–21h50 — \textbf{PRÁTICA:} Antes e Depois — aplicar design no próprio dashboard
+  \item 21h50–22h — \textbf{Revisão do T5 + revisão Q2}
 \end{enumerate}
 \end{BoardBox}
 
@@ -131,7 +132,7 @@ sujeito (retenção) + verbo (aumentou) + magnitude (22pp).
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte III — Chartjunk: o que remover (20h–20h30)}
+\section{Parte III — Chartjunk + Hierarquia Visual (20h–20h20)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -170,141 +171,263 @@ o gráfico fica menos claro?'' Se a resposta for não, remova.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte IV — Hierarquia Visual (20h30–21h)}
+\section{Hierarquia Visual (complemento — para o quadro)}
 % =============================================================================
 
 \begin{BoardBox}
-\textbf{Os quatro pilares da hierarquia visual (para o quadro)}
+\textbf{Os quatro pilares da hierarquia visual}
 
 \textbf{1. Tamanho:} o elemento mais importante deve ser o maior.
 Título $>$ subtítulo $>$ rótulo de dado $>$ nota de rodapé.
-Nunca título menor que os rótulos nos eixos.
 
 \textbf{2. Peso (negrito):} use negrito para o número que carrega a mensagem.
-Um único número em negrito em meio a texto regular atrai o olho imediatamente.
 
 \textbf{3. Cor:} 1 cor de destaque; resto em cinza ou neutro.
-O elemento com a cor de destaque é o primeiro que o olho lê.
 
-\textbf{4. Posição:} a leitura ocidental começa no canto superior esquerdo
-e vai para a direita-baixo em Z. Coloque o dado mais importante no início
-desse caminho, não no rodapé.
+\textbf{4. Posição:} leitura ocidental em Z (canto superior esquerdo primeiro).
 \end{BoardBox}
 
 \begin{SolvedBox}
 \textbf{Consistência — o princípio silencioso:}
 
-Consistência é o que transforma um conjunto de visuais em uma
-\emph{apresentação coesa}. Ela elimina o esforço cognitivo de
-decodificar o ``sistema de design'' a cada nova tela.
-
 \begin{itemize}
-  \item \textbf{Eixos:} se três gráficos mostram a mesma métrica em escalas
-  diferentes, a comparação é impossível. Padronize o eixo Y para comparáveis.
+  \item \textbf{Eixos:} padronize o eixo Y para comparáveis.
   \item \textbf{Cores:} Região Sul é sempre azul em todas as telas.
-  Nunca verde em uma tela e amarelo em outra.
-  \item \textbf{Fontes:} máximo de 2 famílias tipográficas. Títulos numa,
-  corpo noutra.
-  \item \textbf{Animações/transições:} só se adicionarem informação
-  (ex.: mostrar evolução temporal). Animação puramente decorativa distrai.
+  \item \textbf{Fontes:} máximo de 2 famílias tipográficas.
+  \item \textbf{Animações:} só se adicionarem informação.
 \end{itemize}
-\end{SolvedBox}
-
-\begin{SolvedBox}
-\textbf{Questão para o Quadro — Redesign de Dashboard}
-
-Um estagiário apresentou um dashboard com estes elementos:
-\begin{itemize}
-  \item Título: ``Dashboard de Vendas''
-  \item 10 gráficos (pizza, barras, área, waffle, donut, treemap\ldots)
-  \item 6 cores diferentes sem padrão
-  \item Sem espaço em branco
-  \item Fonte tamanho 8 em todas as legendas
-\end{itemize}
-
-O diretor comercial tem 3 minutos por dia para olhar o dashboard.
-Liste \textbf{4 ações de redesign} que você faria.
-
-\textbf{Resolução:}
-\begin{enumerate}
-  \item \textbf{Título-mensagem:} trocar por
-  ``Vendas Q1: meta atingida em Eletrônicos, 15\% abaixo em Vestuário''.
-  \item \textbf{Reduzir para 3–4 visuais:} KPI cards no topo +
-  barras por categoria + linha de tendência mensal.
-  \item \textbf{Paleta restrita:} cinza neutro como base,
-  verde para ``acima da meta'', vermelho para ``abaixo''.
-  \item \textbf{Hierarquia com tamanho:} KPIs em fonte grande (24pt+),
-  detalhes em fonte menor. Espaço em branco para separar seções.
-\end{enumerate}
-
-\textbf{Teste do Relance:} em 3 segundos o diretor deve ver
-se está no verde ou no vermelho. Se precisar ler legendas,
-o dashboard falhou.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte V — Prática: Antes e Depois (21h–21h40)}
+\section{Dataset da Semana — Video Game Sales (Kaggle)}
 % =============================================================================
 
 \begin{BoardBox}
-\textbf{Exercício de reformulação — 3 visuais ruins (em dupla)}
+\textbf{Base de dados da semana:} \textit{Video Game Sales}
 
-Para cada visual abaixo (descrito em texto), identifique os problemas e
-proponha como ele deveria ser redesenhado.
+\textbf{Link para download:}
+\url{https://www.kaggle.com/datasets/gregorut/videogamesales}
 
-\textbf{Visual 1 — Barras em 3D, 6 cores diferentes, título ``Vendas por Produto'':}
+\textbf{Sobre o dataset:}
 \begin{itemize}
-  \item Problemas: 3D distorce; cores sem propósito; título rótulo.
-  \item Redesenho: barras planas horizontais (mais fácil de ler rótulos longos);
-  cor única; ordenar do maior para menor; título: ``Produto B é o líder com 42\% das vendas''.
+  \item $\approx$ 16.500 jogos com vendas globais por região
+  \item \textbf{Colunas principais:} Name, Platform, Year\_of\_Release,
+  Genre, Publisher, NA\_Sales, EU\_Sales, JP\_Sales, Other\_Sales,
+  Global\_Sales
+  \item Dados limpos, sem necessidade de joins — pronto para importar
+  \item Rica variedade: dimensões categóricas (Genre, Platform) +
+  medidas contínuas (vendas) + série temporal (Year)
 \end{itemize}
 
-\textbf{Visual 2 — Linha temporal com 12 séries coloridas, legenda separada, grade pesada:}
+\textbf{Pergunta de negócio da semana:}
+\textit{``Qual gênero de jogo e qual plataforma devemos priorizar
+para o próximo lançamento?''}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Importação no Tableau:} File $\to$ Open $\to$ Text file $\to$
+\texttt{vgsales.csv}. Verificar se \texttt{Year} é reconhecido como
+número (converter para inteiro se necessário).
+Filtrar \texttt{Year} $\neq$ N/A para remover registros sem ano.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte IV — Construção Guiada no Tableau (20h20–21h30)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Construção guiada — Dashboard ``Panorama da Indústria de Games''}
+
+Vamos construir juntos, aplicando os princípios de design aprendidos.
+Cada visual será criado primeiro ``feio'' e depois refinado.
+
+\textbf{Sheet 1 — Linha Temporal: Evolução de Vendas Globais por Ano (15 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{Year} para Columns (contínuo),
+  \texttt{Global\_Sales} (SUM) para Rows
+  \item \textbf{Versão ruim:} deixar padrão do Tableau —
+  título ``Sheet 1'', cor padrão, sem anotação
+  \item \textbf{Aplicar design:}
+  \begin{itemize}
+    \item Título-mensagem: ``Pico de vendas em 2008 — mercado em queda desde então''
+    \item Anotar o ponto de pico (2008) com marcador
+    \item Remover grade pesada (Format $\to$ Lines $\to$ Grid Lines = None)
+    \item 1 cor sólida (azul escuro) para a linha
+  \end{itemize}
+  \item \textbf{Teste do Relance:} cubra e pergunte ao colega
+\end{enumerate}
+
+\textbf{Sheet 2 — Scatter: NA Sales vs EU Sales por Gênero (15 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{NA\_Sales} (SUM) para Columns,
+  \texttt{EU\_Sales} (SUM) para Rows, \texttt{Genre} para Detail + Color
+  \item \textbf{Versão ruim:} 12 gêneros × 12 cores — caos visual
+  \item \textbf{Aplicar design:}
+  \begin{itemize}
+    \item Reduzir: cor cinza para todos, \textbf{destaque em azul}
+    apenas para o gênero líder (Action)
+    \item Adicionar trend line (Analytics $\to$ Trend Line)
+    \item Título: ``Action domina: vendas acima de qualquer outro gênero
+    tanto na América do Norte quanto na Europa''
+    \item Rótulo direto no ponto de destaque (elimina legenda)
+  \end{itemize}
+\end{enumerate}
+
+\textbf{Sheet 3 — Heatmap: Gênero × Plataforma (15 min):}
+\begin{enumerate}
+  \item Arrastar \texttt{Genre} para Rows, \texttt{Platform} para
+  Columns, \texttt{Global\_Sales} (SUM) para Color
+  \item Tipo: Square (Show Me $\to$ Heat Map)
+  \item Paleta: sequencial (branco $\to$ azul escuro)
+  \item Filtrar apenas Top 10 plataformas por vendas (senão fica denso)
+  \item \textbf{Título:} ``Action + PS2 é a combinação mais vendida da história''
+  \item Legenda da escala com unidade: ``Vendas em milhões de USD''
+\end{enumerate}
+
+\textbf{Montar o Dashboard (5 min):}
+\begin{enumerate}
+  \item Linha temporal no topo (contexto temporal)
+  \item Scatter + Heatmap lado a lado embaixo
+  \item Título geral como Big Idea do dashboard
+  \item Paleta consistente: mesma família de azul em todas as sheets
+\end{enumerate}
+\end{SolvedBox}
+
+\begin{BoardBox}
+\textbf{Estudo Estatístico com Video Game Sales (para o quadro)}
+
+\begin{enumerate}
+  \item \textbf{Tendência temporal:} olhando a linha temporal, em que
+  ano as vendas atingiram o pico? Qual a taxa de queda desde então?
+  Adicione uma trend line e observe o $R^2$.
+
+  \item \textbf{Correlação regional:} no scatter NA vs EU, a
+  correlação é forte? Se um gênero vende bem na América do Norte,
+  vende bem na Europa também? E no Japão? (Troque EU por JP e compare.)
+
+  \item \textbf{Top-N:} crie um ranking das 5 plataformas com mais
+  vendas globais. A plataforma líder tem quantas vezes mais vendas
+  que a 5ª? Essa concentração é surpreendente?
+
+  \item \textbf{Comparação de distribuição:} compare a média e a
+  mediana de \texttt{Global\_Sales} por Genre. Gêneros com média
+  muito acima da mediana indicam presença de poucos jogos com
+  vendas gigantes (outliers positivos). Quais gêneros têm esse padrão?
+\end{enumerate}
+\end{BoardBox}
+
+\begin{SolvedBox}
+\textbf{Questão rápida — Redesign de Dashboard}
+
+Um estagiário apresentou um dashboard com:
 \begin{itemize}
-  \item Problemas: impossível identificar qual linha é qual sem consultar a legenda; grade pesada poluí; 12 cores excedem capacidade de distinção.
-  \item Redesenho: anotação direta em cada linha (elimina legenda); remover grade ou usar grade muito suave; destacar apenas 2–3 séries relevantes; destacar o ponto de inflexão com cor.
+  \item Título: ``Dashboard de Vendas''
+  \item 10 gráficos, 6 cores sem padrão, sem espaço em branco
 \end{itemize}
 
-\textbf{Visual 3 — Mapa de calor sem título, escala de cor não explicada, dados sem unidade:}
-\begin{itemize}
-  \item Problemas: o leitor não sabe o que a cor representa; sem título de mensagem; sem unidade impossibilita interpretação.
-  \item Redesenho: título mensagem; legenda da escala com unidade e âncoras (``branco = 0 vendas; azul escuro = 500+ vendas''); nota de rodapé com fontes e período.
-\end{itemize}
+Liste \textbf{4 ações de redesign}.
+
+\textbf{Resolução:}
+\begin{enumerate}
+  \item Título-mensagem: ``Vendas Q1: meta atingida em Eletrônicos,
+  15\% abaixo em Vestuário''.
+  \item Reduzir para 3–4 visuais prioritários.
+  \item Paleta restrita: cinza + verde/vermelho para status.
+  \item Hierarquia: KPIs em fonte grande, espaço em branco para separar.
+\end{enumerate}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Parte V — Antes e Depois: Refinar o Dashboard (21h30–21h50)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Exercício Antes e Depois — no seu próprio dashboard (em dupla)}
+
+Voltem ao dashboard de Video Game Sales que acabaram de construir. Para cada
+sheet, apliquem o checklist:
+
+\begin{tabular}{|p{5cm}|l|l|}
+\hline
+\textbf{Critério} & \textbf{Antes} & \textbf{Depois} \\
+\hline
+Título é mensagem (não rótulo)? & & \\
+Passa no Teste do Relance (3s)? & & \\
+No máximo 2 atributos pré-atencionais? & & \\
+Chartjunk removido (grade, 3D, sombras)? & & \\
+1 cor de destaque + resto em cinza? & & \\
+Rótulos diretos (sem legenda separada)? & & \\
+\hline
+\end{tabular}
+
+\textbf{Tarefa:} ajustem pelo menos 2 sheets aplicando os princípios.
+Capturem print do ``antes'' e do ``depois'' para entregar.
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte VI — Atividade Individual Final (21h40–22h)}
+\section{Complemento — Integração Python $\to$ Tableau}
 % =============================================================================
 
-\begin{SolvedBox}
-\textbf{Instruções:}
+\begin{BoardBox}
+\textbf{Pipeline Python $\to$ Tableau (explicação rápida — para o quadro)}
 
-Dado o cenário a seguir, faça:
+Na Unidade I vocês usaram Python para AED (pandas, matplotlib).
+Na Unidade II vocês usam Tableau para visualização e storytelling.
+Como conectar os dois?
+
+\textbf{Estratégia recomendada (sem TabPy):}
 \begin{enumerate}
-  \item Escreva o título-mensagem para o visual (fórmula: sujeito + verbo + magnitude).
-  \item Liste 3 elementos de chartjunk que você \textbf{não} incluiria neste visual.
-  \item Descreva qual atributo pré-atencional usaria para destacar a informação principal e por quê.
-  \item Esboce (manual) o visual final — mínimo de elementos, máxima clareza.
+  \item \textbf{Python faz o trabalho pesado:} limpeza, feature engineering,
+  cálculos estatísticos, agregações, modelos preditivos.
+  \item \textbf{Exportar CSV ou Parquet:} o resultado final do Python
+  vira um arquivo limpo que o Tableau consome.
+  \item \textbf{Tableau faz a visualização:} importa o arquivo,
+  cria dashboards interativos, aplica design e storytelling.
 \end{enumerate}
 
-\textbf{Cenário:} comparação de tempo médio de atendimento entre 4 canais
-(Chat, Telefone, Email, WhatsApp). Chat = 8 min; WhatsApp = 9 min;
-Telefone = 22 min; Email = 48 min. Meta da empresa: $\leq 15$ min.
+\textbf{Exemplo de pipeline:}
+\begin{itemize}
+  \item Python: \texttt{df.groupby('Genre')['Global\_Sales'].agg(['sum','mean','median']).to\_csv('genre\_stats.csv')}
+  \item Tableau: importar \texttt{genre\_stats.csv} $\to$ barras ordenadas + sparklines
+\end{itemize}
 
-\textbf{Hora de entrega:} folha ou foto no AVA ao final da aula.
-\end{SolvedBox}
+\textbf{Estratégia avançada (TabPy):}
+\begin{itemize}
+  \item \texttt{SCRIPT\_REAL} no Tableau chama código Python em tempo real
+  \item Útil para scoring de modelos já treinados (ex.: previsão de churn)
+  \item Requer TabPy server rodando — não necessário nesta disciplina,
+  mas saibam que existe
+\end{itemize}
+
+\textbf{Leitura complementar:} Capítulo 7 do livro (Insights com Tableau e Python).
+\end{BoardBox}
+
+% =============================================================================
+\section{Parte VI — Revisão + Prova II Q2 (21h50–22h)}
+% =============================================================================
+
+\begin{NoteBox}
+Hoje revisamos o conteúdo da \textbf{Questão 2} da Prova II:
+design de dashboards, Teste do Relance e hierarquia visual.
+\end{NoteBox}
 
 \begin{SolvedBox}
-\textbf{Gabarito orientativo (professor):}
-\begin{itemize}
-  \item \textbf{Título:} ``Telefone e Email superam em 3× a meta de 15 min — ação imediata necessária''
-  \item \textbf{Chartjunk para evitar:} barras em 3D; gradiente de cor; legendas separadas (rótulo direto nas barras).
-  \item \textbf{Atributo pré-atencional:} cor — barras Chat e WhatsApp em verde (abaixo da meta);
-  Telefone e Email em vermelho (acima da meta). A linha da meta (15 min) em tracejado cinza.
-  O olho vai imediatamente ao vermelho — já sabe onde está o problema.
-  \item \textbf{Esboço:} barras horizontais ordenadas (menor para maior);
-  rótulos com os valores diretamente nas barras; linha vertical da meta; título com a mensagem.
-\end{itemize}
+\textbf{Cenário (estilo Q2 da Prova II):}
+
+Pedro está criando um dashboard executivo no Tableau para o diretor
+financeiro de uma distribuidora. Ele tem duas opções:
+
+\textbf{Opção A:} Título ``Vendas Q4: Meta superada em 12\%'';
+KPI grande em verde; 2--3 cores; espaço em branco.
+
+\textbf{Opção B:} Título ``Dashboard de Vendas''; 12 gráficos;
+8 cores; sem espaço livre.
+
+\textbf{Questão:} qual é superior e por quê?
+
+\textbf{Resolução:} A é superior — título é mensagem, uso restrito
+de cores direciona atenção, espaço em branco organiza, e o dashboard
+passa no Teste do Relance.
 \end{SolvedBox}
 
 % =============================================================================

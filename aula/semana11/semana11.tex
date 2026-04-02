@@ -21,16 +21,18 @@ a Big Idea do seu T6 em exatamente 3 minutos.
 \begin{BoardBox}
 \textbf{Roteiro da aula (19h–22h)}
 \begin{enumerate}
-  \item 19h–20h — \textbf{TEORIA:} Estrutura do dashboard decisório
-  \item 20h–20h40 — \textbf{TEORIA:} KPIs, targets e indicadores visuais de status
-  \item 20h40–21h — \textbf{TEORIA:} O Pitch de 3 minutos — estrutura e prática
-  \item 21h–21h40 — \textbf{PRÁTICA:} Revisão em par do T6 (peer review estruturado)
-  \item 21h40–22h — \textbf{Pitches rápidos:} Big Idea de cada aluno (1 min cada)
+  \item 19h–19h40 — \textbf{TEORIA:} Estrutura do dashboard decisório (3 zonas)
+  \item 19h40–20h10 — \textbf{TEORIA:} KPIs, targets e indicadores visuais de status
+  \item 20h10–20h30 — \textbf{TEORIA:} O Pitch de 3 minutos — estrutura
+  \item 20h30–21h20 — \textbf{PRÁTICA GUIADA:} Dashboard decisório de RH com IBM HR Analytics
+  \item 21h20–21h40 — \textbf{ESTUDO ESTATÍSTICO:} Attrition por departamento + satisfação
+  \item 21h40–21h50 — \textbf{Peer review:} Big Idea do T6 (1 min cada)
+  \item 21h50–22h — \textbf{Revisão Q4}
 \end{enumerate}
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte I — Estrutura do Dashboard Decisório (19h–20h)}
+\section{Parte I — Estrutura do Dashboard Decisório (19h–19h40)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -92,7 +94,7 @@ Call to Action & Ausente & Explícito na última tela \\
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte II — KPIs, Targets e Indicadores de Status (20h–20h40)}
+\section{Parte II — KPIs, Targets e Indicadores de Status (19h40–20h10)}
 % =============================================================================
 
 \begin{SolvedBox}
@@ -149,7 +151,7 @@ coisas diferentes.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte III — O Pitch de 3 Minutos (20h40–21h)}
+\section{Parte III — O Pitch de 3 Minutos (20h10–20h30)}
 % =============================================================================
 
 \begin{BoardBox}
@@ -214,35 +216,136 @@ confiança para decidir \emph{na reunião}, sem pedir ``mais dados''.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Parte IV — Peer Review do T6 (21h–21h40)}
+\section{Dataset da Semana — IBM HR Analytics (Kaggle)}
 % =============================================================================
 
 \begin{BoardBox}
-\textbf{Roteiro de peer review estruturado (em par — 20 min cada):}
+\textbf{Base de dados da semana:} \textit{IBM HR Analytics Employee Attrition}
 
-O revisor usa este checklist enquanto o colega apresenta o dashboard:
+\textbf{Link para download:}
+\url{https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset}
 
-\begin{tabular}{|p{5cm}|l|p{5.5cm}|}
-\hline
-\textbf{Critério} & \textbf{Sim/Não} & \textbf{Sugestão específica} \\
-\hline
-Big Idea clara na primeira tela? & & \\
-Todos os títulos são mensagem? & & \\
-Passa no Teste do Relance? & & \\
-KPIs têm meta + gap? & & \\
-Interatividade funciona? & & \\
-Estrutura: contexto→diag→reco? & & \\
-Call to action explícito? & & \\
-\hline
-\end{tabular}
+\textbf{Sobre o dataset:}
+\begin{itemize}
+  \item $\approx$ 1.470 funcionários com 35 atributos (fictício, criado pela IBM)
+  \item \textbf{Colunas principais:} Attrition (Yes/No), Age, Department,
+  DistanceFromHome, Education, EnvironmentSatisfaction, JobRole,
+  MonthlyIncome, OverTime, PerformanceRating, YearsAtCompany,
+  WorkLifeBalance
+  \item Dados limpos, sem joins — pronto para importar no Tableau
+  \item Ideal para dashboards decisórios com KPIs e metas de RH
+\end{itemize}
 
-\textbf{Após o checklist,} o revisor dá 1 feedback de melhoria prioritária
-e 1 ponto forte genuíno. O aluno apresentado anota e tem tempo para ajustar
-antes da Semana 12.
+\textbf{Pergunta de decisão da semana:}
+\textit{``A taxa de rotatividade está acima do aceitável? Quais
+departamentos e perfis de funcionário precisam de ação imediata?''}
+\end{BoardBox}
+
+\begin{NoteBox}
+\textbf{Importação no Tableau:} File $\to$ Open $\to$ Text file $\to$
+\texttt{WA\_Fn-UseC\_-HR-Employee-Attrition.csv}. Verificar se
+\texttt{Attrition} é dimensão e \texttt{MonthlyIncome} é medida.
+\end{NoteBox}
+
+% =============================================================================
+\section{Parte IV — Construção Guiada: Dashboard Decisório de RH (20h30–21h20)}
+% =============================================================================
+
+\begin{SolvedBox}
+\textbf{Construção guiada — ``Dashboard: Rotatividade que Exige Ação''}
+
+Aplicamos aqui o framework das 3 zonas (Contexto → Diagnóstico → Recomendação)
+com dados reais do IBM HR.
+
+\textbf{Sheet 1 — KPI Cards: Zona de Contexto (10 min):}
+\begin{enumerate}
+  \item \textbf{KPI 1 — Taxa de Attrition:} campo calculado
+  \texttt{Attrition Rate = COUNTD(IF [Attrition]="Yes" THEN [EmployeeNumber] END)
+  / COUNTD([EmployeeNumber])}
+  \item Meta: 10\% (benchmark de mercado). Criar parâmetro \texttt{p\_meta\_attrition}
+  \item Campo calculado de status:
+  \texttt{IF [Attrition Rate] > [p\_meta\_attrition] THEN "▼ Acima" ELSE "◆ OK" END}
+  \item Cor condicional: vermelho se acima, verde se abaixo da meta
+  \item \textbf{KPI 2:} Salário Médio (AVG MonthlyIncome)
+  \item \textbf{KPI 3:} Satisfação Média (AVG EnvironmentSatisfaction)
+  \item Formatar: fonte grande (20pt+), gap entre atual e meta
+\end{enumerate}
+
+\textbf{Sheet 2 — Barras: Attrition por Department — Zona de Diagnóstico (10 min):}
+\begin{enumerate}
+  \item Barras horizontais: \texttt{Department} em Rows,
+  \texttt{Attrition Rate} (calculado) em Columns
+  \item Cor: vermelho para departamentos acima da meta, cinza para os demais
+  \item Linha de referência: meta de 10\% (usando o parâmetro)
+  \item \textbf{Título:} ``Sales tem 21\% de rotatividade —
+  mais que o dobro da meta de 10\%''
+  \item Adicionar Overtime como drill-down (cor secundária)
+\end{enumerate}
+
+\textbf{Sheet 3 — Scatter: Income vs Years at Company — Zona de Diagnóstico (10 min):}
+\begin{enumerate}
+  \item \texttt{YearsAtCompany} em Columns, \texttt{MonthlyIncome} em Rows
+  \item Color por \texttt{Attrition} (Yes = vermelho, No = cinza)
+  \item Trend lines separadas por Attrition
+  \item \textbf{Título:} ``Funcionários que saem têm salário e tempo de casa menores''
+  \item Filtrar por Department usando filter action do dashboard
+\end{enumerate}
+
+\textbf{Sheet 4 — Bullet Chart: Satisfação por JobRole — Zona de Recomendação (10 min):}
+\begin{enumerate}
+  \item Barras horizontais: \texttt{JobRole} em Rows,
+  \texttt{AVG(EnvironmentSatisfaction)} em Columns
+  \item Linha de referência: média geral como ``target''
+  (Analytics $\to$ Reference Line $\to$ Entire Table $\to$ Average)
+  \item Cor: abaixo da média em vermelho, acima em azul
+  \item \textbf{Título:} ``Sales Representative e Lab Technician
+  têm satisfação abaixo da média — risco de saída''
+\end{enumerate}
+
+\textbf{Montar o Dashboard Decisório (10 min):}
+\begin{enumerate}
+  \item \textbf{Zona 1 (topo):} 3 KPI cards com meta + gap + status
+  \item \textbf{Zona 2 (meio):} barras por Department (esq.) +
+  scatter Income vs Years (dir.)
+  \item \textbf{Zona 3 (base):} bullet chart de satisfação +
+  texto com recomendação:
+  \textit{``Priorizar programa de retenção em Sales, focando em
+  funcionários com $<$ 3 anos e satisfação $<$ 3.''}
+  \item Filter action: clique em Department filtra todos os outros sheets
+  \item Parâmetro de meta exposto para o usuário ajustar
+\end{enumerate}
+\end{SolvedBox}
+
+% =============================================================================
+\section{Estudo Estatístico com IBM HR Analytics (21h20–21h40)}
+% =============================================================================
+
+\begin{BoardBox}
+\textbf{Estudo Estatístico (para o quadro — discutir com os dados)}
+
+\begin{enumerate}
+  \item \textbf{Taxa de attrition por segmento:} Qual departamento tem
+  a maior taxa? E dentro dele, qual JobRole? Essa granularidade
+  muda a história?
+
+  \item \textbf{Overtime como fator:} Filtre apenas funcionários com
+  OverTime = Yes. A taxa de attrition desse grupo é quanto?
+  Compare com OverTime = No. A diferença é expressiva?
+
+  \item \textbf{Correlação:} No scatter Income vs Years, os pontos
+  vermelhos (Attrition = Yes) se concentram em qual região?
+  Isso sugere que salário baixo + pouco tempo = risco?
+
+  \item \textbf{Decisão baseada em dados:} Se você tivesse que
+  escolher UMA ação para reduzir a rotatividade, qual seria?
+  Justifique com 2 evidências do dashboard.
+  (Exemplo: ``Programa de retenção para Sales Representatives
+  com $<$ 3 anos — eles têm 35\% de attrition e satisfação 2.1/4.'')
+\end{enumerate}
 \end{BoardBox}
 
 % =============================================================================
-\section{Parte V — Pitches Rápidos (21h40–22h)}
+\section{Parte V — Pitches Rápidos: Big Idea do T6 (21h40–21h50)}
 % =============================================================================
 
 \begin{SolvedBox}
@@ -254,11 +357,10 @@ Cada aluno apresenta a Big Idea do seu T6 em \textbf{1 minuto}:
 \end{itemize}
 
 A turma anota: ``Ficou clara a mensagem? O que faltou?''
-Feedback coletivo de 1 minuto após cada pitch.
 \end{SolvedBox}
 
 % =============================================================================
-\section{Revisão Semanal — Questão tipo Prova II (Q4)}
+\section{Revisão Semanal — Questão tipo Prova II (Q4) — (21h50–22h)}
 % =============================================================================
 
 \begin{NoteBox}
