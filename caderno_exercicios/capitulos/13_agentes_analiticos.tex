@@ -1,0 +1,208 @@
+\section{Capítulo 13 --- Agentes analíticos, controle e observabilidade}
+
+Os itens distinguem LLM, ferramenta, skill, memória e coordenação. Um agente recebe apenas as permissões necessárias, registra decisões e recusa ou solicita intervenção quando não dispõe de evidência autorizada. Dados, custos e situações foram elaborados para fins didáticos.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{Distinguir responsabilidades agentic}{Relatório mensal recorrente}
+\TextoBase
+Um fluxo recebe a solicitação, consulta métricas, compara o mês anterior, produz narrativa e pede aprovação humana. A equipe chama de ``agente'' tanto o modelo quanto uma função SQL e um manual de procedimento.
+O relatório alimenta decisões de estoque, e cada etapa deve possuir entrada, saída, permissão e condição de parada verificáveis.
+\FonteDidatica
+\Comando A descrição tecnicamente adequada é
+\begin{enumerate}[label=\Alph*)]
+\item o LLM é a ferramenta, o SQL é o agente e o manual é a memória episódica.
+\item o agente coordena estado e decisões; SQL é ferramenta; o manual pode constituir skill ou playbook; o LLM apoia interpretação.
+\item todo componente é um agente porque participa do mesmo fluxo.
+\item a memória decide o próximo passo e o agente apenas armazena texto.
+\item a skill executa diretamente qualquer ação e torna permissões desnecessárias.
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Calcular confiabilidade composta}{Pipeline de três etapas}
+\TextoBase
+Sob independência aproximada no conjunto de teste, o planejador escolhe a ferramenta correta em 96\% dos casos, a ferramenta retorna dados corretos em 98\% e o verificador aprova corretamente em 95\%. O sucesso exige as três etapas.
+O fluxo só entrega resposta quando planejamento, consulta e validação têm sucesso; falhar em qualquer etapa invalida a execução completa.
+\FonteDidatica
+\Comando A taxa ponta a ponta estimada é
+\begin{enumerate}[label=\Alph*)]
+\item 89,4\%, pelo produto $0{,}96\times0{,}98\times0{,}95$.
+\item 96,3\%, pela média aritmética das três taxas.
+\item 93,0\%, subtraindo do melhor resultado o pior erro.
+\item 99,99\%, porque verificadores compensam qualquer falha anterior.
+\item 78,0\%, somando as três porcentagens de erro.
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Aplicar menor privilégio por ferramenta}{Agente financeiro}
+\TextoBase
+O agente precisa ler uma SPEC de receita e abrir um ticket quando detectar divergência. A credencial atual também permite apagar tabelas e aprovar pagamentos.
+A ferramenta de pagamento produz efeito externo irreversível, enquanto leitura de métricas e simulação podem operar com permissões distintas.
+\FonteDidatica
+\Comando A configuração coerente é
+\begin{enumerate}[label=\Alph*)]
+\item manter a credencial ampla e instruir o modelo a usar somente duas ações.
+\item separar ferramentas de leitura e criação de ticket, com escopos mínimos, validação de parâmetros e aprovação para efeitos relevantes.
+\item ocultar os nomes das ações perigosas no prompt, mantendo-as acessíveis.
+\item usar memória para registrar que apagar tabela é proibido, dispensando controle técnico.
+\item permitir pagamento quando a confiança textual superar 90\%.
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Calcular orçamento de tentativas}{Retry de consulta}
+\TextoBase
+Uma tentativa custa R\$0,12 e leva 1,4 s. Há orçamento de R\$0,40 e 5 s por solicitação, incluindo 0,6 s fixos fora das tentativas. Não existe paralelismo.
+Cada tentativa custa R\$0,12 e 1,4 segundo; há ainda 0,6 segundo fixo, orçamento de R\$0,40 e prazo máximo de cinco segundos.
+\FonteDidatica
+\Comando O número máximo de tentativas completas permitido pelos dois orçamentos é
+\begin{enumerate}[label=\Alph*)]
+\item 2, porque a terceira ultrapassa o orçamento de tempo.
+\item 3, pois custa R\$0,36 e usa $0{,}6+3(1{,}4)=4{,}8$ s.
+\item 4, porque o custo de R\$0,48 pode ser compensado pela latência.
+\item 1, porque qualquer retry produz efeito duplicado.
+\item 5, dividindo o limite de tempo pela parte fixa.
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Escolher memória apropriada}{Correção de preferência e regra}
+\TextoBase
+Um usuário prefere gráficos em barras; a política corporativa determina que valores inferiores a cinco sejam suprimidos. O protótipo grava ambas as informações como lembranças livres produzidas pelo modelo.
+A preferência de formato pertence ao usuário, mas uma política revogada não pode persistir como memória nem ser reintroduzida pelo histórico.
+\FonteDidatica
+\Comando O redesenho adequado é
+\begin{enumerate}[label=\Alph*)]
+\item armazenar preferência e política juntas em memória conversacional sem versão.
+\item tratar preferência como dado de perfil revogável e política como regra governada, versionada e aplicada fora da memória livre.
+\item converter a política em mensagem do usuário para que possa ser substituída em cada conversa.
+\item descartar a preferência e manter somente o histórico integral indefinidamente.
+\item permitir que o agente escolha qual regra lembrar conforme a tarefa.
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Dimensionar revisão humana}{Fila de HITL}
+\TextoBase
+O agente processa 1.500 casos/dia. Vinte por cento vão para revisão humana; cada revisão leva 6 minutos. Cada analista dispõe de 360 minutos úteis por dia.
+Cada revisão leva seis minutos, existem 1.500 casos diários e 20\% são encaminhados; cada analista dispõe de 360 minutos produtivos.
+\FonteDidatica
+\Comando O número mínimo de analistas para absorver a fila diária é
+\begin{enumerate}[label=\Alph*)]
+\item 3, porque há 300 revisões.
+\item 4, pois cada analista revisa 60 casos e cinco seriam necessários apenas com folga.
+\item 5, porque são 1.800 minutos de revisão e cada analista oferece 360.
+\item 6, dividindo casos totais por minutos de uma revisão.
+\item 25, considerando todos os casos como revisão obrigatória.
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Decidir entre agente único e multiagente}{Análise de vendas}
+\TextoBase
+Um agente único chama duas ferramentas determinísticas e produz resposta em quatro passos estáveis. A proposta multiagente cria planejador, pesquisador, crítico e redator, elevando custo em 140\% sem ganho medido de correção.
+A equipe deve justificar coordenação adicional por decomposição real da tarefa, e não pelo pressuposto de que mais agentes sempre melhoram.
+\FonteDidatica
+\Comando A decisão baseada em evidência é
+\begin{enumerate}[label=\Alph*)]
+\item adotar multiagente, porque mais papéis implicam maior inteligência.
+\item manter o fluxo simples como baseline e exigir ganho mensurável ou necessidade real de especialização antes de ampliar coordenação.
+\item remover todas as ferramentas e deixar agentes discutirem os números.
+\item escolher aleatoriamente para evitar viés arquitetural.
+\item duplicar cada agente para reduzir o custo total.
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Interpretar traces ponta a ponta}{Falhas em cem execuções}
+\TextoBase
+Em 100 execuções, 92 criaram plano válido, 88 chamaram ferramenta autorizada, 82 produziram resposta sustentada e 78 passaram no verificador final.
+Os contadores representam etapas encadeadas; mudar denominadores entre elas esconderia onde o agente perdeu consultas ou falhou na validação.
+\FonteDidatica
+\Comando As taxas condicionais após o plano, após a ferramenta e após a sustentação, e o sucesso total são aproximadamente
+\begin{enumerate}[label=\Alph*)]
+\item 95,7\%; 93,2\%; 95,1\%; 78\%.
+\item 88\%; 82\%; 78\%; 95,1\%.
+\item 92\%; 88\%; 82\%; 78\%.
+\item 95,7\%; 82\%; 78\%; 93,2\%.
+\item 4\%; 6\%; 4\%; 22\%.
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Aplicar recusa segura}{Pergunta sem evidência autorizada}
+\TextoBase
+O usuário pede previsão de demissões por pessoa. O agente tem apenas dados agregados autorizados, e a política proíbe inferência individual. Uma ferramenta de busca não encontra fonte adicional.
+A resposta será usada em decisão de crédito; ausência de fonte autorizada exige abstenção útil, sem fabricar aproximação nem executar ferramenta privilegiada.
+\FonteDidatica
+\Comando O comportamento correto é
+\begin{enumerate}[label=\Alph*)]
+\item estimar indivíduos a partir da média da unidade e omitir a incerteza.
+\item recusar a inferência individual, explicar a restrição e oferecer análise agregada autorizada ou encaminhamento humano.
+\item pedir ao modelo que invente dados sintéticos com nomes reais.
+\item executar várias buscas até alguma resposta parecer confiante.
+\item guardar a pergunta na memória e responder depois sem nova autorização.
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Aplicar gate de implantação agentic}{Comparação de versões}
+\TextoBase
+O gate exige sucesso útil $\geq80\%$, ações indevidas=0, p95 $\leq8$ s e custo $\leq$R\$0,50.
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}\toprule
+\textbf{Versão} & \textbf{Sucesso} & \textbf{Ações indevidas} & \textbf{p95} & \textbf{Custo}\\\midrule
+Único & 81\% & 0 & 6,8 s & R\$0,31\\
+Multi A & 87\% & 1 & 7,2 s & R\$0,48\\
+Multi B & 84\% & 0 & 9,1 s & R\$0,46\\
+Multi C & 82\% & 0 & 7,7 s & R\$0,56\\\bottomrule
+\end{tabularx}\end{center}
+\FonteDidatica
+Os gates mínimos são zero ação indevida, correção útil de 80\%, p95 de sete segundos e custo máximo de R\$0,35.
+\Comando A versão aprovada é
+\begin{enumerate}[label=\Alph*)]
+\item Multi A, por maximizar sucesso útil.
+\item Multi B, por não realizar ações indevidas.
+\item Multi C, por equilibrar sucesso e latência.
+\item Único, por atender simultaneamente a todos os gates.
+\item a média das versões multiagente, porque reduz violações individuais.
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Desenhar agente analítico governado}{Investigação de queda de receita}
+\TextoBase
+O agente deve consultar métricas certificadas, decompor receita, buscar incidentes e redigir hipótese. Não pode alterar dados nem atribuir causa sem evidência; conclusões de alto impacto precisam de revisão.
+A investigação envolve métricas financeiras e pode acionar consulta, cálculo e visualização, mas nenhuma ferramenta deve publicar decisão sem validação.
+\FonteDidatica
+\Comando Desenhe estado, nós, ferramentas, skill, memória, gates, recusa, HITL, trace e critérios de parada. Explique como distinguir hipótese, evidência e decisão.
+
+\ItemHeader{12}{Discursiva}{Calcular custo e benefício do multiagente}{Teste A/B arquitetural}
+\TextoBase
+Em 2.000 casos, o agente único obteve 1.600 respostas úteis a R\$0,28 por caso. O multiagente obteve 1.720 respostas úteis a R\$0,46 por caso. Ambos tiveram zero ação indevida. O orçamento incremental máximo é R\$4 por resposta útil adicional.
+O teste contém duas mil solicitações: agente único custa R\$560 e resolve 1.600; multiagente custa R\$920 e resolve 1.720.
+\FonteDidatica
+\Comando Calcule custo total, custo por resposta útil, ganho de respostas e custo incremental por resposta adicional. Decida se o multiagente atende ao limite e indique outra evidência necessária.
+
+\ItemHeader{13}{Discursiva}{Projetar política de memória}{Preferências, fatos e políticas}
+\TextoBase
+O agente mistura histórico, preferências, métricas calculadas e políticas em um vetor sem origem, validade ou opção de exclusão. Uma regra revogada continua influenciando respostas.
+O projeto deve distinguir preferência revogável, fato com proveniência e política autoritativa, definindo retenção e precedência para cada classe.
+\FonteDidatica
+\Comando Proponha classes de memória, origem, versão, validade, autorização, retenção, correção/exclusão, recuperação e testes que impeçam política revogada e dado de outro usuário no contexto.
+
+\ItemHeader{14}{Discursiva}{Calcular indicadores de HITL}{Piloto de decisões}
+\TextoBase
+Em 800 casos, 240 foram encaminhados a humanos. Revisores alteraram 72 decisões; 18 alterações ocorreram após o SLA. Entre os 560 não revisados, auditoria amostral de 140 encontrou 7 erros relevantes.
+Uma amostra aleatória de 140 casos não encaminhados revelou sete erros, informação necessária para avaliar segurança fora da fila humana.
+\FonteDidatica
+\Comando Calcule taxa de encaminhamento, taxa de alteração entre revisados, atraso entre alterações e erro estimado nos não revisados. Interprete se encaminhar menos casos é evidência suficiente de melhora e proponha ajuste verificável.
+
+\ItemHeader{15}{Discursiva}{Responder a incidente agentic}{Ferramenta realizou efeito indevido}
+\TextoBase
+Um agente abriu 83 tickets duplicados após timeout porque repetiu a ferramenta sem chave idempotente. Traces guardam argumentos e IDs, mas também contêm e-mails em claro.
+A ferramenta enviou mensagem externa sem confirmação; a análise deve identificar escopo, credencial, trace e usuários potencialmente afetados.
+\FonteDidatica
+\Comando Proponha contenção, correção dos tickets, preservação minimizada de evidência, comunicação, idempotência, orçamento de retry, confirmação de efeito, testes e critérios de reativação.
+
+\newpage
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 — resposta A.} O sucesso composto é $0{,}96\times0{,}98\times0{,}95=0{,}89376$, ou 89,4\%. A média das etapas superestima o fluxo que exige sucesso simultâneo.
+\[P(\text{sucesso})=0{,}96(0{,}98)(0{,}95)=0{,}89376\]
+
+\paragraph{Questão 4 — resposta B.} Três tentativas custam R\$0,36 e usam 4,8 s com a parte fixa. Quatro custariam R\$0,48 e usariam 6,2 s, violando ambos os orçamentos.
+
+\paragraph{Questão 6 — resposta C.} São $1.500(0{,}20)=300$ revisões, ou 1.800 minutos. $1.800/360=5$ analistas, sem margem adicional.
+
+\paragraph{Questão 8 — resposta A.} $88/92\approx95{,}7\%$; $82/88\approx93{,}2\%$; $78/82\approx95{,}1\%$; sucesso total $78/100=78\%$. O funil localiza perdas sem mudar denominadores silenciosamente.
+
+\paragraph{Questão 10 — resposta D.} O agente único alcança 81\%, zero ação indevida, 6,8 s e R\$0,31. Cada versão multiagente viola segurança, latência ou custo; maior correção não compensa um gate obrigatório.
+
+\paragraph{Questão 12 — critérios.} Único: R\$560 total e R\$0,35 por útil. Multiagente: R\$920 total e aproximadamente R\$0,535 por útil. O ganho é 120 respostas por R\$360 incrementais, ou R\$3 por resposta adicional; passa o limite de R\$4. A decisão ainda requer latência, distribuição de erros, carga operacional e avaliação por subgrupo.
+
+\paragraph{Questão 14 — critérios.} Encaminhamento $=240/800=30\%$; alteração $=72/240=30\%$; atraso $=18/72=25\%$; erro amostral nos não revisados $=7/140=5\%$. Menor encaminhamento não prova melhora: pode aumentar erro não detectado. Ajustes válidos usam amostra auditada, risco calibrado, capacidade e SLA.

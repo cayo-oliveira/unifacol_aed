@@ -1,0 +1,324 @@
+\section{Capítulo 10 --- Text-to-SQL, NL2Vis e camada semântica}
+
+Um grupo varejista permite perguntas em linguagem natural sobre vendas. O agente consulta uma camada semântica, gera SQL somente leitura e propõe visualizações, respeitando identidade e linhagem.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{semântica}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A métrica ``receita líquida'' possui contrato oficial que exclui cancelamentos e impostos, com vigência e responsável. O usuário não conhece a fórmula e pede apenas ``receita''. O agente precisa resolver a intenção pela camada semântica, não inventar cálculo a partir de nomes de colunas. O catálogo registra ainda moeda, data de competência e dimensão de canal permitida. Como o relatório será comparado ao fechamento financeiro, uma soma sintaticamente válida sobre coluna homônima seria rejeitada mesmo que produzisse um número plausível. O pedido abrange apenas lojas ativas no Nordeste e o segundo trimestre; esses filtros também pertencem ao plano semântico e devem aparecer na explicação. Antes da execução, o agente precisa mostrar qual métrica governada, quais dimensões e qual janela temporal resolveu, permitindo que o analista confirme a interpretação.
+
+Essa confirmação deve ocorrer antes do fechamento financeiro.
+
+\FonteDidatica
+
+\Comando Para responder sem criar uma definição paralela de receita, o agente deve
+
+\begin{enumerate}[label=\Alph*)]
+
+\item pedir ao LLM que invente a fórmula
+
+\item somar toda coluna receita
+
+\item resolver a expressão pela métrica governada, não pela soma inferida de uma coluna homônima
+
+\item usar a maior medida
+
+\item duplicar definição em cada prompt
+
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{fanout}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O relatório de auditoria mostra no Quadro 1 a saída de uma junção entre pedidos e itens. O SQL soma o valor do pedido depois da junção; a consulta executa, mas repete medidas de cabeçalho e infla o total.
+\begin{DocumentBox}[Quadro 1 --- saída após o join]
+\begin{tabularx}{\textwidth}{@{}Yrr@{}}\toprule
+\textbf{Pedido} & \textbf{Valor do pedido} & \textbf{Linhas após join}\\\midrule
+P1 & R\$100 & 2\\ P2 & R\$200 & 3\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+
+\FonteDidatica
+
+\Comando Qual par apresenta, respectivamente, o total produzido pela soma ingênua e o total correto no grão de pedido?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item soma ingênua R\$800; correto R\$300 após agregar no grão de pedido
+
+\item R\$300 e R\$800
+
+\item R\$500 e R\$300
+
+\item R\$800 e R\$500
+
+\item R\$300 em ambos
+
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{permissão}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um usuário da regional Recife pergunta pelas vendas nacionais. Sua identidade permite apenas linhas da regional, embora o modelo conheça o esquema completo. A política deve restringir dados antes e durante a consulta, sem depender de o prompt lembrar a regra.
+
+\FonteDidatica
+
+\Comando Qual controle protege efetivamente o escopo regional nesse atendimento?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item gerar SQL nacional e ocultar linhas depois do LLM
+
+\item confiar no prompt ``não mostre''
+
+\item usar conta administrativa compartilhada
+
+\item aplicar identidade e política antes/durante consulta e informar o escopo permitido
+
+\item liberar porque resultado será gráfico
+
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{taxa}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A consulta retorna 45 conversões e 900 sessões para o mesmo período, mas o visual apresenta taxa de 6\%. A resposta será usada para avaliar campanha. O sistema precisa recalcular $45/900$, bloquear inconsistência e registrar a evidência.
+
+\FonteDidatica
+
+\Comando Que conclusão deve ser registrada antes da publicação do visual?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 6\% por arredondamento
+
+\item taxa correta 5\%; bloquear visual e reconciliar cálculo
+
+\item 20\%
+
+\item 0,5\%
+
+\item 5 pontos percentuais de crescimento
+
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{NL2Vis}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A consulta retorna série temporal mensal de vendas para três categorias durante dois anos. O usuário quer comparar tendência, sazonalidade e diferenças entre categorias. A recomendação NL2Vis precisa preservar ordem temporal, unidade e legenda acessível sem escolher visual decorativo.
+
+\FonteDidatica
+
+\Comando Qual recomendação visual atende à pergunta e preserva a estrutura dos dados?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item usar pizza com 36 setores
+
+\item usar mapa sem geografia
+
+\item escolher aleatoriamente
+
+\item omitir eixo temporal
+
+\item propor linhas ou pequenos múltiplos, explicitando agregação, período e categorias
+
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{RLS}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A tabela física possui 1.000 linhas. A política de linha do usuário autoriza 240; após filtros semânticos da pergunta, 60 permanecem. A equipe precisa distinguir universo físico, conjunto autorizado e resultado analítico para auditar a execução.
+
+\FonteDidatica
+
+\Comando Como os três conjuntos de linhas devem ser interpretados na trilha de auditoria?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item retorna 60 mas pode enviar 1.000 ao modelo
+
+\item retorna 240 ignorando pergunta
+
+\item consulta autorizada opera sobre 240 e retorna 60; não sobre 1.000
+
+\item retorna 1.000
+
+\item retorna 300 somando filtros
+
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{rastreabilidade}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O usuário contesta um gráfico de receita por região porque diverge do fechamento financeiro. A interface mostra apenas a imagem e a narrativa. Para responder à contestação, o sistema precisa ligar pergunta, métrica, política, SQL, snapshot, resultado e visual.
+
+\FonteDidatica
+
+\Comando Qual conjunto de evidências permite investigar a divergência sem depender da memória do analista?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item mostrar apenas prompt
+
+\item exibir pergunta interpretada, métrica, dimensões, filtros, SQL/consulta, fonte, horário e identidade/escopo
+
+\item mostrar só imagem
+
+\item reexecutar com temperatura maior
+
+\item apagar consulta antiga
+
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{variação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+As vendas foram 100 em janeiro, 120 em fevereiro e 90 em março, na mesma unidade e definição. A narrativa automática afirma crescimento contínuo. A equipe precisa calcular as duas variações com bases corretas e escolher visual que não esconda a reversão.
+
+\FonteDidatica
+
+\Comando Quais variações mês a mês contradizem a narrativa de crescimento contínuo?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item mar cai 30\% sobre jan e fev
+
+\item crescimento médio 5\% prova tendência
+
+\item mar cai 10\% sobre fev
+
+\item fev cresce 20\%; mar cai 25\% sobre fev; visual deve preservar bases distintas
+
+\item somar percentuais para -5\%
+
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{recusa}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A pergunta ``qual cliente fraudará amanhã?'' não possui rótulo, modelo validado nem base individual autorizada. Produzir uma lista nominal criaria inferência de alto impacto sem evidência. O agente deve recusar de forma útil e oferecer análise agregada permitida.
+
+\FonteDidatica
+
+\Comando Qual resposta do agente é compatível com as evidências e com o risco da solicitação?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item recusar inferência e explicar dados/competência ausentes, sem fabricar SQL
+
+\item gerar ranking por gasto
+
+\item usar receita como fraude
+
+\item retornar todos os clientes
+
+\item criar rótulo no prompt
+
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{contrato}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O SQL é sintaticamente válido e executa, mas usa uma dimensão de região incompatível com a métrica e ignora o período solicitado. A validação precisa ir além da sintaxe e verificar semântica, autorização e resultado contra casos de referência.
+
+\FonteDidatica
+
+\Comando Qual sequência de validação impede que a execução bem-sucedida seja confundida com resposta correta?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aceitar porque executou
+
+\item corrigir só o título
+
+\item usar LIMIT 10
+
+\item pedir mais eloquência ao modelo
+
+\item validar sintaxe, semântica, permissão e resultado contra casos de referência antes de apresentar
+
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma rede de farmácias deseja liberar perguntas em linguagem natural para gerentes regionais. A arquitetura proposta deve impedir escrita no banco, aplicar identidade antes da consulta, resolver métricas no catálogo e conservar evidências suficientes para reproduzir cada resposta contestada.
+
+\FonteDidatica
+
+\Comando Desenhe o fluxo entre pergunta, semântica, permissão, SQL, resultado, NL2Vis e evidência. Indique, em cada etapa, o gate de aprovação, a evidência registrada e duas condições objetivas de recusa.
+
+\ItemHeader{12}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Em uma auditoria, os pedidos P1 e P2 valem R\$100 e R\$200 e aparecem, após a junção, duas e três vezes. Em outro painel do mesmo agente, 45 conversões em 900 sessões foram publicadas como 6\%. A equipe precisa demonstrar os dois erros ao gestor.
+
+\FonteDidatica
+
+\Comando Calcule a soma inflada, a soma correta e o fator de inflação; calcule também a taxa correta. Descreva a consulta conceitual no grão de pedido e duas validações automáticas que barrariam os resultados errados.
+
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+As áreas comercial e financeira usam o nome ``receita líquida'', porém uma exclui apenas cancelamentos e a outra também exclui impostos. O agente responde de formas diferentes conforme as colunas disponíveis, sem informar versão, responsável ou grão da definição.
+
+\FonteDidatica
+
+\Comando Proponha uma entrada de catálogo para ``receita líquida'' contendo fórmula, grão, dimensões permitidas, filtros, responsável, vigência, versão e três testes. Explique como o agente deve tratar a ambiguidade entre as duas definições.
+
+\ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Antes de colocar o agente em produção, a instituição separou casos com perguntas equivalentes, perguntas ambíguas, junções que causam fanout, usuários com escopos diferentes e solicitações sem visual adequado. A avaliação atual mede apenas se o SQL executou.
+
+\FonteDidatica
+
+\Comando Crie um protocolo de avaliação Text-to-SQL/NL2Vis com métricas para execução, correção semântica, autorização e adequação visual. Defina conjunto de teste, regra de aprovação e procedimento para analisar falhas por categoria.
+
+\ItemHeader{15}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Um gerente de Recife recebeu, em uma tabela gerada pelo agente, linhas de outras regionais. O SQL foi executado com uma conta técnica compartilhada e o filtro regional havia sido acrescentado apenas ao prompt. O mesmo resultado pode ter sido exportado por dois usuários.
+
+\FonteDidatica
+
+\Comando Estruture a resposta ao incidente em contenção, preservação de evidências, correção da propagação de identidade, testes de não regressão e comunicação. Diferencie controles imediatos de mudanças permanentes.
+
+\newpage
+
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 --- resposta A.} Após a junção, a soma ingênua é $2\times100+3\times200=800$. No grão correto, cada pedido entra uma vez: $100+200=300$. Portanto, o fanout acrescentou R\$500 e tornou o total $800/300\approx2{,}67$ vezes o valor real. A alternativa A é a única que apresenta os dois totais na ordem solicitada.
+\[\text{inflado}=800,\qquad \text{grão de pedido}=300\]
+
+\paragraph{Questão 4 --- resposta B.} A taxa é $45/900=0{,}05=5\%$. O valor publicado, 6\%, não é arredondamento de 5\%, mas divergência de um ponto percentual. Como o painel orientará avaliação de campanha, o sistema deve bloquear a publicação e reconciliar numerador, denominador, filtros e período. Logo, B.
+
+\paragraph{Questão 6 --- resposta C.} As 1.000 linhas descrevem a tabela física, não o universo que o usuário pode consultar. A política reduz esse universo a 240 linhas; o filtro analítico reduz o conjunto autorizado a 60. Assim, a consulta deve operar sobre 240 e devolver 60, sem expor as outras 760 ao modelo. A alternativa C preserva essa ordem de controles.
+
+\paragraph{Questão 8 --- resposta D.} De janeiro para fevereiro, $(120-100)/100=0{,}20=20\%$. De fevereiro para março, $(90-120)/120=-0{,}25=-25\%$. Os percentuais têm bases diferentes e não devem ser simplesmente somados. A série sobe e depois cai, portanto um visual temporal deve evidenciar a reversão; isso corresponde a D.
+
+\paragraph{Questão 10 --- resposta E.} Executar sem erro confirma apenas a validade sintática. A dimensão incompatível e o período ausente são falhas semânticas; ainda é necessário verificar autorização e comparar o resultado com casos de referência. Somente a sequência da alternativa E cobre os quatro gates antes da apresentação.
+
+\paragraph{Questão 12 --- critérios.} Esperam-se: $2\times100+3\times200=800$; total correto $100+200=300$; inflação $800/300\approx2{,}67$; taxa $45/900=5\%$; pré-agregação ou deduplicação no grão de pedido; e validações de unicidade do grão, reconciliação de totais e contrato do denominador.
+
+\paragraph{Questão 14 --- critérios.} A proposta deve separar execução de correção: casos dourados e adversariais, equivalência semântica do resultado, ausência de vazamento entre identidades e adequação do visual ao tipo de variável. Deve definir métricas por categoria, limiar de aprovação sem falhas críticas de autorização e análise rastreável dos erros.

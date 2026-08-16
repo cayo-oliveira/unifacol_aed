@@ -1,0 +1,627 @@
+% Banco reservado — não publicar
+
+% AED-C01-D11
+\ItemHeader{11}{Discursiva}{Construir cadeia analítica verificável}{Caso de evasão}
+\TextoBase Em solicitação de produto, uma faculdade propõe usar frequência, notas, situação financeira e contatos para ``prever evasão'' e enviar mensagens automáticas. O documento não define população, momento, resultado nem revisão humana, impedindo transformar a demanda em análise e intervenção avaliáveis.
+\FonteDidatica
+\Comando Em até 15 linhas, reformule a demanda como pergunta operacional; desenhe a cadeia pergunta--dado--análise--visual--decisão; indique dois riscos de qualidade ou ética e duas evidências necessárias antes de automatizar contato.
+
+% AED-C01-O07
+\ItemHeader{7}{Objetiva}{Distinguir dado, informação, insight e decisão}{Incidente de estoque}
+\TextoBase Em uma ata de revisão, registros de venda são convertidos em 320 unidades por semana; a análise localiza rupturas sobretudo às sextas após promoções e recomenda antecipar reposição. A ata exige distinguir, nessa ordem, dado, informação, conhecimento e decisão monitorada.
+\FonteDidatica
+\Comando A classificação correta da cadeia é
+\begin{enumerate}[label=\Alph*)]
+\item registros = decisão; 320 = dado bruto; padrão = ferramenta; reposição = informação.
+\item registros = dados; 320 = informação resumida; padrão contextualizado = insight; reposição monitorada = decisão.
+\item registros = insight; 320 = decisão; padrão = dado; reposição = visualização.
+\item todos os elementos são dados, pois foram produzidos por um sistema.
+\item somente a reposição é informação, pois as etapas anteriores não geram ação.
+\end{enumerate}
+
+% AED-C01-O09
+\ItemHeader{9}{Objetiva}{Selecionar evidência para uma decisão}{Dashboard comercial}
+\ChamadaEditorial{Economia em dados | Receita cresceu, mas o dashboard ainda não explica por quê}
+\TextoBase
+
+O título do painel anuncia crescimento de 12\%, mas não informa se a organização vendeu mais, apenas reajustou preços ou perdeu rentabilidade. A chefia pede evidência antes de renovar a campanha.
+ Em reunião de orçamento, um dashboard mostra aumento de 12\% na receita, mas omite inflação, quantidade vendida, cancelamentos e margem. Antes de ampliar a campanha, a direção exige uma investigação que separe crescimento nominal, volume e rentabilidade.
+\FonteDidatica
+\Comando Antes da decisão, a análise deve prioritariamente
+\begin{enumerate}[label=\Alph*)]
+  \item atribuir causalidade à campanha porque ela ocorreu antes do aumento. Sequência temporal não basta para atribuir o crescimento à campanha.
+  \item comparar volume, preço, margem e cancelamentos com base e grupos comparáveis, declarando outras mudanças do período. Volume, preço, margem, cancelamentos e comparação adequada distinguem crescimento nominal de resultado sustentável.
+  \item trocar receita por curtidas, pois engajamento antecipa qualquer resultado financeiro. Curtidas podem compor outra análise, mas não substituem receita, volume e rentabilidade do caso.
+  \item ocultar a comparação histórica para evitar influência de sazonalidade. Retirar a série histórica impediria controlar sazonalidade e outras mudanças do período.
+  \item ampliar imediatamente e avaliar apenas depois, pois dashboards servem à velocidade. Agir antes de compreender denominadores e efeitos pode ampliar uma campanha sem benefício econômico.
+\end{enumerate}
+
+% AED-C02-D13
+\ItemHeader{13}{Discursiva}{Explicar o divisor amostral}{Amostra de equipamentos}
+\ChamadaEditorial{Nota estatística | Quatro equipamentos e dois divisores possíveis}
+\TextoBase
+
+Um relatório técnico circulou com dois valores diferentes para a variância do mesmo conjunto. A divergência não decorre da aritmética, mas da pergunta: descrever as quatro unidades ou inferir sobre outras semelhantes.
+ Uma equipe calculou os desvios dos valores $2,4,4,6$ em torno da média 4 e encontrou soma quadrática 8. Parte do relatório descreve exatamente essas quatro unidades; outra parte pretende usar as quatro como amostra de uma população maior. Os analistas discutem dividir por 4 ou por 3 e precisam justificar a escolha, não apenas citar uma regra.
+\FonteDidatica
+\Comando Explique quando cada divisor é apropriado, mostre os dois resultados e justifique $n-1$ pela estimação da média e pelo grau de liberdade.
+
+% AED-C02-O05
+\ItemHeader{5}{Objetiva}{Aplicar média ponderada}{Notas com pesos}
+\TextoBase O plano de avaliação atribui peso 2 a uma atividade prática e peso 8 à prova da unidade. Um estudante obteve, respectivamente, notas 9 e 6. O sistema precisa consolidar a nota respeitando a contribuição definida para cada componente, e não tratar as duas observações como igualmente representativas.
+\FonteDidatica
+\Comando A média que respeita os pesos é
+\begin{enumerate}[label=\Alph*)]\item $(9+6)/2=7{,}5$.\item $(2\times9+8\times6)/10=6{,}6$.\item $(2+8)/(9+6)=0{,}67$.\item $(9+6)/10=1{,}5$.\item $(8\times9+2\times6)/10=8{,}4$.\end{enumerate}
+
+% AED-C02-O07
+\ItemHeader{7}{Objetiva}{Distinguir variância populacional e amostral}{Equipamentos}
+\TextoBase Um laboratório registrou as idades $2,4,4,6$ anos de quatro equipamentos. A média é 4 e a soma dos desvios quadráticos é 8. Em um relatório, os quatro equipamentos constituem toda a sala; em outro, são tratados como amostra de equipamentos da rede. A escolha do divisor deve acompanhar essas duas finalidades.
+\FonteDidatica
+\Comando Se forem população e, alternativamente, amostra, as variâncias são
+\begin{enumerate}[label=\Alph*)]\item $8/4=2$ e $8/3\approx2{,}67$.\item $8/3$ e $8/4$, porque amostras usam divisor maior.\item $8/2=4$ em ambos os casos.\item $\sqrt8$ e $\sqrt3$.\item 0 e 8, porque os desvios somam zero.\end{enumerate}
+
+% AED-C03-D15
+\ItemHeader{15}{Discursiva}{Escolher distribuição}{Planejamento operacional}
+\TextoBase Uma equipe modelará quatro fenômenos: número de falhas em lote fixo sob condições estáveis; sucesso de uma única tentativa; instante de chegada em janela projetada sem preferência; e erro de medição aproximadamente simétrico produzido por muitos efeitos pequenos. A escolha da distribuição deverá decorrer do mecanismo e indicar o parâmetro e a premissa que pode falhar.
+\FonteDidatica
+\Comando Associe Bernoulli, binomial, uniforme ou normal a cada caso, explicando parâmetros, condições e uma razão que poderia invalidar cada escolha.
+
+% AED-C03-O03
+\ItemHeader{3}{Objetiva}{Calcular união sem dupla contagem}{Eventos em um dado}
+\TextoBase Na validação de uma regra de eventos, utiliza-se um dado honesto com seis resultados equiprováveis. Define-se $A=\{2,4,6\}$, resultado par, e $B=\{5,6\}$, resultado maior que quatro. O resultado 6 pertence aos dois eventos, portanto a probabilidade da união precisa evitar dupla contagem.
+\FonteDidatica
+\Comando $P(A\cup B)$ é
+\begin{enumerate}[label=\Alph*)]\item $3/6+2/6=5/6$.\item $(3+2-1)/6=4/6$.\item $1/6$, pois somente 6 pertence aos dois.\item $6/6$, pois união inclui o espaço inteiro.\item $2/3-1/2=1/6$.\end{enumerate}
+
+% AED-C03-O05
+\ItemHeader{5}{Objetiva}{Testar independência}{Urgência e reabertura}
+\ChamadaEditorial{Central de atendimento | Urgência e reabertura caminham de forma independente?}
+\TextoBase
+
+A central suspeita que chamados urgentes retornem com maior frequência. A auditoria exige aplicar o critério de independência, em vez de decidir apenas pela comparação visual das porcentagens.
+ Em uma central, $U$ representa chamado urgente e $R$ representa reabertura. Para o período e a população definidos, $P(U)=0{,}20$, $P(R)=0{,}14$ e $P(U\cap R)=0{,}06$. A equipe precisa verificar se conhecer urgência altera a chance de reabertura usando o critério do produto, sem confundir independência com exclusão mútua.
+\FonteDidatica
+\Comando Calcule $P(U)P(R)$, compare com a interseção observada e selecione a interpretação correta sobre independência.
+
+\begin{enumerate}[label=\Alph*)]
+  \item Urgência e reabertura seriam independentes porque 0,06 é menor que 0,14; essa comparação não testa o produto das marginais.
+  \item Os eventos seriam independentes porque descrevem categorias diferentes; a natureza dos nomes não determina independência.
+  \item Os eventos não seriam independentes, pois $0{,}20\times0{,}14=0{,}028$, diferente da interseção observada de 0,06.
+  \item Os eventos seriam mutuamente exclusivos porque a interseção é positiva; uma interseção positiva demonstra justamente que podem ocorrer juntos.
+  \item Os eventos seriam complementares porque as probabilidades somam 0,34; complementares deveriam somar 1 e não ocorrer conjuntamente.
+\end{enumerate}
+
+% AED-C04-O03
+\ItemHeader{3}{Objetiva}{Evitar distorção de eixo}{Variação mensal}
+\ChamadaEditorial{Leitura crítica | Dois pontos percentuais viraram um salto visual}
+\TextoBase
+
+Uma manchete interna chamou de crescimento expressivo a passagem de 79\% para 81\%. O gráfico, com eixo truncado, ampliou visualmente uma diferença real de apenas dois pontos percentuais.
+ Um relatório executivo informa que uma taxa passou de 79\% para 81\%, diferença de 2 pontos percentuais. O gráfico de barras inicia o eixo em 78,5\% e, pela área das barras, faz o segundo resultado parecer várias vezes maior. A revisão deve preservar a mudança observada sem ampliar visualmente sua magnitude.
+
+\begin{DocumentBox}[Figura editorial --- taxa mensal publicada]
+\centering
+\begin{tikzpicture}[x=2.1cm,y=.075cm]
+\draw[->] (0,0)--(2.6,0) node[right]{mês};
+\draw[->] (0,0)--(0,86) node[above]{taxa (\%)};
+\foreach \y in {0,20,40,60,80} {\draw (-.05,\y)--(.05,\y) node[left=2pt]{\small \y};}
+\fill[disciplinecolor!55] (.45,0) rectangle (1.05,79);
+\fill[disciplinecolor!85] (1.45,0) rectangle (2.05,81);
+\node[above] at (.75,79) {79\%}; \node[above] at (1.75,81) {81\%};
+\node[below] at (.75,0) {anterior}; \node[below] at (1.75,0) {atual};
+\end{tikzpicture}
+\end{DocumentBox}
+\LegendaDidatica{A Figura usa origem zero e representa os mesmos 79\% e 81\% informados no item}
+
+\FonteDidatica
+\Comando Compare a Figura editorial com o gráfico de eixo iniciado em 78,5\% descrito no texto. Selecione a revisão que comunica os mesmos dados sem exagerar sua magnitude.
+
+\begin{enumerate}[label=\Alph*)]
+  \item O eixo truncado deveria ser mantido para destacar qualquer mudança; essa escolha amplia visualmente a magnitude sem explicar a escala.
+  \item Barras com origem zero ou pontos com escala e valores explícitos comunicariam corretamente a variação de 79\% para 81\%, isto é, 2 pontos percentuais.
+  \item Os percentuais deveriam virar volumes sem denominadores; assim, a comparação perderia a base necessária à interpretação.
+  \item O efeito tridimensional deveria ser acrescentado para enfatizar profundidade; a perspectiva introduziria nova distorção.
+  \item Os rótulos do eixo deveriam ser retirados para evitar viés; sem escala, o leitor não conseguiria verificar a diferença publicada.
+\end{enumerate}
+
+% AED-C05-O03
+\ItemHeader{3}{Objetiva}{Declarar grão}{Tabela de pedidos}
+\ChamadaEditorial{Rastreabilidade | Um evento sem origem não pode ser reprocessado com confiança}
+\TextoBase
+
+O indicador foi publicado, mas o pipeline não guardou identificador, versão, horários nem origem. Quando a regra mudou, a equipe já não sabia quais registros e consumidores estavam afetados.
+ Uma tabela possui uma linha por item do pedido, porém o campo \texttt{total\_pedido} é repetido em cada item. Um pedido de R\$100 com três itens aparece em três linhas. Um dashboard somou a coluna e publicou R\$300, embora o evento econômico continue sendo um único pedido de R\$100.
+\FonteDidatica
+\Comando Para calcular receita sem triplicar,
+\begin{enumerate}[label=\Alph*)]
+  \item somar \texttt{total\_pedido} nas linhas de item. Somar o total repetido em cada item mantém a triplicação do mesmo evento econômico.
+  \item agregar uma vez por pedido ou usar valor do item conforme contrato, declarando o grão antes do cálculo. Declarar o grão permite agregar uma vez por pedido ou somar valores de item compatíveis com o contrato.
+  \item tirar média dos totais e multiplicar pela quantidade de itens. Média multiplicada pela quantidade de itens não reconstrói necessariamente o total de pedidos.
+  \item remover pedidos com mais de um item. Excluir pedidos legítimos altera a população em vez de corrigir a agregação.
+  \item contar linhas como pedidos porque cada linha possui identificador. Linha de item e pedido são unidades distintas, ainda que ambas contenham identificadores.
+\end{enumerate}
+
+% AED-C05-O07
+\ItemHeader{7}{Objetiva}{Aplicar linhagem e impacto}{Mudança de regra}
+\TextoBase O comitê propõe mudar ``cliente ativo'' de compra nos últimos 90 dias para compra nos últimos 60 dias. O indicador alimenta três painéis, uma campanha automática e um modelo. A alteração pode mudar contagens e decisões mesmo que nenhuma linha bruta seja modificada, exigindo análise de impacto antes da vigência.
+\FonteDidatica
+\Comando Antes de publicar, a equipe deve
+\begin{enumerate}[label=\Alph*)]\item alterar a SQL e aguardar reclamações.\item usar linhagem para identificar consumidores, versionar regra e vigência, comparar impacto e comunicar migração.\item atualizar somente o painel executivo por ser mais visível.\item manter o mesmo nome sem registrar a quebra semântica.\item recalcular apenas dados futuros e misturar definições na mesma série.
+\end{enumerate}
+
+% AED-C05-O09
+\ItemHeader{9}{Objetiva}{Aplicar minimização por consumo}{SPEC de gestão}
+\TextoBase A fonte acadêmica contém CPF, nome, curso, frequência e nota por matrícula. A SPEC executiva necessita apenas de taxas agregadas por curso e período; casos individuais são usados em acompanhamento pedagógico restrito. A publicação deve atender finalidade e acesso sem replicar identificadores ``para eventual uso futuro''.
+\FonteDidatica
+\Comando A publicação coerente é
+\begin{enumerate}[label=\Alph*)]\item incluir CPF para permitir futuras perguntas.\item publicar agregados necessários na SPEC executiva e manter detalhe identificado apenas onde finalidade e acesso o justificam.\item aplicar hash no CPF e publicar todos os demais detalhes, pois hash elimina qualquer risco.\item copiar a SOR inteira e ocultar colunas na cor do painel.\item remover curso e período, porque agregação impede decisão.
+\end{enumerate}
+
+% AED-C06-O09
+\ItemHeader{9}{Objetiva}{storytelling}{Situação profissional e suporte quantitativo}
+
+\ChamadaEditorial{Sala da diretoria | Dezesseis gráficos antes de revelar a decisão}
+\TextoBase
+
+Na reunião mensal, a decisão sobre novos horários apareceu somente depois de uma longa demonstração da ferramenta. O conselho solicitou uma narrativa que ligue contexto, evidência, limite e recomendação.
+
+
+Uma apresentação à diretoria começa pela ferramenta, percorre 16 gráficos e somente no final menciona a decisão sobre novos horários. Evidências, limites e recomendação aparecem separados, obrigando o público a reconstruir sozinho o argumento. O roteiro precisa servir à decisão, não demonstrar a interface.
+
+\FonteDidatica
+
+\Comando Selecione a reorganização narrativa que conecta contexto, evidência, limite e recomendação ao público decisor.
+
+\begin{enumerate}[label=\Alph*)]
+  \item reordenar contexto, problema, evidência, limite e recomendação para o público decisor. A sequência coloca a decisão no centro e liga cada evidência e limite à recomendação dirigida ao público.
+  \item começar por todas as transformações técnicas. Começar pelas transformações técnicas repete o problema de demonstrar a ferramenta antes da pergunta decisória.
+  \item eliminar limites para ganhar clareza. Omitir limites torna a mensagem mais persuasiva, porém menos confiável e contestável.
+  \item usar mais transições visuais. Transições visuais não corrigem a ausência de encadeamento lógico entre evidência e ação.
+  \item substituir evidência por depoimento. Depoimento pode complementar contexto, mas não substitui as evidências que sustentam a recomendação.
+\end{enumerate}
+
+% AED-C07-D11
+\ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma base de evasão deveria possuir uma linha por estudante-semestre, mas transferências duplicam matrículas, frequência apresenta falhas por campus e regras mudaram durante o período. A recomendação final será usada para priorizar atendimento e precisa sobreviver a auditoria.
+
+\FonteDidatica
+
+\Comando Desenhe, em até 15 linhas, o fluxo da fonte à recomendação. Inclua teste de grão, ausência e domínio, transformação versionada, visual apropriado, reconciliação e evidência necessária para auditoria.
+
+% AED-C07-D13
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\ChamadaEditorial{Relatório integrado | Da tabela imperfeita à recomendação contestável}
+\TextoBase
+
+Uma área de negócio solicita uma recomendação final, mas os dados apresentam problemas de qualidade, diferenças entre grupos e risco de interpretação causal. A resposta deve tornar o caminho analítico auditável.
+
+
+Um painel público permite filtrar evasão por curso, turno e faixa etária. Em alguns recortes restam três ou quatro estudantes, e servidores locais conhecem a composição das turmas. A instituição precisa informar desempenho sem revelar situações individuais nem ampliar a finalidade original.
+
+\FonteDidatica
+
+\Comando Proponha uma política para células pequenas com limiar ou agregação justificada, finalidade, perfis de acesso, retenção e comunicação do risco residual. Inclua uma forma de testar reidentificação.
+
+% AED-C07-O01
+\ItemHeader{1}{Objetiva}{grão}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A tabela deveria ter uma linha por estudante-semestre, mas transferências criam duas linhas para a mesma pessoa. Como a taxa de evasão usa matrículas elegíveis no denominador, a duplicação altera contagem e perfil do grupo. A secretaria precisa corrigir o grão antes de agregar. O parecer acadêmico informa que a transferência não equivale a uma segunda exposição ao risco: ela muda o vínculo administrativo dentro do mesmo semestre. A trilha de reconciliação deve conservar os dois registros de origem, selecionar o estado válido e provar unicidade na tabela analítica. O relatório será auditado por curso e turno, portanto uma exclusão aleatória poderia alterar justamente os estratos menores. A regra deverá usar chave composta, vigência e estado acadêmico, registrar conflitos e interromper a publicação quando mais de uma linha permanecer elegível para a mesma chave. Só depois desse teste o numerador de evasão e o denominador de estudantes expostos poderão ser agregados sob a mesma definição.
+
+Essa definição institucional vigente também deve constar da linhagem publicada.
+
+\FonteDidatica
+
+\Comando Selecione a ação que restaura uma linha por estudante-semestre e protege numerador e denominador.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item somar todas as linhas porque representam eventos reais
+
+\item remover aleatoriamente uma duplicata
+
+\item definir chave estudante-semestre, reconciliar transferências e testar unicidade antes da taxa
+
+\item agregar por curso antes de investigar
+
+\item usar a média das taxas publicadas
+
+\end{enumerate}
+
+% AED-C07-O09
+\ItemHeader{9}{Objetiva}{recomendação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um campus adotou intervenção de permanência no mesmo mês em que o calendário acadêmico mudou; os demais não adotaram. A evasão caiu no campus participante. A secretaria precisa decidir o próximo passo sem atribuir toda a mudança à intervenção por simples comparação antes/depois.
+
+\FonteDidatica
+
+\Comando Selecione o desenho de continuidade que gera evidência comparável antes de uma expansão definitiva.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item recomendar piloto ampliado com comparação e métricas prévias, não expansão causal definitiva
+
+\item expandir imediatamente por correlação temporal
+
+\item cancelar porque não há ensaio perfeito
+
+\item ocultar mudança de calendário
+
+\item comparar apenas antes/depois
+
+\end{enumerate}
+
+% AED-C08-O05
+\ItemHeader{5}{Objetiva}{visual}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um mapa de calor compara bairros, mas não apresenta escala, usa cores sem ordenação e mistura contagem de atrasos com percentual de entregas. Bairros possuem volumes muito diferentes. A revisão deve preservar unidade, denominador e acessibilidade antes de destacar uma região.
+
+\FonteDidatica
+
+\Comando Selecione o redesenho que separa medidas, explicita escala e permanece legível sem depender apenas de cor.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aumentar o número de cores
+
+\item retirar legenda
+
+\item somar contagem e percentual
+
+\item ordenar bairros alfabeticamente apenas
+
+\item separar medidas, explicitar escala/unidade e oferecer rótulos acessíveis
+
+\end{enumerate}
+
+% AED-C08-O09
+\ItemHeader{9}{Objetiva}{decisão}{Situação profissional e suporte quantitativo}
+
+\ChamadaEditorial{Decisão responsável | Pontualidade não pode compensar risco de acidente}
+\TextoBase
+
+O novo acordo operacional melhorou a pontualidade ao mesmo tempo que elevou acidentes e jornadas. A direção declarou segurança como restrição, e não como indicador que possa ser compensado por uma média favorável.
+
+
+Reduzir a janela prometida elevou o indicador de pontualidade, mas também aumentou acidentes relatados e jornadas prolongadas. A direção não autorizou compensar segurança por desempenho. A decisão precisa tratar qualidade e risco como restrições conjuntas, não como média.
+
+\FonteDidatica
+
+\Comando Selecione a decisão que usa pontualidade e segurança como critérios não compensatórios e verificáveis.
+
+\begin{enumerate}[label=\Alph*)]
+  \item formular decisão multicritério com limite de segurança não compensável por média. O limite de segurança impede que melhora média de pontualidade compense acidentes e jornadas excessivas.
+  \item otimizar somente pontualidade. Otimizar apenas pontualidade viola explicitamente a restrição definida pela direção.
+  \item tirar média de acidentes e tempo. Acidentes e tempo possuem significados e unidades diferentes; sua média não representa decisão responsável.
+  \item ocultar efeito adverso. Ocultar o efeito adverso elimina evidência material e impede governança do risco.
+  \item escolher a métrica mais fácil. Facilidade de mensuração não torna uma métrica adequada à consequência operacional.
+\end{enumerate}
+
+% AED-C09-O03
+\ItemHeader{3}{Objetiva}{validação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O assistant afirma queda de 18\%, mas a tabela de referência contém 120 antes e 110 depois. A resposta será enviada à diretoria. Antes, a aplicação precisa recalcular a variação relativa e tratar a frase do modelo como hipótese sujeita à fonte.
+
+\FonteDidatica
+
+\Comando Recalcule a variação observada e selecione a ação de validação antes da publicação.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aceitar 18\% por ser resposta do modelo
+
+\item trocar system por user
+
+\item aumentar contexto sem conferir
+
+\item recalcular: queda de 8,33\%; bloquear ou corrigir resposta e registrar divergência
+
+\item reduzir temperatura e publicar
+
+\end{enumerate}
+
+% AED-C09-O05
+\ItemHeader{5}{Objetiva}{contexto}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O histórico recuperado contém uma regra revogada e um dado atual, sem vigência visível. Se ambos forem enviados, o modelo pode produzir resposta fluente baseada na política antiga. O contexto precisa privilegiar fonte vigente e preservar proveniência.
+
+\FonteDidatica
+
+\Comando Selecione a estratégia de contexto que remove regra revogada sem perder vigência e proveniência.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item enviar tudo porque mais contexto sempre melhora
+
+\item deixar o assistant decidir autoridade
+
+\item repetir regra antiga
+
+\item usar user para sobrescrever segurança
+
+\item selecionar/versionar contexto, marcar proveniência e excluir ou rotular conteúdo revogado
+
+\end{enumerate}
+
+% AED-C09-O09
+\ItemHeader{9}{Objetiva}{alucinação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A resposta cita uma tabela inexistente, embora a redação seja coerente e os números pareçam plausíveis. Não há artefato que sustente a afirmação. Antes de publicar, a equipe precisa exigir fonte verificável ou recusar a conclusão.
+
+\FonteDidatica
+
+\Comando Selecione a resposta operacional compatível com uma citação sem fonte existente.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item exigir referência válida e sustentação de cada alegação; caso contrário, abster-se
+
+\item aceitar pela coerência
+
+\item aumentar criatividade
+
+\item ocultar a citação
+
+\item treinar imediatamente com a resposta
+
+\end{enumerate}
+
+% AED-C10-D13
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+As áreas comercial e financeira usam o nome ``receita líquida'', porém uma exclui apenas cancelamentos e a outra também exclui impostos. O agente responde de formas diferentes conforme as colunas disponíveis, sem informar versão, responsável ou grão da definição.
+
+\FonteDidatica
+
+\Comando Proponha uma entrada de catálogo para ``receita líquida'' contendo fórmula, grão, dimensões permitidas, filtros, responsável, vigência, versão e três testes. Explique como o agente deve tratar a ambiguidade entre as duas definições.
+
+% AED-C10-O01
+\ItemHeader{1}{Objetiva}{semântica}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A métrica ``receita líquida'' possui contrato oficial que exclui cancelamentos e impostos, com vigência e responsável. O usuário não conhece a fórmula e pede apenas ``receita''. O agente precisa resolver a intenção pela camada semântica, não inventar cálculo a partir de nomes de colunas. O catálogo registra ainda moeda, data de competência e dimensão de canal permitida. Como o relatório será comparado ao fechamento financeiro, uma soma sintaticamente válida sobre coluna homônima seria rejeitada mesmo que produzisse um número plausível. O pedido abrange apenas lojas ativas no Nordeste e o segundo trimestre; esses filtros também pertencem ao plano semântico e devem aparecer na explicação. Antes da execução, o agente precisa mostrar qual métrica governada, quais dimensões e qual janela temporal resolveu, permitindo que o analista confirme a interpretação.
+
+Essa confirmação deve ocorrer antes do fechamento financeiro.
+
+\FonteDidatica
+
+\Comando Para responder sem criar uma definição paralela de receita, o agente deve
+
+\begin{enumerate}[label=\Alph*)]
+
+\item pedir ao LLM que invente a fórmula
+
+\item somar toda coluna receita
+
+\item resolver a expressão pela métrica governada, não pela soma inferida de uma coluna homônima
+
+\item usar a maior medida
+
+\item duplicar definição em cada prompt
+
+\end{enumerate}
+
+% AED-C10-O09
+\ItemHeader{9}{Objetiva}{recusa}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A pergunta ``qual cliente fraudará amanhã?'' não possui rótulo, modelo validado nem base individual autorizada. Produzir uma lista nominal criaria inferência de alto impacto sem evidência. O agente deve recusar de forma útil e oferecer análise agregada permitida.
+
+\FonteDidatica
+
+\Comando Qual resposta do agente é compatível com as evidências e com o risco da solicitação?
+
+\begin{enumerate}[label=\Alph*)]
+
+\item recusar inferência e explicar dados/competência ausentes, sem fabricar SQL
+
+\item gerar ranking por gasto
+
+\item usar receita como fraude
+
+\item retornar todos os clientes
+
+\item criar rótulo no prompt
+
+\end{enumerate}
+
+% AED-C11-D11
+\ItemHeader{11}{Discursiva}{Projetar matriz de comparação governada}{Seleção institucional}
+\TextoBase
+Uma universidade quer escolher entre as seis abordagens do capítulo para perguntas acadêmicas e financeiras. Há métricas certificadas, dados pessoais, grupos com menos de cinco estudantes e orçamento limitado.
+O piloto precisa incluir perguntas rotineiras, ambíguas e proibidas, além de perfis com permissões distintas e decisões de publicação observáveis.
+\FonteDidatica
+\Comando Proponha, em até 15 linhas, um piloto comparável. Defina perguntas, perfis, fontes, critérios de semântica, acesso, evidência, auditoria, custo e latência; explique como tratar grupos pequenos e formule uma regra de aprovação sem escolher marca antecipadamente.
+
+% AED-C11-D13
+\ItemHeader{13}{Discursiva}{Desenhar arquitetura híbrida}{BI corporativo e Streamlit}
+\TextoBase
+O time quer preservar a camada semântica corporativa, mas precisa de simulação customizada, comentários humanos e documento final assinado. Hoje o app usa credencial administrativa e copia dados para CSV.
+O documento assinado gera efeito administrativo, de modo que cada transição de estado deve conservar autor, horário e evidência consultada.
+\FonteDidatica
+\Comando Desenhe uma arquitetura corrigida, incluindo identidade do usuário, consulta governada, política por linha, serviço de simulação, estado de revisão, evidências, assinatura, logs minimizados e critérios de teste e rollback.
+
+% AED-C11-O01
+\ItemHeader{1}{Objetiva}{Selecionar ferramenta pela fronteira de governança}{Consulta executiva multifuente}
+\TextoBase
+Uma rede varejista possui métricas certificadas no warehouse, políticas por linha e um catálogo corporativo. O protótipo com respostas em linguagem natural será usado por 300 gestores. A diretoria exige que toda resposta identifique métrica, filtros, consulta executada e fonte; protótipos fora da camada semântica não podem publicar números oficiais.
+A escolha será submetida ao comitê de dados, que rejeita soluções incapazes de reconstruir uma resposta contestada.
+\FonteDidatica
+\Comando A decisão arquitetural mais coerente é
+\begin{enumerate}[label=\Alph*)]
+\item escolher a interface com o gráfico mais elaborado e recriar métricas no prompt.
+\item usar qualquer chatbot, pois o catálogo torna desnecessário aplicar políticas na consulta.
+\item integrar a experiência conversacional à camada semântica e à identidade corporativa, registrando consulta, versão e evidência.
+\item exportar dados para planilhas individuais e comparar as respostas manualmente ao final do mês.
+\item permitir SQL livre para todos os gestores e auditar apenas respostas denunciadas como erradas.
+\end{enumerate}
+
+% AED-C11-O03
+\ItemHeader{3}{Objetiva}{Distinguir modelo semântico de visualização}{Dois totais para a mesma receita}
+\TextoBase
+No piloto, Looker com Gemini consulta uma medida certificada que exclui cancelamentos e usa câmbio do fechamento. Um app Streamlit soma a coluna bruta e usa câmbio do dia. Ambos desenham gráficos corretos para seus respectivos resultados, mas os totais divergem.
+A divergência afetará o fechamento financeiro, por isso uma mudança apenas visual não resolve o desacordo entre contratos de cálculo.
+\FonteDidatica
+\Comando O diagnóstico e a primeira correção adequados são
+\begin{enumerate}[label=\Alph*)]
+\item atribuir a divergência ao tipo de gráfico e padronizar as cores.
+\item aumentar o modelo de linguagem para que escolha o total mais plausível.
+\item calcular a média dos dois totais e publicá-la como conciliação.
+\item alinhar definição, grão, filtros e regra cambial em uma camada semântica versionada antes de comparar interfaces.
+\item manter ambos os números, pois ferramentas diferentes necessariamente produzem verdades diferentes.
+\end{enumerate}
+
+% AED-C11-O07
+\ItemHeader{7}{Objetiva}{Calcular capacidade e custo por resposta útil}{Teste de carga}
+\TextoBase
+Em 1.000 perguntas, uma configuração respondeu 900, das quais 810 foram corretas e citadas. Custou R\$180. Outra respondeu 800, das quais 760 foram corretas e citadas, ao custo de R\$190. O requisito é pelo menos 75\% de respostas úteis sobre o total e deseja-se menor custo por resposta útil.
+A decisão de escala depende simultaneamente de cobertura útil e custo unitário, medidos sobre o mesmo conjunto de mil perguntas.
+\FonteDidatica
+\Comando A análise correta é
+\begin{enumerate}[label=\Alph*)]
+\item a primeira alcança 81\% e R\$0,22 por útil; a segunda 76\% e R\$0,25; ambas passam, e a primeira tem menor custo unitário.
+\item a primeira alcança 90\% e R\$0,20; a segunda 80\% e R\$0,24; basta dividir custo por respostas geradas.
+\item a primeira alcança 81\% e R\$0,18; a segunda 76\% e R\$0,19; custo deve ser dividido por perguntas totais.
+\item somente a primeira passa, porque 800 respostas são menos que o limiar de 75\%.
+\item somente a segunda passa, porque possui maior precisão entre as respostas geradas.
+\end{enumerate}
+
+% AED-C12-D15
+\ItemHeader{15}{Discursiva}{Especificar teste de atualização}{Troca do modelo local}
+\TextoBase
+A equipe quer substituir Llama Q4 por uma versão nova e alterar simultaneamente prompt, parser e cache. O sistema atende perguntas numéricas, comparações e narrativas.
+A atualização só poderá substituir a versão atual se passar casos funcionais, adversariais, de segurança e de regressão com configuração registrada.
+\FonteDidatica
+\Comando Proponha protocolo com baseline congelado, conjunto estratificado, versões, ablações, testes sintáticos e semânticos, cálculos de referência, latência, memória, custo, segurança, execução paralela, canário e rollback.
+
+% AED-C12-O03
+\ItemHeader{3}{Objetiva}{Impedir execução arbitrária}{Pergunta analítica em linguagem natural}
+\TextoBase
+Para responder perguntas sobre um DataFrame, a equipe considera permitir que o Llama gere Python e execute qualquer código no processo do Streamlit, que também possui credenciais do banco e acesso à rede.
+A pergunta pode conter texto malicioso na planilha; validação de intenção não substitui lista permitida de operações e isolamento da execução.
+\FonteDidatica
+\Comando A alternativa inicial mais segura e verificável é
+\begin{enumerate}[label=\Alph*)]
+\item executar o código gerado e revisar apenas se ocorrer erro.
+\item ocultar as credenciais no prompt, mantendo-as disponíveis ao processo executor.
+\item oferecer ferramentas analíticas permitidas com parâmetros validados; se código livre for indispensável, isolá-lo em sandbox sem segredo, rede ou escrita ampla.
+\item pedir ao modelo uma promessa textual de que não acessará arquivos.
+\item usar temperatura zero como fronteira de segurança para a execução.
+\end{enumerate}
+
+% AED-C12-O05
+\ItemHeader{5}{Objetiva}{Gerenciar estado e reexecução}{Duplo envio no Streamlit}
+\TextoBase
+Ao alterar um filtro, o Streamlit reexecuta o script. O protótipo dispara novamente uma inferência cara e grava duas decisões idênticas. Não há chave que relacione pergunta, dados e versão do modelo.
+O incidente ocorre quando a interface reexecuta o script; a correção deve impedir duplicidade sem perder o histórico visível ao usuário.
+\FonteDidatica
+\Comando A correção adequada é
+\begin{enumerate}[label=\Alph*)]
+\item desativar todos os widgets após a primeira execução da sessão.
+\item usar estado de sessão, formulário para submissão explícita, chave idempotente e cache versionado pelos insumos relevantes.
+\item guardar apenas a última resposta em variável global compartilhada por usuários.
+\item aumentar o timeout para que as duas chamadas terminem na mesma ordem.
+\item remover os logs duplicados sem impedir o efeito repetido.
+\end{enumerate}
+
+% AED-C12-O07
+\ItemHeader{7}{Objetiva}{Garantir saída estruturada}{Gráfico sugerido pelo Llama}
+\TextoBase
+O modelo deve sugerir tipo de gráfico, campos e justificativa. Em testes, produz nomes de colunas inexistentes e ocasionalmente inclui código. A interface espera um objeto estruturado.
+A especificação do gráfico será consumida por componente separado, exigindo campos permitidos, tipos verificáveis e rejeição de propriedades inesperadas.
+\FonteDidatica
+\Comando O fluxo de validação deve
+\begin{enumerate}[label=\Alph*)]
+\item aceitar qualquer JSON sintaticamente válido e renderizar os campos recebidos.
+\item validar esquema, lista permitida de gráficos, existência e tipos das colunas; rejeitar ou reparar de modo controlado antes de renderizar.
+\item extrair nomes por expressão regular e executar eventual código junto da visualização.
+\item inserir todas as colunas do DataFrame no prompt até o modelo parar de errar.
+\item remover justificativa e validação para diminuir tokens.
+\end{enumerate}
+
+% AED-C13-O01
+\ItemHeader{1}{Objetiva}{Distinguir responsabilidades agentic}{Relatório mensal recorrente}
+\TextoBase
+Um fluxo recebe a solicitação, consulta métricas, compara o mês anterior, produz narrativa e pede aprovação humana. A equipe chama de ``agente'' tanto o modelo quanto uma função SQL e um manual de procedimento.
+O relatório alimenta decisões de estoque, e cada etapa deve possuir entrada, saída, permissão e condição de parada verificáveis.
+\FonteDidatica
+\Comando A descrição tecnicamente adequada é
+\begin{enumerate}[label=\Alph*)]
+\item o LLM é a ferramenta, o SQL é o agente e o manual é a memória episódica.
+\item o agente coordena estado e decisões; SQL é ferramenta; o manual pode constituir skill ou playbook; o LLM apoia interpretação.
+\item todo componente é um agente porque participa do mesmo fluxo.
+\item a memória decide o próximo passo e o agente apenas armazena texto.
+\item a skill executa diretamente qualquer ação e torna permissões desnecessárias.
+\end{enumerate}
+
+% AED-C13-O05
+\ItemHeader{5}{Objetiva}{Escolher memória apropriada}{Correção de preferência e regra}
+\TextoBase
+Um usuário prefere gráficos em barras; a política corporativa determina que valores inferiores a cinco sejam suprimidos. O protótipo grava ambas as informações como lembranças livres produzidas pelo modelo.
+A preferência de formato pertence ao usuário, mas uma política revogada não pode persistir como memória nem ser reintroduzida pelo histórico.
+\FonteDidatica
+\Comando O redesenho adequado é
+\begin{enumerate}[label=\Alph*)]
+\item armazenar preferência e política juntas em memória conversacional sem versão.
+\item tratar preferência como dado de perfil revogável e política como regra governada, versionada e aplicada fora da memória livre.
+\item converter a política em mensagem do usuário para que possa ser substituída em cada conversa.
+\item descartar a preferência e manter somente o histórico integral indefinidamente.
+\item permitir que o agente escolha qual regra lembrar conforme a tarefa.
+\end{enumerate}
+
+% AED-C13-O09
+\ItemHeader{9}{Objetiva}{Aplicar recusa segura}{Pergunta sem evidência autorizada}
+\TextoBase
+O usuário pede previsão de demissões por pessoa. O agente tem apenas dados agregados autorizados, e a política proíbe inferência individual. Uma ferramenta de busca não encontra fonte adicional.
+A resposta será usada em decisão de crédito; ausência de fonte autorizada exige abstenção útil, sem fabricar aproximação nem executar ferramenta privilegiada.
+\FonteDidatica
+\Comando O comportamento correto é
+\begin{enumerate}[label=\Alph*)]
+\item estimar indivíduos a partir da média da unidade e omitir a incerteza.
+\item recusar a inferência individual, explicar a restrição e oferecer análise agregada autorizada ou encaminhamento humano.
+\item pedir ao modelo que invente dados sintéticos com nomes reais.
+\item executar várias buscas até alguma resposta parecer confiante.
+\item guardar a pergunta na memória e responder depois sem nova autorização.
+\end{enumerate}
+
+% AED-C14-D15
+\ItemHeader{15}{Discursiva}{Responder a contestação e corrigir o sistema}{Decisão baseada em número errado}
+\TextoBase
+Um relatório GenBI levou a reduzir estoque. Depois, descobriu-se que o snapshot tinha atraso de dois dias e o trace não registrava versão. Houve perda operacional, mas a extensão ainda está em apuração.
+A recomendação equivocada já afetou clientes; correção técnica deve ocorrer junto com contenção, comunicação, reparação e prevenção de recorrência.
+\FonteDidatica
+\Comando Proponha contenção, correção da decisão, preservação de evidências, comunicação de fatos e hipóteses, reconstrução, compensação/encaminhamento, correção de versionamento e gates para retorno.
+
+% AED-C14-O05
+\ItemHeader{5}{Objetiva}{Distinguir alucinação de desatualização}{Política revogada}
+\TextoBase
+O recuperador trouxe uma política revogada, marcada como versão vigente por erro de metadado. O modelo citou fielmente o trecho e não inventou conteúdo, mas a decisão contrariou a norma atual.
+A resposta usou corretamente um documento que deixou de valer; a avaliação deve separar recuperação desatualizada de conteúdo sem sustentação.
+\FonteDidatica
+\Comando A classificação mais precisa é
+\begin{enumerate}[label=\Alph*)]
+\item alucinação textual exclusiva, porque toda resposta incorreta é alucinação.
+\item falha de vigência/proveniência na recuperação; fidelidade ao contexto não garantiu correção atual.
+\item falha exclusiva de estilo, resolvida com prompt mais formal.
+\item sucesso, porque a citação existe.
+\item falha de custo, porque versões antigas usam mais tokens.
+\end{enumerate}

@@ -1,0 +1,324 @@
+\section{Capítulo 7 --- Integração da tabela imperfeita à recomendação}
+
+Uma secretaria analisa evasão em cursos técnicos. A base reúne matrícula, frequência e situação final, mas há duplicatas, ausências, mudanças de definição e grupos com exposição desigual.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{grão}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A tabela deveria ter uma linha por estudante-semestre, mas transferências criam duas linhas para a mesma pessoa. Como a taxa de evasão usa matrículas elegíveis no denominador, a duplicação altera contagem e perfil do grupo. A secretaria precisa corrigir o grão antes de agregar. O parecer acadêmico informa que a transferência não equivale a uma segunda exposição ao risco: ela muda o vínculo administrativo dentro do mesmo semestre. A trilha de reconciliação deve conservar os dois registros de origem, selecionar o estado válido e provar unicidade na tabela analítica. O relatório será auditado por curso e turno, portanto uma exclusão aleatória poderia alterar justamente os estratos menores. A regra deverá usar chave composta, vigência e estado acadêmico, registrar conflitos e interromper a publicação quando mais de uma linha permanecer elegível para a mesma chave. Só depois desse teste o numerador de evasão e o denominador de estudantes expostos poderão ser agregados sob a mesma definição.
+
+Essa definição institucional vigente também deve constar da linhagem publicada.
+
+\FonteDidatica
+
+\Comando Selecione a ação que restaura uma linha por estudante-semestre e protege numerador e denominador.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item somar todas as linhas porque representam eventos reais
+
+\item remover aleatoriamente uma duplicata
+
+\item definir chave estudante-semestre, reconciliar transferências e testar unicidade antes da taxa
+
+\item agregar por curso antes de investigar
+
+\item usar a média das taxas publicadas
+
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{taxa}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O relatório da secretaria registra no Quadro 1 evasões e estudantes elegíveis de dois cursos sob a mesma definição. A comparação deve usar taxas, sem classificar pela contagem absoluta nem ocultar o denominador menor.
+\begin{DocumentBox}[Quadro 1 --- evasão por curso]
+\begin{tabularx}{\textwidth}{@{}Yrr@{}}\toprule
+\textbf{Curso} & \textbf{Evasões} & \textbf{Elegíveis}\\\midrule
+A & 30 & 200\\ B & 18 & 80\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+
+\FonteDidatica
+
+\Comando Calcule as taxas de A e B e selecione a comparação proporcional aos denominadores.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item A=15\% e B=22,5\%; B tem maior taxa, com ressalva sobre denominador menor
+
+\item A=30\% e B=18\%
+
+\item A=12,5\% e B=7,5\%
+
+\item A é pior porque tem mais casos
+
+\item as taxas somam 37,5\%
+
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{causalidade}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Cursos com mais atendimentos psicopedagógicos apresentam menor evasão. Entretanto, o atendimento foi priorizado para estudantes que solicitaram ajuda, e os cursos diferem em perfil e calendário. A secretaria avalia expansão, mas o desenho observacional ainda admite seleção e explicações alternativas.
+
+\FonteDidatica
+
+\Comando Selecione a conclusão que distingue associação observada de efeito causal e propõe evidência comparável.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item concluir que atendimento causou toda a redução
+
+\item concluir que atendimento aumenta risco
+
+\item remover estudantes atendidos
+
+\item tratar como associação sujeita a seleção; propor desenho comparável antes de atribuir efeito
+
+\item usar correlação como prova causal
+
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{ausência}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A frequência está ausente em 40 de 400 registros; 30 dessas ausências concentram-se em um campus cujo leitor falhou. Substituir vazios por zero classificaria falha de captura como falta. A secretaria precisa quantificar completude e investigar o mecanismo antes de imputar.
+
+\FonteDidatica
+
+\Comando Calcule a proporção ausente e selecione o tratamento compatível com a concentração por campus.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 1\% e ausência completamente aleatória
+
+\item 10\% ausente e mecanismo dependente do campus; investigar processo antes de imputar
+
+\item 40\% e excluir toda a coluna
+
+\item 7,5\% e substituir por zero
+
+\item 10\% e imputar média sem registrar
+
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{ética}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um ranking público detalha evasão por curso, turno e faixa etária. Algumas células possuem menos de cinco estudantes e, combinadas com informações locais, permitem inferir situações individuais. A transparência precisa ser equilibrada com finalidade, agregação e risco de reidentificação.
+
+\FonteDidatica
+
+\Comando Selecione a publicação que reduz reidentificação sem eliminar a finalidade analítica.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item publicar porque nomes não aparecem
+
+\item trocar nomes por códigos e manter células
+
+\item adicionar cores para anonimizar
+
+\item pedir ao LLM que decida a divulgação
+
+\item agregar/suprimir células pequenas, limitar finalidade e documentar risco residual
+
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{covariação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Horas de trabalho e faltas apresentam covariância positiva e correlação $r=0,62$. Após verificar e retirar dois casos extremos em análise de sensibilidade, $r=0,28$. Os casos são legítimos; a secretaria precisa comunicar influência, tamanho e associação sem seleção oportunista nem alegação causal.
+
+\FonteDidatica
+
+\Comando Compare as duas correlações e selecione a interpretação que comunica sensibilidade sem excluir casos automaticamente.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item a correlação aumentou 0,34
+
+\item 62\% das faltas são causadas por trabalho
+
+\item a associação linear cai 0,34 e é sensível aos extremos; relatar ambas e não inferir causa
+
+\item covariância positiva prova unidade comum
+
+\item retirar extremos sempre produz verdade
+
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{auditoria}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O dashboard atual mostra evasão de 17\%, enquanto uma planilha anterior informa 14\% para período aparentemente igual. Não há registro de definição, janela, grão, filtros ou versão. Antes de escolher um valor, a secretaria precisa reconstruir as duas cadeias de cálculo.
+
+\FonteDidatica
+
+\Comando Selecione o procedimento que reconcilia definição, período, grão, filtros e versões antes da publicação.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item publicar a média 15,5\%
+
+\item reconciliar definição, janela, grão, filtros e versões antes de escolher um valor
+
+\item usar o valor mais recente sem investigação
+
+\item manter ambos sem rótulo
+
+\item escolher o menor para evitar alarme
+
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{risco relativo}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+No mesmo período, o turno noturno registrou 48 evasões em 240 elegíveis; o diurno, 24 em 240. A secretaria quer comparar risco absoluto e razão entre taxas, mantendo explícito que o turno pode estar associado a outras condições não controladas.
+
+\FonteDidatica
+
+\Comando Calcule as duas taxas e sua razão e selecione a interpretação que preserva o limite causal.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item diferença de 24 pontos percentuais
+
+\item razão 0,5 com noturno protegido
+
+\item noturno causa 100\% das evasões
+
+\item taxas 20\% e 10\%; razão 2, associação que ainda requer controle de confundidores
+
+\item taxas iguais porque denominadores coincidem
+
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{recomendação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um campus adotou intervenção de permanência no mesmo mês em que o calendário acadêmico mudou; os demais não adotaram. A evasão caiu no campus participante. A secretaria precisa decidir o próximo passo sem atribuir toda a mudança à intervenção por simples comparação antes/depois.
+
+\FonteDidatica
+
+\Comando Selecione o desenho de continuidade que gera evidência comparável antes de uma expansão definitiva.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item recomendar piloto ampliado com comparação e métricas prévias, não expansão causal definitiva
+
+\item expandir imediatamente por correlação temporal
+
+\item cancelar porque não há ensaio perfeito
+
+\item ocultar mudança de calendário
+
+\item comparar apenas antes/depois
+
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{rastreabilidade}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A diretoria exige que cada taxa de evasão apresentada hoje possa ser refeita seis meses depois. Fontes recebem novas linhas, regras podem mudar e filtros do dashboard não ficam no PDF. O pacote de evidência precisa versionar toda a cadeia e seus responsáveis.
+
+\FonteDidatica
+
+\Comando Selecione o conjunto de artefatos necessário para reproduzir o indicador após mudanças de dados e regras.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item guardar apenas PDF final
+
+\item guardar prompt sem dados
+
+\item fotografar o dashboard
+
+\item registrar somente a ferramenta usada
+
+\item versionar fonte, transformação, regra, filtro e artefato com responsável e data
+
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma base de evasão deveria possuir uma linha por estudante-semestre, mas transferências duplicam matrículas, frequência apresenta falhas por campus e regras mudaram durante o período. A recomendação final será usada para priorizar atendimento e precisa sobreviver a auditoria.
+
+\FonteDidatica
+
+\Comando Desenhe, em até 15 linhas, o fluxo da fonte à recomendação. Inclua teste de grão, ausência e domínio, transformação versionada, visual apropriado, reconciliação e evidência necessária para auditoria.
+
+\ItemHeader{12}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+No mesmo período, o curso A registrou 30 evasões em 200 elegíveis e B, 18 em 80. O noturno registrou 48 em 240 e o diurno, 24 em 240. Os grupos diferem em tamanho e composição, e a secretaria considera concentrar recursos em apenas um deles.
+
+\FonteDidatica
+
+\Comando Calcule as quatro taxas, as diferenças em pontos percentuais e as razões A/B e noturno/diurno. Recomende uma prioridade provisória, distinguindo volume, risco relativo e limite causal.
+
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Um painel público permite filtrar evasão por curso, turno e faixa etária. Em alguns recortes restam três ou quatro estudantes, e servidores locais conhecem a composição das turmas. A instituição precisa informar desempenho sem revelar situações individuais nem ampliar a finalidade original.
+
+\FonteDidatica
+
+\Comando Proponha uma política para células pequenas com limiar ou agregação justificada, finalidade, perfis de acesso, retenção e comunicação do risco residual. Inclua uma forma de testar reidentificação.
+
+\ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+O dashboard informa evasão de 17\%, enquanto a planilha usada no mês anterior mostra 14\%. As equipes não conseguem localizar versão da definição, filtros, população elegível ou data de extração. A diretoria suspendeu a publicação até haver reconciliação.
+
+\FonteDidatica
+
+\Comando Crie um protocolo de reconciliação para 14\% e 17\%. Ordene verificações de definição, período, população, grão, filtros, transformação e versão; atribua responsáveis e declare a evidência para republicar.
+
+\ItemHeader{15}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Um campus adotou intervenção de permanência ao mesmo tempo em que alterou calendário e equipe. A evasão posterior caiu, mas não existe campus pareado nem métrica prévia de exposição à intervenção. A direção deseja expandir a política para toda a rede.
+
+\FonteDidatica
+
+\Comando Avalie a alegação causal. Identifique confundidores, proponha grupo ou período comparável, métricas prévias e uma regra mensurável de expansão que não dependa apenas da diferença antes/depois.
+
+\newpage
+
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 --- resposta A.} Para A, $30/200=0{,}15=15\%$. Para B, $18/80=0{,}225=22{,}5\%$. Apesar de A ter mais casos absolutos, B apresenta taxa 7,5 pontos percentuais maior. A interpretação deve manter visível que B possui denominador menor; portanto, A é a resposta correta.
+\[p_A=15\%,\qquad p_B=22{,}5\%\]
+
+\paragraph{Questão 4 --- resposta B.} A ausência global é $40/400=0{,}10=10\%$. Desses 40 registros, 30 vêm do campus com falha de leitor, concentração incompatível com tratar a ausência como completamente aleatória. Preencher com zero confundiria falha de captura com falta; deve-se investigar e corrigir o processo antes de imputar. Logo, B.
+
+\paragraph{Questão 6 --- resposta C.} A correlação passa de 0,62 para 0,28, queda de $0{,}62-0{,}28=0{,}34$. Isso mostra sensibilidade aos dois casos extremos, não licença para apagá-los. Como são legítimos, ambas as análises devem ser relatadas; nenhum dos coeficientes prova causalidade. Essa leitura está em C.
+
+\paragraph{Questão 8 --- resposta D.} No noturno, $48/240=0{,}20=20\%$; no diurno, $24/240=0{,}10=10\%$. A razão é $20\%/10\%=2$: a taxa observada no noturno é o dobro. O cálculo descreve associação e ainda requer controle de perfil, trabalho e outras variáveis. Logo, D.
+
+\paragraph{Questão 10 --- resposta E.} Guardar apenas o PDF não congela dados, regra ou recorte. A reprodução exige versão da fonte ou snapshot, transformação, definição da métrica, filtros e artefato, cada qual com responsável e data. Esse encadeamento permite explicar mudanças futuras e está completo somente na alternativa E.
+
+\paragraph{Questão 12 --- critérios.} Esperam-se os cálculos $30/200=15\%$, $18/80=22{,}5\%$, $48/240=20\%$, $24/240=10\%$ e razão 2. A interpretação deve distinguir diferença absoluta, razão e tamanhos amostrais, além de propor comparação estratificada antes de atribuir efeito ao turno.
+
+\paragraph{Questão 14 --- critérios.} A resposta deve reconciliar 17\% e 14\% por definição, janela, grão, filtros e versão; não vale publicar média entre indicadores incompatíveis. Deve propor um painel com contrato da métrica, denominadores, data de atualização, rastreabilidade e regra de bloqueio enquanto a divergência não for explicada.

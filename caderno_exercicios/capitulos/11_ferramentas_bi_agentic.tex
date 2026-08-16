@@ -1,0 +1,215 @@
+\section{Capítulo 11 --- Ferramentas analíticas e BI agentic}
+
+Os itens comparam arquiteturas e configurações observadas em cenários didáticos. Nomes de produtos situam decisões profissionais, mas nenhuma questão pressupõe que uma marca possua capacidade universal ou permanente.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{Selecionar ferramenta pela fronteira de governança}{Consulta executiva multifuente}
+\TextoBase
+Uma rede varejista possui métricas certificadas no warehouse, políticas por linha e um catálogo corporativo. O protótipo com respostas em linguagem natural será usado por 300 gestores. A diretoria exige que toda resposta identifique métrica, filtros, consulta executada e fonte; protótipos fora da camada semântica não podem publicar números oficiais.
+A escolha será submetida ao comitê de dados, que rejeita soluções incapazes de reconstruir uma resposta contestada.
+\FonteDidatica
+\Comando A decisão arquitetural mais coerente é
+\begin{enumerate}[label=\Alph*)]
+\item escolher a interface com o gráfico mais elaborado e recriar métricas no prompt.
+\item usar qualquer chatbot, pois o catálogo torna desnecessário aplicar políticas na consulta.
+\item integrar a experiência conversacional à camada semântica e à identidade corporativa, registrando consulta, versão e evidência.
+\item exportar dados para planilhas individuais e comparar as respostas manualmente ao final do mês.
+\item permitir SQL livre para todos os gestores e auditar apenas respostas denunciadas como erradas.
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Calcular pontuação multicritério}{Piloto de plataformas}
+\TextoBase
+Uma instituição atribuiu pesos 0,35 para governança semântica, 0,30 para controle de acesso, 0,20 para auditabilidade e 0,15 para custo. Notas de 1 a 5 foram obtidas no mesmo roteiro de testes.
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}\toprule
+\textbf{Opção} & \textbf{Semântica} & \textbf{Acesso} & \textbf{Auditoria} & \textbf{Custo}\\\midrule
+Power BI/Fabric & 5 & 4 & 4 & 2\\
+Tableau & 4 & 4 & 3 & 3\\
+Python/Streamlit & 2 & 3 & 5 & 5\\\bottomrule
+\end{tabularx}\end{center}
+\FonteDidatica
+As notas foram atribuídas por avaliadores independentes; o resultado deve apoiar seleção de piloto, não substituir análise de requisitos eliminatórios.
+\Comando Aplicando a soma ponderada, a classificação correta é
+\begin{enumerate}[label=\Alph*)]
+\item Tableau 3,70; Power BI/Fabric 3,55; Python/Streamlit 3,45.
+\item Power BI/Fabric 4,05; Tableau 3,65; Python/Streamlit 3,15.
+\item Python/Streamlit 4,10; Tableau 3,80; Power BI/Fabric 3,25.
+\item Power BI/Fabric 4,25; Python/Streamlit 3,65; Tableau 3,15.
+\item Power BI/Fabric 3,75; Tableau 3,75; Python/Streamlit 3,75.
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Distinguir modelo semântico de visualização}{Dois totais para a mesma receita}
+\TextoBase
+No piloto, Looker com Gemini consulta uma medida certificada que exclui cancelamentos e usa câmbio do fechamento. Um app Streamlit soma a coluna bruta e usa câmbio do dia. Ambos desenham gráficos corretos para seus respectivos resultados, mas os totais divergem.
+A divergência afetará o fechamento financeiro, por isso uma mudança apenas visual não resolve o desacordo entre contratos de cálculo.
+\FonteDidatica
+\Comando O diagnóstico e a primeira correção adequados são
+\begin{enumerate}[label=\Alph*)]
+\item atribuir a divergência ao tipo de gráfico e padronizar as cores.
+\item aumentar o modelo de linguagem para que escolha o total mais plausível.
+\item calcular a média dos dois totais e publicá-la como conciliação.
+\item alinhar definição, grão, filtros e regra cambial em uma camada semântica versionada antes de comparar interfaces.
+\item manter ambos os números, pois ferramentas diferentes necessariamente produzem verdades diferentes.
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Calcular custo mensal comparável}{Orçamento para consultas conversacionais}
+\TextoBase
+Três pilotos processam 40.000 consultas mensais. Amazon Q em QuickSight foi estimado em R\$0,06 por consulta mais R\$1.200 fixos; Databricks Genie, em R\$0,04 por consulta mais R\$2.000; Streamlit+LLM, em R\$0,025 por consulta, R\$600 de infraestrutura e 30 horas mensais de operação a R\$80/h.
+O orçamento será comparado antes da contratação anual e deve incluir componentes variáveis, fixos e trabalho especializado recorrente.
+\FonteDidatica
+\Comando Os custos mensais estimados são, respectivamente,
+\begin{enumerate}[label=\Alph*)]
+\item R\$2.400; R\$1.600; R\$1.600.
+\item R\$3.600; R\$3.600; R\$4.000.
+\item R\$3.600; R\$2.000; R\$3.000.
+\item R\$2.600; R\$3.600; R\$4.600.
+\item R\$4.000; R\$4.000; R\$3.600.
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Avaliar acesso antes da geração}{Assistente com três domínios}
+\TextoBase
+Um diretor pergunta sobre margem e folha salarial. Tem acesso ao domínio comercial, mas não ao domínio de pessoas. O agente consegue gerar uma única narrativa juntando resultados de várias fontes. A política exige autorização por domínio e proíbe inferir valores protegidos a partir de agregados pequenos.
+A solicitação envolve pequeno grupo salarial, tornando insuficiente filtrar apenas o texto depois que dados protegidos já foram consultados.
+\FonteDidatica
+\Comando O fluxo coerente deve
+\begin{enumerate}[label=\Alph*)]
+\item consultar todos os domínios e remover a parte salarial do texto final.
+\item aplicar identidade e políticas antes de cada consulta, responder apenas com evidência autorizada e declarar a indisponibilidade da parte protegida.
+\item enviar esquemas completos ao LLM e confiar que a instrução de sistema impeça exposição.
+\item executar a consulta salarial com agregação, mesmo que o grupo possua apenas uma pessoa.
+\item usar a credencial do administrador para manter a experiência sem interrupções.
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Interpretar evidência e auditabilidade}{Resposta com número correto por caminho errado}
+\TextoBase
+O Tableau Agent e um protótipo Python retornaram receita de R\$8,2 milhões. O primeiro registrou usuário, métrica certificada, filtros, consulta e versão. O protótipo registrou somente a pergunta e a resposta; depois se descobriu que consultara uma réplica desatualizada que, por coincidência, produziu o mesmo total.
+O número será usado em conselho deliberativo; acertar por coincidência não satisfaz o requisito de demonstrar origem e transformação.
+\FonteDidatica
+\Comando A avaliação correta é
+\begin{enumerate}[label=\Alph*)]
+\item aprovar ambos, porque igualdade numérica elimina a necessidade de proveniência.
+\item reprovar ambos, porque respostas conversacionais não podem usar métricas financeiras.
+\item considerar equivalentes, desde que a linguagem da resposta seja clara.
+\item aprovar o protótipo por simplicidade e dispensar a versão da fonte.
+\item reconhecer acerto pontual nos dois, mas considerar apenas o primeiro auditável; o segundo precisa registrar caminho e fonte antes de sustentar decisão.
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Calcular capacidade e custo por resposta útil}{Teste de carga}
+\TextoBase
+Em 1.000 perguntas, uma configuração respondeu 900, das quais 810 foram corretas e citadas. Custou R\$180. Outra respondeu 800, das quais 760 foram corretas e citadas, ao custo de R\$190. O requisito é pelo menos 75\% de respostas úteis sobre o total e deseja-se menor custo por resposta útil.
+A decisão de escala depende simultaneamente de cobertura útil e custo unitário, medidos sobre o mesmo conjunto de mil perguntas.
+\FonteDidatica
+\Comando A análise correta é
+\begin{enumerate}[label=\Alph*)]
+\item a primeira alcança 81\% e R\$0,22 por útil; a segunda 76\% e R\$0,25; ambas passam, e a primeira tem menor custo unitário.
+\item a primeira alcança 90\% e R\$0,20; a segunda 80\% e R\$0,24; basta dividir custo por respostas geradas.
+\item a primeira alcança 81\% e R\$0,18; a segunda 76\% e R\$0,19; custo deve ser dividido por perguntas totais.
+\item somente a primeira passa, porque 800 respostas são menos que o limiar de 75\%.
+\item somente a segunda passa, porque possui maior precisão entre as respostas geradas.
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Comparar produto e aplicação customizada}{Regra analítica especializada}
+\TextoBase
+Uma equipe precisa incorporar uma simulação proprietária, revisão humana em duas etapas e exportação assinada. O BI corporativo oferece semântica, identidade e dashboards; o app Streamlit permite programar o fluxo, mas ainda não possui controles corporativos.
+A solução será auditada antes de assinar documentos; identidade compartilhada impediria atribuir consultas e aprovações aos responsáveis.
+\FonteDidatica
+\Comando A arquitetura inicial mais defensável é
+\begin{enumerate}[label=\Alph*)]
+\item abandonar a camada semântica e duplicar todas as regras no app.
+\item forçar o workflow dentro de uma visualização, mesmo sem suporte aos estados de revisão.
+\item usar o BI como fonte governada e o Streamlit como aplicação controlada, integrando identidade, métricas, logs e assinatura.
+\item publicar o app com conta técnica compartilhada e acrescentar auditoria após a adoção.
+\item substituir a simulação por texto gerado para reduzir a necessidade de código especializado.
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Selecionar experimento comparável}{Benchmark de seis ferramentas}
+\TextoBase
+A diretoria quer comparar Tableau, Power BI/Fabric, Amazon Q em QuickSight, Looker/Gemini, Databricks Genie e Python/Streamlit. Cada equipe propôs usar dados, perguntas e critérios próprios.
+O benchmark orientará investimento plurianual, devendo separar capacidade real da ferramenta, configuração escolhida e qualidade do dado de origem.
+\FonteDidatica
+\Comando Para obter evidência comparável, o desenho deve
+\begin{enumerate}[label=\Alph*)]
+\item permitir casos distintos, pois cada ferramenta deve mostrar apenas seu ponto forte.
+\item usar o mesmo conjunto versionado de perguntas, identidades, fontes e rubrica, registrando configuração, falhas, custo e latência.
+\item comparar somente screenshots finais, evitando expor diferenças de arquitetura.
+\item aceitar demonstrações dos fornecedores como medida suficiente de produção.
+\item escolher a menor latência média, sem analisar cauda, correção ou acesso.
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Aplicar gates simultâneos}{Resultado do piloto governado}
+\TextoBase
+O gate exige correção citada $\geq85\%$, p95 $\leq6$ s, custo $\leq$ R\$0,30 e zero violações de acesso.
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}\toprule
+\textbf{Opção} & \textbf{Correção} & \textbf{p95} & \textbf{Custo} & \textbf{Violações}\\\midrule
+Looker/Gemini & 87\% & 5,8 s & R\$0,28 & 0\\
+Databricks Genie & 91\% & 6,4 s & R\$0,26 & 0\\
+Power BI/Fabric & 86\% & 5,2 s & R\$0,32 & 0\\
+Streamlit+LLM & 84\% & 4,9 s & R\$0,22 & 0\\\bottomrule
+\end{tabularx}\end{center}
+\FonteDidatica
+O comitê definiu os quatro limites antes de ver os resultados e proíbe compensar falha em um gate pelo desempenho em outro.
+\Comando A opção aprovada pelo gate é
+\begin{enumerate}[label=\Alph*)]
+\item Databricks Genie, por ter a maior correção.
+\item Power BI/Fabric, por ter a menor latência entre as opções acima de 85\%.
+\item Streamlit+LLM, por apresentar menor custo e p95.
+\item Looker/Gemini, por atender simultaneamente aos quatro critérios.
+\item a média das quatro, porque compensa violações individuais de limites.
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Projetar matriz de comparação governada}{Seleção institucional}
+\TextoBase
+Uma universidade quer escolher entre as seis abordagens do capítulo para perguntas acadêmicas e financeiras. Há métricas certificadas, dados pessoais, grupos com menos de cinco estudantes e orçamento limitado.
+O piloto precisa incluir perguntas rotineiras, ambíguas e proibidas, além de perfis com permissões distintas e decisões de publicação observáveis.
+\FonteDidatica
+\Comando Proponha, em até 15 linhas, um piloto comparável. Defina perguntas, perfis, fontes, critérios de semântica, acesso, evidência, auditoria, custo e latência; explique como tratar grupos pequenos e formule uma regra de aprovação sem escolher marca antecipadamente.
+
+\ItemHeader{12}{Discursiva}{Calcular TCO e recomendar}{Três opções de implantação}
+\TextoBase
+Para 60.000 consultas/mês: A cobra R\$0,05 por consulta e R\$1.500 fixos; B cobra R\$0,03 e R\$2.100 fixos; C cobra R\$0,018, R\$900 de infraestrutura e 45 horas de operação a R\$90/h. Correção citada: A=89\%, B=86\%, C=84\%. O gate exige 85\%.
+A recomendação deve separar custo técnico de qualidade útil, pois respostas baratas sem citação não atendem ao uso institucional.
+\FonteDidatica
+\Comando Calcule o custo mensal e o custo por resposta correta citada de cada opção. Indique quais passam no gate e recomende uma decisão condicionada, considerando que C pode ser retestada após melhoria.
+
+\ItemHeader{13}{Discursiva}{Desenhar arquitetura híbrida}{BI corporativo e Streamlit}
+\TextoBase
+O time quer preservar a camada semântica corporativa, mas precisa de simulação customizada, comentários humanos e documento final assinado. Hoje o app usa credencial administrativa e copia dados para CSV.
+O documento assinado gera efeito administrativo, de modo que cada transição de estado deve conservar autor, horário e evidência consultada.
+\FonteDidatica
+\Comando Desenhe uma arquitetura corrigida, incluindo identidade do usuário, consulta governada, política por linha, serviço de simulação, estado de revisão, evidências, assinatura, logs minimizados e critérios de teste e rollback.
+
+\ItemHeader{14}{Discursiva}{Interpretar disponibilidade e cauda}{Operação mensal}
+\TextoBase
+Em 20.000 consultas, 19.200 concluíram; 17.600 concluíram em até 5 s; 16.800 foram corretas e citadas; 8 respostas expuseram coluna não autorizada. O SLA exige disponibilidade de 97\%, 90\% das concluídas em até 5 s, 85\% de correção citada sobre o total e zero exposição.
+A direção só autoriza produção se desempenho, correção e acesso forem avaliados com denominadores explícitos e regra de bloqueio previamente acordada.
+\FonteDidatica
+\Comando Calcule os quatro indicadores, compare-os ao SLA e proponha uma decisão de publicação que não permita compensar falha de acesso por desempenho médio.
+
+\ItemHeader{15}{Discursiva}{Defender portabilidade de decisão}{Mudança de fornecedor}
+\TextoBase
+Uma organização deseja trocar a ferramenta sem refazer métricas, permissões e avaliação. Hoje prompts, regras, consultas e logs estão misturados em dashboards proprietários.
+A migração será considerada bem-sucedida somente se decisões históricas puderem ser reproduzidas e comparadas entre as duas plataformas.
+\FonteDidatica
+\Comando Proponha um plano de desacoplamento: contratos semânticos, testes dourados, adaptadores, identidade, catálogo, telemetria, exportação de evidências, execução paralela e critérios de corte. Justifique quais partes podem permanecer específicas do produto.
+
+\newpage
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 — resposta B.} Os totais ponderados são: Power BI/Fabric $=5(0{,}35)+4(0{,}30)+4(0{,}20)+2(0{,}15)=4{,}05$; Tableau $=3{,}65$; Python/Streamlit $=3{,}15$. A pontuação serve ao conjunto de pesos declarado, não prova superioridade universal.
+\[S=0{,}35G+0{,}30A+0{,}20U+0{,}15C\]
+
+\paragraph{Questão 4 — resposta B.} Amazon Q em QuickSight: $40.000(0{,}06)+1.200=3.600$; Databricks Genie: $40.000(0{,}04)+2.000=3.600$; Streamlit+LLM: $40.000(0{,}025)+600+30(80)=4.000$. O custo operacional não pode desaparecer da comparação.
+
+\paragraph{Questão 6 — resposta E.} Coincidência numérica não reconstrói a decisão. Sem fonte, versão, identidade, consulta e filtros, não é possível demonstrar por que o protótipo acertou nem saber se continuará correto.
+
+\paragraph{Questão 8 — resposta C.} A camada corporativa preserva significado e acesso; a aplicação customizada implementa simulação e revisão. A integração deve carregar identidade, evidência e logs, em vez de copiar regras ou usar conta compartilhada.
+
+\paragraph{Questão 10 — resposta D.} Looker/Gemini apresenta 87\%, 5,8 s, R\$0,28 e zero violações, atendendo a todos os limites. As demais opções violam latência, custo ou correção; uma média entre produtos não é uma configuração implantável.
+
+\paragraph{Questão 12 — critérios.} A=R\$4.500 e aproximadamente R\$0,0843 por resposta correta citada; B=R\$3.900 e aproximadamente R\$0,0756; C=R\$6.030 e aproximadamente R\$0,1196. A e B passam 85\%; B lidera em custo sob os dados fornecidos. C não passa e só deve ser reconsiderada após novo teste comparável.
+
+\paragraph{Questão 14 — critérios.} Disponibilidade $=19.200/20.000=96\%$; até 5 s entre concluídas $=17.600/19.200\approx91{,}7\%$; correção citada $=16.800/20.000=84\%$; exposições=8. Apenas a meta de cauda passa. A exposição bloqueia publicação e exige contenção, investigação e reteste; médias não compensam segurança.

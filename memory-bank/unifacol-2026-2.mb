@@ -1,0 +1,127 @@
+# Memory Bank — Trilha UNIFACOL 2026.2
+
+updated_at: 2026-08-12
+status: canonical_structure_and_priority_chapters_validated
+owner: Cayo Oliveira
+repositories:
+  topicos: /Users/cayofel/Documents/GitHub/unifacol_topicos
+  ia: /Users/cayofel/Documents/GitHub/unifacol_ia
+  aed: /Users/cayofel/Documents/GitHub/unifacol_aed
+
+## Objetivo ativo
+
+Migrar os materiais de 2026.1 para 2026.2, unindo livro e notas em um livro-aula semanal, separando exercícios e atividades, padronizando avaliações ENADE e compartilhando o calendário e o método entre os três repositórios.
+
+## Estado atual — 12/08/2026
+
+- Plano/Excel sincronizados. Apresentações: 20/08, 03/09, 17/09 e 24/09; 0,5 cada; 20 estudantes × 4 artigos de 2026.
+- `caderno_atividades/main.pdf`: 5 pp A4, 80 atribuições provisórias, zero Overfull. Catálogo bibliográfico verificado ainda pendente.
+- Cap. 2 substituído por estatística desde o início, sem código: 5.313 palavras, 8 seções (7–10 parágrafos), 45 equações, 17 pp A4, zero Overfull; inspeção visual aprovada.
+- `livro/main.pdf`: Caps. 1–8, 143 pp A4, zero Overfull. Cap. 9 retirado temporariamente do volume até revisão/compilação na nova sequência.
+- Próximo: Cap. 3 (probabilidade, distribuições, covariância e correlação, sem código) e catálogo 2026; depois caderno ENADE completo.
+
+## Decisões confirmadas
+
+- O PDF novo é do semestre 2026.2; os arquivos atuais descrevem 2026.1.
+- Cada capítulo corresponde a um encontro semanal de três horas.
+- IA ocorre remotamente às segundas; Tópicos às quartas; AED às quintas.
+- Chamada às 20h30; saída permitida, aula continua; bloco sem aluno após a chamada não entra na revisão.
+- Livro e notas se tornam um artefato único de leitura guiada.
+- Exercícios são removidos do livro e passam para caderno separado.
+- Unidade I: prova 8 + atividade 2. Unidade II: prova 7 + simulado 3.
+- Provas: 8 questões, 6 objetivas e 2 discursivas, padrão ENADE.
+- Dificuldade: U1=2, U2=2, Final=1, Segunda Chamada=3, Simulado=ENADE.
+- Versões A/B diferem somente pela permutação das alternativas.
+
+## Conteúdo aprendido — Tópicos
+
+- Livro atual: plano; MVP/PMC/Ágil; prototipação; arquitetura de software; arquitetura de dados; LGPD; DAMA; qualidade/testes; IA tradicional; IA generativa.
+- Notas atuais: 12 semanas, com projeto de app, três pilares LGPD+IA+SPEC, SOR→SOT→SPEC, weeklies e deploy.
+- Força: sequência prática e bom material de MVP, dados, LGPD e DAMA.
+- Mudança: aprofundar arquitetura de software; preservar domínio de dados; substituir qualidade/testes genéricos por IA aplicada a qualidade e testes; dar forte ênfase a GenAI aplicada a software na Unidade II.
+- Atividade U1: quatro apresentações de artigo, 0,5 cada, artigos distintos por aluno.
+- Prioridade: Capítulo 1, apresentação do curso e artigo integrador do semestre.
+
+## Conteúdo aprendido — IA
+
+- Livro e notas têm grande densidade: fundamentos, estatística, modelos, regressão linear/logística, RMSE, matriz de confusão, odds ratio, ROC/AUC, IA generativa e Python.
+- Força: exemplos numéricos detalhados e ponte ML→GenAI.
+- Mudança: Unidade I mantém matemática/teoria; Python vira apêndice; Unidade II enfatiza GenAI atual; incluir uso responsável de LLM para estudar e programar.
+- Aula remota às segundas, respeitando feriados.
+
+## Conteúdo aprendido — AED
+
+- Livro atual cobre AED uni/bi/multivariada, Tableau, gráficos, insights, storytelling e casos.
+- Notas atuais seguem ETL Python→Tableau e comunicação por Big Idea.
+- Força: postura de decisão, comparação exploratória/explanativa e materiais visuais.
+- Mudança completa: conceitos de dataviz acima da ferramenta; aluno escolhe ferramenta; demonstrar Tableau e Python/Streamlit, com foco em Streamlit+IA.
+- Atividade U1: quatro simulados difíceis e individualizados, 0,5 cada, com explicação oral.
+- Prioridade: Capítulo 1, apresentação do curso e visão de IA aplicada a dataviz.
+
+## Calendário 2026.2 lido do PDF
+
+- 04/08 início veteranos; 17/08 início ingressantes.
+- I Unidade: 29/09–07/10.
+- II Unidade: 23–30/11.
+- Segunda chamada: 09–11/12.
+- Final: 18–23/12.
+- Feriados que afetam IA nas segundas: 03/08, 07/09, 12/10 e 02/11.
+- EXPOFACOL: 11–13/11.
+- Total institucional: 109 dias letivos (55+54).
+
+## Estado encontrado — não sobrescrever
+
+Os três repositórios possuem mudanças versionadas e arquivos não rastreados. Considerar tudo material do professor. Em Tópicos, as provas antigas estão em `provas/2026.1/` e o template em `provas/template_prova_enade/`; preservar esse acervo.
+
+## Produzido e validado até esta etapa
+
+- Skill instalado e replicado em `.agents/skills/trilha-unifacol/` nos três repositórios; `AGENTS.md` ativa a convenção nas tarefas pedagógicas. Validação oficial: `Skill is valid!` nos três.
+- Estrutura canônica aplicada: `livro/`, `caderno_exercicios/`, `caderno_atividades/`, `provas/` e `memory-bank/`. As pastas concorrentes `aula`, `chapters`, `prova`/`Provas` e nomes de cadernos em maiúsculas foram eliminadas da raiz.
+- Fontes antigas preservadas em `livro/fontes_2026_1/`, separando `notas_de_aula`, `capitulos_livro`, recursos e metadados quando aplicável. Nada foi descartado na migração.
+- Referências curriculares, calendário, avaliação ENADE, escrita guiada, template legado e extrações Markdown da prova ENADE 2021.
+- PDF institucional replicado nos três repositórios.
+- `calendario.md`, `context.md`, `opus.md`, `mudancas_2026_2.md` e estrutura inicial replicados; versões 2026.1 preservadas nos repositórios externos.
+- Plano semanal de Tópicos criado; planos de AED e IA preparados para replicação.
+- Caderno de exercícios de Tópicos, Capítulo 1: 8 questões (6 objetivas + 2 discursivas), 4 páginas, compilado.
+- Livro-aula de Tópicos, Capítulo 1 ampliado com os estudos de SDD e engenharia de agentes: 8.720 palavras de prosa estimadas e 15 seções. O novo fio explica `spec-first`, `spec-anchored`, `spec-as-source`, contexto, arquitetura, plano, tarefas e aceitação; depois diferencia LLM, agente, subagente, multiagente, skill, playbook, MCP e Memory Bank, com estruturas de pasta e comparação atual entre Codex, Claude Code, Copilot e Kiro. Os artigos `Spec-Driven Development: From Code to Contract...` (8 páginas) e `Agent Skills for Large Language Models...` (9 páginas) estão anexados após o survey IEEE. O capítulo individual e `livro/main.pdf` têm 59 páginas A4, compilaram com Tectonic e não possuem overflow.
+- Caderno de exercícios de AED, Capítulo 1: 8 questões, 3 páginas, compilado.
+- Livro-aula de AED, Capítulo 1 refinado novamente: 6.916 palavras de prosa estimadas, 11 seções e 18 caixas cinza com trechos reais ampliados de Phebe. Cada caixa tem leitura e conexão explícitas; o artigo liga as seções posteriores de cadeia analítica, percepção, IA, ferramentas, avaliação e fechamento. O PDF de Phebe está anexado; capítulo individual e `livro/main.pdf` têm 30 páginas A4 e nenhum overflow. Pergunta central: `para que dataviz se a IA responde diretamente?`.
+- Livro-aula de AED, Capítulo 1 ampliado para o panorama de BI agentic: 8.870 palavras de prosa estimadas e 11 seções. A seção de ferramentas agora distingue BI visual, copiloto, análise conversacional e BI agentic e compara Tableau Agent/Tableau Next, Power BI Copilot/Fabric data agents/Power BI Agentic, Amazon Q em Quick Sight, Looker Studio versus Looker com Gemini, Databricks AI/BI Genie e Python/Streamlit. O preprint `Beyond Text-to-SQL: An Agentic LLM System for Governed Enterprise Analytics APIs` (2026, 9 páginas) foi lido, conectado a Phebe e anexado. Capítulo individual e `livro/main.pdf` têm 45 páginas A4, foram compilados com Tectonic e não possuem overflow.
+- Referência `references/bi-agentic.md` adicionada ao skill com escada conceitual, fontes científicas, nomenclatura verificada em 2026-08-05, documentação oficial e critérios pedagógicos para comparação de plataformas.
+- Preâmbulo compartilhado corrigido: títulos brancos nas caixas laranja, azul e cinza; espaço vertical antes/depois; `ArticleBox` documental.
+- Validador `scripts/validate_chapter.py` criado: mínimo de cinco parágrafos substantivos por seção/subseção/subsubseção e piso de 5.000 palavras nos capítulos iniciais.
+- Fontes de abertura: survey IEEE sobre LLMs no processamento de código para Tópicos; Phebe 2026 sobre linguagem natural, Text-to-SQL, análise e recomendação de visual para AED.
+- Regra incorporada no skill: com PDF disponível, a leitura percorre o artigo inteiro; citações permanecem curtas para respeitar direitos autorais e as caixas podem usar síntese fiel identificada. Logo abaixo entram `Leitura guiada` e `Ligação com o semestre`. O artigo continua como liga substantiva das seções conceituais posteriores; o link permanece no corpo e o PDF legalmente obtido no apêndice.
+- Livro-aula de IA, Capítulo 1 ampliado e submetido a pente-fino de vocabulário: 10.052 palavras de prosa estimadas e 13 seções; a seção `O universo da IA antes de chegarmos aos LLMs` possui 31 parágrafos substantivos. O panorama percorre as bases de Matemática, Computação, Estatística/Dados e Engenharia/Controle; distingue contenção de interseção; explica IA simbólica, aprendizado supervisionado e não supervisionado, aprendizado profundo, visão, áudio, PLN, recomendação, reforço, robótica, IA generativa e LLMs. O texto explicita que IA generativa classifica o objetivo de produzir novas amostras, enquanto LLM classifica escala e domínio de linguagem; apresenta GANs, autoencoders variacionais, difusão e modelos autorregressivos; explica por que PLN apenas cruza aprendizado profundo e por que reforço apenas cruza Robótica. Termos potencialmente opacos passaram a ser definidos no primeiro uso em português, preservando o nome inglês apenas como ponte para a literatura: corpus/corpora, token, embedding, vieses, pré-treinamento, ajuste fino, subajuste, sobreajuste, vazamento, benchmark, ponto de corte, métricas, agrupamento, PCA, SLAM, PID, função de perda, latência, SDD, skill, playbook, MCP, Markdown e Memory Banking, entre outros. A antiga tabela panorâmica de 11 regiões e a tabela curricular de 8 linhas foram removidas para preservar o storytelling. Há duas tabelas conceituais compactas e uma tabela curta com o roteiro de três horas, todas em blocos fixos no fluxo `texto → tabela → interpretação`, citadas explicitamente antes e depois. A Figura 1.1 continua citada várias vezes durante as explicações das relações do mapa, sem alteração da arte. PNG, SVG e script ficam em `unifacol_ia/livro/figuras/`. As páginas das novas definições, da distinção IA generativa × LLM, de agentes e do roteiro foram inspecionadas visualmente. Os três artigos permanecem anexados; capítulo individual e `livro/main.pdf` têm 91 páginas A4, compilaram com Tectonic e não possuem overflow.
+- Livro-aula de IA, Capítulo especial `capitulo_99` criado para aprofundamento docente em LangGraph, Langfuse, GenBI, Text-to-SQL e grafos de conhecimento: 5.788 palavras de prosa, 12 seções e roteiro de estudo de três horas. O capítulo distingue modelo, agente, workflow, estado, nó, aresta, checkpoint, thread, trace, session e observation; percorre o artigo `Graph-Based Agentic AI with LangGraph` (2026), incluindo fluxo SQL com reparo; conecta o artigo `Beyond Text-to-SQL` (2026) a APIs analíticas governadas; e usa `A Text-to-SQL strategy based on large language models and knowledge graphs for real-world databases` (2026) para explicar ligação semântica, DANKE, visões e exemplos dinâmicos. Inclui arquitetura integrada LangGraph + camada semântica/KG + SQL/API + GenBI + Langfuse, estado e rotas em Python, persistência, interrupção, avaliação, segurança, taxonomia de falhas e diferença entre execução válida e correção ponta a ponta. A topologia auto-hospedada do Langfuse cobre web, worker, PostgreSQL, ClickHouse, Redis/Valkey, S3, OpenTelemetry, traces, observations, sessions, scores, datasets e prompts. Dois diagramas TikZ foram citados e inspecionados visualmente. Os três artigos completos estão anexados; o capítulo individual possui 80 páginas A4 e `livro/main.pdf`, agora com Capítulos 1 e 99, possui 170 páginas. Ambos compilaram com Tectonic sem overflow.
+- Referência durável `references/engenharia-agentica.md` criada para o skill `trilha-unifacol`: distingue padrões de convenções locais, registra taxonomia, fontes científicas, estruturas atuais de ferramentas, segurança e critérios de comparação entre agente único com skills e sistemas multiagente.
+- PDF de Phebe recebido como `unifacol_aed/livro/capitulos/capitulo_01/phebe.pdf`, validado como PDF 1.5, 7 páginas em formato Letter e licença CC BY-NC-ND 4.0. Apêndice e referências de página concluídos.
+- Matrizes de cobertura de Tópicos e AED iniciadas para controlar preservação e destino das fontes 2026.1.
+- Skill validado oficialmente com `quick_validate.py` usando o ambiente Python de AED: `Skill is valid!`.
+- Catálogo IEEE 2026 de Tópicos iniciado com 15 de 50 trabalhos verificados e links de página/PDF; não declarar completo até conferir os 35 restantes.
+- Livro-aula de AED, Capítulo 2 concluído em 07/08/2026: `Antes da média: que dado representa o problema?`. Possui 5.004 palavras de prosa estimadas, 10 seções e entre 7 e 13 parágrafos substantivos por seção. Integra pergunta operacional, população/amostra, unidade de observação/análise, tipos e escalas, granularidade, chaves/junções/agregações, qualidade, dicionário, erros plausíveis, estatística básica manual e conferência em pandas. O capítulo individual possui 17 páginas A4, foi compilado com Tectonic, não tem `Overfull` e teve páginas de abertura e tabela inspecionadas visualmente. `livro/main.tex` passou a incluir Capítulos 1 e 2; fontes de 2026.1 permanecem preservadas.
+- Livro-aula de AED, Capítulo 3 concluído em 07/08/2026: `Centro não é história completa`. Possui 5.025 palavras de prosa estimadas, 11 seções e entre 6 e 13 parágrafos substantivos por seção. Desenvolve frequências, média simples/ponderada, mediana, moda, quartis, percentis, comparação por composição, centros temporais, narrativa e limites; todas as contas aparecem à mão antes de pandas/NumPy. O capítulo individual possui 15 páginas A4, compilou com Tectonic e não possui `Overfull`. `livro/main.tex` passou a incluir Capítulos 1–3; fontes 2026.1 foram mapeadas sem perda.
+- Livro-aula de AED, Capítulo 4 concluído em 07/08/2026: `Variabilidade, distribuição e incerteza`. Possui 5.422 palavras de prosa estimadas, 10 seções e entre 6 e 10 parágrafos substantivos por seção. Desenvolve amplitude, variância populacional/amostral e correção de Bessel, desvio-padrão, IQR, cercas de Tukey, histograma, boxplot, assimetria, caudas, multimodalidade, ausências MCAR/MAR/MNAR, imputação e outliers. O caso integrado de entregas apresenta contas à mão antes do código, análise de sensibilidade, interpretação, limites e relatório de tratamento justificável. Integra `02_uni.tex` e as partes pertinentes das Semanas 4–5 sem concatenar exercícios, respostas ou teleprompter. O PDF individual possui 17 páginas A4 e o `livro/main.pdf`, agora com Capítulos 1–4, possui 90 páginas A4. Ambos compilaram com Tectonic sem `Overfull`; páginas de abertura, fórmulas/caixas, histograma manual, ausências, código e relatório foram inspecionadas visualmente, incluindo refinamento dos cabeçalhos corridos e da tabela final.
+- Livro-aula de AED, Capítulo 5 produzido em 07/08/2026: `Da fonte ao visual: arquitetura de dados para AED`. Possui 5.081 palavras de prosa estimadas, 11 seções e entre 6 e 10 parágrafos substantivos por seção. Desenvolve pergunta e contrato, fontes OLTP, ingestão, SOR/SOT/SPEC, armazenamento, grão, chaves, cardinalidade, joins, modelagem dimensional, SQL/pandas, qualidade, catálogo, linhagem, camada semântica, fonte de verdade, segurança e consumo. O caso de receita multicanal encadeia divergência de definições, fanout manual e implementação verificada. Integra a antiga Semana 1 e `05_fundamentos.tex` sem concatenar exercícios ou teleprompter. Registrar páginas, PDFs, inspeção e overflow após compilação final.
+- Livro-aula de AED, Capítulo 7 concluído em 07/08/2026: `Cor, acessibilidade e layout: quando o espaço também argumenta`. Possui 5.383 palavras de prosa estimadas, 11 seções e entre 6 e 7 parágrafos substantivos por seção. O caso de uma rede de clínicas desenvolve famílias de paletas, centro semântico, contraste e WCAG 2.2, redundância além da cor, Gestalt, hierarquia visual, carga cognitiva, grid, zonas, responsividade, filtros, parâmetros, drill-down, estados, redesign, teste do relance e auditoria. Integra partes pertinentes de `06_gaficos.tex`, `07_insights.tex`, `08_storytelling.tex`, `04_multi.tex` e Semana 8 sem transportar exercícios, respostas, teleprompter, Big Idea ou pitch. O PDF individual possui 14 páginas A4 e o `livro/main.pdf`, agora com Capítulos 1–7, possui 130 páginas A4. Ambos compilaram com Tectonic sem `Overfull`; abertura, tabela de paletas, caixa de síntese, mudanças de seção, referências e margens foram inspecionadas visualmente.
+- Livro-aula de AED, Capítulo 8 concluído em 07/08/2026: `Da exploração à história verificável: evidência que orienta decisão`. Possui 5.011 palavras de prosa estimadas, 11 seções e entre 6 e 8 parágrafos substantivos por seção. Um caso de permanência estudantil integra público e decisão, Big Idea, problema→evidência→decisão, fundamentos, estatística, arquitetura SOR/SOT/SPEC, qualidade, gráficos, cor, layout, storyboard, anotação, incerteza, ética e leitura crítica contextualizada em padrão ENADE. Integra `08_storytelling.tex`, a antiga Semana 8, `09_real_cases.tex` e a semana especial sem transportar exercícios, respostas, teleprompter, tutoriais ou rubrica. O PDF individual possui 15 páginas A4 e o `livro/main.pdf`, agora com Capítulos 1–8, possui 143 páginas A4. Ambos compilaram com Tectonic sem `Overfull`; abertura, Big Idea, tabela de integração, cálculo de incerteza, tabela do caso, caixa final, referências e margens foram inspecionados visualmente.
+- Livro-aula de AED, Capítulo 9 produzido em 07/08/2026: `IA generativa aplicada à análise: da pergunta à resposta verificável`. Possui 5.021 palavras de prosa estimadas, 11 seções e entre 6 e 11 parágrafos substantivos por seção. O caso de receita regional percorre intenção, métrica/dimensão, camada semântica, Text-to-SQL passo a passo, execução restrita, validação independente, tokens/contexto/custo/alucinação, copiloto, analytics conversacional, BI agentic, plataformas e perguntas irrespondíveis. Integra `07_insights.tex`, semana especial, Phebe e o estudo de analytics agentic governado sem repetir o panorama do Cap. 1 nem transportar exercícios/respostas. Wrapper, integração ao livro, páginas, overflow e inspeção visual devem ser registrados após compilação.
+
+## Próximas ações
+
+1. Completar as matrizes de cobertura à medida que cada capítulo for integrado, sem perder conteúdo das fontes 2026.1.
+2. Completar o catálogo verificado de 50 artigos IEEE 2026 para Tópicos.
+3. Definir a atividade de 2 pontos da Unidade I de IA.
+4. Expandir primeiro os cadernos de exercícios; depois continuar os capítulos semanais de Tópicos e AED.
+5. Criar primeiro o caderno de exercícios do Capítulo 1 de IA e então continuar os capítulos semanais de IA, Tópicos e AED.
+
+## Ajuste ativo — 12/08/2026
+
+- AED sincronizada: plano/Excel/Cap. 1/caderno de atividades usam quatro apresentações em 20/08, 03/09, 17/09 e 24/09.
+- Caps. 2–3 refinados e replicados em IA: 6.594/7.285 palavras, 19/24 pp. e 3/5 figuras; mais exemplos, contraexemplos e contas manuais, sem código; PDFs e livro integral sem `Overfull` novo.
+- Caderno ENADE AED completo: 14 capítulos, 210 itens (15 por capítulo; 10 objetivos + 5 discursivos), respostas públicas somente nos pares, gabaritos privados e PDF A4 de 100 pp.; validador aprovado e zero `Overfull`.
+- Próximo: catálogo verificado de artigos 2026; depois reservar/substituir itens ímpares e montar provas A/B.
+- Caderno de atividades concluído: 80 artigos IEEE 2026, quatro rodadas, 20 estudantes e PDF A4 de 24 pp.; DOI, páginas, resumo e acesso verificados.
+- Caderno ENADE integral concluído: 14 capítulos/210 itens refinados e validados, respostas públicas só pares, gabaritos privados e PDF A4 de 100 pp.; nenhuma questão reservada. Próximo: aprofundar capítulos do livro contra 2026.1, depois provas.
+2026-08-16 — Padrão progressivo dos Caps. estatísticos incorporado à Trilha: fórmula explicada, conta linha a linha, interpretação, exemplo/contraexemplo e ponte, sem repetir pré-requisitos. Caderno ENADE v2 integrado (14 caps., 210 itens, 114 pp.). Provas 2026.2 geradas: I U., II U., segunda chamada, final e simulado, 6O+2D, A/B apenas por permutação; 40 ímpares únicos, PDFs/logs/rastreabilidade aprovados. Próximo: revisar plano e capítulos somente sob demanda, preservando o núcleo estatístico comum.
+2026-08-16 — Prova I A/B refinada sem criar itens: somente IDs ímpares do caderno. Cobertura: problema/dor, Estatística I/II, gráfico funcional, arquitetura de dados, dashboard/storytelling, integração e decisão. Texto-base recebeu voz documental e alternativas contextuais, preservando dados, procedimento e gabarito. PDF A4 6 pp.; A/B, matriz e log sem Overfull/fatal validados.

@@ -1,0 +1,179 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\CadernoDisciplina}{Análise Exploratória de Dados}
+\newcommand{\CadernoCorHex}{17365D}
+\input{../../../caderno_exercicios/caderno_enade_style.tex}
+\newcommand{\ChamadaEditorial}[1]{\par\medskip\noindent{\color{disciplinecolor}\bfseries\small #1}\par\smallskip}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\begin{center}
+{\Large\bfseries UNIFACOL}\\[2mm]
+{\large Avaliação da I Unidade}\\[1mm]
+{\Large\bfseries VERSÃO B}
+\end{center}
+\begin{DocumentBox}[Identificação]
+\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}p{.48\textwidth}@{}}
+Estudante: \hrulefill & Turma: \hrulefill\\[3mm]
+Professor: Cayo Oliveira & Data: \rule{2.7cm}{.2pt}/2026
+\end{tabularx}
+\end{DocumentBox}
+\textbf{Instruções.} Esta avaliação contém seis questões objetivas e duas discursivas. Nas objetivas, assinale uma única alternativa. Nas discursivas, mostre cálculos intermediários e justifique decisões com as evidências do texto-base. Respostas sem desenvolvimento podem não receber pontuação integral.
+\bigskip
+% origem: AED-C05-O03
+\ItemHeader{1}{Objetiva}{Declarar grão}{Tabela de pedidos}
+\ChamadaEditorial{Rastreabilidade | Um evento sem origem não pode ser reprocessado com confiança}
+\TextoBase
+
+O indicador foi publicado, mas o pipeline não guardou identificador, versão, horários nem origem. Quando a regra mudou, a equipe já não sabia quais registros e consumidores estavam afetados.
+ Uma tabela possui uma linha por item do pedido, porém o campo \texttt{total\_pedido} é repetido em cada item. Um pedido de R\$100 com três itens aparece em três linhas. Um dashboard somou a coluna e publicou R\$300, embora o evento econômico continue sendo um único pedido de R\$100.
+\FonteDidatica
+\Comando Para calcular receita sem triplicar,
+\begin{enumerate}[label=\Alph*)]
+  \item somar \texttt{total\_pedido} nas linhas de item. Somar o total repetido em cada item mantém a triplicação do mesmo evento econômico.
+  \item remover pedidos com mais de um item. Excluir pedidos legítimos altera a população em vez de corrigir a agregação.
+  \item tirar média dos totais e multiplicar pela quantidade de itens. Média multiplicada pela quantidade de itens não reconstrói necessariamente o total de pedidos.
+  \item contar linhas como pedidos porque cada linha possui identificador. Linha de item e pedido são unidades distintas, ainda que ambas contenham identificadores.
+  \item agregar uma vez por pedido ou usar valor do item conforme contrato, declarando o grão antes do cálculo. Declarar o grão permite agregar uma vez por pedido ou somar valores de item compatíveis com o contrato.
+\end{enumerate}
+
+% origem: AED-C06-O09
+\ItemHeader{2}{Objetiva}{storytelling}{Situação profissional e suporte quantitativo}
+
+\ChamadaEditorial{Sala da diretoria | Dezesseis gráficos antes de revelar a decisão}
+\TextoBase
+
+Na reunião mensal, a decisão sobre novos horários apareceu somente depois de uma longa demonstração da ferramenta. O conselho solicitou uma narrativa que ligue contexto, evidência, limite e recomendação.
+
+
+Uma apresentação à diretoria começa pela ferramenta, percorre 16 gráficos e somente no final menciona a decisão sobre novos horários. Evidências, limites e recomendação aparecem separados, obrigando o público a reconstruir sozinho o argumento. O roteiro precisa servir à decisão, não demonstrar a interface.
+
+\FonteDidatica
+
+\Comando Selecione a reorganização narrativa que conecta contexto, evidência, limite e recomendação ao público decisor.
+
+\begin{enumerate}[label=\Alph*)]
+  \item usar mais transições visuais. Transições visuais não corrigem a ausência de encadeamento lógico entre evidência e ação.
+  \item reordenar contexto, problema, evidência, limite e recomendação para o público decisor. A sequência coloca a decisão no centro e liga cada evidência e limite à recomendação dirigida ao público.
+  \item começar por todas as transformações técnicas. Começar pelas transformações técnicas repete o problema de demonstrar a ferramenta antes da pergunta decisória.
+  \item substituir evidência por depoimento. Depoimento pode complementar contexto, mas não substitui as evidências que sustentam a recomendação.
+  \item eliminar limites para ganhar clareza. Omitir limites torna a mensagem mais persuasiva, porém menos confiável e contestável.
+\end{enumerate}
+
+% origem: AED-C02-D13
+\ItemHeader{3}{Discursiva}{Explicar o divisor amostral}{Amostra de equipamentos}
+\ChamadaEditorial{Nota estatística | Quatro equipamentos e dois divisores possíveis}
+\TextoBase
+
+Um relatório técnico circulou com dois valores diferentes para a variância do mesmo conjunto. A divergência não decorre da aritmética, mas da pergunta: descrever as quatro unidades ou inferir sobre outras semelhantes.
+ Uma equipe calculou os desvios dos valores $2,4,4,6$ em torno da média 4 e encontrou soma quadrática 8. Parte do relatório descreve exatamente essas quatro unidades; outra parte pretende usar as quatro como amostra de uma população maior. Os analistas discutem dividir por 4 ou por 3 e precisam justificar a escolha, não apenas citar uma regra.
+\FonteDidatica
+\Comando Explique quando cada divisor é apropriado, mostre os dois resultados e justifique $n-1$ pela estimação da média e pelo grau de liberdade.
+\EspacoDiscursiva
+
+% origem: AED-C03-O05
+\ItemHeader{4}{Objetiva}{Testar independência}{Urgência e reabertura}
+\ChamadaEditorial{Central de atendimento | Urgência e reabertura caminham de forma independente?}
+\TextoBase
+
+A central suspeita que chamados urgentes retornem com maior frequência. A auditoria exige aplicar o critério de independência, em vez de decidir apenas pela comparação visual das porcentagens.
+ Em uma central, $U$ representa chamado urgente e $R$ representa reabertura. Para o período e a população definidos, $P(U)=0{,}20$, $P(R)=0{,}14$ e $P(U\cap R)=0{,}06$. A equipe precisa verificar se conhecer urgência altera a chance de reabertura usando o critério do produto, sem confundir independência com exclusão mútua.
+\FonteDidatica
+\Comando Calcule $P(U)P(R)$, compare com a interseção observada e selecione a interpretação correta sobre independência.
+
+\begin{enumerate}[label=\Alph*)]
+  \item Os eventos seriam complementares porque as probabilidades somam 0,34; complementares deveriam somar 1 e não ocorrer conjuntamente.
+  \item Urgência e reabertura seriam independentes porque 0,06 é menor que 0,14; essa comparação não testa o produto das marginais.
+  \item Os eventos não seriam independentes, pois $0{,}20\times0{,}14=0{,}028$, diferente da interseção observada de 0,06.
+  \item Os eventos seriam independentes porque descrevem categorias diferentes; a natureza dos nomes não determina independência.
+  \item Os eventos seriam mutuamente exclusivos porque a interseção é positiva; uma interseção positiva demonstra justamente que podem ocorrer juntos.
+\end{enumerate}
+
+% origem: AED-C08-O09
+\ItemHeader{5}{Objetiva}{decisão}{Situação profissional e suporte quantitativo}
+
+\ChamadaEditorial{Decisão responsável | Pontualidade não pode compensar risco de acidente}
+\TextoBase
+
+O novo acordo operacional melhorou a pontualidade ao mesmo tempo que elevou acidentes e jornadas. A direção declarou segurança como restrição, e não como indicador que possa ser compensado por uma média favorável.
+
+
+Reduzir a janela prometida elevou o indicador de pontualidade, mas também aumentou acidentes relatados e jornadas prolongadas. A direção não autorizou compensar segurança por desempenho. A decisão precisa tratar qualidade e risco como restrições conjuntas, não como média.
+
+\FonteDidatica
+
+\Comando Selecione a decisão que usa pontualidade e segurança como critérios não compensatórios e verificáveis.
+
+\begin{enumerate}[label=\Alph*)]
+  \item formular decisão multicritério com limite de segurança não compensável por média. O limite de segurança impede que melhora média de pontualidade compense acidentes e jornadas excessivas.
+  \item ocultar efeito adverso. Ocultar o efeito adverso elimina evidência material e impede governança do risco.
+  \item escolher a métrica mais fácil. Facilidade de mensuração não torna uma métrica adequada à consequência operacional.
+  \item tirar média de acidentes e tempo. Acidentes e tempo possuem significados e unidades diferentes; sua média não representa decisão responsável.
+  \item otimizar somente pontualidade. Otimizar apenas pontualidade viola explicitamente a restrição definida pela direção.
+\end{enumerate}
+
+% origem: AED-C01-O09
+\ItemHeader{6}{Objetiva}{Selecionar evidência para uma decisão}{Dashboard comercial}
+\ChamadaEditorial{Economia em dados | Receita cresceu, mas o dashboard ainda não explica por quê}
+\TextoBase
+
+O título do painel anuncia crescimento de 12\%, mas não informa se a organização vendeu mais, apenas reajustou preços ou perdeu rentabilidade. A chefia pede evidência antes de renovar a campanha.
+ Em reunião de orçamento, um dashboard mostra aumento de 12\% na receita, mas omite inflação, quantidade vendida, cancelamentos e margem. Antes de ampliar a campanha, a direção exige uma investigação que separe crescimento nominal, volume e rentabilidade.
+\FonteDidatica
+\Comando Antes da decisão, a análise deve prioritariamente
+\begin{enumerate}[label=\Alph*)]
+  \item comparar volume, preço, margem e cancelamentos com base e grupos comparáveis, declarando outras mudanças do período. Volume, preço, margem, cancelamentos e comparação adequada distinguem crescimento nominal de resultado sustentável.
+  \item trocar receita por curtidas, pois engajamento antecipa qualquer resultado financeiro. Curtidas podem compor outra análise, mas não substituem receita, volume e rentabilidade do caso.
+  \item atribuir causalidade à campanha porque ela ocorreu antes do aumento. Sequência temporal não basta para atribuir o crescimento à campanha.
+  \item ocultar a comparação histórica para evitar influência de sazonalidade. Retirar a série histórica impediria controlar sazonalidade e outras mudanças do período.
+  \item ampliar imediatamente e avaliar apenas depois, pois dashboards servem à velocidade. Agir antes de compreender denominadores e efeitos pode ampliar uma campanha sem benefício econômico.
+\end{enumerate}
+
+% origem: AED-C07-D13
+\ItemHeader{7}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\ChamadaEditorial{Relatório integrado | Da tabela imperfeita à recomendação contestável}
+\TextoBase
+
+Uma área de negócio solicita uma recomendação final, mas os dados apresentam problemas de qualidade, diferenças entre grupos e risco de interpretação causal. A resposta deve tornar o caminho analítico auditável.
+
+
+Um painel público permite filtrar evasão por curso, turno e faixa etária. Em alguns recortes restam três ou quatro estudantes, e servidores locais conhecem a composição das turmas. A instituição precisa informar desempenho sem revelar situações individuais nem ampliar a finalidade original.
+
+\FonteDidatica
+
+\Comando Proponha uma política para células pequenas com limiar ou agregação justificada, finalidade, perfis de acesso, retenção e comunicação do risco residual. Inclua uma forma de testar reidentificação.
+\EspacoDiscursiva
+
+% origem: AED-C04-O03
+\ItemHeader{8}{Objetiva}{Evitar distorção de eixo}{Variação mensal}
+\ChamadaEditorial{Leitura crítica | Dois pontos percentuais viraram um salto visual}
+\TextoBase
+
+Uma manchete interna chamou de crescimento expressivo a passagem de 79\% para 81\%. O gráfico, com eixo truncado, ampliou visualmente uma diferença real de apenas dois pontos percentuais.
+ Um relatório executivo informa que uma taxa passou de 79\% para 81\%, diferença de 2 pontos percentuais. O gráfico de barras inicia o eixo em 78,5\% e, pela área das barras, faz o segundo resultado parecer várias vezes maior. A revisão deve preservar a mudança observada sem ampliar visualmente sua magnitude.
+
+\begin{DocumentBox}[Figura editorial --- taxa mensal publicada]
+\centering
+\begin{tikzpicture}[x=2.1cm,y=.075cm]
+\draw[->] (0,0)--(2.6,0) node[right]{mês};
+\draw[->] (0,0)--(0,86) node[above]{taxa (\%)};
+\foreach \y in {0,20,40,60,80} {\draw (-.05,\y)--(.05,\y) node[left=2pt]{\small \y};}
+\fill[disciplinecolor!55] (.45,0) rectangle (1.05,79);
+\fill[disciplinecolor!85] (1.45,0) rectangle (2.05,81);
+\node[above] at (.75,79) {79\%}; \node[above] at (1.75,81) {81\%};
+\node[below] at (.75,0) {anterior}; \node[below] at (1.75,0) {atual};
+\end{tikzpicture}
+\end{DocumentBox}
+\LegendaDidatica{A Figura usa origem zero e representa os mesmos 79\% e 81\% informados no item}
+
+\FonteDidatica
+\Comando Compare a Figura editorial com o gráfico de eixo iniciado em 78,5\% descrito no texto. Selecione a revisão que comunica os mesmos dados sem exagerar sua magnitude.
+
+\begin{enumerate}[label=\Alph*)]
+  \item O eixo truncado deveria ser mantido para destacar qualquer mudança; essa escolha amplia visualmente a magnitude sem explicar a escala.
+  \item Os rótulos do eixo deveriam ser retirados para evitar viés; sem escala, o leitor não conseguiria verificar a diferença publicada.
+  \item Os percentuais deveriam virar volumes sem denominadores; assim, a comparação perderia a base necessária à interpretação.
+  \item O efeito tridimensional deveria ser acrescentado para enfatizar profundidade; a perspectiva introduziria nova distorção.
+  \item Barras com origem zero ou pontos com escala e valores explícitos comunicariam corretamente a variação de 79\% para 81\%, isto é, 2 pontos percentuais.
+\end{enumerate}
+
+\end{document}

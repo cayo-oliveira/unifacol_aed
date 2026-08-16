@@ -1,0 +1,439 @@
+\chapter{Variabilidade, distribuição e incerteza}
+
+Uma operação de entregas anuncia que seu prazo médio é de 6,2 dias. O número parece suficiente para planejar estoque, responder ao cliente e comparar transportadoras. Entretanto, nove de dez pedidos chegaram entre três e sete dias, enquanto um levou 21 dias. A mesma média mistura a rotina e uma ocorrência excepcional; se o gestor não enxergar a dispersão, poderá prometer um serviço que não representa nem os pedidos comuns nem o caso crítico.
+
+No capítulo anterior, aprendemos a localizar o centro por média, mediana, moda, quartis e percentis. Agora completaremos essa leitura perguntando quanto os valores se afastam, que forma a distribuição assume e por que alguns registros estão ausentes ou muito distantes. A análise seguirá uma ordem deliberada: primeiro a conta à mão, depois a representação visual, então o código e, por fim, a decisão documentada.
+
+Variabilidade não é sinônimo de erro. Uma variação pode resultar de diversidade legítima de clientes, sazonalidade, mistura de processos, instabilidade operacional, mudança de regra ou falha de medição. Da mesma forma, um valor extremo pode ser um evento real e importante, e uma célula vazia pode informar algo sobre o processo que deixou de registrá-la. A tarefa da AED é tornar essas possibilidades visíveis antes de escolher um tratamento.
+
+Ao longo deste encontro, usaremos um caso de entregas e pequenas bases auxiliares para calcular amplitude, variância populacional e amostral, desvio-padrão e intervalo interquartil. Leremos histogramas e boxplots, distinguiremos simetria, assimetria, caudas e multimodalidade, diagnosticaremos ausências e construiremos uma análise de sensibilidade. O produto intelectual não será uma coluna ``limpa'', mas uma justificativa verificável para conservar, corrigir, excluir, imputar ou segmentar cada situação.
+
+O capítulo foi planejado para três horas. A primeira hora constrói dispersão e suas contas; a segunda relaciona IQR, outliers e forma da distribuição; a terceira trata ausências, reproduz os resultados em código e fecha um relatório de decisão. A chamada ocorre às 20h30, mas a aula continua; o encadeamento do texto permite também uma leitura autônoma por quem precisar reconstruir o raciocínio depois.
+
+\section{Uma mesma média, operações muito diferentes}
+
+Considere dois centros de suporte com cinco tempos de resolução, em minutos. O Centro A registrou $6,7,8,9,10$; o Centro B registrou $2,3,8,13,14$. Ambos têm soma 40 e média 8. Se o painel mostrar apenas ``tempo médio: 8 minutos'', parecerão equivalentes, embora o primeiro seja concentrado e o segundo alterne casos muito rápidos e muito lentos.
+
+Essa diferença muda decisões concretas. Para uma fila que promete atendimento previsível, a concentração do Centro A pode valer mais que alguns atendimentos muito rápidos do Centro B. Para uma triagem em que resolver imediatamente parte dos casos é valioso, a forma do Centro B pode ser aceitável, desde que os casos longos tenham tratamento próprio. A estatística não escolhe o objetivo; ela descreve a consequência de cada configuração para que a decisão declare o que está priorizando.
+
+Dispersão é o nome geral dado ao espalhamento dos valores. Uma medida de dispersão pequena indica observações próximas segundo determinado critério; uma medida grande indica afastamento. O complemento ``segundo determinado critério'' é essencial: amplitude observa somente extremos, variância e desvio-padrão medem distâncias à média, e IQR mede a extensão da metade central. Dois conjuntos podem trocar de ordem conforme a medida escolhida.
+
+Também precisamos preservar a unidade de análise. Se cada linha representa um evento de rastreamento, calcular dispersão entre linhas não descreve dispersão entre pedidos. Se um pedido lento gera mais eventos, ele será contado várias vezes e influenciará o resultado de forma indevida. Antes da fórmula, confirmamos que cada linha representa um pedido concluído, no mesmo período e sob a mesma definição de prazo.
+
+O tamanho do conjunto acompanha toda medida. Uma dispersão calculada com quatro observações é muito mais instável que outra baseada em quarenta mil, ainda que os números coincidam. Informar $n$, período, unidade e quantidade de ausências impede que precisão decimal seja confundida com estabilidade. A AED responsável não apresenta ``desvio-padrão 2,43'' sem dizer 2,43 de quê, em qual população e com quantos casos.
+
+Há ainda uma distinção entre variação observada e incerteza sobre uma estimativa. O desvio-padrão descreve o espalhamento das observações; o erro-padrão, que será estudado em inferência, descreve a incerteza da média estimada e geralmente diminui com amostras maiores. Trocar um pelo outro leva a frases erradas: uma operação pode continuar muito variável mesmo quando sua média foi estimada com grande precisão.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: duas bases com a mesma média não têm necessariamente a mesma experiência operacional. Sempre procure pelo menos uma medida de dispersão, o tamanho do conjunto e uma visualização da forma antes de chamar um processo de estável.
+\end{GuidedBox}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: centro responde onde os valores se localizam; dispersão responde quanto eles se afastam. A escolha da medida depende da pergunta, do grão, da forma e do custo de cada tipo de variação.
+\end{SummaryBox}
+
+\section{Amplitude: um alarme rápido que olha apenas as pontas}
+
+A amplitude total é a diferença entre maior e menor valor: $A=x_{\max}-x_{\min}$. Nos tempos do Centro A, $A=10-6=4$ minutos. No Centro B, $A=14-2=12$ minutos. Com uma conta imediata, percebemos que o segundo conjunto ocupa um intervalo três vezes maior, embora as médias sejam iguais.
+
+A medida é útil como alarme e como verificação de domínio. Se idades variam de 18 a 920, a amplitude chama atenção para um valor impossível ou uma unidade errada. Se uma temperatura de sensor deveria permanecer entre 15 e 30 graus e aparece 74, o par mínimo--máximo ajuda a localizar uma quebra. O resultado não explica a causa, mas indica onde investigar.
+
+Sua limitação é depender exclusivamente de duas observações. Se acrescentarmos 100 ao Centro A, a amplitude salta de 4 para 94 minutos, embora os cinco valores originais permaneçam iguais. Não sabemos, pela amplitude, se os demais valores estão uniformemente distribuídos, todos concentrados em 8 ou separados em dois grupos. Ela ignora $n-2$ observações.
+
+A amplitude também cresce com o tamanho da amostra. Quanto mais observações coletamos, maior a oportunidade de encontrar extremos, mesmo que o processo subjacente não tenha mudado. Comparar a amplitude de uma filial com vinte pedidos à de outra com vinte mil pode penalizar a segunda apenas porque ela foi mais observada. Para comparações, acompanhamos tamanho e usamos medidas que aproveitam toda a distribuição ou sua região central.
+
+Em escalas limitadas, o significado também muda. Uma amplitude de 40 pontos em uma nota de 0 a 100 ocupa 40\% da escala possível; uma amplitude de 40 reais em preços próximos de 10 mil é pequena. A unidade e o domínio devem aparecer no texto. Transformações ou arredondamentos ainda podem alterar mínimo e máximo, por isso a versão dos dados precisa ser registrada.
+
+No caso das entregas $3,3,4,4,4,5,5,6,7,21$, a amplitude é $21-3=18$ dias. Sem o valor 21, seria $7-3=4$ dias. A diferença mostra a sensibilidade ao evento longo, mas ainda não autoriza removê-lo. Precisamos saber se 21 é erro de digitação, extravio, região remota, paralisação ou parte real do serviço prometido.
+
+Uma comunicação honesta poderia dizer: ``os prazos observados variaram de 3 a 21 dias; nove de dez ficaram entre 3 e 7, e um pedido levou 21''. Essa frase preserva o extremo e a concentração. Dizer somente ``amplitude de 18'' é correto, mas pouco acionável; dizer somente ``a maioria em até 7'' esconde o risco de cauda.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{A amplitude como primeira leitura, não como diagnóstico completo.}
+\label{tab:amplitude-limites}
+\begin{tabularx}{0.94\textwidth}{@{}p{2.8cm}YY@{}}
+\toprule
+\textbf{Situação} & \textbf{O que a amplitude mostra} & \textbf{O que ainda falta investigar} \\
+\midrule
+Domínio impossível & distância entre o menor e o maior valor & qual extremo é inválido e por quê \\
+Comparação de grupos & extensão total observada & tamanho, centro, forma e extremos legítimos \\
+Monitoramento & surgimento de uma ponta nova & frequência, duração e causa operacional \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: amplitude é simples, legível e excelente para levantar suspeitas, mas é frágil como retrato da variabilidade. Use-a com $n$, centro, forma e investigação dos extremos.
+\end{SummaryBox}
+
+\section{Do desvio à variância: a conta inteira à mão}
+
+Para aproveitar todas as observações, começamos pela distância de cada valor até a média. Use o conjunto $4,6,8,10,12$, cuja média é $\bar{x}=(4+6+8+10+12)/5=8$. Os desvios são $-4,-2,0,2,4$. A soma dos desvios é zero, porque a média funciona como ponto de equilíbrio; simplesmente tirar a média dos desvios apagaria o espalhamento.
+
+Elevamos cada desvio ao quadrado para impedir o cancelamento dos sinais e atribuir peso maior aos afastamentos grandes. Obtemos $16,4,0,4,16$, cuja soma é 40. Essa soma dos quadrados é a matéria-prima da variância. O quadrado não é uma decoração algébrica: ele expressa uma escolha de perda em que dobrar o afastamento multiplica sua contribuição por quatro.
+
+Se os cinco valores forem toda a população de interesse, a variância populacional divide a soma por $N=5$: $\sigma^2=40/5=8$ minutos ao quadrado. Se forem uma amostra usada para estimar uma população mais ampla, usamos a variância amostral $s^2=40/(5-1)=10$. O denominador $n-1$ é a correção de Bessel e compensa a tendência de uma amostra parecer menos dispersa em torno de sua própria média.
+
+Podemos entender o grau de liberdade sem decorar uma regra. Depois de fixar média 8, quatro desvios podem variar, mas o quinto fica determinado pela obrigação de somar zero. Se os quatro primeiros são $-4,-2,0,2$, o último precisa ser 4. Há $n-1$ desvios livres. Essa explicação não substitui a demonstração estatística do não viés, mas dá sentido ao denominador.
+
+A tabela a seguir torna cada etapa auditável. Uma calculadora pode retornar 10 sem mostrar se usou amostra, população ou valores ausentes. Ao reconstruir a coluna de desvios, verificamos centro, sinal, soma e unidade antes de aceitar o resultado.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Cálculo manual da soma dos quadrados em torno da média 8.}
+\label{tab:variancia-mao}
+\begin{tabular}{@{}rrr@{}}
+\toprule
+$x_i$ & $x_i-\bar{x}$ & $(x_i-\bar{x})^2$ \\
+\midrule
+4 & $-4$ & 16 \\
+6 & $-2$ & 4 \\
+8 & 0 & 0 \\
+10 & 2 & 4 \\
+12 & 4 & 16 \\
+\midrule
+Soma & 0 & 40 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A variância possui unidade ao quadrado. Se $x$ está em minutos, $s^2$ está em minutos quadrados; se salários estão em reais, a variância está em reais quadrados. Essa unidade é adequada para cálculo e modelagem, porém pouco intuitiva para comunicação operacional. Por isso, tiramos a raiz quadrada e obtemos o desvio-padrão na unidade original.
+
+No conjunto, o desvio-padrão populacional é $\sigma=\sqrt{8}\approx2{,}83$ minutos; o amostral é $s=\sqrt{10}\approx3{,}16$ minutos. A frase adequada é ``os valores apresentam afastamento típico em torno de 3,16 minutos da média, segundo a definição amostral''. Não dizemos que cada observação fica exatamente a 3,16 minutos, nem que todos os casos estão entre média menos e mais um desvio.
+
+O desvio-padrão é sensível a extremos porque herda média e quadrados. Essa sensibilidade não o torna ruim: em controle de capacidade, um atraso de 20 dias pode custar muito mais que dois atrasos de dez, e a penalização quadrática sinaliza esse risco. O limite aparece quando usamos o número como descrição de uma distribuição muito assimétrica sem mostrar a cauda que o elevou.
+
+Há uma fórmula computacional equivalente, $\sum x_i^2-n\bar{x}^2$, mas ela pode esconder o raciocínio e sofrer problemas numéricos com valores muito grandes e diferenças pequenas. Para aprender e auditar, a tabela de desvios é preferível. Bibliotecas robustas usam algoritmos estáveis; ainda assim, o analista precisa conferir o parâmetro que define os graus de liberdade.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: `variância da população' e `variância da amostra' não são duas respostas concorrentes para a mesma pergunta. Elas correspondem a objetivos diferentes. Declare se os registros esgotam o universo relevante ou estimam casos além do conjunto observado.
+\end{GuidedBox}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: a variância agrega desvios quadráticos de todas as observações; o desvio-padrão devolve a escala original. A escolha entre $N$ e $n-1$ nasce do papel do conjunto, não do software disponível.
+\end{SummaryBox}
+
+\section{Desvio-padrão e IQR para previsibilidade}
+
+Retomemos as entregas $3,3,4,4,4,5,5,6,7,21$. A soma é 62 e a média é $6{,}2$. Os desvios quadráticos somam 257,6; portanto, a variância populacional é $25{,}76$ e o desvio-padrão populacional é aproximadamente $5{,}08$ dias. Tratando os dez pedidos como amostra de entregas futuras, $s^2=257{,}6/9\approx28{,}62$ e $s\approx5{,}35$ dias.
+
+O desvio de 5,35 é quase tão grande quanto a média de 6,2, indicando baixa previsibilidade sob essa síntese. Entretanto, nove pedidos estão concentrados e um domina a soma de quadrados: sozinho, o desvio de 14,8 dias produz 219,04 dos 257,6 pontos quadráticos. A decomposição mostra por que precisamos de uma medida robusta e de uma investigação do evento.
+
+Com a convenção linear usada no capítulo anterior, $Q_1$ está na posição 3,25 e vale 4; a mediana vale 4,5; $Q_3$ está na posição 7,75 e vale 5,75. Assim, $IQR=Q_3-Q_1=1{,}75$ dia. A metade central ocupa uma faixa estreita, muito diferente do espalhamento sugerido pelo desvio-padrão.
+
+Essa divergência não é contradição. O desvio-padrão usa todos os valores e responde à magnitude do caso 21; o IQR usa a metade central e praticamente não muda quando um extremo se afasta ainda mais. Para descrever a rotina, mediana 4,5 e IQR 1,75 são informativos. Para quantificar exposição ao evento longo, média, desvio-padrão, máximo e percentil alto preservam informação que o IQR deixa de lado.
+
+Aplicamos a regra de Tukey calculando cercas, não sentenças. A cerca inferior é $4-1{,}5(1{,}75)=1{,}375$; a superior é $5{,}75+1{,}5(1{,}75)=8{,}375$. Como 21 excede 8,375, ele é sinalizado pelo critério. A palavra ``sinalizado'' é mais correta que ``confirmado como erro'': a regra mede afastamento relativo à região central, não validade semântica.
+
+Os bigodes de um boxplot normalmente alcançam as observações mais extremas ainda dentro das cercas. Neste conjunto, vão de 3 a 7; o valor 21 aparece isolado. O bigode não precisa terminar exatamente em $Q_1-1{,}5IQR$ ou $Q_3+1{,}5IQR$ porque as cercas são limites teóricos, enquanto os bigodes terminam em dados observados. Essa distinção evita desenhar um valor que nunca ocorreu.
+
+Se o pedido 21 foi um extravio real, excluí-lo do painel de experiência apagaria precisamente o risco que a operação deveria corrigir. Podemos apresentar duas visões: desempenho rotineiro com mediana e IQR, e taxa/impacto de incidentes com contagem, máximo e causa. Se foi 2,1 digitado sem separador decimal, corrigimos usando evidência da fonte, preservamos o valor original e registramos a regra de correção.
+
+Se compararmos escalas diferentes, desvio-padrão absoluto pode enganar. Um processo com média 100 kg e $s=5$ varia 5\% em relação à média; outro com média 50 kg e o mesmo $s=5$ varia 10\%. O coeficiente de variação $CV=s/\bar{x}\times100\%$ ajuda quando a escala possui zero significativo e médias positivas. Não deve ser usado cegamente com médias próximas de zero, valores negativos ou escalas intervalares como Celsius.
+
+A interpretação final depende da decisão. Para prometer SLA, percentis altos e incidência de violações são mais diretos que supor normalidade. Para comparar consistência de processos semelhantes, desvio-padrão e IQR lado a lado revelam rotina e cauda. Para dimensionar custo total, a média continua relevante. Uma única medida raramente atende todos esses públicos.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Leituras complementares do mesmo conjunto de entregas.}
+\label{tab:dispersoes-entrega}
+\begin{tabularx}{0.94\textwidth}{@{}p{2.6cm}p{2.4cm}Y@{}}
+\toprule
+\textbf{Medida} & \textbf{Resultado} & \textbf{Leitura} \\
+\midrule
+Amplitude & 18 dias & extensão total, dominada pelas pontas \\
+DP amostral & 5,35 dias & afastamento em torno da média, sensível ao caso 21 \\
+IQR & 1,75 dia & largura da metade central, resistente ao extremo \\
+Cerca superior & 8,375 dias & 21 é candidato a investigação, não descarte automático \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: desvio-padrão e IQR podem contar partes diferentes e verdadeiras da mesma história. A análise madura mantém rotina e exceção visíveis, em vez de escolher a medida que produz a narrativa mais conveniente.
+\end{SummaryBox}
+
+\section{Distribuição: forma, cauda, assimetria e mistura}
+
+Uma lista ordenada ajuda em bases pequenas, mas perde eficiência quando há milhares de valores. O histograma divide a escala numérica em intervalos contíguos, chamados bins, e conta quantas observações caem em cada um. Diferentemente do gráfico de barras categórico, a posição e a largura dos intervalos têm significado quantitativo; mover fronteiras pode mudar a aparência percebida.
+
+Para as entregas, use bins $[0,5)$, $[5,10)$, $[10,15)$, $[15,20)$ e $[20,25)$. As contagens são 5, 4, 0, 0 e 1. O colchete à esquerda indica inclusão e o parêntese à direita, exclusão: um prazo 5 pertence ao segundo intervalo. A Figura~\ref{fig:histograma-manual} registra essas fronteiras e elimina a ambiguidade comum de contar valores na borda duas vezes.
+
+\begin{figure}[htbp]
+\centering
+\small
+\begin{tabular}{@{}rc@{}}
+$[0,5)$   & \textcolor{guidedblueframe}{\rule{5.0cm}{0.34cm}}\quad 5 \\
+$[5,10)$  & \textcolor{guidedblueframe}{\rule{4.0cm}{0.34cm}}\quad 4 \\
+$[10,15)$ & \rule{0.08cm}{0.34cm}\quad 0 \\
+$[15,20)$ & \rule{0.08cm}{0.34cm}\quad 0 \\
+$[20,25)$ & \textcolor{guidedblueframe}{\rule{1.0cm}{0.34cm}}\quad 1 \\
+\end{tabular}
+\caption{Histograma manual dos prazos: concentração até dez dias e uma observação na cauda.}
+\label{fig:histograma-manual}
+\end{figure}
+
+Poucos bins comprimem a história; muitos transformam flutuações em aparência de estrutura. A regra de Sturges, $k=1+3{,}322\log_{10}(n)$, oferece um ponto de partida, não uma verdade visual. Para $n=10$, ela sugere cerca de quatro ou cinco bins. Também podemos usar larguras ligadas ao IQR, mas toda escolha precisa ser testada quanto à estabilidade da conclusão.
+
+Uma distribuição simétrica apresenta lados aproximadamente equilibrados em torno do centro, embora simetria não implique normalidade. A distribuição normal é um caso particular, unimodal, com forma de sino e parâmetros média e desvio-padrão. Não devemos aplicar automaticamente a regra 68--95--99,7 a qualquer conjunto ``mais ou menos equilibrado''; ela depende de aproximação normal sustentada pelo contexto e pela forma.
+
+Assimetria positiva significa cauda estendida para valores altos, como ocorre em renda, duração de chamados e preço de imóveis. Em geral, a média tende a exceder a mediana, pois os valores altos deslocam o equilíbrio. Assimetria negativa apresenta cauda para valores baixos e frequentemente média menor que mediana. Essas relações são pistas, não testes infalíveis, especialmente em amostras pequenas ou multimodais.
+
+No caso das entregas, a cauda à direita é visível no intervalo de 20 a 25. Uma medida robusta de assimetria baseada em quartis é $B=(Q_3+Q_1-2Q_2)/IQR$. Substituindo $Q_1=4$, $Q_2=4{,}5$, $Q_3=5{,}75$ e $IQR=1{,}75$, obtemos $B\approx0{,}43$, coerente com cauda direita. Outras fórmulas de assimetria existem e softwares podem usar correções amostrais distintas; registre a definição ao comparar resultados.
+
+Uma distribuição bimodal tem dois picos e pode revelar mistura de processos. Tempos concentrados em 5 e 35 minutos talvez representem chamados simples e complexos. Calcular uma média global de 20 pode descrever poucos casos reais. Antes de chamar a forma de anomalia, segmentamos por categoria, canal, turno ou versão do processo e verificamos se os picos correspondem a subpopulações interpretáveis.
+
+Caudas também precisam de escala. Em valores monetários, uma transformação logarítmica pode tornar diferenças multiplicativas mais legíveis, mas altera a pergunta visual: distâncias iguais passam a representar razões, não diferenças absolutas. Nunca transformamos apenas para ``normalizar o gráfico'' sem explicar como a interpretação mudou. Preservar uma visão na escala original ajuda a comunicar impacto real.
+
+O boxplot resume posição e dispersão, mas não mostra bem multimodalidade nem lacunas. Dois grupos muito diferentes podem compartilhar os mesmos cinco números resumidos. O histograma mostra forma, mas depende de bins e ocupa mais espaço. Usá-los juntos reduz pontos cegos: boxplot facilita comparação entre grupos; histograma revela concentração, cauda e mistura dentro de cada grupo.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Forma observada e perguntas que ela abre.}
+\label{tab:forma-pergunta}
+\begin{tabularx}{0.94\textwidth}{@{}p{2.5cm}YY@{}}
+\toprule
+\textbf{Forma} & \textbf{Pista estatística} & \textbf{Pergunta de processo} \\
+\midrule
+Simétrica & média e mediana próximas & há um único mecanismo estável? \\
+Cauda direita & poucos valores muito altos & existe incidente, segmento ou atraso acumulado? \\
+Bimodal & dois picos persistentes & estamos misturando populações ou regras? \\
+Truncada & limite abrupto & houve censura, teto do instrumento ou filtro? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: um histograma não ``é'' a distribuição; ele é uma representação produzida por fronteiras e larguras escolhidas. Varie os bins e confira se a interpretação central permanece antes de contar uma história.
+\end{GuidedBox}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: forma conecta matemática e mecanismo. Simetria, cauda e múltiplos picos orientam a escolha de centro e dispersão, mas precisam ser confirmados por contexto, segmentação e visualizações complementares.
+\end{SummaryBox}
+
+\section{Ausência é dado sobre o processo de geração}
+
+Uma célula vazia não possui interpretação universal. Prazo ausente pode significar pedido ainda aberto, falha de integração, cancelamento, evento não aplicável ou cliente que preferiu não responder. Transformar todos esses estados em `NaN' é conveniente para a máquina e perigoso para a análise. Primeiro distinguimos códigos e significados no contrato de dados.
+
+O diagnóstico começa por contagem: número e percentual de ausências por coluna, período, fonte e grupo relevante. Uma taxa global de 4\% pode esconder 40\% em um canal recente. Também procuramos padrões temporais, quebras após atualização de sistema e combinações impossíveis. O mapa de ausência frequentemente revela um problema de arquitetura antes de revelar um problema estatístico.
+
+Na literatura, MCAR significa ausência completamente ao acaso: a probabilidade de faltar não depende de valores observados nem não observados. MAR significa que, condicionada às variáveis observadas usadas no modelo, a ausência não depende do valor ausente. MNAR significa que ainda há dependência do próprio valor ausente ou de informação não observada. Os nomes são hipóteses sobre o mecanismo, não etiquetas que uma tabela prova sozinha.
+
+Uma falha aleatória de transmissão pode ser plausivelmente MCAR, mas somente se não se concentrar por dispositivo, local, horário ou valor. Um formulário digital menos respondido por idosos pode ser tratado como MAR se idade e fatores necessários estiverem observados e modelados. Pessoas muito insatisfeitas que evitam avaliar sugerem MNAR, pois a chance de ausência se relaciona ao conteúdo que seria informado. Em todos os casos, conhecimento do processo é tão importante quanto o padrão numérico.
+
+Remover linhas completas é simples e pode ser razoável quando a ausência é pequena, plausivelmente MCAR e o tamanho remanescente sustenta a análise. Contudo, um limiar como 5\% não transforma exclusão em regra automática. Se os poucos casos ausentes representam justamente incidentes críticos, removê-los destrói relevância. A decisão depende de mecanismo, variável, finalidade e custo de erro.
+
+Imputar pela média conserva aproximadamente o centro observado, mas cria valores artificiais iguais, reduz a variância e enfraquece relações entre variáveis. Imputar pela mediana é mais resistente a caudas, porém também concentra artificialmente os dados. Imputar por grupo pode usar informação observada relevante, mas transmite ao resultado qualquer segmentação inadequada. Métodos mais sofisticados não dispensam declarar suposições e incerteza.
+
+Considere cinco prazos observados $8,10,11,12,14$ e dois ausentes. A média e a mediana observadas são 11. Se imputarmos ambos com 11, a média permanece 11, mas os sete valores parecem mais concentrados do que a evidência original. A soma dos desvios quadráticos continua 20, enquanto o denominador amostral passa de 4 para 6; a variância cai de 5 para aproximadamente 3,33 por construção, não porque o processo se tornou mais estável.
+
+Uma flag de ausência, como \texttt{prazo\_ausente}, preserva a possibilidade de comparar registros completos e incompletos. Ela não resolve MNAR nem recupera o valor desconhecido. Serve para tornar o tratamento rastreável e testar se a ausência se associa a canal, região, cancelamento ou satisfação. Em modelos posteriores, a flag pode carregar informação de processo, mas também perpetuar vieses; seu uso precisa de justificativa.
+
+Dados estruturais não aplicáveis devem receber tratamento distinto de dados desconhecidos. ``Data de devolução'' vazia para compra não devolvida pode ser correta, enquanto vazia para devolução confirmada indica falha. Se ambos virarem o mesmo nulo, a análise mistura estados. Um campo de status ou uma categoria explícita protege semântica e evita imputar datas em eventos que nunca ocorreram.
+
+O relatório de ausência deve registrar contagens antes e depois, hipótese de mecanismo, regra aplicada, variáveis auxiliares, versão do dado e impacto sobre resultados. Também deve manter uma cópia bruta ou trilha de transformação. Transparência permite que outra pessoa conteste a hipótese e reproduza uma análise alternativa sem reconstruir silenciosamente os valores originais.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Estratégias de ausência e riscos que permanecem.}
+\label{tab:ausencia-estrategias}
+\begin{tabularx}{0.95\textwidth}{@{}p{2.8cm}YY@{}}
+\toprule
+\textbf{Estratégia} & \textbf{Condição plausível} & \textbf{Risco a documentar} \\
+\midrule
+Excluir linha & pequena perda plausivelmente MCAR & viés oculto e redução de amostra \\
+Imputar centro & uso descritivo limitado e sensibilidade baixa & variância e relações comprimidas \\
+Imputar por grupo & mecanismo plausivelmente MAR & grupo mal definido e falsa precisão \\
+Flag + cenários & MNAR suspeito ou estado informativo & não recupera o valor e pode carregar viés \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: MCAR, MAR e MNAR não são descobertos automaticamente por `isna()'. Eles são hipóteses sobre como o dado foi gerado. Use padrão observado, conhecimento do processo e análise de sensibilidade para sustentar --- ou limitar --- sua conclusão.
+\end{GuidedBox}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: ausência não é sujeira homogênea. Contar, localizar, interpretar o mecanismo e medir o efeito do tratamento são partes da análise; preencher uma célula é apenas uma possível etapa técnica.
+\end{SummaryBox}
+
+\section{Outlier é uma pergunta, não uma ordem de exclusão}
+
+Outlier é uma observação que se afasta segundo algum critério. A definição depende da distribuição, do grupo de referência e da pergunta. Um faturamento de 120 mil pode ser extremo entre representantes, normal entre grandes contas e impossível se o campo está em unidades quando deveria estar em milhares. Sem contexto semântico, distância matemática não classifica validade.
+
+Há pelo menos quatro origens úteis. O valor pode ser erro de captura ou unidade; evento real raro, como extravio; membro legítimo de outra população, como chamado de nível 3; ou mudança de processo, como nova política comercial. Cada origem pede uma resposta: corrigir com evidência, conservar e sinalizar, segmentar, ou investigar ruptura. Excluir é apenas uma das possibilidades.
+
+A regra de $1{,}5IQR$ é uma heurística exploratória, não um teste universal. Em distribuições fortemente assimétricas, pode sinalizar muitos valores legítimos da cauda. Em amostras pequenas, quartis variam conforme convenção. Em séries temporais, um pico pode ser esperado em feriado. Aplicar a cerca global sem considerar grupo e tempo produz falsos alarmes.
+
+O escore padronizado $z=(x-\bar{x})/s$ mede quantos desvios-padrão um valor está da média. Regras como $|z|>3$ pressupõem uma referência aproximadamente simétrica e são afetadas pelo próprio extremo, que desloca média e desvio. Para dados assimétricos, alternativas robustas baseadas em mediana e desvio absoluto mediano podem ser mais coerentes, mas também dependem de contexto e não decretam erro.
+
+O diagnóstico deve começar na fonte. Verificamos unidade, faixa permitida, identificador, duplicidade, timestamp, evento de negócio e transformação anterior. Se 21 dias corresponde a um pedido existente, com rastreamento coerente e registro de extravio, ele é evidência real. Se a origem mostra ``2,1'' e a ingestão removeu a vírgula, a correção precisa referenciar essa evidência e não apenas a conveniência estatística.
+
+Depois, fazemos análise de sensibilidade. Calculamos resultados com todos os valores; repetimos com correção comprovada, segmentação relevante ou exclusão justificada; comparamos centro, dispersão, forma e decisão. Se a recomendação muda, o tratamento é material e deve aparecer no relatório. Se não muda, ainda documentamos a robustez encontrada.
+
+Para as entregas, com o valor 21, média e desvio-padrão amostral são 6,2 e 5,35. Sem ele, os nove prazos somam 41, a média cai para aproximadamente 4,56 e o desvio-padrão amostral fica próximo de 1,33. A mudança é grande: uma narrativa baseada na média depende fortemente de uma observação. A mediana muda de 4,5 para 4 e o IQR permanece em região próxima, mostrando resistência da rotina central.
+
+Não devemos publicar apenas a versão ``sem outlier'' se o caso é real. Uma apresentação útil separa desempenho base e incidentes: ``nove pedidos tiveram média de 4,56 dias e baixa dispersão; um extravio levou 21 dias, elevando a média total para 6,2 e o desvio para 5,35''. Assim, a rotina orienta planejamento e o incidente orienta prevenção.
+
+Outliers multivariados, que parecem normais em cada coluna isolada mas estranhos em combinação, serão aprofundados em capítulos posteriores. Por ora, guardamos o princípio: o grupo de referência precisa fazer sentido. Um prazo de sete dias pode ser normal para região remota e extremo para entrega urbana expressa. A segmentação deve ser definida por processo, não escolhida depois apenas para esconder pontos.
+
+A decisão final pode ser conservar, corrigir, excluir, truncar para finalidade específica, segmentar ou modelar separadamente. Truncar valores, por exemplo, reduz influência mas altera magnitudes e não deve substituir a visão original. Toda ação precisa de regra anterior, justificativa, contagem afetada, impacto e possibilidade de reversão.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Da origem provável do extremo à decisão verificável.}
+\label{tab:outlier-decisao}
+\begin{tabularx}{0.95\textwidth}{@{}p{2.7cm}YY@{}}
+\toprule
+\textbf{Origem} & \textbf{Evidência procurada} & \textbf{Tratamento possível} \\
+\midrule
+Erro de registro & fonte, unidade, log de ingestão & corrigir preservando original \\
+Evento raro real & rastreamento e causa operacional & conservar, sinalizar e explicar \\
+Outro processo & categoria ou regra de negócio & segmentar com critério anterior \\
+Ruptura temporal & data de mudança e versão & separar períodos ou recalcular base \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: uma cerca ou um escore abre investigação; não fecha diagnóstico. A resposta profissional combina regra estatística, evidência da fonte, contexto de negócio e sensibilidade da decisão.
+\end{SummaryBox}
+
+\section{Código como verificação}
+
+Depois da conta à mão, o código permite escalar a mesma lógica e conferir convenções. O exemplo abaixo cria a série de entregas, separa quantidade total e válida, calcula amplitude, variâncias com denominadores diferentes, quartis, IQR e cercas. O parâmetro `ddof=1' indica um grau de liberdade descontado; sem ele, muitas bibliotecas retornam a versão populacional.
+
+\begin{verbatim}
+import pandas as pd
+
+prazos = pd.Series([3, 3, 4, 4, 4, 5, 5, 6, 7, 21],
+                   name="prazo_dias")
+
+n = prazos.notna().sum()
+amplitude = prazos.max() - prazos.min()
+var_pop = prazos.var(ddof=0)
+var_amostra = prazos.var(ddof=1)
+dp_amostra = prazos.std(ddof=1)
+q1, mediana, q3 = prazos.quantile([0.25, 0.50, 0.75])
+iqr = q3 - q1
+li = q1 - 1.5 * iqr
+ls = q3 + 1.5 * iqr
+sinalizados = prazos[(prazos < li) | (prazos > ls)]
+\end{verbatim}
+
+O resultado esperado é $n=10$, amplitude 18, variância populacional 25,76, variância amostral aproximadamente 28,62 e desvio-padrão amostral aproximadamente 5,35. Os quartis seguem a interpolação padrão usada por `Series.quantile' na versão corrente da biblioteca; se outra ferramenta produzir valores diferentes, comparamos o método, não arredondamos até coincidir.
+
+Para tornar a forma visível, podemos construir um histograma com fronteiras explícitas e um boxplot. As fronteiras são passadas como lista; assim, outra pessoa reproduz exatamente a contagem. Em material publicado, o gráfico precisa trazer unidade, período, $n$ e legenda que diga o que observar. A imagem sozinha não substitui a interpretação textual.
+
+\begin{verbatim}
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(1, 2, figsize=(9, 3.4))
+ax[0].hist(prazos, bins=[0, 5, 10, 15, 20, 25],
+           edgecolor="black", color="#5B8FF9")
+ax[0].set(xlabel="Prazo (dias)", ylabel="Pedidos",
+          title="Distribuição dos prazos")
+ax[1].boxplot(prazos, vert=False)
+ax[1].set(xlabel="Prazo (dias)", title="Resumo robusto e extremo")
+plt.tight_layout()
+\end{verbatim}
+
+O histograma deve mostrar cinco pedidos entre zero e cinco dias, quatro entre cinco e dez, nenhum nas duas faixas seguintes e um entre vinte e 25. O boxplot deve isolar 21 além do bigode superior. Se o resultado divergir, conferimos intervalos, inclusão das bordas, tipo numérico e valores carregados antes de reinterpretar a operação.
+
+Dados ausentes exigem um perfil separado. `isna().mean()' calcula taxa por coluna, mas não explica mecanismo. Cruzamentos por fonte e período ajudam a localizar o problema. Ao imputar para uma análise de sensibilidade, preservamos a coluna original e criamos outra com nome que indique tratamento; sobrescrever impede auditoria.
+
+\begin{verbatim}
+df["prazo_ausente"] = df["prazo_dias"].isna()
+taxa_por_canal = df.groupby("canal")["prazo_ausente"].mean()
+
+df["prazo_mediana_canal"] = df["prazo_dias"].fillna(
+    df.groupby("canal")["prazo_dias"].transform("median")
+)
+
+comparacao = pd.DataFrame({
+    "original": df["prazo_dias"].describe(),
+    "imputado": df["prazo_mediana_canal"].describe()
+})
+\end{verbatim}
+
+A comparação deve incluir pelo menos contagem, média, mediana, desvio-padrão e quartis antes e depois. Também verificamos a taxa de ausência por grupo e repetimos a decisão sob cenários plausíveis. Código que apenas preenche nulos e segue para o dashboard torna a escolha invisível; código analítico deve produzir evidência do impacto.
+
+Bibliotecas e planilhas adotam padrões distintos. `pandas.Series.std()' usa $n-1$ por padrão, enquanto `numpy.std()' tradicionalmente usa $n$ se `ddof' não for informado. Excel separa funções populacionais e amostrais. Um resultado diferente pode vir de denominador, interpolação de quartil, filtro, arredondamento ou tratamento de nulos. A defesa é declarar parâmetros e manter um caso pequeno com resultado manual conhecido.
+
+Uma LLM pode ajudar a explicar uma função ou gerar um esqueleto, mas pode supor coluna, método ou mecanismo de ausência inexistente. O protocolo é fornecer contrato e amostra, pedir que explicite suposições, executar localmente, comparar com a conta de referência e revisar casos sinalizados na fonte. A resposta automática não conhece por que o pedido levou 21 dias nem por que a célula ficou vazia.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: o código está correto apenas quando reproduz a definição escolhida e os dados certos. Um programa executado sem erro pode calcular perfeitamente a população errada, excluir nulos seletivos ou usar quartis incompatíveis.
+\end{GuidedBox}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: automatizar vem depois de definir e calcular. Parâmetros explícitos, base preservada, caso manual de referência e comparação antes/depois transformam o script em trilha auditável.
+\end{SummaryBox}
+
+\section{Caso integrado: relatório justificável}
+
+Imagine uma empresa de comércio eletrônico que precisa decidir se renova o contrato de uma transportadora. O painel atual mostra apenas prazo médio de 6,2 dias e taxa de preenchimento de 90\%. A meta é cinco dias. Uma leitura apressada diria que o fornecedor falhou. Uma leitura igualmente apressada poderia excluir o prazo 21 e dizer que tudo está bem. O relatório precisa explicar rotina, incidente e lacuna sem escolher previamente um lado.
+
+O primeiro passo é fixar contrato analítico: unidade pedido concluído, período agosto de 2026, prazo em dias corridos entre postagem e entrega confirmada, cancelados fora do denominador e pedidos ainda abertos marcados separadamente. O registro bruto contém os dez prazos já analisados e um pedido adicional sem entrega confirmada. Assim, são onze pedidos no escopo, dez concluídos e um aberto; a taxa de completude do prazo é $10/11\approx90{,}9\%$.
+
+O segundo passo descreve os concluídos sem ocultar forma. Média 6,2, mediana 4,5, desvio-padrão amostral 5,35, $Q_1=4$, $Q_3=5,75$, $IQR=1,75$, mínimo 3 e máximo 21. Nove concluídos estão até sete dias; um levou 21. Histograma e boxplot mostram cauda à direita e sinalizam o evento longo.
+
+O terceiro passo investiga registros, não apenas números. O pedido de 21 dias possui rastreamento de extravio e reenvio, portanto é real. O pedido sem prazo continua aberto; imputar zero afirmaria entrega instantânea, e imputar mediana fingiria conclusão em 4,5 dias. Para a métrica de concluídos, ele permanece fora com denominador explícito; para risco operacional, aparece como aberto e sua idade atual é acompanhada em indicador separado.
+
+O quarto passo calcula cenários. Com todos os concluídos, a média excede a meta e a dispersão é alta. Para o fluxo rotineiro sem o incidente, a média é aproximadamente 4,56 e o desvio amostral cerca de 1,33. O cenário não ``corrige'' o KPI oficial; ele decompõe o mecanismo: o processo base atende a meta, mas um incidente material compromete resultado total e experiência do cliente.
+
+O quinto passo transforma evidência em decisão. Renovar sem condição ignoraria o extravio; rescindir apenas pela média ignoraria a consistência de nove pedidos. Uma recomendação proporcional seria renovar com plano de prevenção e monitoramento: SLA reportado por percentis e violações, indicador separado de incidentes, causa e tempo de resolução, além de regra para pedidos ainda abertos. Se incidentes se repetirem, o contrato deve prever consequência.
+
+O sexto passo registra limites. Onze pedidos são poucos para afirmar desempenho de longo prazo; agosto pode não representar sazonalidade; um único fornecedor e uma região limitam comparação; o mecanismo do pedido aberto ainda não foi concluído. O relatório descreve evidência observada, não promete causalidade nem generalização. A próxima coleta precisa ampliar períodos e estratificar por região e modalidade.
+
+A Tabela~\ref{tab:relatorio-tratamento} organiza uma decisão que outra pessoa consegue contestar. Ela não contém somente um valor final; liga achado, evidência, tratamento e impacto. Esse é o formato esperado de um diagnóstico profissional de AED, mesmo quando a ferramenta futura for um painel com IA conversacional.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Trecho do relatório de tratamento justificável.}
+\label{tab:relatorio-tratamento}
+\begin{tabularx}{0.97\textwidth}{@{}p{2.15cm}p{2.75cm}YY@{}}
+\toprule
+\textbf{Achado} & \textbf{Evidência} & \textbf{Tratamento} & \textbf{Impacto} \\
+\midrule
+Prazo 21 & rastreamento confirma extravio & conservar como incidente & eleva média e DP; mede risco real \\
+Prazo ausente & pedido continua aberto & não imputar; medir abertos & evita falsa entrega \\
+Cauda direita & histograma e centros divergem & mostrar centro e cauda & separa rotina de incidente \\
+Amostra pequena & 11 pedidos em agosto & ampliar período observado & decisão provisória \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+O relato executivo pode ser curto sem ser simplista: ``Entre onze pedidos, dez foram concluídos. Nove chegaram entre três e sete dias; um extravio levou 21 dias e um permanece aberto. A rotina concluída apresenta mediana de 4,5 dias e IQR de 1,75; incluindo o incidente, a média sobe para 6,2 e o desvio para 5,35. Recomendamos renovação condicionada a controle de extravios e reporte separado de pedidos abertos''. Cada frase aponta para evidência verificável.
+
+Esse caso também responde à pergunta transversal do curso: uma IA poderia calcular medidas e redigir a frase, mas não deveria decidir sozinha se o valor 21 é erro, incidente ou novo segmento. A decisão depende de rastreamento, regra contratual, custo, materialidade e responsabilidade. Dataviz continua necessária porque expõe distribuição, exceção e ausência para contestação; uma resposta textual sem essas ligações pode parecer segura demais.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: um relatório justificável preserva o dado bruto, define denominador, mostra rotina e cauda, testa cenários, registra limites e liga tratamento a evidência. ``Limpar'' é uma decisão analítica, não um botão.
+\end{SummaryBox}
+
+\section{Fechamento: um protocolo para não esconder a incerteza}
+
+Começamos com uma média de 6,2 dias e descobrimos que ela condensava nove entregas regulares, um extravio e um pedido ainda aberto fora do cálculo. A amplitude revelou a extensão, a variância e o desvio-padrão quantificaram afastamentos da média, e o IQR descreveu a metade central. Nenhuma medida venceu; cada uma respondeu a uma pergunta diferente.
+
+A forma completou a conta. Histograma mostrou concentração e cauda, enquanto boxplot tornou quartis e sinalização do extremo comparáveis. A assimetria explicou por que média e mediana divergiram. Também vimos que um gráfico depende de bins, escala, grupo e convenção; visualização é evidência construída, não fotografia neutra.
+
+Ausências ampliaram o problema. Uma célula sem valor pode representar acaso, dependência observável, dependência do próprio valor, estado em andamento ou não aplicabilidade. MCAR, MAR e MNAR são hipóteses do processo de geração. Excluir ou imputar sem investigar pode alterar média, reduzir variância e fabricar estabilidade.
+
+Outliers exigiram o mesmo cuidado. A cerca de Tukey sinalizou 21, mas o rastreamento mostrou um extravio real. Conservá-lo foi necessário para medir risco; separá-lo ajudou a compreender a rotina. Análise de sensibilidade tornou visível quanto a decisão dependia do tratamento e impediu que uma versão conveniente substituísse a história observada.
+
+O protocolo deste capítulo pode ser memorizado como uma sequência: declarar pergunta e grão; contar válidos e ausentes; calcular centro e pelo menos duas dispersões; visualizar forma; investigar extremos e mecanismo de ausência; comparar cenários; documentar decisão e limite. Se qualquer elo faltar, a automação apenas acelera uma interpretação frágil.
+
+Na próxima semana, seguiremos da tabela tratada para a arquitetura de dados que torna essa análise repetível. Fontes, ingestão, camadas SOR, SOT e SPEC, warehouse, lakehouse, modelo semântico, catálogo e linhagem determinarão se prazo, status e incidente continuam significando a mesma coisa até o dashboard. A estatística de hoje se tornará teste de qualidade ao longo desse caminho.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: variabilidade é parte da realidade, distribuição revela mecanismos, ausência carrega informação e extremo pede investigação. Uma AED confiável não elimina incerteza; ela a mede, mostra e documenta para que a decisão possa ser revista.
+\end{SummaryBox}

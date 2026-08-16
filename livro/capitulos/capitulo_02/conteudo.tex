@@ -1,0 +1,607 @@
+\chapter[Estatística I]{Estatística desde o começo: posição, dispersão e boxplot}
+
+Imagine que a coordenação de um curso recebeu uma planilha com os tempos, em minutos, que oito estudantes levaram para concluir uma atividade de análise de dados: $18$, $20$, $20$, $22$, $25$, $25$, $30$ e $56$. A primeira reação pode ser procurar um botão que produza um painel. Entretanto, antes do gráfico existe uma sequência de decisões: esses oito estudantes representam quem? O tempo foi medido da mesma maneira para todos? O valor $56$ é erro, caso raro ou observação legítima? Qual número resume o grupo sem esconder sua diversidade? A estatística nasceu justamente da necessidade humana de transformar muitas observações em descrições comparáveis sem perder de vista aquilo que foi observado.
+
+Neste capítulo, começaremos do início absoluto. Primeiro distinguiremos população, amostra, unidade observada, variável e frequência. Depois construiremos, uma por vez, as medidas de posição: média simples, média ponderada, mediana, moda, quartis e percentis. Em seguida, perceberemos por que um centro não basta e chegaremos à amplitude, à variância populacional, à variância amostral, ao desvio-padrão e ao intervalo interquartil. O boxplot fechará a história ao reunir posição e dispersão em uma representação compacta. Não usaremos código: todas as contas serão abertas e acompanhadas linha a linha.
+
+O fio condutor será a turma fictícia da Trilha UNIFACOL. Trabalharemos com conjuntos pequenos porque eles permitem enxergar cada decisão e conferir cada operação. Isso não torna a matemática artificial. Uma fórmula aplicada a milhões de registros executa o mesmo raciocínio que faremos com cinco ou oito valores; a diferença é apenas o volume. Aprender com poucos dados cria uma referência contra a qual qualquer ferramenta poderá ser verificada posteriormente.
+
+O encontro foi dimensionado para três horas. No primeiro bloco, construímos o vocabulário e as tabelas de frequência; no segundo, localizamos o centro com média, mediana e moda; depois da chamada das 20h30, medimos posição relativa e dispersão; no fechamento, montamos e interpretamos um boxplot. As contas resolvidas fazem parte da explicação do livro, não constituem uma lista de exercícios. A intenção é que o professor possa refazer cada linha com a turma enquanto os estudantes explicam o significado, e não somente repetem uma regra.
+
+Ao final, você deverá conseguir escolher uma medida de acordo com a pergunta, explicar cada símbolo das fórmulas e reconstruir os cálculos sem depender de uma função pronta. Também deverá distinguir variância populacional e amostral, justificar o divisor $n-1$ sem transformar a justificativa em mistério e interpretar o que o desvio-padrão e o IQR dizem na unidade do problema. Mais importante: deverá perceber que estatística descritiva não é uma coleção de botões. É uma linguagem para reduzir dados sem apagar contexto.
+
+\begin{SummaryBox}
+Então, aluno, veja só o caminho desta aula: começaremos perguntando quem e o que foi observado, organizaremos as ocorrências e somente depois resumiremos posição e dispersão. Cada fórmula aparecerá porque uma pergunta real exigiu uma resposta mais precisa.
+\end{SummaryBox}
+
+\section{Antes de calcular: população, amostra, variáveis e frequências}
+
+Muito antes de existirem computadores, governos, comerciantes e pesquisadores precisavam contar pessoas, terras, colheitas e impostos. A palavra \textit{estatística} está historicamente ligada ao Estado e à produção de informações sobre uma coletividade. O problema essencial permanece atual: raramente queremos apenas saber os valores escritos em uma tabela; queremos dizer algo sobre um conjunto de pessoas, objetos ou eventos. Chamamos de \textbf{população} o conjunto completo de unidades sobre o qual a pergunta foi formulada. Se a pergunta é ``qual foi o tempo de conclusão de todos os estudantes matriculados em AED neste semestre?'', a população inclui todos os estudantes que satisfazem esse recorte, e não apenas aqueles que responderam primeiro.
+
+Nem sempre é possível observar toda a população. Pode ser caro, demorado, destrutivo ou simplesmente inviável. Selecionamos então uma \textbf{amostra}, isto é, uma parte da população efetivamente observada para produzir conhecimento sobre o conjunto maior. Se a turma possui quarenta estudantes e medimos oito, temos tamanho populacional $N=40$ e tamanho amostral $n=8$. As letras maiúscula e minúscula ajudam a recordar a diferença, mas não garantem qualidade. Uma amostra de oito voluntários pode representar mal a turma se apenas os mais rápidos aceitaram participar. O modo de seleção importa tanto quanto o tamanho.
+
+Cada elemento sobre o qual registramos informações é uma \textbf{unidade de observação}. Na tabela dos tempos, uma linha pode representar uma tentativa de um estudante, não necessariamente um estudante único. Se a mesma pessoa realizou três tentativas, temos três eventos e talvez apenas uma pessoa. Antes de qualquer média, precisamos completar a frase ``cada linha representa...''. Essa frase determina o denominador. Confundir tentativa com estudante produz um resultado numericamente correto para a tabela e conceitualmente errado para a pergunta.
+
+Uma \textbf{variável} é uma característica que pode assumir valores diferentes entre as unidades. O curso de matrícula e o turno são qualitativos nominais: indicam categorias sem ordem natural. Uma avaliação como ``insuficiente, básico, adequado, avançado'' é qualitativa ordinal: existe ordem, mas a distância entre categorias não foi medida como igual. Número de faltas é quantitativo discreto porque resulta de contagem. Tempo, massa e temperatura são quantitativos contínuos porque, em princípio, admitem valores em um intervalo, embora o instrumento imponha precisão. Classificar a variável impede operações sem sentido, como calcular a média de códigos de curso $1$, $2$ e $3$.
+
+Um teste semântico simples ajuda quando a coluna parece numérica: ``faz sentido somar dois valores?'' Para salários de R\$ 3.000 e R\$ 5.000, a soma R\$ 8.000 representa um total; a diferença R\$ 2.000 também possui significado. Para códigos de região $1$ e $2$, o resultado $3$ não representa a junção das regiões, e a diferença não mede distância geográfica. Pergunte ainda se o zero significa ausência da quantidade ou apenas um rótulo. Matrícula, CEP e telefone permanecem identificadores mesmo armazenados como números; tempo e faltas são quantidades. Esse teste prepara tanto a escolha da média quanto as restrições do coeficiente de variação.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: o tipo exibido pelo sistema não decide o tipo estatístico. Antes de somar, subtrair ou calcular média, pergunte se soma, diferença e zero possuem significado no fenômeno. Um código numérico continua sendo categoria quando seus algarismos apenas identificam.
+\end{GuidedBox}
+
+Para organizar observações, começamos pela \textbf{frequência absoluta}. Dez estudantes informaram, na ordem, celular, notebook, celular, tablet, notebook, celular, notebook, notebook, celular e notebook. Contamos $4$ ocorrências de celular, $5$ de notebook e $1$ de tablet. Denotando a frequência absoluta da categoria $j$ por $f_j$, temos $f_{cel}=4$, $f_{note}=5$ e $f_{tab}=1$. A soma precisa recuperar o número de observações: $4+5+1=10=n$. Essa igualdade é uma primeira conferência do raciocínio.
+
+A frequência relativa responde qual parte do total pertence a cada categoria. Sua fórmula é
+\[
+ h_j=\frac{f_j}{n}.
+\]
+Aqui, $h_j$ é a frequência relativa da categoria $j$, $f_j$ é sua contagem e $n$ é o total observado. Para celular, $h_{cel}=4/10=0{,}40=40\%$; para notebook, $h_{note}=5/10=0{,}50=50\%$; para tablet, $h_{tab}=1/10=0{,}10=10\%$. Somando, $0{,}40+0{,}50+0{,}10=1$, ou $100\%$. A contagem mostra volume; a proporção permite comparar grupos de tamanhos diferentes.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Canal} & \textbf{Frequência absoluta $f_j$} & \textbf{Frequência relativa $h_j$} \\
+\midrule
+Celular & 4 & 40\% \\
+Notebook & 5 & 50\% \\
+Tablet & 1 & 10\% \\
+\midrule
+Total & 10 & 100\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Quando as categorias possuem ordem, podemos calcular frequência acumulada. Considere as avaliações ${1,2,2,3,3,3,4,4,5,5}$. Até o valor $1$, há $1$ caso; até $2$, há $1+2=3$; até $3$, $3+3=6$; até $4$, $6+2=8$; até $5$, $8+2=10$. A frequência relativa acumulada até $3$ é $6/10=60\%$. Isso significa que seis em cada dez observações estão no máximo em $3$. A palavra ``até'' é crucial: frequência acumulada não serve naturalmente a categorias nominais como cor ou curso, porque não há uma ordem legítima a acumular.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: população é o conjunto sobre o qual queremos falar; amostra é o conjunto que observamos; unidade é aquilo que cada linha representa; variável é a característica registrada. Se essas quatro respostas estiverem erradas, uma conta perfeita produzirá uma conclusão errada.
+\end{GuidedBox}
+
+A transição para as medidas de posição nasce de uma necessidade simples. A tabela de frequências descreve quantas vezes cada valor apareceu, mas um relatório frequentemente precisa de um resumo do valor típico. Não existe um único ``centro'' universal. A média redistribui o total igualmente, a mediana localiza a posição central e a moda identifica a maior repetição. Começaremos pela média porque sua ideia de repartição equitativa deixa visível por que cada observação participa do cálculo.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: antes da fórmula vêm o recorte, a unidade e o tipo da variável. Frequência absoluta conta ocorrências; frequência relativa divide a contagem pelo total; frequência acumulada informa quantos casos estão até determinada posição ordenável.
+\end{SummaryBox}
+
+\section{Média simples e média ponderada: repartir o total com justiça matemática}
+
+A média aritmética surgiu da necessidade de representar várias magnitudes por um único valor comparável. Em astronomia, medições repetidas do mesmo fenômeno variavam por erros de observação; em comércio e administração, era necessário comparar preços, produções e rendimentos. A ideia é antiga e poderosa: somamos o que foi observado e imaginamos uma redistribuição igual entre as unidades. Por isso, a média pode ser entendida como ponto de equilíbrio. Ela preserva o total, embora nenhum indivíduo precise possuir exatamente o valor médio.
+
+Para uma amostra com valores $x_1,x_2,\ldots,x_n$, a média aritmética é
+\[
+ \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
+ =\frac{x_1+x_2+\cdots+x_n}{n}.
+\]
+O símbolo $x_i$ representa o valor observado na posição $i$; $i$ percorre as posições de $1$ até $n$; $n$ é a quantidade de observações; $\sum$ ordena que todos os valores sejam somados; e $\bar{x}$, lido ``x barra'', representa a média da amostra. Se tivéssemos a população inteira, seria comum usar $\mu$, a letra grega mi, para a média populacional: $\mu=(1/N)\sum_{i=1}^{N}x_i$.
+
+Vamos calcular a média das horas de estudo de cinco estudantes: $x={2,4,4,5,10}$. Primeiro contamos $n=5$. Depois somamos cada observação, sem pular etapas:
+\[
+\sum_{i=1}^{5}x_i=2+4+4+5+10=25.
+\]
+Por fim, dividimos o total pelo número de estudantes:
+\[
+\bar{x}=\frac{25}{5}=5\text{ horas}.
+\]
+O resultado diz que, se as $25$ horas fossem redistribuídas igualmente, cada estudante teria $5$ horas. Não diz que a maioria estudou cinco horas; apenas um valor observado foi $5$.
+
+A propriedade de equilíbrio pode ser conferida pelos desvios em relação à média. Subtraímos $5$ de cada valor: $2-5=-3$, $4-5=-1$, $4-5=-1$, $5-5=0$ e $10-5=5$. Somando os desvios, $-3-1-1+0+5=0$. Os valores abaixo da média equilibram os valores acima. Essa igualdade, $\sum(x_i-\bar{x})=0$, será importante quando chegarmos à variância: ela explica por que não podemos simplesmente calcular a média dos desvios assinados para medir dispersão.
+
+A média utiliza todos os valores e, por isso, reage fortemente aos extremos. Troque $10$ por $30$: o conjunto vira $\{2,4,4,5,30\}$. A soma passa a $45$ e a média passa a $45/5=9$. Quatro dos cinco valores permanecem no máximo em $5$, mas a média sobe de $5$ para $9$. Isso não torna a média errada. Mostra que sua pergunta é ``qual é a repartição igual do total?'', e que um valor grande altera bastante esse total. Para encontrar uma posição central resistente, precisaremos da mediana.
+
+A Figura~\ref{fig:efeito-outlier-centro} coloca lado a lado o conjunto original e o conjunto em que apenas o último valor mudou. Os pontos representam observações, a linha azul marca a média e a linha laranja tracejada marca a mediana. A figura deve ser lida junto da conta anterior: ela torna visível qual medida se desloca quando um valor extremo altera a soma.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=.27cm,y=1.35cm]
+\draw[->] (0,.45)--(32,.45) node[right] {valor};
+\foreach \x in {0,5,...,30}{\draw[gray!55] (\x,.39)--(\x,.51) node[below] {\x};}
+\node[anchor=east] at (0,2) {original};
+\node[anchor=east] at (0,1) {com extremo 30};
+\foreach \x in {2,4,5,10}{\fill (\x,2) circle (2.4pt);}
+\fill (4,2.13) circle (2.4pt);
+\foreach \x in {2,4,5,30}{\fill (\x,1) circle (2.4pt);}
+\fill (4,1.13) circle (2.4pt);
+\draw[guidedblueframe,very thick] (5,1.65)--(5,2.35) node[above] {$\bar x=5$};
+\draw[guidedblueframe,very thick] (9,.65)--(9,1.35) node[above] {$\bar x=9$};
+\draw[guidedorangeframe,very thick,dashed] (4,.65)--(4,2.35);
+\end{tikzpicture}
+\caption{Um único extremo desloca a média de 5 para 9, enquanto a mediana permanece em 4. Fonte: elaboração didática.}
+\label{fig:efeito-outlier-centro}
+\end{figure}
+
+Observe na Figura~\ref{fig:efeito-outlier-centro} que o ponto $30$ não ``quebra'' a média: ele acrescenta vinte unidades à soma em comparação com o $10$, e essas vinte unidades são repartidas entre cinco observações, deslocando a média em quatro. A mediana permanece $4$ porque a terceira posição ordenada não mudou. Se o total interessa, a mudança da média é informação; se o centro posicional interessa, a estabilidade da mediana é informação. Ocultar uma delas empobreceria a análise.
+
+Antes da mediana, precisamos resolver outro problema: algumas observações representam quantidades diferentes. A \textbf{média ponderada} atribui um peso $w_i$ a cada valor $x_i$:
+\[
+ \bar{x}_w=\frac{\sum_{i=1}^{k}w_i x_i}{\sum_{i=1}^{k}w_i}.
+\]
+Aqui, $k$ é o número de valores ou grupos, $w_i$ é o peso do grupo $i$, $w_ix_i$ é sua contribuição ao total e $\sum w_i$ é o peso total. A média simples é um caso particular no qual todos os pesos são iguais a $1$.
+
+Considere duas avaliações. A atividade vale peso $2$ e a prova vale peso $8$. Um estudante obteve $9$ na atividade e $6$ na prova. Não podemos calcular $(9+6)/2=7{,}5$, porque isso daria a mesma importância às duas avaliações. A conta ponderada começa pelas contribuições:
+\[
+2\times9=18,\qquad 8\times6=48.
+\]
+Somamos as contribuições, $18+48=66$, e os pesos, $2+8=10$. Então,
+\[
+\bar{x}_w=\frac{66}{10}=6{,}6.
+\]
+O resultado fica mais próximo de $6$ porque a prova concentra $80\%$ do peso.
+
+A ponderação também corrige a chamada ``média das médias''. Uma turma A com $10$ estudantes tem média $8$; uma turma B com $30$ estudantes tem média $6$. A média simples das turmas é $(8+6)/2=7$, adequada apenas se quisermos que cada turma tenha o mesmo peso. Para descrever o estudante típico entre os quarenta, recuperamos os totais: $10\times8=80$ pontos na turma A e $30\times6=180$ na B. Logo,
+\[
+\bar{x}_w=\frac{80+180}{10+30}=\frac{260}{40}=6{,}5.
+\]
+O valor $6{,}5$ responde à população de estudantes; $7$ responde a duas turmas tratadas como duas unidades. A pergunta determina o peso.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: peso não é um enfeite colocado depois da conta. Ele declara quanto cada valor representa. Antes de usar média ponderada, explique a origem dos pesos e confira se o denominador é a soma deles, não apenas a quantidade de linhas.
+\end{GuidedBox}
+
+Chegamos a uma escolha importante. A média é excelente quando o total e o equilíbrio importam, como em custo médio, nota ponderada ou consumo por unidade. Entretanto, quando um extremo desloca o total, pode deixar de representar a posição onde se encontra a maioria. A próxima medida abandona a lógica de repartir e passa a perguntar: depois de ordenar, qual observação ocupa o meio?
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: a média simples reparte a soma igualmente entre $n$ observações. A média ponderada reparte a soma das contribuições pela soma dos pesos. Ambas usam todos os valores; por isso, um extremo legítimo também participa integralmente do resultado.
+\end{SummaryBox}
+
+\section{Mediana e moda: o centro pela posição e pela repetição}
+
+A mediana atende a uma necessidade diferente da média: localizar o centro de uma sequência ordenada. A ideia tornou-se especialmente útil em distribuições assimétricas, como renda, preço de imóveis e tempo de atendimento, nas quais poucos valores muito altos puxam a média. Em vez de redistribuir o total, a mediana divide as observações por posição: aproximadamente metade fica abaixo e metade acima. Ela é uma medida de ordem, não de soma.
+
+O primeiro passo é sempre ordenar. Para $n$ ímpar, a posição central é
+\[
+ p=\frac{n+1}{2}.
+\]
+Considere ${10,2,5,4,4}$. A ordem de coleta não serve para localizar o meio. Ordenamos: ${2,4,4,5,10}$. Como $n=5$, $p=(5+1)/2=3$. O terceiro valor é $4$; portanto, a mediana, indicada por $\widetilde{x}$ ou $Q_2$, é $4$. Dois valores estão antes e dois depois da posição central.
+
+Quando $n$ é par, não existe uma única posição central. Calculamos a média dos valores nas posições $n/2$ e $n/2+1$. Para ${2,4,5,10}$, já ordenado, $n=4$. As posições centrais são $4/2=2$ e $4/2+1=3$. Os valores correspondentes são $4$ e $5$. Assim,
+\[
+\widetilde{x}=\frac{4+5}{2}=\frac{9}{2}=4{,}5.
+\]
+A mediana não precisa ser um valor observado; $4{,}5$ é o ponto que separa as duas observações inferiores das duas superiores.
+
+Compare agora média e mediana no conjunto ${2,4,4,5,30}$. A média já calculada é $9$. A mediana é o terceiro valor, $4$. A diferença conta uma história: o centro por posição permanece próximo do grupo principal, enquanto o centro por equilíbrio foi deslocado pelo $30$. Se o objetivo for estimar a despesa total dividida igualmente, a média continua relevante. Se a pergunta for ``qual tempo representa a experiência central de uma pessoa?'', a mediana provavelmente comunica melhor. Estatística não escolhe automaticamente; ela torna a escolha justificável.
+
+A \textbf{moda} nasceu da necessidade de identificar o valor, categoria ou classe mais frequente. Sua definição é direta: moda é o valor associado à maior frequência absoluta. No conjunto ${2,4,4,5,30}$, as frequências são $f(2)=1$, $f(4)=2$, $f(5)=1$ e $f(30)=1$. Logo, a moda é $4$. Diferentemente da média e da mediana, ela pode ser aplicada a uma variável nominal. Podemos dizer que notebook é o canal modal sem atribuir números artificiais às categorias.
+
+Um conjunto pode ser amodal, unimodal, bimodal ou multimodal. Em ${1,2,3,4}$, todos aparecem uma vez; não há um valor mais frequente, então o conjunto é amodal. Em ${1,1,2,3}$, a moda única é $1$. Em ${1,1,2,2,3}$, há duas modas, $1$ e $2$. Em pesquisa aplicada, duas modas podem indicar subgrupos, como estudantes que concluem uma tarefa em torno de vinte minutos e outro grupo em torno de quarenta. Resumir tudo por uma média poderia esconder essa estrutura.
+
+Moda não significa automaticamente ``melhor'' nem ``recomendado''. Ela informa repetição. Se o tamanho de camiseta modal é M, o estoque precisa considerar a frequência de M, mas não pode ignorar P e G. Se o erro mais frequente de um sistema é ``senha inválida'', isso indica volume, não necessariamente maior impacto. Uma falha rara de segurança pode exigir prioridade superior. A medida responde ``qual ocorre mais?'', e a decisão acrescenta custo, risco e finalidade.
+
+Podemos reunir as três medidas no conjunto de tempos ${18,20,20,22,25,25,30,56}$. A soma é $216$, então a média é $216/8=27$. As posições centrais são a quarta e a quinta, $22$ e $25$, logo a mediana é $(22+25)/2=23{,}5$. As maiores frequências são as de $20$ e $25$, ambas iguais a $2$, portanto a distribuição é bimodal. O mesmo conjunto possui três centros legítimos porque cada um responde a uma pergunta diferente.
+
+\begin{center}
+\small
+\begin{tabularx}{0.94\textwidth}{@{}p{2.6cm}YY@{}}
+\toprule
+\textbf{Medida} & \textbf{Pergunta que responde} & \textbf{Resultado nos tempos} \\
+\midrule
+Média & qual seria a repartição igual do total? & $27$ minutos \\
+Mediana & qual é o centro das posições ordenadas? & $23{,}5$ minutos \\
+Moda & quais valores mais se repetem? & $20$ e $25$ minutos \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A mediana prepara a próxima ideia. Se conseguimos dividir os dados em duas metades, também podemos dividi-los em quatro partes ou em cem partes. Quartis e percentis generalizam a posição relativa e permitem dizer não apenas onde está o centro, mas onde uma observação se encontra em relação às demais.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: mediana exige ordenar e localiza o meio; moda identifica a maior frequência. Média, mediana e moda não competem para ver qual é sempre melhor. Cada uma preserva uma característica diferente dos dados.
+\end{SummaryBox}
+
+\section{Quartis e percentis: localizar uma observação na distribuição}
+
+Quartis e percentis respondem a uma necessidade administrativa e científica antiga: localizar uma observação dentro de uma distribuição. Em educação, saúde, economia e controle de qualidade, não basta saber o valor central; queremos reconhecer faixas e posições relativas. Um percentil não diz apenas ``quanto alguém obteve'', mas ``que parcela das observações está até esta posição''. Essa linguagem permite comparar resultados em escalas distintas, desde que a população e o método de cálculo estejam claros.
+
+Os quartis dividem os dados ordenados em quatro partes. $Q_1$ é o primeiro quartil, associado aproximadamente aos $25\%$ inferiores; $Q_2$ é o segundo quartil e coincide com a mediana; $Q_3$ é o terceiro quartil, associado aproximadamente aos $75\%$ inferiores. Os percentis dividem conceitualmente a distribuição em cem partes. Assim, $Q_1=P_{25}$, $Q_2=P_{50}$ e $Q_3=P_{75}$. A palavra ``aproximadamente'' é importante em amostras pequenas, porque posições percentuais podem cair entre observações.
+
+Existem convenções diferentes para calcular quartis e percentis em amostras finitas. Neste capítulo, usaremos um método didático transparente: ordenar; obter a mediana; quando $n$ for par, separar metades de mesmo tamanho; calcular a mediana de cada metade. Quando $n$ for ímpar, excluiremos a mediana geral antes de formar as metades. Softwares podem interpolar de outra maneira e apresentar pequenas diferenças. Isso não é erro automático; o relatório deve declarar a convenção usada.
+
+Considere os dados ordenados $x={2,4,5,7,8,10,12,14}$. Temos $n=8$. A mediana usa o quarto e o quinto valores:
+\[
+Q_2=\frac{7+8}{2}=7{,}5.
+\]
+A metade inferior é ${2,4,5,7}$. Sua mediana usa $4$ e $5$:
+\[
+Q_1=\frac{4+5}{2}=4{,}5.
+\]
+A metade superior é ${8,10,12,14}$, cuja mediana usa $10$ e $12$:
+\[
+Q_3=\frac{10+12}{2}=11.
+\]
+
+A interpretação precisa acompanhar a conta. $Q_1=4{,}5$ indica que a fronteira do primeiro quarto está entre $4$ e $5$; $Q_2=7{,}5$ separa as metades; $Q_3=11$ separa o quarto superior dos demais. Não significa que exatamente $25\%$ dos valores sejam iguais a $4{,}5$, nem que $4{,}5$ tenha sido observado. Quartil é posição de corte.
+
+Como contraexemplo de convenção, considere $\{1,2,3,4,5\}$, com $n$ ímpar. Pelo método adotado neste capítulo, excluímos a mediana $3$, formamos $\{1,2\}$ e $\{4,5\}$ e obtemos $Q_1=(1+2)/2=1{,}5$ e $Q_3=(4+5)/2=4{,}5$. Outra convenção inclui a mediana nas duas metades: $\{1,2,3\}$ e $\{3,4,5\}$, produzindo $Q_1=2$ e $Q_3=4$. Ambos os pares podem ser corretos sob métodos declarados. O erro seria misturar convenções ou comparar resultados sem registrar como foram obtidos.
+
+Para percentis, adotaremos a posição
+\[
+L=\frac{k}{100}(n+1),
+\]
+em que $k$ é o percentil desejado, $n$ é o número de observações e $L$ é a posição teórica na lista ordenada. Se $L$ for inteiro, usamos o valor daquela posição. Se cair entre duas posições, fazemos interpolação linear: percorremos a fração indicada entre os dois valores vizinhos. Essa é uma convenção entre várias, escolhida porque deixa o raciocínio visível.
+
+Calculemos $P_{60}$ no mesmo conjunto com $n=8$. Primeiro,
+\[
+L=\frac{60}{100}(8+1)=0{,}60\times9=5{,}4.
+\]
+A posição $5{,}4$ está $0{,}4$ do caminho entre o quinto valor, $8$, e o sexto, $10$. A distância entre eles é $10-8=2$. Tomamos $40\%$ dessa distância: $0{,}4\times2=0{,}8$. Somamos ao valor inferior:
+\[
+P_{60}=8+0{,}8=8{,}8.
+\]
+Segundo esta convenção, o corte do percentil 60 é $8{,}8$.
+
+Uma interpretação cuidadosa seria: aproximadamente $60\%$ da distribuição situa-se até o corte $8{,}8$. Não devemos dizer que uma pessoa ``acertou 60\%'' só porque está no percentil 60. Percentual de acertos e percentil são ideias diferentes. Um estudante pode acertar $70\%$ de uma prova e estar no percentil 90 se quase todos acertaram menos; pode acertar $90\%$ e estar no percentil 40 em um grupo de desempenho muito alto.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: quartis e percentis dependem da ordem e de uma convenção de posição. Ao comparar um cálculo manual com uma ferramenta, confira o método antes de concluir que um dos resultados está errado. Em um relatório, registre a convenção.
+\end{GuidedBox}
+
+As posições contam onde os dados estão, mas ainda não dizem quanto eles se espalham. Dois grupos podem compartilhar mediana $7{,}5$ e apresentar comportamentos muito diferentes: ${7,7,7,8,8,8}$ está concentrado; ${1,3,7,8,12,14}$ está espalhado. Precisamos acrescentar medidas de dispersão. Começaremos pela mais simples, a amplitude, e depois construiremos uma medida que utiliza a distância de cada valor ao centro.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: quartis dividem a ordem em quatro regiões e percentis localizam cortes em cem partes conceituais. Eles descrevem posição relativa, exigem dados ordenados e devem vir acompanhados da convenção de cálculo.
+\end{SummaryBox}
+
+\section{Amplitude, variância e o motivo do quadrado}
+
+A dispersão tornou-se necessária quando analistas perceberam que o centro, sozinho, não descrevia estabilidade, risco ou diversidade. Duas fábricas podem produzir peças com a mesma medida média e qualidades muito diferentes se uma opera perto do alvo e outra oscila amplamente. Duas turmas podem ter a mesma nota média, mas uma ser homogênea e outra conter resultados muito baixos e muito altos. Medidas de dispersão quantificam essa abertura dos dados.
+
+A medida mais direta é a \textbf{amplitude total}:
+\[
+A=x_{\max}-x_{\min}.
+\]
+$x_{\max}$ é o maior valor observado e $x_{\min}$ é o menor. Para os tempos ${18,20,20,22,25,25,30,56}$, temos $x_{\max}=56$ e $x_{\min}=18$. Logo,
+\[
+A=56-18=38\text{ minutos}.
+\]
+Do menor ao maior tempo há uma extensão de $38$ minutos.
+
+A amplitude é fácil de explicar, mas utiliza somente dois valores. Se o $56$ fosse substituído por $35$, a amplitude cairia de $38$ para $17$, embora sete observações permanecessem idênticas. Também não diferencia distribuições internas: ${0,0,0,10}$ e ${0,5,5,10}$ possuem amplitude $10$, mas o segundo conjunto ocupa mais o intervalo. Para incorporar todas as observações, calculamos distâncias em relação à média.
+
+Uma primeira tentativa seria fazer a média dos desvios $x_i-\bar{x}$. Porém, já vimos que esses desvios somam zero: os negativos anulam os positivos. Poderíamos usar valores absolutos, e isso produz uma medida válida, o desvio absoluto médio. A tradição da variância escolheu elevar os desvios ao quadrado. O quadrado elimina sinais, dá mais peso a afastamentos grandes e possui propriedades algébricas que sustentam inferência e modelagem. A escolha não é mágica: é uma solução matemática para impedir cancelamento e trabalhar bem com somas.
+
+Quando possuímos toda a população, a \textbf{variância populacional} é
+\[
+\sigma^2=\frac{1}{N}\sum_{i=1}^{N}(x_i-\mu)^2.
+\]
+$\sigma^2$ é a variância populacional; $N$ é o tamanho da população; $x_i$ é cada valor; $\mu$ é a média populacional; $x_i-\mu$ é o desvio; e $(x_i-\mu)^2$ é o desvio quadrático. A operação completa é: calcular a média, subtrair a média de cada valor, elevar cada diferença ao quadrado, somar e dividir por $N$.
+
+Considere que as idades ${2,4,4,6}$ sejam toda a população de quatro equipamentos de um laboratório. A média populacional é
+\[
+\mu=\frac{2+4+4+6}{4}=\frac{16}{4}=4.
+\]
+Agora abrimos cada desvio e quadrado:
+\[
+(2-4)^2=(-2)^2=4,
+\]
+\[
+(4-4)^2=0^2=0,
+\]
+\[
+(4-4)^2=0^2=0,
+\]
+\[
+(6-4)^2=2^2=4.
+\]
+A soma dos quadrados é $4+0+0+4=8$. Como temos a população inteira,
+\[
+\sigma^2=\frac{8}{4}=2\text{ anos}^2.
+\]
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrr@{}}
+\toprule
+$x_i$ & $x_i-\mu$ & $(x_i-\mu)^2$ \\
+\midrule
+2 & $-2$ & 4 \\
+4 & 0 & 0 \\
+4 & 0 & 0 \\
+6 & 2 & 4 \\
+\midrule
+Soma & 0 & 8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O resultado $2$ está em anos ao quadrado porque elevamos diferenças medidas em anos. Essa unidade dificulta a interpretação direta, mas a variância cumpre uma função central: quantifica o afastamento quadrático médio e penaliza mais os afastamentos grandes. Uma população com variância zero possui todos os valores iguais à média. Quanto maior a variância, maior o espalhamento quadrático na escala considerada.
+
+Dois conjuntos podem ter exatamente a mesma média e dispersões muito diferentes. Considere $A=\{4,5,5,6\}$ e $B=\{1,3,7,9\}$. Ambos somam $20$ e possuem média $5$. Em $A$, os desvios são $-1,0,0,1$, os quadrados somam $2$, $\sigma_A^2=2/4=0{,}5$ e $\sigma_A\approx0{,}71$. Em $B$, os desvios são $-4,-2,2,4$, os quadrados somam $40$, $\sigma_B^2=40/4=10$ e $\sigma_B\approx3{,}16$.
+
+A Figura~\ref{fig:mesma-media-dispersao} mostra os dois conjuntos na mesma escala. A linha vertical marca a média comum. Como a pergunta visual é comparar espalhamento ao redor do mesmo centro, um dotplot preserva cada observação e evita que uma barra agregada esconda a diferença.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=.76cm,y=1.35cm]
+\draw[->] (0,.45)--(10.5,.45) node[right] {valor};
+\foreach \x in {0,...,10}{\draw[gray!55] (\x,.39)--(\x,.51) node[below] {\x};}
+\node[anchor=east] at (0,2) {Conjunto A};
+\node[anchor=east] at (0,1) {Conjunto B};
+\foreach \x in {4,5,6}{\fill[guidedblueframe] (\x,2) circle (2.8pt);}
+\fill[guidedblueframe] (5,2.14) circle (2.8pt);
+\foreach \x in {1,3,7,9}{\fill[guidedorangeframe] (\x,1) rectangle +(4pt,4pt);}
+\draw[black,thick,dashed] (5,.65)--(5,2.4) node[above] {média $=5$};
+\end{tikzpicture}
+\caption{Mesma média, mas desvios-padrão muito diferentes. Fonte: elaboração didática.}
+\label{fig:mesma-media-dispersao}
+\end{figure}
+
+Na Figura~\ref{fig:mesma-media-dispersao}, os pontos de $A$ cercam a média de perto, enquanto os de $B$ ocupam quase toda a escala. Um cartão que mostrasse apenas ``média 5'' faria os processos parecerem equivalentes. A variância e o desvio-padrão respondem justamente ao que o cartão omitiu. Este é o motivo operacional de nunca interpretar centro sem alguma medida de dispersão.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: amplitude usa apenas máximo e mínimo. Variância usa todos os desvios em relação à média, eleva-os ao quadrado para impedir cancelamento e resume a soma desses quadrados. Quando os dados são a população inteira, dividimos por $N$.
+\end{SummaryBox}
+
+\section{Variância amostral, o divisor $n-1$ e o desvio-padrão}
+
+Na prática, frequentemente observamos uma amostra e queremos estimar a dispersão da população. Surge uma dificuldade: calculamos os desvios em torno de $\bar{x}$, a média da própria amostra. Essa média foi escolhida pelos mesmos dados e fica exatamente no ponto que minimiza a soma dos quadrados. Consequentemente, os desvios amostrais tendem a parecer um pouco menores do que seriam em torno da média populacional desconhecida. Dividir por $n$ tenderia a subestimar a variância populacional.
+
+A correção tradicional, associada ao desenvolvimento da teoria estatística por Bessel e outros pesquisadores do século XIX, substitui $n$ por $n-1$:
+\[
+s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
+\]
+$s^2$ é a variância amostral; $n$ é o tamanho da amostra; $\bar{x}$ é a média amostral. O termo $n-1$ também expressa um grau de liberdade perdido. Depois que conhecemos $n-1$ desvios e sabemos que sua soma é zero, o último desvio já está determinado; apenas $n-1$ podem variar livremente.
+
+Vamos tratar ${2,4,4,6}$ agora como amostra de uma população maior. A média continua $\bar{x}=4$, e a soma dos desvios quadráticos continua $8$. A diferença está no objetivo. Não estamos descrevendo apenas esses quatro equipamentos; estamos estimando a dispersão da população que eles representam. Logo,
+\[
+s^2=\frac{8}{4-1}=\frac{8}{3}\approx2{,}67\text{ anos}^2.
+\]
+Com os mesmos valores, a variância populacional foi $2$ e a amostral é aproximadamente $2{,}67$. Nenhuma é universalmente ``a correta'': a escolha depende de termos população completa ou amostra usada para estimar uma população.
+
+Podemos enxergar o grau de liberdade nos desvios $-2,0,0,2$. Conhecidos os três primeiros e a regra de que a soma deve ser zero, o quarto precisa ser $2$: $-2+0+0+d_4=0$, então $d_4=2$. Não possuímos quatro informações independentes sobre os desvios. Dividir a soma por três compensa, em média, a concentração produzida ao estimar o centro com os próprios dados.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: não use $n-1$ apenas porque ``a fórmula manda''. Pergunte qual é o papel do conjunto. Se ele contém toda a população definida, descrevemos com $N$. Se é uma amostra usada para estimar a variância populacional, usamos $n-1$.
+\end{GuidedBox}
+
+A variância resolve o cancelamento, mas sua unidade ao quadrado é pouco intuitiva. Por isso tomamos a raiz quadrada e obtemos o \textbf{desvio-padrão}. Para a população,
+\[
+\sigma=\sqrt{\sigma^2};
+\]
+para a amostra,
+\[
+s=\sqrt{s^2}.
+\]
+A raiz desfaz o quadrado da unidade. Se as idades estão em anos, o desvio-padrão volta a anos; se os tempos estão em minutos, volta a minutos. Essa compatibilidade permite comparar diretamente dispersão e média na escala original.
+
+No exemplo populacional, $\sigma^2=2$, então
+\[
+\sigma=\sqrt{2}\approx1{,}41\text{ anos}.
+\]
+No exemplo amostral, $s^2=8/3\approx2{,}67$, então
+\[
+s=\sqrt{2{,}67}\approx1{,}63\text{ anos}.
+\]
+Podemos dizer que as idades apresentam afastamento quadrático típico de cerca de $1{,}41$ ano em relação à média quando os quatro equipamentos formam a população. A expressão ``típico'' é uma intuição; o desvio-padrão não é a média dos valores absolutos dos desvios.
+
+Façamos um exemplo mais completo com as notas amostrais $x={6,7,7,8,12}$. A soma é $40$ e a média é $40/5=8$. Os desvios são $-2,-1,-1,0,4$. Os quadrados são $4,1,1,0,16$, com soma $22$. A variância amostral é
+\[
+s^2=\frac{22}{5-1}=\frac{22}{4}=5{,}5.
+\]
+O desvio-padrão é
+\[
+s=\sqrt{5{,}5}\approx2{,}35\text{ pontos}.
+\]
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrr@{}}
+\toprule
+Nota $x_i$ & Desvio $x_i-8$ & Quadrado \\
+\midrule
+6 & $-2$ & 4 \\
+7 & $-1$ & 1 \\
+7 & $-1$ & 1 \\
+8 & 0 & 0 \\
+12 & 4 & 16 \\
+\midrule
+Soma & 0 & 22 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O valor $12$ contribui com $16$ dos $22$ pontos quadráticos, cerca de $73\%$ da soma. Isso mostra a sensibilidade da variância e do desvio-padrão aos extremos. Essa sensibilidade é útil quando grandes desvios representam risco real, como falhas muito demoradas ou custos muito acima do planejado. Quando queremos descrever a região central com maior resistência a extremos, voltamos aos quartis e calculamos o intervalo interquartil.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: $n-1$ corrige a tendência de a amostra parecer concentrada em torno da média que ela própria estimou. O desvio-padrão é a raiz da variância e devolve a medida à unidade original, mas continua sensível a afastamentos grandes.
+\end{SummaryBox}
+
+\section{Coeficiente de variação: comparar dispersão relativa com cuidado}
+
+O desvio-padrão conserva a unidade original, o que é excelente para interpretar uma variável, mas dificulta certas comparações. Um desvio de R\$ 500 pode ser pequeno diante de salário médio de R\$ 10.000 e grande diante de renda média de R\$ 800. Para responder ``quanto a dispersão representa em relação ao centro?'', usamos o \textbf{coeficiente de variação}, difundido no desenvolvimento da biometria e da comparação de séries com escalas distintas. Ele transforma o desvio-padrão em uma razão relativa à média.
+
+Para uma amostra com média positiva, o coeficiente de variação é
+\[
+CV=\frac{s}{\bar{x}}\times100\%.
+\]
+$s$ é o desvio-padrão amostral, $\bar{x}$ é a média amostral e a multiplicação por $100\%$ expressa a razão em percentagem. Para uma população, podemos escrever $CV=(\sigma/\mu)\times100\%$. Como numerador e denominador possuem a mesma unidade, ela se cancela. O CV não informa minutos ou reais; informa dispersão relativa ao tamanho do centro.
+
+Considere dois processos. O processo A possui média $50$ ms e desvio-padrão $5$ ms. O processo B possui média $10$ ms e desvio-padrão $2$ ms. Em termos absolutos, A tem maior desvio: $5>2$. Porém,
+\[
+CV_A=\frac{5}{50}\times100\%=10\%,
+\]
+\[
+CV_B=\frac{2}{10}\times100\%=20\%.
+\]
+O processo B varia menos milissegundos, mas varia o dobro em relação à própria média. A pergunta ``qual oscila mais?'' precisa dizer se interessa variação absoluta ou relativa.
+
+A razão só é interpretável quando o zero da escala significa ausência da quantidade e a média está suficientemente distante de zero. Massa, tempo, distância e receita positiva costumam admitir comparação relativa. Temperatura em graus Celsius é um contraexemplo: $20^\circ$C não representa o dobro de calor de $10^\circ$C, porque o zero Celsius é convencional. Converter para Fahrenheit mudaria o CV embora o fenômeno fosse o mesmo. Nesses casos, DP e outras descrições são preferíveis.
+
+Médias próximas de zero também tornam o CV instável. Se um retorno médio é $0{,}2\%$ com desvio $2\%$, o CV seria $1.000\%$; se a média muda ligeiramente para $-0{,}1\%$, o sinal muda e a razão perde a leitura usual. Para dados que podem ser negativos, como lucro líquido ou variação de temperatura, o CV pode não responder a uma pergunta coerente. Não basta a fórmula aceitar a divisão: a escala precisa sustentar a interpretação.
+
+O CV também não substitui a visualização nem resolve assimetria. Dois processos podem ter CV semelhante e distribuições com caudas diferentes. Ao publicá-lo, informe média, desvio-padrão, unidade e tamanho da amostra. Assim, o leitor consegue reconstruir a razão e avaliar se o centro positivo e a escala de razão tornam a comparação válida.
+
+Considere agora dois times que possuem tempo médio próximo de nove minutos e precisam cumprir um SLA de até doze minutos na maior parte dos atendimentos. A tabela reúne centro, dispersão e tamanho. O time A parece mais previsível pelo DP e pelo IQR; o time B possui metade central e afastamento quadrático mais largos. Entretanto, $n=8$ em B torna sua estimativa mais sensível a poucos casos. A decisão não é premiar A automaticamente, mas investigar proporção acima do SLA, composição e período comparável.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Time} & $n$ & \textbf{Média} & \textbf{DP} & \textbf{IQR} \\
+\midrule
+A & 40 & 9,1 min & 1,2 min & 1,5 min \\
+B & 8 & 9,0 min & 3,8 min & 4,0 min \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Comparações por grupo devem publicar $n$, período e unidade de análise. Uma média baseada em duas pessoas e outra baseada em duzentas podem ter o mesmo valor, mas não a mesma estabilidade. Também precisamos confirmar que os grupos enfrentaram tipos de chamado comparáveis. A regra editorial é simples: nunca apresente média ou mediana por grupo sem informar quantas observações a sustentam e qual decisão será tomada.
+
+DP e IQR respondem a sensibilidades diferentes. Quando a distribuição é aproximadamente simétrica e sem extremos dominantes, média e DP preservam bem centro e espalhamento. Quando há assimetria ou casos afastados legítimos, mediana e IQR descrevem melhor a região central resistente. Em distribuição bimodal, nenhum par encerra a análise: investigamos subgrupos. O IQR não mede simetria; apenas a largura da metade central.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: use CV para comparar dispersão relativa quando a média positiva e o zero significativo permitem a razão. Não use por hábito em Celsius, escalas arbitrárias, médias próximas de zero ou valores que atravessam zero.
+\end{GuidedBox}
+
+O coeficiente de variação encerra a família baseada em média e desvio-padrão. Para uma leitura resistente da metade central e para uma representação que sinalize observações afastadas, voltaremos aos quartis. O IQR e o boxplot completarão a comparação entre dispersão sensível e dispersão robusta.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: DP mede dispersão na unidade; CV divide essa dispersão pela média para comparações relativas. O ganho de comparabilidade vem acompanhado de uma condição: a razão precisa ter significado no fenômeno.
+\end{SummaryBox}
+
+\section{IQR e boxplot: posição e dispersão em uma única leitura}
+
+O intervalo interquartil, conhecido pela sigla inglesa IQR, surgiu como uma forma robusta de descrever a largura da metade central dos dados. Sua fórmula é
+\[
+IQR=Q_3-Q_1.
+\]
+Como utiliza os quartis e ignora diretamente os $25\%$ inferiores e os $25\%$ superiores ao medir a largura, sofre menos influência de valores extremos do que a amplitude e o desvio-padrão. Ele não substitui todas as medidas; responde especificamente quanto espaço a metade central ocupa.
+
+Retomemos os tempos ${18,20,20,22,25,25,30,56}$. A mediana é $(22+25)/2=23{,}5$. A metade inferior é ${18,20,20,22}$, então
+\[
+Q_1=\frac{20+20}{2}=20.
+\]
+A metade superior é ${25,25,30,56}$, então
+\[
+Q_3=\frac{25+30}{2}=27{,}5.
+\]
+Logo,
+\[
+IQR=27{,}5-20=7{,}5\text{ minutos}.
+\]
+A metade central dos tempos ocupa uma faixa de $7{,}5$ minutos.
+
+Compare IQR e amplitude. A amplitude é $56-18=38$ minutos, muito influenciada pelo maior valor. O IQR é $7{,}5$, refletindo a concentração do miolo entre $20$ e $27{,}5$. Juntas, as medidas sugerem que existe uma cauda superior ou observação afastada. Não devemos apagar o $56$ apenas porque é distante. Primeiro investigamos se ele é válido e o que ocorreu: dificuldade técnica, interrupção, acessibilidade, erro de registro ou variação legítima.
+
+O boxplot foi popularizado no século XX pelo estatístico John Tukey como parte de uma abordagem exploratória que valorizava olhar para padrões antes de impor modelos. Ele resume cinco posições: mínimo não atípico, $Q_1$, mediana, $Q_3$ e máximo não atípico. A caixa vai de $Q_1$ a $Q_3$; uma linha marca a mediana; hastes alcançam os valores observados mais extremos ainda compatíveis com o critério adotado; observações além dele são desenhadas separadamente.
+
+O critério usual calcula cercas de referência:
+\[
+LI=Q_1-1{,}5\times IQR,
+\qquad
+LS=Q_3+1{,}5\times IQR.
+\]
+$LI$ é a cerca inferior e $LS$ a cerca superior. Para os tempos,
+\[
+LI=20-1{,}5\times7{,}5=20-11{,}25=8{,}75,
+\]
+\[
+LS=27{,}5+1{,}5\times7{,}5=27{,}5+11{,}25=38{,}75.
+\]
+Qualquer valor abaixo de $8{,}75$ ou acima de $38{,}75$ será sinalizado pelo critério de Tukey. O $56$ está acima da cerca superior.
+
+As cercas não são necessariamente as extremidades desenhadas das hastes. A haste inferior alcança o menor valor observado que permanece dentro das cercas: $18$. A haste superior alcança o maior valor observado dentro das cercas: $30$. O $56$ aparece como ponto separado. O resumo do boxplot é, portanto: haste inferior $18$, $Q_1=20$, mediana $23{,}5$, $Q_3=27{,}5$, haste superior $30$ e um ponto sinalizado em $56$.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Elemento} & \textbf{Valor} \\
+\midrule
+Haste inferior & 18 \\
+$Q_1$ & 20 \\
+Mediana & 23,5 \\
+$Q_3$ & 27,5 \\
+Haste superior & 30 \\
+Valor sinalizado & 56 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Um ponto fora das cercas não é automaticamente erro e não deve ser chamado de impossível. O termo \textit{outlier} descreve uma observação afastada segundo um critério, não uma sentença sobre sua origem. Se $56$ foi digitado no lugar de $26$, corrigimos com evidência na fonte. Se representa um estudante que enfrentou barreira de acessibilidade, removê-lo esconderia um problema decisivo. Se é uma ocorrência legítima rara, podemos apresentar estatísticas com e sem o caso, explicando a razão, mas não apagá-lo silenciosamente.
+
+O formato do boxplot também informa assimetria. Neste exemplo, a distância de $Q_3=27{,}5$ até a haste superior $30$ é pequena, mas existe um ponto muito distante em $56$. A média $27$ fica acima da mediana $23{,}5$, coerente com a influência da cauda superior. Um boxplot não mostra bem multimodalidade nem todos os detalhes da distribuição; conjuntos diferentes podem produzir caixas semelhantes. Por isso ele deve ser acompanhado de contexto, contagem e, quando necessário, outra representação.
+
+A Figura~\ref{fig:boxplot-efeito-extremo} compara a versão sem o $56$, $\{18,20,20,22,25,25,30\}$, com a versão completa. No primeiro conjunto, pela convenção declarada de excluir a mediana nas metades ímpares, temos $Q_1=20$, mediana $22$ e $Q_3=25$; as hastes vão de $18$ a $30$. No segundo, a caixa vai de $20$ a $27{,}5$, a mediana é $23{,}5$, as hastes ainda terminam em $18$ e $30$ e o $56$ é desenhado separadamente.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=.125cm,y=1.25cm]
+\draw[->] (5,0) -- (61,0) node[right] {minutos};
+\foreach \x in {10,20,30,40,50,60}{\draw (\x,.08)--(\x,-.08) node[below] {\x};}
+\node[anchor=east] at (5,1) {sem 56};
+\node[anchor=east] at (5,2.2) {com 56};
+\draw[thick] (18,1)--(20,1) (25,1)--(30,1);
+\draw[thick,fill=guidedblue] (20,.72) rectangle (25,1.28);
+\draw[very thick,guidedblueframe] (22,.72)--(22,1.28);
+\draw[thick] (18,.82)--(18,1.18) (30,.82)--(30,1.18);
+\draw[thick] (18,2.2)--(20,2.2) (27.5,2.2)--(30,2.2);
+\draw[thick,fill=guidedorange] (20,1.92) rectangle (27.5,2.48);
+\draw[very thick,guidedorangeframe] (23.5,1.92)--(23.5,2.48);
+\draw[thick] (18,2.02)--(18,2.38) (30,2.02)--(30,2.38);
+\filldraw[guidedorangeframe] (56,2.2) circle (2.2pt) node[above] {$56$};
+\end{tikzpicture}
+\caption{O valor 56 altera quartis e mediana moderadamente, mas aparece separado pelo critério do IQR. Fonte: elaboração didática.}
+\label{fig:boxplot-efeito-extremo}
+\end{figure}
+
+Na Figura~\ref{fig:boxplot-efeito-extremo}, a inclusão do extremo não estica a haste até $56$, porque a haste termina no maior valor observado dentro da cerca. Também vemos que o IQR muda de $25-20=5$ para $27{,}5-20=7{,}5$: resistência não significa imobilidade. Quartis reagem menos que média e amplitude, mas ainda refletem alterações de posição. Essa leitura impede dois erros opostos: imaginar que o boxplot ignora extremos ou imaginar que todo ponto separado deve ser removido.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: as cercas de $1{,}5\times IQR$ são um sinalizador exploratório, não uma regra automática de exclusão. O próximo passo é investigar a observação e sua origem. Estatística ajuda a formular a pergunta; o contexto sustenta a decisão.
+\end{GuidedBox}
+
+O boxplot completa a ponte do capítulo. Frequências organizaram ocorrências; média, mediana e moda resumiram centros diferentes; quartis e percentis localizaram posições; amplitude, variância, desvio-padrão e IQR mediram dispersões distintas. Agora dispomos de uma pequena gramática para descrever dados antes de produzir qualquer visual mais elaborado ou inferência.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: o IQR mede a largura da metade central. O boxplot reúne quartis, mediana, hastes e pontos sinalizados. Ele ajuda a enxergar posição, dispersão e assimetria, mas não substitui a investigação do contexto.
+\end{SummaryBox}
+
+\section{Caso integrado e síntese da aula de três horas}
+
+Vamos fechar reconstruindo a análise de um novo conjunto sem atalhos. Uma equipe registrou, para oito atendentes, $4$, $5$, $5$, $6$, $6$, $7$, $7$ e $20$ chamados resolvidos no turno. Suponha que esses oito formem toda a equipe daquele turno; portanto, tratamos o conjunto como população para descrevê-lo. A unidade de observação é o atendente e a variável ``chamados resolvidos'' é quantitativa discreta. Antes de calcular, confirmamos que cada atendente aparece uma vez e que todos trabalharam o mesmo período.
+
+As frequências absolutas são: $4$ aparece uma vez; $5$, duas; $6$, duas; $7$, duas; $20$, uma. As frequências relativas são $1/8=12{,}5\%$ para $4$ e $20$, e $2/8=25\%$ para $5$, $6$ e $7$. A soma é $12{,}5+25+25+25+12{,}5=100\%$. A distribuição é multimodal, com modas $5$, $6$ e $7$. Essa repetição mostra um grupo central, enquanto $20$ merece investigação.
+
+A soma dos valores é $4+5+5+6+6+7+7+20=60$. A média populacional é
+\[
+\mu=\frac{60}{8}=7{,}5\text{ chamados}.
+\]
+Como os dados já estão ordenados e $n=8$, a mediana usa a quarta e a quinta posições, ambas iguais a $6$:
+\[
+Q_2=\frac{6+6}{2}=6.
+\]
+A média $7{,}5$ fica acima da mediana $6$ por causa do valor $20$. Dizer que o atendente ``típico'' resolveu $7{,}5$ chamados sem informar a assimetria seria incompleto.
+
+Para os quartis, a metade inferior é ${4,5,5,6}$, então $Q_1=(5+5)/2=5$. A metade superior é ${6,7,7,20}$, então $Q_3=(7+7)/2=7$. O IQR é
+\[
+IQR=7-5=2.
+\]
+As cercas são $LI=5-1{,}5\times2=2$ e $LS=7+1{,}5\times2=10$. Assim, $20$ é sinalizado. As hastes alcançam $4$ e $7$; a caixa vai de $5$ a $7$ e a mediana fica em $6$.
+
+Agora calculamos a variância populacional. Em relação a $\mu=7{,}5$, os desvios são $-3{,}5$, $-2{,}5$, $-2{,}5$, $-1{,}5$, $-1{,}5$, $-0{,}5$, $-0{,}5$ e $12{,}5$. Seus quadrados são $12{,}25$, $6{,}25$, $6{,}25$, $2{,}25$, $2{,}25$, $0{,}25$, $0{,}25$ e $156{,}25$. A soma é $186$. Logo,
+\[
+\sigma^2=\frac{186}{8}=23{,}25\text{ chamados}^2,
+\qquad
+\sigma=\sqrt{23{,}25}\approx4{,}82\text{ chamados}.
+\]
+O $20$ domina a soma quadrática, assim como já suspeitávamos pelo boxplot.
+
+Se os mesmos oito atendentes fossem uma amostra de uma rede maior, manteríamos média e desvios, mas usaríamos
+\[
+s^2=\frac{186}{8-1}=\frac{186}{7}\approx26{,}57,
+\qquad
+s\approx5{,}15.
+\]
+A troca não ocorre porque o conjunto mudou, mas porque mudou a pergunta: descrição de toda a equipe do turno ou estimação de uma população mais ampla. Esse é o tipo de decisão que uma ferramenta não pode adivinhar a partir dos números.
+
+A leitura integrada é mais rica do que qualquer medida isolada. A moda aponta concentração em $5$, $6$ e $7$; a mediana $6$ representa a posição central; a média $7{,}5$ revela a influência do total produzido pelo caso $20$; o IQR $2$ descreve um miolo estreito; o desvio-padrão $4{,}82$ reage ao afastamento grande; o boxplot sinaliza o caso para investigação. Se o atendente de $20$ recebeu chamados muito simples ou teve registro duplicado, a comparação individual não é justa. Se ele criou uma prática eficiente, o caso pode gerar aprendizado.
+
+Os primeiros noventa minutos do encontro sustentam população, amostra, variáveis, frequências e médias com contas reconstruídas. A transição até a chamada trabalha mediana, moda e comparação de centros. Depois das 20h30, quartis, percentis, amplitude, variância, desvio-padrão, IQR e boxplot completam a análise. O fechamento integrado existe para que cada símbolo retorne à pergunta original; a fórmula não deve permanecer separada da decisão que a tornou necessária.
+
+Na próxima semana, ampliaremos a estatística básica para probabilidade, distribuições e relação entre variáveis. Média e variância reaparecerão como parâmetros de distribuições; quartis ajudarão a ler formas; e a lógica dos desvios preparará covariância e correlação. Não começaremos outra coleção de fórmulas: continuaremos a mesma história de como dados variam e de como essa variação pode ser descrita com responsabilidade.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você construiu: partiu do significado da linha, organizou frequências, calculou centros, localizou quartis, mediu dispersão e reuniu tudo no boxplot. A boa análise não escolhe um número favorito; compara medidas, explica diferenças e retorna ao contexto antes de decidir.
+\end{SummaryBox}

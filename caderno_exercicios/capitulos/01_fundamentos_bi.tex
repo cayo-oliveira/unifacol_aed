@@ -1,0 +1,177 @@
+\section{Capítulo 1 --- Fundamentos de AED, cadeia analítica e BI}
+
+As questões 1 a 10 são objetivas e as questões 11 a 15 são discursivas. Os dados são elaborados para fins didáticos. A edição pública apresenta resolução somente dos itens pares.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{Transformar demanda em pergunta analítica}{Caso de permanência estudantil}
+\TextoBase Em memorando, a direção solicita ``um dashboard de evasão''. Como matrículas, frequência, notas e situação acadêmica são atualizadas em ritmos distintos, o documento exige que a primeira entrega defina população, período, resultado observável e decisão, antes de escolher qualquer gráfico. A equipe pedagógica poderá contatar estudantes, mas somente após a coordenação distinguir abandono confirmado de sinal preventivo; por isso, a pergunta deve indicar quem será observado, até quando e qual ação o resultado sustentará.
+\FonteDidatica
+\Comando A formulação mais adequada para orientar a análise é
+\begin{enumerate}[label=\Alph*)]
+\item Quais cores deixam o painel de evasão mais atraente para a direção?
+\item Quais estudantes de graduação ativos em 2026.2 apresentam, até setembro, sinais definidos de queda de frequência e desempenho para priorizar contato pedagógico?
+\item Como prever definitivamente quais estudantes abandonarão o curso neste ano?
+\item Quais colunas do banco podem ser colocadas em uma única tela institucional?
+\item Qual ferramenta de BI possui maior quantidade de recursos automatizados?
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Distinguir exploração, explicação e decisão}{Relato de vendas}
+\TextoBase Uma rede observou queda de receita. A analista segmentou por loja, canal e categoria, descobriu que a redução se concentra no canal móvel de duas lojas e validou que o problema começou após uma mudança no checkout. A gerência precisa decidir se reverte a mudança.
+\begin{center}
+\begin{tikzpicture}[node distance=5mm and 7mm,>=Latex,every node/.style={draw,rounded corners,font=\footnotesize,text width=2.15cm,align=center}]
+\node (e) {explorar lojas, canais e categorias}; \node[right=of e] (v) {verificar período e mudança};
+\node[right=of v] (x) {explicar o achado relevante}; \node[right=of x] (d) {decidir sobre o checkout};
+\draw[->] (e)--(v);\draw[->] (v)--(x);\draw[->] (x)--(d);
+\end{tikzpicture}
+\end{center}
+\LegendaDidatica{Etapas candidatas da cadeia que o comando pede ordenar conceitualmente}
+\FonteDidatica
+\Comando A sequência que representa corretamente o trabalho é
+\begin{enumerate}[label=\Alph*)]
+\item escolher o gráfico, publicar o total e depois procurar uma pergunta compatível.
+\item explorar padrões, verificar a evidência, explicar o achado relevante e vinculá-lo a uma decisão.
+\item prever receita, excluir lojas discrepantes e atribuir a queda ao canal móvel.
+\item agregar todos os canais, substituir a mediana pela média e recomendar publicidade.
+\item automatizar a narrativa e aceitar a causa proposta pela ferramenta de BI.
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Avaliar qualidade da cadeia pergunta--dado--visual--decisão}{Indicadores de atendimento}
+\TextoBase Um relatório de auditoria afirma que ``o atendimento melhorou'' porque a média caiu. O Quadro 1, porém, registra centro, cauda e reabertura no mesmo período; a recomendação será aceita somente se considerar conjuntamente essas evidências.
+\begin{DocumentBox}[Quadro 1 --- indicadores antes e depois]
+\begin{tabularx}{\textwidth}{@{}Yrr@{}}\toprule
+\textbf{Indicador} & \textbf{Antes} & \textbf{Depois}\\\midrule
+tempo médio & 18 min & 14 min\\ percentil 90 & 31 min & 46 min\\ reabertura & 8\% & 15\%\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+\FonteDidatica
+\Comando A decisão analítica mais defensável é
+\begin{enumerate}[label=\Alph*)]
+\item declarar melhora, porque a média resume toda a distribuição.
+\item declarar piora geral, porque qualquer aumento no percentil 90 invalida a média.
+\item manter o piloto e investigar cauda e reabertura antes de concluir, pois rapidez média e qualidade evoluíram em direções diferentes.
+\item remover os casos acima do percentil 90 e recalcular a média do período.
+\item substituir todos os indicadores por uma nota única sem preservar os denominadores.
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Selecionar indicador com denominador coerente}{Tabela de conversão}
+\TextoBase Uma equipe de comércio digital comparará duas campanhas com volumes de exposição distintos. Cada visita pertence a uma única campanha e cada compra é atribuída à visita correspondente. A gerência precisa distinguir quantidade absoluta de compras da efetividade por oportunidade antes de redistribuir o orçamento.
+\begin{center}\begin{tabular}{@{}lrr@{}}\toprule Campanha & Visitas & Compras\\\midrule A&2.000&120\\ B&600&54\\\bottomrule\end{tabular}\end{center}
+\FonteDidatica
+\Comando Para comparar a efetividade, a leitura correta é
+\begin{enumerate}[label=\Alph*)]
+\item A é melhor, pois gerou 120 compras contra 54.
+\item B é melhor, pois converteu $54/600=9\%$, contra $120/2.000=6\%$ de A.
+\item ambas são iguais, pois a diferença de compras decorre apenas do volume.
+\item A é melhor, pois sua taxa é $2.000/120\approx16{,}7\%$.
+\item B é melhor, pois $54/120=45\%$ mede sua participação nas compras.
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Distinguir BI visual, conversacional e agentic}{Cenário de governança}
+\TextoBase No parecer de aquisição, uma organização permite perguntas em linguagem natural somente quando a resposta usa métricas certificadas, respeita acesso por área, mostra a fonte e pode ser contestada. A ferramenta poderá propor investigação, mas o parecer proíbe que execute decisões financeiras.
+\FonteDidatica
+\Comando A capacidade requerida é melhor descrita como
+\begin{enumerate}[label=\Alph*)]
+\item painel estático sem camada semântica, porque métricas visuais dispensam rastreabilidade.
+\item chatbot geral conectado a arquivos, porque fluência substitui governança de métricas.
+\item análise conversacional governada, com possível orquestração agentic limitada por permissões e revisão humana.
+\item planilha individual, porque cada usuário deve redefinir as métricas conforme sua necessidade.
+\item agente autônomo financeiro, porque propor investigação autoriza executar a decisão resultante.
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Diagnosticar média de taxas}{Comparação de frequência}
+\TextoBase Um chamado acadêmico contesta a frequência de uma estudante: foram 9 presenças em 10 aulas de AED e 1 em 2 de IA, mas o painel calculou a média simples de 90\% e 50\%. A correção precisa conservar aulas e presenças como denominadores auditáveis.
+\FonteDidatica
+\Comando A correção que preserva numerador e denominador é
+\begin{enumerate}[label=\Alph*)]
+\item $(90+50)/2=70\%$, porque disciplinas têm o mesmo peso.
+\item $(9+1)/(10+2)=10/12\approx83{,}3\%$, porque aulas são as oportunidades observadas.
+\item $(10+2)/(9+1)=120\%$, porque o total previsto deve dividir o realizado.
+\item $9/12=75\%$, porque somente AED possui quantidade suficiente de aulas.
+\item $1/10=10\%$, porque a menor taxa domina o risco acadêmico.
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Distinguir dado, informação, insight e decisão}{Incidente de estoque}
+\TextoBase Em uma ata de revisão, registros de venda são convertidos em 320 unidades por semana; a análise localiza rupturas sobretudo às sextas após promoções e recomenda antecipar reposição. A ata exige distinguir, nessa ordem, dado, informação, conhecimento e decisão monitorada.
+\FonteDidatica
+\Comando A classificação correta da cadeia é
+\begin{enumerate}[label=\Alph*)]
+\item registros = decisão; 320 = dado bruto; padrão = ferramenta; reposição = informação.
+\item registros = dados; 320 = informação resumida; padrão contextualizado = insight; reposição monitorada = decisão.
+\item registros = insight; 320 = decisão; padrão = dado; reposição = visualização.
+\item todos os elementos são dados, pois foram produzidos por um sistema.
+\item somente a reposição é informação, pois as etapas anteriores não geram ação.
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Avaliar ausência de dados}{Notas acadêmicas}
+\TextoBase Um incidente de qualidade envolve seis matrículas: cinco notas foram lançadas (8, 6, 7, 9 e 8,5) e a sexta permanece vazia porque a avaliação ainda não ocorreu. O sistema converteu o vazio em zero, confundindo ausência de observação com desempenho observado.
+\FonteDidatica
+\Comando A análise coerente é
+\begin{enumerate}[label=\Alph*)]
+\item usar zero e obter $38{,}5/6\approx6{,}42$, pois todo vazio representa reprovação.
+\item usar as cinco observadas e obter $38{,}5/5=7{,}7$, informando $n=5$ e a pendência separadamente.
+\item excluir a maior nota e obter média mais robusta para compensar a ausência.
+\item repetir a última nota no campo vazio e manter seis observações.
+\item publicar apenas a soma 38,5, pois médias não aceitam ausência.
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Selecionar evidência para uma decisão}{Dashboard comercial}
+\TextoBase Em reunião de orçamento, um dashboard mostra aumento de 12\% na receita, mas omite inflação, quantidade vendida, cancelamentos e margem. Antes de ampliar a campanha, a direção exige uma investigação que separe crescimento nominal, volume e rentabilidade.
+\FonteDidatica
+\Comando Antes da decisão, a análise deve prioritariamente
+\begin{enumerate}[label=\Alph*)]
+\item atribuir causalidade à campanha porque ela ocorreu antes do aumento.
+\item comparar volume, preço, margem e cancelamentos com base e grupos comparáveis, declarando outras mudanças do período.
+\item trocar receita por curtidas, pois engajamento antecipa qualquer resultado financeiro.
+\item ocultar a comparação histórica para evitar influência de sazonalidade.
+\item ampliar imediatamente e avaliar apenas depois, pois dashboards servem à velocidade.
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Escolher visual e decisão coerentes}{Fila de espera}
+\TextoBase A chefe de uma unidade solicita acompanhamento semanal da mediana e do percentil 90 do tempo de espera. O painel deve destacar p90 acima de 40 minutos, exibir o tamanho da amostra e manter legível, inclusive em escala de cinza, a diferença entre centro e cauda.
+\FonteDidatica
+\Comando A solução mais apropriada é
+\begin{enumerate}[label=\Alph*)]
+\item gráfico de linhas com duas séries, linha de referência em 40 minutos e contagem semanal visível.
+\item gráfico de pizza por semana, com uma fatia para mediana e outra para p90.
+\item nuvem de palavras com os tempos mais frequentes e alerta textual.
+\item mapa sem localização, colorido apenas por média mensal.
+\item cartão único com o menor valor observado no semestre.
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Construir cadeia analítica verificável}{Caso de evasão}
+\TextoBase Em solicitação de produto, uma faculdade propõe usar frequência, notas, situação financeira e contatos para ``prever evasão'' e enviar mensagens automáticas. O documento não define população, momento, resultado nem revisão humana, impedindo transformar a demanda em análise e intervenção avaliáveis.
+\FonteDidatica
+\Comando Em até 15 linhas, reformule a demanda como pergunta operacional; desenhe a cadeia pergunta--dado--análise--visual--decisão; indique dois riscos de qualidade ou ética e duas evidências necessárias antes de automatizar contato.
+
+\ItemHeader{12}{Discursiva}{Interpretar indicadores conflitantes}{Tabela de atendimento}
+\TextoBase O relatório operacional de um novo fluxo registra média de 16 para 12 minutos e mediana de 13 para 11, mas p90 de 28 para 41 e reabertura de 7\% para 13\%, com volume semelhante. A gerência precisa decidir sem permitir que a melhora do centro compense a piora da cauda e da qualidade.
+\FonteDidatica
+\Comando Produza recomendação à gerência distinguindo observação, interpretação e decisão. Indique um visual para tempos, outro para qualidade e uma condição mensurável para manter ou reverter o fluxo.
+
+\ItemHeader{13}{Discursiva}{Definir contrato de indicador}{Taxa de resolução}
+\TextoBase Três áreas publicam ``resolução no primeiro contato'', mas usam denominadores diferentes: chamados abertos, chamados encerrados e clientes únicos. Os valores alimentam metas e remuneração, embora uma pessoa possa abrir vários chamados e alguns permaneçam abertos no corte. A organização precisa de um contrato antes de comparar áreas.
+\FonteDidatica
+\Comando Escreva um contrato mínimo para o indicador, incluindo unidade, numerador, denominador, exclusões, janela, atualização, responsável e dois testes. Explique como a mudança de denominador altera a decisão.
+
+\ItemHeader{14}{Discursiva}{Calcular e avaliar desempenho por grupo}{Tabela de campanha}
+\TextoBase Um memorando comercial compara duas campanhas. A registrou 2.000 visitas, 120 compras, R\$9.600 de margem e custo de R\$2.000; B registrou 600 visitas, 54 compras, R\$3.240 de margem e custo de R\$900. A recomendação deve separar escala, conversão e retorno líquido.
+\FonteDidatica
+\Comando Calcule conversão, margem por compra e margem líquida de cada campanha. Recomende uma prioridade, explicando por que volume e taxa isolados não resolvem a decisão.
+
+\ItemHeader{15}{Discursiva}{Avaliar proposta de BI conversacional}{Arquitetura de decisão}
+\TextoBase Em proposta de fornecedor, um chatbot consulta diretamente tabelas operacionais, gera SQL e envia recomendações a gestores. A auditoria de arquitetura identifica ausência de catálogo de métricas, teste da consulta e registro de fonte, três requisitos para reproduzir e contestar uma recomendação.
+\FonteDidatica
+\Comando Em até 15 linhas, diagnostique quatro lacunas e proponha um fluxo governado que preserve permissões, camada semântica, validação, proveniência e contestação humana.
+
+\newpage
+\subsection{Respostas explicadas das questões pares}
+\paragraph{Questão 2 — resposta B.} A equipe parte de exploração, verifica a concentração e a mudança temporal, comunica o achado relevante e o relaciona à decisão. Escolher visual ou causa antes da evidência quebra a cadeia.
+\paragraph{Questão 4 — resposta B.} A conversão de A é $120/2.000=6\%$ e a de B é $54/600=9\%$. Contagem absoluta responde volume; a taxa compara efetividade por oportunidade.
+\paragraph{Questão 6 — resposta B.} Devem-se somar presenças e aulas antes de dividir: $10/12=83{,}3\%$. A média simples de percentuais dá peso indevido à disciplina com apenas duas aulas.
+\paragraph{Questão 8 — resposta B.} A nota ausente significa ``ainda não observada'', não zero. A média válida dos valores presentes é 7,7 e precisa vir acompanhada de $n=5$ e completude $5/6$.
+\paragraph{Questão 10 — resposta A.} Linhas preservam ordem temporal; duas séries permitem comparar centro e cauda; a referência operacionaliza o limiar; a contagem comunica a base de cada semana.
+\paragraph{Questão 12 — critérios de resposta.} Reconhecer melhora no centro e piora na cauda/qualidade; propor histograma ou boxplot para tempos e série temporal para reabertura; condicionar a decisão a limiar explícito e investigação da cauda.
+\paragraph{Questão 14 — cálculo e critérios.} A: conversão 6\%, margem/compra R\$80, líquida R\$7.600. B: 9\%, R\$60, líquida R\$2.340. A maximiza contribuição total; B converte melhor. A recomendação deve declarar o objetivo e não confundir essas dimensões.

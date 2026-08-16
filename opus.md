@@ -1,4 +1,19 @@
-# Guia de Estilo para Agentes — Aulas UNIFACOL
+# Guia de escrita 2026.2 — Livro-aula UNIFACOL
+
+O padrão ativo está no skill `trilha-unifacol/`. Antes de editar conteúdo, ler o Memory Bank e as referências `escrita-guiada.md`, `disciplinas.md` e `avaliacao-enade.md`.
+
+## Regra editorial ativa
+
+- Livro e notas formam um único livro-aula por encontro de três horas.
+- O texto atende aluno e professor, mas não expõe teleprompter, respostas esperadas, plano B, fiscalização ou estratégia de prova.
+- Exercícios e soluções ficam somente no caderno de exercícios.
+- Usar apenas caixa laranja para síntese conversada e caixa azul para explicação guiada.
+- Incluir exemplos reais, tabelas curtas, diagramas legíveis e transições de storytelling.
+- Compilar capítulo e livro completo com Tectonic e revisar margens.
+
+---
+
+# Guia legado 2026.1 — Notas de aula UNIFACOL
 
 Este documento descreve a persona, estrutura, padrões visuais e metodologia usados para gerar os arquivos `.tex` das semanas de aula. **Aplica-se a qualquer disciplina** (AED, IA, Tópicos Integradores, etc.). Use-o como referência obrigatória ao criar ou expandir qualquer `semanaXX.tex`.
 

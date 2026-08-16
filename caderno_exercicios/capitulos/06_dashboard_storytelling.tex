@@ -1,0 +1,322 @@
+\section{Capítulo 6 --- Dashboard, storytelling e decisão}
+
+Uma rede de 24 clínicas acompanha acesso, qualidade e sustentabilidade. O painel mensal será usado pela diretoria para decidir onde abrir horários e onde investigar deterioração clínica.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{hierarquia visual}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A página inicial do painel das 24 clínicas exibe 28 cartões com o mesmo tamanho, oito cores e quatro filtros abertos. Em dez segundos, a diretoria precisa localizar espera elevada sem aceitar uma redução obtida à custa de mais cancelamentos. A primeira camada deve priorizar a decisão; detalhes permanecem disponíveis para exploração. Na reunião, a decisão imediata é escolher duas unidades para abrir horários, mas a diretoria só autoriza a medida quando espera e cancelamento aparecem juntos, com período e meta visíveis. O protocolo também exige comparação com o mês anterior e indicação de qualidade dos dados. Assim, destaque visual não pode depender apenas de cor nem transformar um indicador isolado em recomendação; a leitura inicial precisa revelar prioridade, contraponto e próximo passo.
+
+\FonteDidatica
+
+\Comando Para orientar o redesenho da primeira camada, selecione a alternativa que preserva hierarquia, contexto e o indicador de qualidade.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item ordenar todos os cartões alfabeticamente
+
+\item usar uma cor diferente para cada unidade
+
+\item priorizar uma Big Idea, destacar espera junto de cancelamento e relegar diagnóstico detalhado a uma camada de exploração
+
+\item remover cancelamento para simplificar a mensagem
+
+\item substituir números por um texto persuasivo
+
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{média ponderada}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O memorando da diretoria apresenta no Quadro 1 tempos médios e volumes de três clínicas. O indicador único deve representar os 160 atendimentos, preservando o peso de cada volume.
+\begin{DocumentBox}[Quadro 1 --- espera e volume]
+\begin{tabularx}{\textwidth}{@{}Yrr@{}}\toprule
+\textbf{Clínica} & \textbf{Espera média} & \textbf{Atendimentos}\\\midrule
+A & 12 min & 100\\ B & 20 min & 50\\ C & 35 min & 10\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+
+\FonteDidatica
+
+\Comando Calcule a espera média ponderada dos 160 atendimentos e selecione a alternativa correspondente.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 15,9 min, calculando a média ponderada pelo volume
+
+\item 22,3 min, média simples das unidades
+
+\item 67 min, soma das médias
+
+\item 18,0 min, ponderando apenas as duas maiores
+
+\item 20,0 min, usando a mediana sem considerar volume
+
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Big Idea}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um piloto ampliou a triagem em parte das clínicas. A espera caiu apenas nas unidades participantes, enquanto o cancelamento permaneceu estável; nas demais, não houve melhora. Como alocará equipe no próximo mês, a diretoria precisa de uma mensagem central que preserve a condição observada e proponha monitoramento.
+
+\FonteDidatica
+
+\Comando Selecione a Big Idea que traduz a evidência do piloto em recomendação proporcional e verificável.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item afirmar que triagem sempre reduz espera
+
+\item esconder unidades sem melhora
+
+\item recomendar expansão porque o gráfico ficou verde
+
+\item formular mensagem condicionada: ampliar piloto de triagem, monitorando espera e cancelamento
+
+\item trocar a hipótese por uma lista de indicadores
+
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{taxa e incerteza}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Duas clínicas serão priorizadas para revisão de alta. A unidade A registrou 18 retornos em 200 altas; B, 12 em 80. Como os volumes diferem, a meta de reduzir retorno exige comparar taxas com seus denominadores, sem classificar pela contagem absoluta.
+
+\FonteDidatica
+
+\Comando Calcule as taxas de retorno de A e B e selecione a interpretação compatível com os tamanhos observados.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item A=18\% e B=12\%, usando contagens como percentuais
+
+\item A=9\% e B=15\%; B merece investigação, sem ignorar tamanhos amostrais
+
+\item A=6\% e B=4\%, dividindo por 300
+
+\item B é melhor porque teve menos retornos absolutos
+
+\item as unidades são equivalentes porque a diferença é seis casos
+
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{interação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O filtro de período altera todos os gráficos, mas título, fonte e exportação não exibem o recorte ativo. Capturas do painel são levadas a reuniões e podem circular fora do sistema. A interação precisa preservar estado e permitir que outra pessoa reconstrua a leitura.
+
+\FonteDidatica
+
+\Comando Selecione o desenho de interação que torna o recorte reproduzível dentro e fora do painel.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item ocultar filtros para evitar erro
+
+\item usar animação como registro de estado
+
+\item permitir qualquer combinação sem aviso
+
+\item fixar sempre o último período escolhido
+
+\item tornar estado visível no título, preservar filtros no artefato e oferecer restauração
+
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{cauda}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Antes de uma mudança, o tempo mediano era 9 min, o p90 31 min e o p95 48 min. Depois, passaram a 8, 38 e 61 min, no mesmo tipo de atendimento. A direção precisa avaliar simultaneamente experiência central e cauda, evitando usar apenas a melhora de um minuto.
+
+\FonteDidatica
+
+\Comando Compare as três medidas antes e depois e selecione a conclusão sustentada pelo centro e pela cauda.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item o serviço melhorou 11\% em todas as observações
+
+\item o p95 melhorou 13 min
+
+\item a mediana melhorou 1 min, mas a cauda piorou; não declarar melhora global
+
+\item a média necessariamente caiu
+
+\item percentis não podem coexistir em um dashboard
+
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{acessibilidade}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O painel codifica meta cumprida em verde e falha em vermelho, sem texto, forma ou padrão redundante. Quando impresso em cinza, ambos os estados ficam visualmente semelhantes. O relatório será usado por públicos diversos e precisa manter o significado independentemente da percepção de cor.
+
+\FonteDidatica
+
+\Comando Selecione a revisão que mantém a distinção dos estados para impressão e diferentes percepções de cor.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aumentar saturação de vermelho e verde
+
+\item combinar cor com texto, forma ou padrão e verificar contraste
+
+\item adicionar mais tons intermediários
+
+\item usar legenda distante sem rótulos
+
+\item manter porque usuários aprenderão as cores
+
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{variação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A taxa de cancelamento em cinco semanas foi 8, 9, 8, 10 e 25\%. A média é 12\% e a mediana 9\%. A quinta semana coincide com falha de agendamento confirmada, mas o valor é legítimo; a equipe precisa comunicá-lo sem apagá-lo nem inventar tendência.
+
+\FonteDidatica
+
+\Comando Compare média, mediana e sequência semanal e selecione a ação exploratória proporcional ao pico.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item declarar estabilidade porque a mediana é 9\%
+
+\item remover 25\% sem registrar critério
+
+\item usar somente média porque inclui tudo
+
+\item destacar o pico e investigar sua causa; média isolada esconde a semana atípica
+
+\item concluir tendência crescente com cinco valores
+
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{storytelling}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Uma apresentação à diretoria começa pela ferramenta, percorre 16 gráficos e somente no final menciona a decisão sobre novos horários. Evidências, limites e recomendação aparecem separados, obrigando o público a reconstruir sozinho o argumento. O roteiro precisa servir à decisão, não demonstrar a interface.
+
+\FonteDidatica
+
+\Comando Selecione a reorganização narrativa que conecta contexto, evidência, limite e recomendação ao público decisor.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item reordenar contexto, problema, evidência, limite e recomendação para o público decisor
+
+\item começar por todas as transformações técnicas
+
+\item eliminar limites para ganhar clareza
+
+\item usar mais transições visuais
+
+\item substituir evidência por depoimento
+
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{comparação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A meta de espera é 15 minutos. A clínica A registra espera 14 e cancelamento 22\%; B registra espera 17 e cancelamento 5\%, sob períodos comparáveis. Cada unidade atende melhor a um critério; a direção ainda não definiu qual risco tem prioridade.
+
+\FonteDidatica
+
+\Comando Avalie conjuntamente espera e cancelamento e selecione a conclusão que não agrega escalas nem inventa prioridade.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item classificar A como melhor apenas pela espera
+
+\item classificar B como melhor apenas por cancelamento
+
+\item tirar média das duas métricas
+
+\item ocultar a meta para evitar viés
+
+\item mostrar conjuntamente espera e cancelamento; nenhuma unidade domina sem critério de prioridade
+
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+A diretoria recebe uma tela única com espera, cancelamento, retorno e satisfação de 24 clínicas. Indicadores principais competem com filtros e diagnósticos, e capturas perdem o período selecionado. A equipe precisa separar decisão executiva de exploração sem romper a rastreabilidade.
+
+\FonteDidatica
+
+\Comando Em até 15 linhas, descreva duas camadas do dashboard. Declare Big Idea e público, organize hierarquia e interações e associe uma regra de decisão a espera e cancelamento. Explique como o recorte permanece auditável.
+
+\ItemHeader{12}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Três clínicas registraram espera média de 12, 20 e 35 minutos em 100, 50 e 10 atendimentos. Para o período consolidado, a mediana foi 9, o p90 38 e o p95 61 minutos. A diretoria quer representar volume, centro e cauda sem misturar suas funções.
+
+\FonteDidatica
+
+\Comando Calcule a média ponderada da rede, interprete os percentis e proponha uma combinação visual que mantenha visíveis volume e cauda. Explicite por que a média simples das clínicas seria inadequada.
+
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Um piloto de triagem reduziu espera somente nas clínicas participantes e não alterou cancelamento. A apresentação atual começa pela ferramenta, mostra 16 gráficos e encerra sem decisão. O público precisa compreender evidência, alcance, incerteza e próximo passo em poucos minutos.
+
+\FonteDidatica
+
+\Comando Escreva um storyboard de cinco movimentos, do contexto à decisão. Em cada movimento, indique a função narrativa e inclua ao menos uma evidência, um limite e uma recomendação condicionada para ampliar ou interromper o piloto.
+
+\ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+O painel usa vermelho e verde sem rótulos, possui fonte pequena e apresenta 28 cartões equivalentes. Em teste informal, usuários confundiram o período ativo e escolheram clínicas diferentes diante da mesma pergunta. A publicação será impressa e também navegada por tecnologias assistivas.
+
+\FonteDidatica
+
+\Comando Defina um teste de acessibilidade e um teste de interpretação, cada um com tarefa, participantes ou ferramenta, critério observável de aprovação e ação corretiva após falha.
+
+\ItemHeader{15}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Após uma mudança de agenda, a média do tempo caiu, mas o p95 aumentou 13 minutos. O painel declara ``melhora'' sem mostrar distribuição, canal, volume ou semanas individuais. A gestão considera expandir a mudança para todas as clínicas no mês seguinte.
+
+\FonteDidatica
+
+\Comando Em até 15 linhas, audite a conclusão: proponha hipóteses para centro e cauda, cortes de investigação, duas visualizações e uma regra mensurável para expandir, manter o piloto ou reverter.
+
+\newpage
+
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 --- resposta A.} A soma ponderada é $12\times100+20\times50+35\times10=2.550$ minutos. Dividindo pelos $100+50+10=160$ atendimentos, obtém-se $2.550/160=15{,}9375$, ou 15,9 min. A média simples das três clínicas daria 22,3 min e super-representaria a unidade de apenas dez atendimentos.
+\[\bar x_w=\frac{12(100)+20(50)+35(10)}{160}=15{,}9\text{ min}\]
+
+\paragraph{Questão 4 --- resposta B.} Na unidade A, $18/200=0{,}09=9\%$; na B, $12/80=0{,}15=15\%$. Embora B tenha menos retornos absolutos, sua taxa é seis pontos percentuais maior. Ela merece investigação, preservando a informação de que seu denominador é menor. Isso corresponde à alternativa B.
+
+\paragraph{Questão 6 --- resposta C.} A mediana caiu de 9 para 8 min, melhora de um minuto no centro. Entretanto, o p90 subiu de 31 para 38 min e o p95 de 48 para 61 min, pioras de 7 e 13 min na cauda. Portanto, não há base para declarar melhora global; a alternativa C integra as três medidas.
+
+\paragraph{Questão 8 --- resposta D.} A média é $(8+9+8+10+25)/5=12\%$, enquanto a mediana é 9\%. A diferença decorre sobretudo do pico legítimo de 25\%, coincidente com a falha confirmada. Excluí-lo apagaria um evento operacional; usar apenas a média ocultaria a forma da série. A ação adequada é destacá-lo e investigar sua causa, como em D.
+
+\paragraph{Questão 10 --- resposta E.} A atende à meta de espera por um minuto, mas tem 22\% de cancelamento; B excede a meta em dois minutos, porém tem apenas 5\% de cancelamento. Cada clínica vence em um critério. Sem prioridade ou função de decisão definida, não se deve fabricar um ranking: ambos os indicadores devem aparecer juntos. Logo, E.
+
+\paragraph{Questão 12 --- critérios.} A resposta deve recalcular $2.550/160=15{,}9$ min, explicar por que a média simples é inadequada e comparar média e mediana da série de cancelamentos, identificando o pico de 25\%. O wireframe deve exibir volumes, período, meta, estado dos filtros e anotação do evento operacional.
+
+\paragraph{Questão 14 --- critérios.} Espera-se roteiro que comece pela decisão, apresente evidências centrais e de cauda, explicite a falha da quinta semana e compare espera e cancelamento sem prioridade inventada. A recomendação deve ser proporcional e acompanhada de critério de monitoramento e fonte reproduzível.

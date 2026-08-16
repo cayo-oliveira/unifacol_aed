@@ -1,0 +1,215 @@
+\chapter[Gráficos, escalas e percepção]{Gráficos, escalas e percepção: escolher pela pergunta}
+
+\section{O mesmo resultado, duas histórias visuais}
+
+Uma central de atendimento fechou agosto com tempo mediano de espera de 4,8 minutos, diante de uma meta de 5 minutos. A frase ``a meta foi cumprida'' é verdadeira, mas ainda não informa se a operação melhorou, se todos os turnos melhoraram ou se poucos dias excepcionais esconderam uma semana crítica. Uma tabela com o único valor 4,8 permite verificar o indicador; um gráfico pode revelar sua estrutura. O ponto de partida deste capítulo é que visualizar não significa decorar números. Significa construir uma representação que torne uma pergunta mais fácil de responder sem deformar o dado.
+
+Considere a série mensal 5,1; 5,0; 4,9; 4,8. Em um gráfico cujo eixo vertical vai de zero a dez, a queda parece discreta. Se o eixo começa em 4,7 e termina em 5,2, a mesma queda ocupa quase toda a altura e parece dramática. Nenhum ponto mudou. Mudou a razão visual entre a diferença observada e o espaço disponível. A primeira versão pode esconder uma variação operacional relevante; a segunda pode exagerá-la. O analista responsável mostra a escala, explica o propósito e oferece contexto suficiente para que a leitura não dependa de um recorte conveniente.
+
+Antes de escolher ``barras ou linhas'', formule a tarefa. Perguntas como ``qual turno espera mais?'', ``a espera está caindo?'', ``como os atendimentos se distribuem?'', ``volume e espera caminham juntos?'' e ``qual canal compõe o total?'' pedem operações perceptivas diferentes. Elas correspondem, respectivamente, a comparação, tendência, distribuição, relação e composição. O tipo de gráfico é consequência dessa operação. Começar pela galeria da ferramenta costuma produzir uma resposta visualmente atraente para uma pergunta que ninguém fez.
+
+Chamaremos de marca o elemento geométrico que representa uma observação ou agregado: ponto, linha, barra ou área. Chamaremos de canal visual a propriedade que codifica um valor: posição, comprimento, inclinação, área, cor, forma ou tamanho. Uma barra usa posição e comprimento; um diagrama de dispersão usa duas posições; um mapa coroplético usa cor sobre áreas geográficas. O gráfico é, portanto, uma função que transforma campos do conjunto de dados em marcas e canais sob uma escala definida.
+
+Essa transformação carrega decisões. Agregar pela média ou pela mediana, ordenar por valor ou alfabeticamente, mostrar taxa ou contagem, conservar zero ou ampliar uma faixa, separar turnos ou misturá-los: tudo isso antecede fonte, legenda e paleta. Um gráfico correto precisa respeitar o contrato semântico construído nos capítulos anteriores. Se o grão contém uma linha por atendimento, a taxa diária exige numerador e denominador diários; somar percentuais de linhas diferentes não cria uma taxa válida.
+
+Ao final deste capítulo, a pergunta continua sendo o teste principal: que comparação o leitor precisa executar e quanto esforço a representação impõe? A resposta deverá mencionar unidade, população, período, agregação, escala, incerteza e limite de interpretação. Matplotlib, seaborn, Tableau, Power BI ou outra ferramenta podem implementar essa decisão, mas não a substituem. O caso da central será retomado para mostrar que uma boa escolha visual é uma hipótese verificável sobre como o leitor perceberá a evidência.
+
+\begin{SummaryBox}
+\textbf{Regra de trabalho.} Escreva primeiro uma frase no formato ``preciso comparar \emph{X} entre \emph{Y} para decidir \emph{Z}''. Só depois escolha marcas, canais, escala e anotações. Se o gráfico não torna essa comparação mais direta, redesenhe-o.
+\end{SummaryBox}
+
+\section{Comparação: posição e comprimento antes do enfeite}
+
+Para comparar categorias, uma tabela é excelente quando o leitor precisa recuperar valores exatos. Um gráfico de barras é superior quando precisa perceber rapidamente ordem, distância e exceções. Suponha medianas de espera por turno: manhã 3,9, tarde 5,7, noite 4,6 e madrugada 6,2 minutos. Ordenadas do maior para o menor, as barras respondem de imediato onde agir. Em ordem alfabética, o leitor precisa saltar entre posições para reconstruir o ranking. Ordenar é uma decisão analítica, não apenas estética.
+
+A precisão vem do canal. Seres humanos comparam posições sobre uma escala comum com mais facilidade do que ângulos ou áreas. Por isso, pontos alinhados e barras tendem a favorecer comparação quantitativa. Comprimentos também são eficazes quando partem da mesma base. Já círculos proporcionais exigem estimar área: para representar o dobro do valor, o raio deve crescer por $\sqrt{2}$, não por dois. Se dobrarmos o raio, a área quadruplica e a percepção induz uma diferença inexistente.
+
+Em barras, o zero é parte da gramática porque o comprimento codifica o valor. Cortar a base de 0 para 5 em valores 5,7 e 6,2 faz a segunda barra parecer quase três vezes maior, embora a razão real seja $6{,}2/5{,}7\approx1{,}09$. Para pontos ou linhas, a posição, e não o comprimento desde zero, carrega a medida; um recorte pode ser legítimo para examinar pequena variação, desde que o eixo esteja visível e o contexto seja declarado. A regra não é ``todo eixo começa em zero'', mas ``não mude a operação perceptiva sem avisar''.
+
+Quando há duas condições, barras agrupadas funcionam para poucas categorias, mas ficam congestionadas rapidamente. Um gráfico de pontos conectados pode mostrar antes e depois: cada turno recebe dois pontos na mesma linha e a inclinação revela direção. Se manhã cai de 5,2 para 3,9 e madrugada sobe de 5,8 para 6,2, a representação destaca movimentos opostos que duas colunas de números esconderiam. Para muitas categorias, pequenos múltiplos ou uma matriz podem reduzir o esforço de procurar cores em uma legenda distante.
+
+Uma comparação responsável inclui denominadores. Dizer que a madrugada teve 18 reclamações e a manhã 30 sugere pior desempenho matinal. Se houve 300 atendimentos na madrugada e 2.000 pela manhã, as taxas são 6\% e 1,5\%. Contagem responde a carga absoluta; taxa responde a risco relativo. Ambas podem ser necessárias, lado a lado, com unidades explícitas. Escolher uma sem declarar a decisão pode deslocar recursos para o lugar errado.
+
+O título também participa da análise. ``Espera por turno'' nomeia o assunto; ``Madrugada excede a meta apesar do menor volume'' explicita a descoberta verificável. O segundo não deve afirmar causa nem substituir a leitura dos dados. Uma linha de meta em 5 minutos, rótulos apenas nos extremos e uma nota sobre o período completam a evidência. Bordas, sombras e ícones não melhoram a comparação; em excesso, competem com os sinais que deveriam orientar o olhar.
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Turno & Atendimentos & Reclamações & Taxa \\
+\midrule
+Manhã & 2.000 & 30 & 1,5\% \\
+Tarde & 1.400 & 35 & 2,5\% \\
+Noite & 800 & 28 & 3,5\% \\
+Madrugada & 300 & 18 & 6,0\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Tendência: tempo, continuidade e contexto}
+
+Uma linha conecta observações e sugere continuidade. Ela é adequada quando o eixo horizontal tem ordem temporal ou outra sequência significativa. Trocar a ordem dos meses mudaria a história; trocar a ordem de quatro categorias não altera sua identidade. Essa diferença explica por que ligar categorias nominais com linhas é perigoso: o segmento inventa uma transição que o dado não possui. Em uma série temporal, a conexão orienta a leitura de nível, direção, velocidade, sazonalidade e ruptura.
+
+O intervalo temporal altera a conclusão. Médias mensais podem esconder uma pane de três dias; valores horários podem transformar ruído em aparente urgência. Na central, a mediana mensal caiu, mas o gráfico diário revela uma fila intensa toda segunda-feira. A granularidade deve corresponder à latência da decisão: quem escala equipes diariamente precisa ver dias ou horas; quem negocia orçamento trimestral pode precisar de semanas ou meses. Agregar não é neutro, pois remove variações em nome de um padrão mais amplo.
+
+Compare variação absoluta e relativa. Cair de 6 para 5 minutos significa menos 1 minuto e redução de $1/6\approx16{,}7\%$. Cair de 2 para 1 minuto também significa menos 1 minuto, porém 50\%. O eixo e o rótulo precisam informar qual medida orienta a decisão. Indexar séries em 100 numa data inicial ajuda a comparar ritmos de mudança entre métricas de unidades diferentes, mas apaga seus níveis originais. Um índice é útil para tendência relativa, não para afirmar que dois serviços têm o mesmo desempenho.
+
+Linhas de referência fornecem contexto: meta, mediana histórica, limite regulatório ou início de uma intervenção. Elas devem ser semanticamente estáveis. Uma meta que muda no meio do período precisa aparecer em degraus ou segmentos, não como linha horizontal única. Anotações devem marcar eventos conhecidos sem declarar automaticamente causalidade. ``Novo roteador implantado'' é observação temporal; ``roteador reduziu a espera'' exige desenho de avaliação, grupo de comparação ou outra evidência além da coincidência.
+
+Suavização ajuda a enxergar tendência, mas cobra transparência. Uma média móvel de sete dias substitui cada ponto pela média de uma janela. Para valores 4, 6 e 8, a média móvel simples de três períodos no centro é $(4+6+8)/3=6$. A curva suavizada reduz ruído e introduz atraso, além de perder pontos nas bordas conforme o método. Mostrar linha bruta em cinza e suavizada em destaque preserva o vínculo com observações. Ocultar a série original pode fazer uma escolha de janela parecer um fato.
+
+Também é preciso respeitar lacunas. Conectar janeiro diretamente a março quando fevereiro está ausente sugere que houve uma trajetória observada entre os pontos. O gráfico deve interromper a linha, marcar ausência ou explicar imputação. Frequência irregular pede datas reais no eixo, não posições igualmente espaçadas. Em tempo, distância visual representa duração; falsificar o espaçamento falsifica velocidade. A leitura crítica procura esses detalhes antes de aceitar uma narrativa de crescimento ou queda.
+
+\begin{GuidedBox}
+\textbf{Leitura de uma tendência.} Procure nível, direção, variação, sazonalidade, ruptura, lacunas e janela de agregação. Depois pergunte se a escala mostra valores absolutos, percentuais, índices ou transformação logarítmica.
+\end{GuidedBox}
+
+\section{Distribuição: enxergar o que a média esconde}
+
+A média de espera pode cumprir a meta enquanto uma parcela dos clientes enfrenta atrasos extremos. Distribuição é a pergunta sobre como valores se espalham: centro, amplitude, assimetria, caudas, concentração, multimodalidade e valores raros. Um histograma divide o domínio em intervalos e mostra quantas observações caem em cada um. Ele não é uma barra de categorias: as barras se tocam porque os intervalos representam continuidade e sua ordem é numérica.
+
+A escolha do número de intervalos muda a aparência. Com poucos intervalos, dois grupos se fundem; com muitos, flutuações aleatórias parecem picos. Uma regra prática é a de Freedman--Diaconis, cuja largura é $h=2\,IQR\,n^{-1/3}$. Se $IQR=4$ e $n=512$, então $n^{1/3}=8$ e $h=1$ minuto. A regra oferece ponto de partida, não resposta automática. Comparar duas larguras razoáveis e verificar se a conclusão persiste é mais honesto do que procurar a divisão que melhor conta uma história desejada.
+
+O boxplot resume mediana, quartis e extensão, sendo eficiente para comparar muitos grupos. Seu retângulo não mostra picos nem tamanho da amostra com clareza. Duas distribuições, uma simétrica e outra bimodal, podem compartilhar o mesmo boxplot. Um violino acrescenta estimativa de densidade, porém depende de parâmetros de suavização e exige mais familiaridade. Para turmas pequenas ou conjuntos modestos, pontos individuais com leve deslocamento, combinados a mediana e intervalo, frequentemente revelam mais do que uma forma suavizada.
+
+Percentis traduzem experiência de cauda. Se o percentil 90 é 11 minutos, 90\% dos atendimentos terminaram com espera de até 11 e 10\% superaram esse valor. Ele não significa que ``a média dos piores 10\% é 11''. Comparar mediana e P90 ajuda a separar desempenho típico de risco de serviço. Na central, mediana de 4,8 e P90 de 14 contam uma história diferente de uma operação uniformemente próxima de cinco minutos.
+
+Ao comparar distribuições entre turnos, use a mesma escala e os mesmos intervalos. Histogramas com limites distintos fazem formas incomparáveis. Sobrepor quatro preenchimentos cria mistura de cores; pequenos múltiplos alinhados ou densidades em linhas separadas funcionam melhor. Normalizar cada grupo para proporção responde ``qual é a forma dentro do turno''; manter contagem responde ``onde está o volume''. A legenda deve dizer qual denominador foi usado.
+
+Outlier é sinal para investigação, não ordem de exclusão. Um ponto distante pode ser erro de unidade, fraude, evento raro válido ou mudança de regime. O gráfico localiza; o contrato e o domínio explicam. Remover extremos apenas para deixar a figura limpa reduz a incerteza aparente. Quando o domínio possui cauda longa, uma escala logarítmica, um painel ampliado ou estatísticas robustas podem preservar observações sem permitir que uma delas comprima todas as demais.
+
+\section{Relação: padrões, grupos e o limite da causalidade}
+
+O diagrama de dispersão coloca cada unidade como ponto e codifica duas variáveis por posição. Para a central, volume diário no eixo horizontal e espera mediana no vertical podem revelar associação: dias mais cheios tendem a esperar mais. Antes de calcular uma correlação, o gráfico permite observar forma, intensidade, grupos, lacunas e valores influentes. Uma reta resumida sem pontos esconde justamente as condições sob as quais o resumo falha.
+
+O mesmo coeficiente pode acompanhar formas muito diferentes. Uma nuvem linear, uma curva, grupos separados e um conjunto dominado por um outlier podem produzir estatísticas semelhantes. Portanto, correlação é resumo de uma relação, não substituto da visualização. Se a forma é curva, transformar a variável ou usar outro modelo pode ser adequado. Se há grupos, a associação agregada pode inverter dentro de cada grupo, fenômeno conhecido como paradoxo de Simpson.
+
+Imagine que nos dias úteis cada turno tenha relação fraca entre volume e espera, mas fins de semana combinem baixo volume com equipe ainda menor. Ao misturar os regimes, surge forte inclinação. Colorir pontos por tipo de dia e usar painéis separados mostra a variável de contexto. Cor não deve apenas adornar: ela precisa representar uma hipótese analítica. Se nenhuma decisão depende do grupo, uma única cor reduz carga cognitiva.
+
+Tamanho como terceiro canal exige cuidado porque o leitor percebe área. Bolhas grandes também cobrem pontos pequenos e introduzem ordem de desenho. Para uma terceira variável quantitativa, pequenos múltiplos ou cor sequencial podem ser mais legíveis; para poucas categorias, forma ou contorno pode ajudar. Um gráfico não precisa codificar todo campo disponível. Seleção é parte da clareza, e detalhes podem permanecer em tabela ou interação sob demanda.
+
+Sobreposição aparece quando milhares de pontos ocupam posições semelhantes. Transparência, amostragem documentada, jitter para categorias, hexágonos agregados ou mapas de densidade tornam concentração visível. Cada solução muda a unidade de leitura. Um hexbin deixa de mostrar indivíduos e passa a mostrar contagens por célula. Isso deve ser informado, sobretudo quando casos raros importam. Um painel agregado pode ser acompanhado por lista auditável dos eventos extremos.
+
+Associação visual não demonstra mecanismo causal. Uma seta, uma linha ou uma anotação não cria causalidade. A pergunta ``aumentar a equipe reduzirá a espera?'' requer considerar demanda, escala, complexidade e desenho da intervenção. O gráfico sustenta hipóteses e identifica padrões que merecem teste. O título responsável diz ``maior volume coincide com maior espera'', não ``volume causa atraso'', a menos que a evidência tenha identificado esse efeito.
+
+\section{Composição: partes, totais e denominadores}
+
+Composição pergunta como um total se divide. Uma barra empilhada mostra parte e todo quando as categorias são mutuamente exclusivas e o denominador é explícito. Para um único mês, uma barra de 100\% permite ler participação dos canais; para valores absolutos, a altura total também comunica volume. Misturar os dois objetivos na mesma escala confunde. Se a decisão é capacidade, volume absoluto importa; se é mudança de mix, proporção pode ser o foco.
+
+Somente os segmentos junto à mesma base são comparados com precisão. Em barras empilhadas, o primeiro segmento parte de zero; os internos flutuam. Por isso, acompanhar a participação de quatro canais ao longo de doze meses pode ser melhor com linhas de participação ou pequenos múltiplos. O empilhamento é útil para uma visão compacta do todo, mas não transforma todas as partes em comparações igualmente fáceis.
+
+Gráficos de setores codificam proporção por ângulo e área. Podem comunicar poucas partes muito diferentes, desde que somem 100\% e não haja valores negativos. Tornam-se fracos quando há muitas fatias, diferenças pequenas ou necessidade de comparar períodos. Uma barra ordenada costuma permitir julgamento mais preciso. Donut remove a região central, reduzindo a referência angular, embora abra espaço para um rótulo; o espaço ganho não corrige a dificuldade perceptiva.
+
+Treemaps usam área e acomodam hierarquias, mas são inadequados para diferenças sutis. Um retângulo duas vezes maior representa o dobro, porém formatos e posições variados dificultam a estimativa. Sunbursts acrescentam anéis e ângulos, aumentando a carga. Essas formas são úteis para exploração de estrutura quando espaço é limitado, não como escolha universal. Para mostrar receita por canal e produto com comparação precisa, dois painéis de barras ou uma tabela hierárquica podem ser melhores.
+
+O denominador pode mudar no tempo. Se a participação do chat cresce de 20\% para 30\%, isso pode ocorrer com chat estável e queda dos demais canais. Mostre também o total ou declare a mudança absoluta. Decomposições devem fechar: soma das partes igual ao todo, categorias sem sobreposição e tratamento visível de ``outros'' e ausentes. Uma categoria ``outros'' que passa de 5\% para 35\% destrói a interpretabilidade e pede revisão da classificação.
+
+Composição acumulada também aparece em curvas de Pareto. Ordenam-se categorias pela contribuição, calculando $p_k=\sum_{i=1}^{k}x_i/\sum_i x_i$, e observa-se quanto do total está concentrado nas primeiras posições. Se três motivos respondem por 72\% das reclamações, isso orienta investigação, mas não prova que tratá-los produzirá 72\% de redução: causas podem se sobrepor e custos diferem. A curva deve manter barras de valores e linha acumulada com unidades claramente separadas; uma tabela curta pode evitar o eixo duplo.
+
+Waterfall e áreas empilhadas respondem perguntas específicas. O primeiro decompõe como acréscimos e reduções levam de um saldo inicial a outro; o segundo enfatiza evolução do total e composição contínua. Ambos dependem de ordem e base corretas. Nunca use área empilhada para séries que podem ser negativas sem tratamento explícito, pois a linha de base se torna ambígua. Em composição, a pergunta central é sempre ``parte de qual total, em qual momento e sob quais regras?''.
+
+\section{Escalas, eixos e normalização}
+
+Escala é a regra que converte valores em posições, comprimentos ou cores. Em escala linear, diferenças iguais ocupam distâncias iguais: a distância de 2 para 4 é igual à de 8 para 10. Em escala logarítmica, razões iguais ocupam distâncias iguais: 1, 10, 100 e 1.000 ficam igualmente espaçados. A transformação é útil para ordens de grandeza e crescimento multiplicativo, mas valores zero e negativos exigem tratamento e a leitura precisa ser declarada.
+
+Um eixo deve mostrar unidade, limites, marcas e transformação. Abreviar ``mil'' e ``milhão'' sem consistência pode produzir erros de mil vezes. Datas devem respeitar intervalos reais. Eixos invertidos só fazem sentido quando a convenção do domínio os torna naturais, como posição em ranking ou profundidade. Grades leves ajudam a estimar; grades escuras competem com os dados. Rótulos de todos os pontos criam uma tabela mal diagramada.
+
+Dois eixos verticais permitem sobrepor séries de unidades diferentes, porém qualquer inclinação aparente pode ser fabricada escolhendo limites independentes. Receita e satisfação podem parecer mover-se juntas em uma configuração e divergir em outra. Alternativas incluem painéis alinhados, índice com base comum ou normalização explicitamente justificada. Se o eixo duplo for indispensável, cores devem vincular série e eixo, limites devem ser documentados e a interpretação não deve apoiar-se apenas no paralelismo visual.
+
+Normalizar responde a perguntas comparativas. Dividir por população produz taxa per capita; dividir pelo primeiro período produz índice; subtrair a média e dividir pelo desvio-padrão produz escore $z=(x-\bar{x})/s$. Se um turno tem espera 7, média histórica 5 e desvio 1, seu $z=2$: está dois desvios acima da média daquele turno. Isso permite comparar desvios relativos entre operações, mas remove minutos e pressupõe que média e desvio sejam referências úteis.
+
+Min--max, $x'=(x-\min)/(\max-\min)$, coloca valores entre zero e um. Um novo extremo muda todos os valores transformados, e a escala não informa distância substantiva. Percentual de meta, por sua vez, depende da direção do indicador: 120\% da meta pode ser bom para vendas e ruim para espera. Toda normalização precisa de semântica, fórmula e referência. ``Pontuação normalizada'' sem esses elementos é uma caixa-preta visual.
+
+Uma boa auditoria refaz a leitura em unidades originais. Se um painel usa índices para comparar tendências, disponibilize valores absolutos em tooltip, tabela ou painel adjacente. Se usa log, mostre marcas como 1, 10 e 100, não expoentes opacos. Se corta o eixo, sinalize e explique. Escalas não são rodapés técnicos: elas definem o que distância significa e, portanto, participam da afirmação principal.
+
+\section{Cor, contraste e acessibilidade}
+
+Cor pode distinguir categorias, ordenar intensidade ou separar desvios. Paletas qualitativas usam matizes distintos sem ordem para poucas categorias. Paletas sequenciais variam luminosidade para valores do menor ao maior. Paletas divergentes partem de um centro substantivo, como zero ou meta, e usam duas direções. Aplicar arco-íris a uma taxa cria fronteiras artificiais e não oferece ordem perceptiva estável. A paleta deve nascer do tipo de variável.
+
+O destaque funciona por contraste, não por quantidade de pigmento. Se todas as barras têm cor intensa, nenhuma se destaca. Na central, barras cinza com a madrugada em laranja guiam o olhar para a exceção; a cor precisa ser acompanhada por título ou anotação que explique por quê. Usar vermelho e verde como únicos portadores de ``ruim'' e ``bom'' exclui parte dos leitores e falha em impressão. Forma, posição, rótulo ou padrão devem fornecer redundância.
+
+Luminosidade costuma comunicar ordem melhor que mudança arbitrária de matiz. Em um mapa de calor, células mais escuras podem representar maior espera, com legenda contínua e limites. Se os valores cruzam uma meta, uma escala divergente centrada em cinco minutos torna o desvio explícito. Centrar automaticamente na média dos dados mudaria o significado a cada filtro. O centro deve vir do domínio, não da conveniência gráfica.
+
+Contraste de texto, tamanho de fonte e espaço em branco também são acessibilidade. Legendas distantes exigem memória; rotular linhas diretamente reduz busca. Siglas devem ser definidas. Texto alternativo deve registrar mensagem, eixos, período, padrão e exceções, não apenas dizer ``gráfico de linhas''. Uma tabela acessível pode acompanhar a figura quando valores exatos importam. A experiência não termina na tela colorida do autor.
+
+Cor geográfica merece cautela. Em mapas coropléticos, área grande chama atenção mesmo com taxa moderada; contagens favorecem regiões populosas. Taxas normalizadas são normalmente mais informativas, desde que populações pequenas e incerteza sejam sinalizadas. Para localização de eventos, pontos podem ser adequados; para densidade, agregação espacial evita sobreposição. Um mapa só deve ser escolhido quando geografia participa da pergunta, não porque há uma coluna de estado.
+
+Teste a figura em escala de cinza, projeção, celular e impressão. Verifique se a conclusão continua possível sem depender de hover. Paletas perceptualmente uniformes disponíveis em bibliotecas modernas ajudam, mas não dispensam julgamento. A ferramenta pode sugerir cores; o analista valida contraste, semântica, consistência e consequências. Estética apoia confiança quando torna estrutura legível, não quando mascara fragilidade.
+
+\section{Múltiplos painéis, facetas e comparações justas}
+
+Pequenos múltiplos repetem a mesma gramática para grupos ou métricas. Quatro painéis de linha, um por turno, permitem enxergar sazonalidade sem sobreposição. A repetição reduz aprendizado porque o leitor entende um painel e transfere a regra. Para comparação justa, eixos devem compartilhar limites quando o nível importa. Escalas livres podem revelar forma interna, mas fazem séries de amplitudes distintas parecer igualmente variáveis.
+
+Um painel geral e outro de detalhe podem coexistir. O primeiro mostra a série anual; o segundo amplia os últimos trinta dias. A relação precisa ser explícita por título, faixa destacada ou anotação. Sem isso, o detalhe parece outra população. Zoom é útil para investigar, mas não pode apagar a posição do recorte no todo. Contexto e foco são duas vistas da mesma evidência.
+
+Facetar por uma variável relevante ajuda a detectar heterogeneidade. Se a queda de espera existe apenas na manhã, uma linha agregada pode atribuí-la à central inteira. Facetas por turno revelam a diferença; facetas por dezenas de agentes produzem miniaturas ilegíveis. A quantidade de painéis deve seguir a decisão. Para muitos grupos, ordenar por uma métrica, destacar exceções e oferecer exploração filtrável é mais eficiente.
+
+Dashboards combinam gráficos, mas proximidade sugere relação. Colocar uma linha de receita ao lado de reclamações pode convidar inferência causal mesmo sem conexão. Títulos e organização precisam dizer se os painéis compartilham filtros, período e população. Um filtro silencioso é especialmente perigoso: o total no topo pode permanecer global enquanto a tabela abaixo mostra apenas um turno. Indicadores de estado e subtítulos dinâmicos tornam o contexto auditável.
+
+A hierarquia visual distribui atenção. No topo, a pergunta e poucos indicadores; no centro, evidência principal; abaixo, diagnóstico e detalhe. Essa organização não é regra rígida, mas consequência do percurso decisório. Uma grade coerente, alinhamento e espaço reduzem busca. Repetir vinte cartões de KPI concede igual peso a sinais desiguais e transforma o dashboard em inventário. O que não sustenta a decisão pode sair ou ficar sob demanda.
+
+Interação adiciona possibilidades e riscos. Filtro, seleção e tooltip permitem detalhe; também podem esconder o estado que produziu a figura. Exporte o contexto com o gráfico, mantenha valores padrão seguros e ofereça caminho de retorno. Uma captura de tela deve conservar data, filtros e fonte. O painel é uma interface para argumentos de dados, e sua reprodutibilidade depende tanto das consultas quanto dos estados de interação.
+
+\section{Incerteza: não desenhar estimativas como certezas}
+
+Todo resumo contém incerteza de medição, amostragem, processamento ou previsão. Uma média calculada sobre todos os atendimentos registrados ainda pode omitir quedas do sistema e registros incompletos. Uma estimativa amostral acrescenta variação entre amostras. Um gráfico honesto distingue valor observado, estimativa e meta. Casas decimais em excesso não criam precisão; frequentemente apenas escondem a origem aproximada do número.
+
+Intervalos de confiança representam procedimento de estimação, não faixa onde ``95\% dos dados estão''. Para uma média com erro-padrão $EP=s/\sqrt{n}$, uma aproximação de 95\% é $\bar{x}\pm1{,}96EP$ em condições adequadas. Se $\bar{x}=5$, $s=2$ e $n=100$, então $EP=0{,}2$ e o intervalo aproximado é $[4{,}61;5{,}39]$. O gráfico deve informar método, nível e tamanho da amostra, especialmente ao comparar grupos.
+
+Barras de erro sobrepostas não resolvem sozinhas um teste de diferença, e ausência de sobreposição não explica relevância prática. Mostre efeito e intervalo em unidade compreensível. Uma redução estimada de 0,1 minuto com intervalo estreito pode ser estatisticamente clara e operacionalmente irrelevante; redução de 1 minuto com intervalo largo pode justificar coleta adicional. A decisão combina magnitude, incerteza, custo e reversibilidade.
+
+Previsões precisam de faixas que normalmente se alargam com o horizonte. Uma linha pontual até dezembro sugere conhecimento que o modelo não possui. Cenários devem ser rotulados como cenários, não confundidos com intervalos probabilísticos. Se uma área sombreada representa P10--P90, explique que ela depende do modelo e dos pressupostos. Choques fora do histórico podem permanecer fora da faixa, logo incerteza quantificada não equivale a garantia.
+
+Dados suprimidos por privacidade ou baixa contagem devem aparecer como ausência explicada, não zero. Em mapas e taxas, regiões com denominadores pequenos produzem grande volatilidade; transparência, hachura ou painel de tamanho da amostra ajudam a impedir ranking injusto. Uma taxa de 50\% baseada em dois casos não tem o mesmo peso que 48\% baseada em dois mil. Codificar apenas a taxa remove essa diferença essencial.
+
+A incerteza também pode ser comunicada por linguagem. ``Estima-se'', ``nos registros disponíveis'' e ``o padrão é compatível com'' delimitam a afirmação; ``comprovou'' exige evidência mais forte. Não se trata de enfraquecer a mensagem, mas de calibrá-la. Um leitor que conhece limites pode decidir melhor do que outro seduzido por precisão falsa. Visualização responsável conserva dúvida relevante sem transformar toda conclusão em paralisia.
+
+\section{Redesenho guiado e implementação reprodutível}
+
+O redesenho começa pela afirmação. Recebemos um painel com donut de quatro turnos, barras 3D de reclamações, linha mensal em eixo duplo e mapa de atendimentos por estado. A decisão é realocar duas pessoas para reduzir espera extrema. O donut mostra participação, não risco; o 3D distorce comprimentos; o eixo duplo sugere relação; o mapa não ajuda se a escala é por turno. A primeira ação é retirar componentes sem função, não escolher uma paleta nova.
+
+Uma versão coerente combina três vistas: pontos ordenados da mediana e P90 por turno contra a meta; pequenos múltiplos diários para verificar recorrência; tabela curta com volume, taxa e completude. O P90 representa cauda, a série revela quando e a tabela preserva denominadores. A madrugada pode exibir pior taxa, mas volume pequeno e intervalo largo. Assim, a decisão passa de ``maior barra'' para uma comparação entre severidade, frequência, confiança e capacidade.
+
+O código vem depois do desenho conceitual e registra escolhas. Em Python, agregamos no grão turno--dia, calculamos mediana e percentil e mantemos a amostra. O mesmo raciocínio pode ser implementado em SQL e em ferramentas de BI. O importante é que campo, agregação, filtro, escala e ordenação sejam reproduzíveis. Um clique sem registro é uma transformação invisível.
+
+\begin{verbatim}
+resumo = (df.groupby("turno")["espera_min"]
+            .agg(mediana="median", n="size",
+                 p90=lambda s: s.quantile(.90))
+            .reset_index()
+            .sort_values("p90", ascending=False))
+
+ax = resumo.plot.barh(x="turno", y="p90", legend=False,
+                      color="#F28E2B")
+ax.axvline(5, color="#4B5563", linestyle="--", label="meta")
+ax.set(xlabel="Espera no percentil 90 (min)", ylabel="")
+\end{verbatim}
+
+O trecho não resolve sozinho qualidade, incerteza nem acesso. Antes dele, verificamos se \texttt{espera\_min} usa a mesma definição em todos os canais, se cancelamentos entram no denominador e se ausências estão distribuídas por turno. Depois dele, conferimos valores contra uma tabela, testamos filtros e registramos fonte e data de atualização. A figura é o fim visível de uma cadeia de evidência.
+
+Faça o teste do relance: em poucos segundos, um colega consegue dizer qual é a mensagem, a unidade e a exceção? Em seguida, faça o teste de auditoria: ele consegue descobrir período, população, agregação, filtros, fonte e limite? O primeiro protege atenção; o segundo protege confiança. Uma figura pode passar em um e falhar no outro. Dashboard decisório precisa dos dois.
+
+Ferramentas oferecem recomendações automáticas, temas e inteligência generativa. Elas aceleram protótipos e podem sugerir alternativas, mas frequentemente escolhem pela forma da tabela, não pela consequência da decisão. Um modelo pode gerar código correto para uma pergunta mal formulada ou um gráfico convincente sobre taxa somada. Use automação para produzir candidatos; use contrato, percepção e domínio para aprovar a versão publicada.
+
+\section{Roteiro de decisão e fechamento}
+
+A primeira etapa é escrever pergunta e ação. ``Qual turno requer intervenção na próxima escala?'' define comparação e consequência. Depois, confirme unidade de análise, população, período e métricas. Uma pergunta sobre experiência exige distribuição ou percentis, não apenas média. Uma pergunta sobre carga exige contagem; uma pergunta sobre risco pede taxa. Sem esse contrato, nenhuma escolha gráfica é estável.
+
+A segunda etapa é classificar a operação perceptiva. Comparação favorece posição e comprimento em base comum; tendência favorece posição ao longo do tempo; distribuição pede histograma, pontos ou resumos de quantis; relação pede duas posições; composição pede partes de um total explícito. Casos reais combinam operações, mas cada painel deve ter função principal. Se um gráfico tenta responder tudo, normalmente não responde nada com clareza.
+
+A terceira etapa é auditar escalas e canais. Verifique zero em barras, transformação, limites, unidade, denominador, ordenação e continuidade. Pergunte se área, ângulo ou cor estão sendo usados quando posição seria mais precisa. Examine como o desenho se comporta com filtros, valores ausentes, negativos e extremos. Uma escolha segura no conjunto completo pode tornar-se enganosa em um recorte interativo.
+
+A quarta etapa é incorporar contexto e incerteza. Metas, linhas de referência, tamanho da amostra, intervalos, eventos e notas devem apoiar a afirmação sem ocupar o centro visual. Destaque apenas o que merece atenção e mantenha alternativa acessível. Depois, valide números contra fonte independente e peça a outra pessoa que descreva o que entendeu. Se a descrição divergir da pergunta, a representação falhou como comunicação.
+
+Em uma aula de três horas, este percurso pode ser vivido em dois movimentos de noventa minutos. O primeiro vai do caso inicial às operações de comparação, tendência e distribuição, com cálculo de razões, percentis e efeito de eixo. O segundo percorre relação, composição, escalas, cor, múltiplos painéis e incerteza, terminando no redesenho da central. O ritmo alterna leitura, cálculo manual, inspeção visual e reprodução em código, sempre retomando a decisão.
+
+O gráfico final não é ``o mais bonito'' nem ``o recomendado pelo software''. É aquele cuja gramática torna a comparação necessária direta, preserva denominadores, expõe escala e limita a inferência ao que os dados sustentam. No caso da central, o cumprimento da mediana deixa de encerrar a conversa: P90, turnos, dias, volume e incerteza mostram onde a experiência falha e quão segura é a intervenção. Visualizar bem é reduzir a distância entre evidência e decisão sem esconder o caminho.
+
+A leitura crítica pode ser condensada em cinco perguntas repetíveis: o que cada marca representa; qual transformação liga o dado à marca; que comparação o desenho favorece; que contexto foi removido; e qual decisão mudaria se a escala, o período ou o denominador mudasse? Aplicadas antes da publicação, elas funcionam como revisão. Aplicadas a gráficos de jornal, relatórios e respostas geradas por IA, funcionam como defesa contra persuasão visual indevida. O aluno deixa de apenas consumir imagens e passa a reconstruir seus argumentos.
+
+Essa reconstrução deve chegar até o dado. Ao encontrar um pico, procure a linha ou o agregado que o produziu; ao encontrar uma cor extrema, leia a legenda; ao encontrar um ranking, confira empates, filtros e amostra. A habilidade não é desconfiar de toda figura, mas distinguir síntese legítima de simplificação enganosa. Quando pergunta, cálculo, codificação e limite permanecem conectados, o gráfico pode ser conciso sem ser superficial e persuasivo sem manipular.
+
+Uma entrega profissional registra também as alternativas rejeitadas. Anotar que o setor foi trocado por barras para favorecer comparação, que a média foi acompanhada pelo P90 para expor a cauda e que o eixo duplo foi separado em painéis torna o raciocínio revisável. Esse pequeno histórico funciona como decisão de projeto visual: outro analista consegue entender o propósito, testar o resultado com novos dados e reverter a escolha se a pergunta mudar. A qualidade não reside apenas na imagem final, mas na capacidade de explicar por que ela representa melhor a evidência disponível.
+
+\begin{SummaryBox}
+\textbf{Síntese.} Pergunta $\rightarrow$ operação perceptiva $\rightarrow$ marcas e canais $\rightarrow$ escala $\rightarrow$ contexto e incerteza $\rightarrow$ validação. Ferramenta é a última escolha dessa cadeia.
+\end{SummaryBox}

@@ -1,0 +1,132 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\CadernoDisciplina}{Análise Exploratória de Dados}
+\newcommand{\CadernoCorHex}{17365D}
+\input{../../../caderno_exercicios/caderno_enade_style.tex}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\begin{center}
+{\Large\bfseries UNIFACOL}\\[2mm]
+{\large Simulado ENADE}\\[1mm]
+{\Large\bfseries VERSÃO B}
+\end{center}
+\begin{DocumentBox}[Identificação]
+\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}p{.48\textwidth}@{}}
+Estudante: \hrulefill & Turma: \hrulefill\\[3mm]
+Professor: Cayo Oliveira & Data: \rule{2.7cm}{.2pt}/2026
+\end{tabularx}
+\end{DocumentBox}
+\textbf{Instruções.} Esta avaliação contém seis questões objetivas e duas discursivas. Nas objetivas, assinale uma única alternativa. Nas discursivas, mostre cálculos intermediários e justifique decisões com as evidências do texto-base. Respostas sem desenvolvimento podem não receber pontuação integral.
+\bigskip
+% origem: AED-C05-O09
+\ItemHeader{1}{Objetiva}{Aplicar minimização por consumo}{SPEC de gestão}
+\TextoBase A fonte acadêmica contém CPF, nome, curso, frequência e nota por matrícula. A SPEC executiva necessita apenas de taxas agregadas por curso e período; casos individuais são usados em acompanhamento pedagógico restrito. A publicação deve atender finalidade e acesso sem replicar identificadores ``para eventual uso futuro''.
+\FonteDidatica
+\Comando A publicação coerente é
+\begin{enumerate}[label=\Alph*)]
+  \item publicar agregados necessários na SPEC executiva e manter detalhe identificado apenas onde finalidade e acesso o justificam.
+  \item aplicar hash no CPF e publicar todos os demais detalhes, pois hash elimina qualquer risco.
+  \item incluir CPF para permitir futuras perguntas.
+  \item remover curso e período, porque agregação impede decisão.
+  \item copiar a SOR inteira e ocultar colunas na cor do painel.
+\end{enumerate}
+
+% origem: AED-C12-D15
+\ItemHeader{2}{Discursiva}{Especificar teste de atualização}{Troca do modelo local}
+\TextoBase
+A equipe quer substituir Llama Q4 por uma versão nova e alterar simultaneamente prompt, parser e cache. O sistema atende perguntas numéricas, comparações e narrativas.
+A atualização só poderá substituir a versão atual se passar casos funcionais, adversariais, de segurança e de regressão com configuração registrada.
+\FonteDidatica
+\Comando Proponha protocolo com baseline congelado, conjunto estratificado, versões, ablações, testes sintáticos e semânticos, cálculos de referência, latência, memória, custo, segurança, execução paralela, canário e rollback.
+\EspacoDiscursiva
+
+% origem: AED-C09-O05
+\ItemHeader{3}{Objetiva}{contexto}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O histórico recuperado contém uma regra revogada e um dado atual, sem vigência visível. Se ambos forem enviados, o modelo pode produzir resposta fluente baseada na política antiga. O contexto precisa privilegiar fonte vigente e preservar proveniência.
+
+\FonteDidatica
+
+\Comando Selecione a estratégia de contexto que remove regra revogada sem perder vigência e proveniência.
+
+\begin{enumerate}[label=\Alph*)]
+  \item usar user para sobrescrever segurança
+  \item enviar tudo porque mais contexto sempre melhora
+  \item deixar o assistant decidir autoridade
+  \item repetir regra antiga
+  \item selecionar/versionar contexto, marcar proveniência e excluir ou rotular conteúdo revogado
+\end{enumerate}
+
+% origem: AED-C11-O07
+\ItemHeader{4}{Objetiva}{Calcular capacidade e custo por resposta útil}{Teste de carga}
+\TextoBase
+Em 1.000 perguntas, uma configuração respondeu 900, das quais 810 foram corretas e citadas. Custou R\$180. Outra respondeu 800, das quais 760 foram corretas e citadas, ao custo de R\$190. O requisito é pelo menos 75\% de respostas úteis sobre o total e deseja-se menor custo por resposta útil.
+A decisão de escala depende simultaneamente de cobertura útil e custo unitário, medidos sobre o mesmo conjunto de mil perguntas.
+\FonteDidatica
+\Comando A análise correta é
+\begin{enumerate}[label=\Alph*)]
+  \item somente a segunda passa, porque possui maior precisão entre as respostas geradas.
+  \item a primeira alcança 81\% e R\$0,22 por útil; a segunda 76\% e R\$0,25; ambas passam, e a primeira tem menor custo unitário.
+  \item a primeira alcança 90\% e R\$0,20; a segunda 80\% e R\$0,24; basta dividir custo por respostas geradas.
+  \item somente a primeira passa, porque 800 respostas são menos que o limiar de 75\%.
+  \item a primeira alcança 81\% e R\$0,18; a segunda 76\% e R\$0,19; custo deve ser dividido por perguntas totais.
+\end{enumerate}
+
+% origem: AED-C01-D11
+\ItemHeader{5}{Discursiva}{Construir cadeia analítica verificável}{Caso de evasão}
+\TextoBase Em solicitação de produto, uma faculdade propõe usar frequência, notas, situação financeira e contatos para ``prever evasão'' e enviar mensagens automáticas. O documento não define população, momento, resultado nem revisão humana, impedindo transformar a demanda em análise e intervenção avaliáveis.
+\FonteDidatica
+\Comando Em até 15 linhas, reformule a demanda como pergunta operacional; desenhe a cadeia pergunta--dado--análise--visual--decisão; indique dois riscos de qualidade ou ética e duas evidências necessárias antes de automatizar contato.
+\EspacoDiscursiva
+
+% origem: AED-C12-O03
+\ItemHeader{6}{Objetiva}{Impedir execução arbitrária}{Pergunta analítica em linguagem natural}
+\TextoBase
+Para responder perguntas sobre um DataFrame, a equipe considera permitir que o Llama gere Python e execute qualquer código no processo do Streamlit, que também possui credenciais do banco e acesso à rede.
+A pergunta pode conter texto malicioso na planilha; validação de intenção não substitui lista permitida de operações e isolamento da execução.
+\FonteDidatica
+\Comando A alternativa inicial mais segura e verificável é
+\begin{enumerate}[label=\Alph*)]
+  \item executar o código gerado e revisar apenas se ocorrer erro.
+  \item oferecer ferramentas analíticas permitidas com parâmetros validados; se código livre for indispensável, isolá-lo em sandbox sem segredo, rede ou escrita ampla.
+  \item ocultar as credenciais no prompt, mantendo-as disponíveis ao processo executor.
+  \item usar temperatura zero como fronteira de segurança para a execução.
+  \item pedir ao modelo uma promessa textual de que não acessará arquivos.
+\end{enumerate}
+
+% origem: AED-C01-O07
+\ItemHeader{7}{Objetiva}{Distinguir dado, informação, insight e decisão}{Incidente de estoque}
+\TextoBase Em uma ata de revisão, registros de venda são convertidos em 320 unidades por semana; a análise localiza rupturas sobretudo às sextas após promoções e recomenda antecipar reposição. A ata exige distinguir, nessa ordem, dado, informação, conhecimento e decisão monitorada.
+\FonteDidatica
+\Comando A classificação correta da cadeia é
+\begin{enumerate}[label=\Alph*)]
+  \item registros = dados; 320 = informação resumida; padrão contextualizado = insight; reposição monitorada = decisão.
+  \item todos os elementos são dados, pois foram produzidos por um sistema.
+  \item somente a reposição é informação, pois as etapas anteriores não geram ação.
+  \item registros = decisão; 320 = dado bruto; padrão = ferramenta; reposição = informação.
+  \item registros = insight; 320 = decisão; padrão = dado; reposição = visualização.
+\end{enumerate}
+
+% origem: AED-C07-O01
+\ItemHeader{8}{Objetiva}{grão}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A tabela deveria ter uma linha por estudante-semestre, mas transferências criam duas linhas para a mesma pessoa. Como a taxa de evasão usa matrículas elegíveis no denominador, a duplicação altera contagem e perfil do grupo. A secretaria precisa corrigir o grão antes de agregar. O parecer acadêmico informa que a transferência não equivale a uma segunda exposição ao risco: ela muda o vínculo administrativo dentro do mesmo semestre. A trilha de reconciliação deve conservar os dois registros de origem, selecionar o estado válido e provar unicidade na tabela analítica. O relatório será auditado por curso e turno, portanto uma exclusão aleatória poderia alterar justamente os estratos menores. A regra deverá usar chave composta, vigência e estado acadêmico, registrar conflitos e interromper a publicação quando mais de uma linha permanecer elegível para a mesma chave. Só depois desse teste o numerador de evasão e o denominador de estudantes expostos poderão ser agregados sob a mesma definição.
+
+Essa definição institucional vigente também deve constar da linhagem publicada.
+
+\FonteDidatica
+
+\Comando Selecione a ação que restaura uma linha por estudante-semestre e protege numerador e denominador.
+
+\begin{enumerate}[label=\Alph*)]
+  \item somar todas as linhas porque representam eventos reais
+  \item definir chave estudante-semestre, reconciliar transferências e testar unicidade antes da taxa
+  \item usar a média das taxas publicadas
+  \item remover aleatoriamente uma duplicata
+  \item agregar por curso antes de investigar
+\end{enumerate}
+
+\end{document}

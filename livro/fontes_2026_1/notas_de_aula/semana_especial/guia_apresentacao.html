@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Semana Especial — Roteiro de Apresentação</title>
+<style>
+:root {
+  --brand-dark: #0B3D2E;
+  --brand-light: #1B5E3F;
+  --accent: #E35D22;
+  --blue: #4A7FB5;
+  --green: #2E7D52;
+  --gray-light: #F5F6FA;
+  --gray-dark: #333;
+  --text: #1E293B;
+  --muted: #64748B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-light) 100%);
+  color: #fff;
+  padding: 30px 40px;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+header p {
+  font-size: 0.95rem;
+  color: #b8d5c7;
+  font-weight: 500;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* ===== LEFT: TIMELINE ===== */
+.timeline-section {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-section h2 {
+  font-size: 1.3rem;
+  color: var(--brand-dark);
+  margin-bottom: 25px;
+  font-weight: 700;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 12px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 40px;
+  padding-bottom: 15px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 0.85rem;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+.timeline-item:nth-child(1)::before {
+  background: var(--blue);
+  box-shadow: 0 0 0 2px var(--green);
+}
+
+.timeline-item:nth-child(2)::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 35px;
+  width: 3px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--blue), transparent);
+}
+
+.timeline-item:last-child::after {
+  display: none;
+}
+
+.timeline-date {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--brand-dark);
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  font-size: 0.95rem;
+  color: var(--gray-dark);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.timeline-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.timeline-duration {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== RIGHT: CONTENT TABLE ===== */
+.content-section {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.content-section h2 {
+  font-size: 1.3rem;
+  color: var(--brand-dark);
+  margin-bottom: 20px;
+  font-weight: 700;
+  border-bottom: 3px solid var(--green);
+  padding-bottom: 12px;
+}
+
+.content-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.content-table thead {
+  background: linear-gradient(90deg, var(--brand-dark) 0%, var(--brand-light) 100%);
+  color: white;
+}
+
+.content-table th {
+  padding: 12px 10px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+}
+
+.content-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.content-table td {
+  padding: 12px 10px;
+  vertical-align: top;
+  color: var(--text);
+}
+
+.content-table td:first-child {
+  font-weight: 600;
+  color: var(--brand-dark);
+}
+
+.content-table td:nth-child(2) {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.content-table td:nth-child(3) {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ===== BOTTOM SECTION: KEY POINTS ===== */
+.key-section {
+  background: linear-gradient(135deg, #fff8f0 0%, #fffbf5 100%);
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.key-section h3 {
+  font-size: 1.1rem;
+  color: var(--brand-dark);
+  margin-bottom: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.key-section h3::before {
+  content: '★';
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+.key-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.key-item {
+  background: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent);
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* ===== TIPS SECTION ===== */
+.tips-section {
+  background: linear-gradient(135deg, #f0f8ff 0%, #f5f5ff 100%);
+  border: 2px solid var(--blue);
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tips-section h3 {
+  font-size: 1.1rem;
+  color: var(--brand-dark);
+  margin-bottom: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tips-section h3::before {
+  content: '💡';
+  font-size: 1.3rem;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tip-item {
+  background: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border-left: 4px solid var(--blue);
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+footer a {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .main-wrapper {
+    grid-template-columns: 1fr;
+  }
+  
+  .key-items,
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 100%;
+  }
+  
+  header {
+    border-radius: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <header>
+    <h1>📅 Semana Especial — Roteiro de Apresentação</h1>
+    <p>Aula 10 + 11 | Revisão Unidade II + Apresentações dos Grupos | Unifacol — 2026.1</p>
+  </header>
+
+  <div class="main-wrapper">
+    
+    <!-- LEFT: TIMELINE -->
+    <div class="timeline-section">
+      <h2>📍 Agenda</h2>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">04 de maio (segunda)</div>
+          <div class="timeline-title">Revisão Unidade II</div>
+          <div class="timeline-desc">
+            Recuperação do conteúdo teórico, estatísticas e técnicas da Unidade II. Resolução de exercícios das provas.
+          </div>
+          <div class="timeline-duration">⏱️ ~90 min</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">18 de maio (segunda)</div>
+          <div class="timeline-title">Apresentações dos Grupos</div>
+          <div class="timeline-desc">
+            5 grupos apresentam seus projetos de análise em 12 min cada. Feedback e avaliação em rubrica ao vivo.
+          </div>
+          <div class="timeline-duration">⏱️ ~60 min + debate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: CONTENT TABLE -->
+    <div class="content-section">
+      <h2>📋 Conteúdos por Aula</h2>
+      
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th>Tópico</th>
+            <th>Aula</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Estatística descritiva</td>
+            <td>04/05</td>
+            <td>Média, mediana, DP, assimetria</td>
+          </tr>
+          <tr>
+            <td>Correlação & Regressão</td>
+            <td>04/05</td>
+            <td>Pearson r, causa vs correlação</td>
+          </tr>
+          <tr>
+            <td>Visualizações de Padrões</td>
+            <td>04/05</td>
+            <td>Scatter, barras, distribuições</td>
+          </tr>
+          <tr>
+            <td>Teste de Hipóteses</td>
+            <td>04/05</td>
+            <td>T-test, ANOVA, interpretação</td>
+          </tr>
+          <tr>
+            <td>Prova II Unidade Q1–Q7</td>
+            <td>04/05</td>
+            <td>Questões de múltipla escolha</td>
+          </tr>
+          <tr>
+            <td>Prova Final Q8–Q10</td>
+            <td>04/05</td>
+            <td>Casos reais, interpretação</td>
+          </tr>
+          <tr>
+            <td>II Chamada Q8–Q10</td>
+            <td>04/05</td>
+            <td>Para alunos que não fizeram</td>
+          </tr>
+          <tr>
+            <td style="background:#f0f8ff; font-weight:700; color:var(--blue);">Projeto Grupo 1</td>
+            <td style="background:#f0f8ff;">18/05</td>
+            <td style="background:#f0f8ff; font-size:0.8rem;">O-List: Dashboard vendas</td>
+          </tr>
+          <tr>
+            <td style="background:#f0f8ff; font-weight:700; color:var(--blue);">Projeto Grupo 2</td>
+            <td style="background:#f0f8ff;">18/05</td>
+            <td style="background:#f0f8ff; font-size:0.8rem;">RH IBM: Retenção talentos</td>
+          </tr>
+          <tr>
+            <td style="background:#f0f8ff; font-weight:700; color:var(--blue);">Projeto Grupo 3</td>
+            <td style="background:#f0f8ff;">18/05</td>
+            <td style="background:#f0f8ff; font-size:0.8rem;">Superstore: Segmentação</td>
+          </tr>
+          <tr>
+            <td style="background:#f0f8ff; font-weight:700; color:var(--blue);">Projeto Grupo 4</td>
+            <td style="background:#f0f8ff;">18/05</td>
+            <td style="background:#f0f8ff; font-size:0.8rem;">Saúde: Predição readmissão</td>
+          </tr>
+          <tr>
+            <td style="background:#f0f8ff; font-weight:700; color:var(--blue);">Projeto Grupo 5</td>
+            <td style="background:#f0f8ff;">18/05</td>
+            <td style="background:#f0f8ff; font-size:0.8rem;">FinTech: Fraude detecção</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- KEY POINTS -->
+  <div class="key-section">
+    <h3>O que Preparar para o Quadro (04/05)</h3>
+    <div class="key-items">
+      <div class="key-item"><strong>Fórmula de Média:</strong> $\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$</div>
+      <div class="key-item"><strong>Desvio Padrão:</strong> $s = \sqrt{\frac{1}{n}\sum (x_i - \bar{x})^2}$</div>
+      <div class="key-item"><strong>Pearson r:</strong> $r = \frac{\sum (x - \bar{x})(y - \bar{y})}{\sqrt{\sum(x-\bar{x})^2 \sum(y-\bar{y})^2}}$</div>
+      <div class="key-item"><strong>Intervalo de Confiança:</strong> $\bar{x} \pm t_{\alpha/2} \cdot \frac{s}{\sqrt{n}}$</div>
+      <div class="key-item"><strong>Poder de Teste:</strong> Relação entre significância (α) e erro Tipo II (β)</div>
+      <div class="key-item"><strong>P-value:</strong> Prob. observar dados tão extremos se H₀ for verdadeira</div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-section" style="margin-top: 20px; margin-bottom: 30px;">
+    <h3>Dicas para Apresentação</h3>
+    <div class="tips-grid">
+      <div class="tip-item">✓ Comece cada tópico mostrando onde aparece na prova</div>
+      <div class="tip-item">✓ Use exemplos com dados do StudentPerformanceFactors</div>
+      <div class="tip-item">✓ Deixe 5 min no final para dúvidas sobre prova</div>
+      <div class="tip-item">✓ Recorde a diferença entre correlação e causalidade</div>
+      <div class="tip-item">✓ Mostre os gráficos do notebook (auto_eda_demo) na tela</div>
+      <div class="tip-item">✓ Para grupos: deixe espaço para perguntas dos colegas</div>
+      <div class="tip-item">✓ Reforce: "se tiver dúvida, escreva no chat"</div>
+      <div class="tip-item">✓ Tire screenshot dos slides importantes para enviá-los depois</div>
+    </div>
+  </div>
+
+  <footer>
+    📊 Unifacol — Análise e Exploração de Dados (2026.1) | Roteiro interativo | Imprimir ou usar em full-screen
+  </footer>
+
+</div>
+
+<script>
+// Permitir imprimir bonito
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+    console.log('💾 Pronto para imprimir!');
+  }
+});
+
+// Adicionar "data-hora" de atualização (opcional)
+console.log('📅 Roteiro carregado em:', new Date().toLocaleString('pt-BR'));
+</script>
+
+</body>
+</html>

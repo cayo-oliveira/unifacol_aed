@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard FinTech — Churn Cartão Premium</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --brand: #6F42C1;
+  --accent: #FFC107;
+  --bg: #F8F7FF;
+  --text: #1A1A1A;
+  --light: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, var(--bg) 0%, #E9ECEF 100%); }
+header { background: linear-gradient(135deg, var(--brand) 0%, #4B2E83 100%); color: white; padding: 25px 30px; }
+header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+.dash { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+.section-title { font-size: 0.85rem; font-weight: 700; color: var(--brand); text-transform: uppercase; margin: 25px 0 12px; letter-spacing: 0.08em; }
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi { background: white; padding: 15px; border-radius: 8px; border: 2px solid var(--brand); }
+.kpi .val { font-size: 1.8rem; font-weight: 700; color: var(--brand); }
+.kpi .lbl { font-size: 0.75rem; color: #888; margin-top: 6px; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.chart-card { background: white; padding: 18px; border-radius: 8px; border: 1px solid #E9ECEF; }
+.chart-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; color: var(--brand); }
+.insight { background: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%); border-left: 4px solid var(--brand); padding: 15px; border-radius: 6px; margin: 15px 0; }
+.insight .tag { font-size: 0.7rem; font-weight: 700; color: var(--brand); text-transform: uppercase; }
+.insight .txt { font-size: 0.85rem; margin-top: 6px; line-height: 1.4; color: var(--text); }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.85rem; }
+th { background: var(--brand); color: white; padding: 10px; text-align: left; font-weight: 700; }
+td { padding: 8px; border-bottom: 1px solid #eee; }
+tr:hover { background: #f9f9f9; }
+.cta { background: var(--brand); color: white; padding: 20px; border-radius: 8px; margin: 15px 0; }
+.cta h3 { font-size: 1rem; margin-bottom: 10px; }
+footer { text-align: center; padding: 20px; font-size: 0.75rem; color: #999; }
+</style>
+</head>
+<body>
+<header>
+  <h1>💳 FinTech — Churn de Cartão Premium</h1>
+  <p>Receita de clientes Premium em risco: R$ 2,1M/ano | Segmentação por uso e limite | Base: 10.127 clientes</p>
+</header>
+
+<div class="dash">
+  <p class="section-title">Contexto — Emergência Financeira</p>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="val" style="color:#6F42C1;">18%</div>
+      <div class="lbl">Churn Premium<br>(benchmark: 8%)</div>
+    </div>
+    <div class="kpi">
+      <div class="val">4x</div>
+      <div class="lbl">Risco relativo<br>limite <R$10k</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:#6F42C1;">285</div>
+      <div class="lbl">Clientes em perfil<br>alto risco</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:#6F42C1;">R$ 1.2M</div>
+      <div class="lbl">Receita preservável<br>engajamento proativo</div>
+    </div>
+  </div>
+
+  <p class="section-title">Diagnóstico — Quem Está Saindo?</p>
+  <div class="charts">
+    <div class="chart-card">
+      <h3>Churn por Faixa de Limite de Crédito</h3>
+      <p style="font-size:0.75rem; color:#999; margin-bottom:8px;">Limite baixo = maior risco | Linha em 8% = benchmark</p>
+      <canvas id="chart1" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Frequência de Uso vs Ticket Médio (Cores = Churn)</h3>
+      <p style="font-size:0.75rem; color:#999; margin-bottom:8px;">Zona vermelha: <20 transações + <R$5k limite</p>
+      <canvas id="chart2" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="tag">[Insight IA] Acionável — Retenção</div>
+    <div class="txt"><strong>Clientes Premium com limite < R$ 10k e menos de 20 transações/ano têm 4× mais chance de cancelamento (taxa 32% vs 8% na base) — equivalente a R$ 420k em receita anual em risco. Engajamento proativo focado nesse perfil (285 clientes) com cashback + limite temporário pode reduzir churn em 50%, preservando R$ 1,2M em receita anual.</strong></div>
+  </div>
+
+  <div class="cta">
+    <h3>📱 CALL TO ACTION</h3>
+    <p><strong>Lançar campanha de reengajamento via app para 285 clientes em risco até 15/junho.</strong><br>
+    Responsável: Gerência de CRM | Impacto: reduzir churn Premium de 18% para 9% em 6 meses</p>
+  </div>
+
+  <p class="section-title">Matriz de Risco — Limite vs Frequência</p>
+  <table>
+    <thead><tr><th>Faixa de Limite</th><th>Frequência/Ano</th><th>Churn %</th><th>Clientes</th><th>Receita em Risco</th></tr></thead>
+    <tbody>
+      <tr><td><strong><R$10k</strong></td><td><strong><20 trans</strong></td><td style="color:#6F42C1;"><strong>32%</strong></td><td style="color:#6F42C1;"><strong>285</strong></td><td style="color:#6F42C1;"><strong>R$ 420k</strong></td></tr>
+      <tr><td>R$10-30k</td><td>20-50 trans</td><td>14%</td><td>450</td><td>R$ 180k</td></tr>
+      <tr><td>>R$30k</td><td>>50 trans</td><td>6%</td><td>320</td><td>R$ 48k</td></tr>
+      <tr><td>Inativo</td><td>0 trans</td><td>72%</td><td>95</td><td>R$ 230k</td></tr>
+    </tbody>
+  </table>
+
+  <footer>Dashboard gerado via Pipeline Multi-Agente | Dados: Credit Card Customers Dataset | Atualização: mai/2026</footer>
+</div>
+
+<script>
+new Chart(document.getElementById('chart1'), {
+  type: 'bar',
+  data: {
+    labels: ['<R$5k', 'R$5-10k', 'R$10-30k', '>R$30k'],
+    datasets: [{
+      label: 'Churn %',
+      data: [28, 32, 14, 6],
+      backgroundColor: ['#FF4444', '#FF6B6B', '#FFD700', '#90EE90']
+    },
+    {
+      label: 'Benchmark 8%',
+      data: [8, 8, 8, 8],
+      type: 'line',
+      borderColor: '#000000',
+      borderWidth: 2,
+      fill: false,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    plugins: { legend: { display: true } },
+    scales: { y: { min: 0, max: 40 } }
+  }
+});
+
+new Chart(document.getElementById('chart2'), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Alto Churn (>20%)',
+      data: [{x:8, y:2500}, {x:12, y:3000}, {x:15, y:2800}],
+      backgroundColor: '#FF4444',
+      pointRadius: 8
+    },
+    {
+      label: 'Médio (8-20%)',
+      data: [{x:35, y:5000}, {x:42, y:5500}, {x:30, y:4800}],
+      backgroundColor: '#FFC107',
+      pointRadius: 8
+    },
+    {
+      label: 'Baixo (<8%)',
+      data: [{x:65, y:8000}, {x:78, y:9000}, {x:72, y:8500}],
+      backgroundColor: '#90EE90',
+      pointRadius: 8
+    }]
+  },
+  options: {
+    plugins: { legend: { display: true } },
+    scales: {
+      x: { title: { display: true, text: 'Transações/Ano' }, min: 0, max: 90 },
+      y: { title: { display: true, text: 'Ticket Médio (R$)' }, min: 2000, max: 10000 }
+    }
+  }
+});
+</script>
+</body>
+</html>

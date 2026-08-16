@@ -1,0 +1,88 @@
+\section{Pergunta, visual e decisão}
+
+\subsection*{Questões objetivas}
+
+\paragraph{Questão 1.} Uma universidade observa aumento da evasão e pede ``um dashboard completo''. Antes de escolher gráficos, qual ação produz a base analítica mais adequada?
+
+\begin{enumerate}[label=\Alph*)]
+\item Selecionar uma paleta institucional e criar o maior número possível de visuais.
+\item Definir população, período, comparação, medida de evasão e decisão que poderá ser tomada.
+\item Pedir a um LLM que escolha colunas sem fornecer contexto institucional.
+\item Carregar o dataset na ferramenta e aceitar automaticamente os tipos inferidos.
+\item Calcular somente a média global para evitar segmentações sensíveis.
+\end{enumerate}
+
+\paragraph{Questão 2.} Um analista precisa comparar a taxa de evasão entre oito cursos em um único semestre. Qual visual tende a permitir a comparação mais precisa?
+
+\begin{enumerate}[label=\Alph*)]
+\item Gráfico de barras ordenadas em escala comum.
+\item Gráfico de pizza com oito setores e efeito tridimensional.
+\item Nuvem de palavras com o nome de cada curso.
+\item Mapa de calor sem legenda nem valor de referência.
+\item Bolhas com área proporcional e posições livres.
+\end{enumerate}
+
+\paragraph{Questão 3.} Um LLM gerou código que remove todas as linhas com valores ausentes. A execução reduziu a base de 12.000 para 7.100 estudantes. Qual é a próxima ação mais defensável?
+
+\begin{enumerate}[label=\Alph*)]
+\item Aceitar, pois ausência sempre representa erro de coleta.
+\item Publicar o gráfico e informar apenas o tamanho final.
+\item Medir ausências por variável e grupo, investigar mecanismo e avaliar impacto da remoção.
+\item Pedir ao LLM outro código e escolher o resultado com maior número de linhas.
+\item Preencher todas as ausências com zero sem alterar a documentação.
+\end{enumerate}
+
+\paragraph{Questão 4.} Um modelo reconstrói valores ausentes e um dashboard mostra a série completa. Qual elemento visual é essencial para não confundir observado e estimado?
+
+\begin{enumerate}[label=\Alph*)]
+\item Uma animação automática da série.
+\item Distinção visual e legenda entre valores observados e estimados, com indicação de incerteza.
+\item Uso de uma única linha sem interrupções para manter estética.
+\item Remoção dos pontos observados, deixando apenas a curva do modelo.
+\item Um título que afirme que a previsão está correta.
+\end{enumerate}
+
+\paragraph{Questão 5.} O artigo T-Vol relata $R^2=0{,}85$ em seu experimento. Qual interpretação é correta?
+
+\begin{enumerate}[label=\Alph*)]
+\item O modelo acerta 85\% de cada valor individual.
+\item A visualização 3D está 85\% correta em qualquer mercado.
+\item A métrica descreve ajuste no contexto avaliado e deve ser lida com dados, baselines e erros.
+\item O valor elimina a necessidade de inspeção de restrições do domínio.
+\item Qualquer modelo com $R^2$ positivo pode orientar decisão financeira.
+\end{enumerate}
+
+\paragraph{Questão 6.} Tableau e Streamlit produzem dois painéis com a mesma pergunta e os mesmos dados. Qual critério deve orientar a escolha?
+
+\begin{enumerate}[label=\Alph*)]
+\item A preferência do LLM que gerou o primeiro protótipo.
+\item A quantidade de cores disponíveis.
+\item Reprodutibilidade, interação, implantação, privacidade, manutenção e capacidade da equipe.
+\item A ferramenta mais citada em redes sociais na semana.
+\item A obrigação de usar sempre uma única tecnologia no semestre.
+\end{enumerate}
+
+\subsection*{Questões discursivas}
+
+\paragraph{Questão 7.} Em até 15 linhas, transforme o pedido ``crie um dashboard de desempenho acadêmico'' em uma pergunta analítica completa. Indique medida, população, período, comparação, visual inicial e decisão possível.
+
+\paragraph{Questão 8.} Em até 15 linhas, proponha um fluxo em que uma LLM auxilie a exploração sem substituir o analista. Inclua ao menos quatro verificações e uma forma de documentar a origem de cada conclusão.
+
+\section*{Respostas explicadas --- professor}
+
+\begin{tabularx}{\textwidth}{@{}c c Y@{}}
+\toprule
+\textbf{Q} & \textbf{R} & \textbf{Justificativa} \\
+\midrule
+1 & B & Uma pergunta operacional delimita dado, medida, comparação e decisão; a ferramenta vem depois. \\
+2 & A & Posição e comprimento em escala comum favorecem comparação entre categorias. \\
+3 & C & Remoção pode introduzir viés; é preciso entender padrão e impacto antes de decidir. \\
+4 & B & O leitor deve distinguir evidência observada de saída do modelo e perceber sua incerteza. \\
+5 & C & A métrica depende do conjunto e não substitui análise de erro, validade externa ou regras do domínio. \\
+6 & C & A escolha é uma decisão de contexto e ciclo de vida, não de marca. \\
+\bottomrule
+\end{tabularx}
+
+\paragraph{Espelho Q7 (2,0).} Pergunta delimitada (0,5); medida e população (0,4); período e comparação (0,4); visual coerente (0,3); decisão possível sem causalidade indevida (0,4).
+
+\paragraph{Espelho Q8 (2,0).} Papel da LLM (0,3); checagens de schema/qualidade/cálculo/visual (0,8); execução e comparação (0,3); documentação e rastreabilidade (0,3); responsabilidade do analista (0,3).

@@ -1,0 +1,208 @@
+\section{Capítulo 12 --- Streamlit e Llama em uma aplicação analítica}
+
+Os cenários tratam Streamlit como camada de interação e um modelo Llama como componente de linguagem. Cálculos, autorização e evidências permanecem em componentes verificáveis; o modelo não é fonte de verdade. Dados, custos e situações foram elaborados para fins didáticos.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{Separar interface, domínio e modelo}{Aplicação de indicadores}
+\TextoBase
+Um protótipo coloca upload, limpeza, cálculo de receita, prompt, chamada ao Llama e geração de gráfico em um único arquivo Streamlit. Uma alteração visual mudou acidentalmente o denominador do indicador.
+O produto será operado por analistas não técnicos; uma falha de camada não pode conceder ao modelo autoridade para executar ações arbitrárias.
+\FonteDidatica
+\Comando O redesenho mais coerente é
+\begin{enumerate}[label=\Alph*)]
+\item manter tudo no arquivo e acrescentar comentários ao redor da fórmula.
+\item separar UI, serviço analítico testável, adaptador do modelo e repositório de dados, com contratos explícitos entre eles.
+\item mover a fórmula para o prompt e deixar o Llama escolher o denominador.
+\item duplicar o cálculo na interface e no adaptador para detectar divergência visualmente.
+\item executar a aplicação sempre com o mesmo CSV, evitando mudanças no código.
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Calcular orçamento de contexto}{Prompt com tabela resumida}
+\TextoBase
+O modelo admite 8.192 tokens. Instrução e esquema usam 1.100; histórico, 1.700; resposta reservada, 1.200; margem de segurança, 10\% da janela total. Cada bloco resumido de dados usa 420 tokens.
+A equipe reserva a margem para variação de tokenização e precisa selecionar apenas blocos inteiros, preservando instruções e espaço de saída.
+\FonteDidatica
+\Comando O número máximo inteiro de blocos que cabe no orçamento é
+\begin{enumerate}[label=\Alph*)]
+\item 7 blocos, porque a margem deve ser descontada antes de dividir o restante.
+\item 8 blocos, pois $8.192-1.100-1.700-1.200-819{,}2=3.372{,}8$.
+\item 9 blocos, desconsiderando a reserva de resposta durante a entrada.
+\item 12 blocos, porque a janela conta somente tokens gerados pelo modelo.
+\item 19 blocos, dividindo a janela total diretamente por 420.
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Impedir execução arbitrária}{Pergunta analítica em linguagem natural}
+\TextoBase
+Para responder perguntas sobre um DataFrame, a equipe considera permitir que o Llama gere Python e execute qualquer código no processo do Streamlit, que também possui credenciais do banco e acesso à rede.
+A pergunta pode conter texto malicioso na planilha; validação de intenção não substitui lista permitida de operações e isolamento da execução.
+\FonteDidatica
+\Comando A alternativa inicial mais segura e verificável é
+\begin{enumerate}[label=\Alph*)]
+\item executar o código gerado e revisar apenas se ocorrer erro.
+\item ocultar as credenciais no prompt, mantendo-as disponíveis ao processo executor.
+\item oferecer ferramentas analíticas permitidas com parâmetros validados; se código livre for indispensável, isolá-lo em sandbox sem segredo, rede ou escrita ampla.
+\item pedir ao modelo uma promessa textual de que não acessará arquivos.
+\item usar temperatura zero como fronteira de segurança para a execução.
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Calcular efeito de cache}{Inferências repetidas}
+\TextoBase
+Em um dia, 2.000 interações pediram análises. Quarenta por cento eram repetições exatas elegíveis a cache; o cache acertou 75\% dessas repetições. Cada inferência custa R\$0,08. O custo do cache é desprezível.
+O cache só é elegível quando pergunta, versão da fonte, identidade e filtros coincidem, evitando reutilizar resposta sob contexto diferente.
+\FonteDidatica
+\Comando O número de inferências evitadas e a economia são
+\begin{enumerate}[label=\Alph*)]
+\item 600 inferências e R\$48,00.
+\item 800 inferências e R\$64,00.
+\item 1.500 inferências e R\$120,00.
+\item 400 inferências e R\$32,00.
+\item 150 inferências e R\$12,00.
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Gerenciar estado e reexecução}{Duplo envio no Streamlit}
+\TextoBase
+Ao alterar um filtro, o Streamlit reexecuta o script. O protótipo dispara novamente uma inferência cara e grava duas decisões idênticas. Não há chave que relacione pergunta, dados e versão do modelo.
+O incidente ocorre quando a interface reexecuta o script; a correção deve impedir duplicidade sem perder o histórico visível ao usuário.
+\FonteDidatica
+\Comando A correção adequada é
+\begin{enumerate}[label=\Alph*)]
+\item desativar todos os widgets após a primeira execução da sessão.
+\item usar estado de sessão, formulário para submissão explícita, chave idempotente e cache versionado pelos insumos relevantes.
+\item guardar apenas a última resposta em variável global compartilhada por usuários.
+\item aumentar o timeout para que as duas chamadas terminem na mesma ordem.
+\item remover os logs duplicados sem impedir o efeito repetido.
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Compor orçamento de latência}{Pipeline analítico síncrono}
+\TextoBase
+O SLA é p95 de 5 s. No p95, autenticação usa 0,2 s, consulta 1,1 s, cálculo 0,5 s, renderização 0,4 s e validação final 0,3 s. O tempo restante pode ser destinado ao Llama.
+O SLA cobre a resposta completa, portanto otimizar apenas geração pode deixar fila, recuperação ou validação como gargalo dominante.
+\FonteDidatica
+\Comando O orçamento máximo do modelo no p95 é
+\begin{enumerate}[label=\Alph*)]
+\item 2,5 s, porque as demais etapas somam 2,5 s.
+\item 3,0 s, desconsiderando a validação final.
+\item 3,7 s, considerando somente consulta e renderização.
+\item 4,5 s, porque cálculo local não participa da latência percebida.
+\item 5,0 s, pois as etapas podem ser ignoradas no orçamento do modelo.
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Garantir saída estruturada}{Gráfico sugerido pelo Llama}
+\TextoBase
+O modelo deve sugerir tipo de gráfico, campos e justificativa. Em testes, produz nomes de colunas inexistentes e ocasionalmente inclui código. A interface espera um objeto estruturado.
+A especificação do gráfico será consumida por componente separado, exigindo campos permitidos, tipos verificáveis e rejeição de propriedades inesperadas.
+\FonteDidatica
+\Comando O fluxo de validação deve
+\begin{enumerate}[label=\Alph*)]
+\item aceitar qualquer JSON sintaticamente válido e renderizar os campos recebidos.
+\item validar esquema, lista permitida de gráficos, existência e tipos das colunas; rejeitar ou reparar de modo controlado antes de renderizar.
+\item extrair nomes por expressão regular e executar eventual código junto da visualização.
+\item inserir todas as colunas do DataFrame no prompt até o modelo parar de errar.
+\item remover justificativa e validação para diminuir tokens.
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Interpretar funil de aplicação}{Teste com 500 perguntas}
+\TextoBase
+Em 500 perguntas, 450 foram autorizadas. Entre as autorizadas, 405 produziram consulta válida; dessas, 360 respostas tiveram cálculo correto e evidência exibida.
+As perdas precisam ser localizadas por etapa, pois uma taxa final isolada não distingue recusa correta, plano inválido e falha de execução.
+\FonteDidatica
+\Comando As taxas de autorização, validade condicional e sucesso ponta a ponta são
+\begin{enumerate}[label=\Alph*)]
+\item 90\%; 90\%; 72\%.
+\item 90\%; 81\%; 80\%.
+\item 81\%; 90\%; 72\%.
+\item 90\%; 80\%; 81\%.
+\item 72\%; 81\%; 90\%.
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Aplicar minimização ao upload}{Planilha com dados pessoais}
+\TextoBase
+Um usuário envia planilha com CPF, nome, e-mail, salário, unidade e vendas. A pergunta solicita somente vendas por unidade. O app envia todas as colunas para um endpoint externo e registra o arquivo integral.
+O arquivo será descartado após a sessão; antes disso, colunas desnecessárias devem ser removidas e qualquer persistência precisa de finalidade documentada.
+\FonteDidatica
+\Comando A correção coerente é
+\begin{enumerate}[label=\Alph*)]
+\item manter todas as colunas, pois o usuário realizou o upload voluntariamente.
+\item selecionar localmente apenas unidade e vendas, validar finalidade e acesso, agregar quando possível e definir retenção e logs minimizados.
+\item substituir CPF por nome e manter os demais dados no prompt.
+\item enviar o arquivo integral com temperatura zero para reduzir risco de exposição.
+\item excluir os logs, mas continuar transmitindo todas as colunas ao modelo.
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Selecionar configuração pelos gates}{Teste de quantização}
+\TextoBase
+O app exige correção $\geq82\%$, p95 $\leq4$ s e memória $\leq10$ GB.
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}Yrrr@{}}\toprule
+\textbf{Modelo} & \textbf{Correção} & \textbf{p95} & \textbf{Memória}\\\midrule
+Llama F16 & 88\% & 6,2 s & 15 GB\\
+Llama Q8 & 86\% & 4,4 s & 9 GB\\
+Llama Q4 & 83\% & 3,2 s & 6 GB\\
+Llama Q3 & 78\% & 2,6 s & 5 GB\\\bottomrule
+\end{tabularx}\end{center}
+\FonteDidatica
+A implantação local possui limite de seis gigabytes, correção mínima de 82\% e p95 máximo de quatro segundos, todos não compensatórios.
+\Comando A configuração que atende simultaneamente aos gates é
+\begin{enumerate}[label=\Alph*)]
+\item F16, porque maximiza correção.
+\item Q8, porque cabe na memória e perde pouca correção.
+\item Q4, porque satisfaz correção, p95 e memória.
+\item Q3, porque minimiza latência e memória.
+\item a média de Q8 e Q4, porque equilibra os três valores.
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Projetar aplicação analítica verificável}{Dashboard conversacional}
+\TextoBase
+Uma cooperativa quer carregar CSV, filtrar período, calcular indicadores e pedir ao Llama uma narrativa. Há dados pessoais, métricas certificadas e necessidade de exportar evidências.
+O desenho deve permitir reexecutar a mesma pergunta com snapshot, versão de modelo e parâmetros, comparando resultado numérico e evidência.
+\FonteDidatica
+\Comando Desenhe, em até 15 linhas, componentes e fluxo: validação do upload, minimização, serviço de cálculo, camada semântica, adaptador Llama, saída estruturada, validação, estado, cache, identidade, evidência e observabilidade.
+
+\ItemHeader{12}{Discursiva}{Calcular capacidade e fila}{Servidor local}
+\TextoBase
+Um servidor executa no máximo 4 inferências simultâneas; cada uma dura em média 8 s. No pico chegam 45 solicitações por minuto. Desconsidere variação e overhead para o cálculo inicial.
+A fila recebe rajadas de 45 solicitações além do fluxo contínuo; capacidade nominal sem backpressure produziria espera crescente e timeout.
+\FonteDidatica
+\Comando Calcule a capacidade teórica por minuto, o excedente no pico e o tempo mínimo para processar uma rajada de 45 solicitações iniciada com fila vazia. Proponha duas intervenções e as métricas necessárias para validá-las em produção.
+
+\ItemHeader{13}{Discursiva}{Responder a incidente de execução}{Código gerado acessou arquivo}
+\TextoBase
+Um recurso experimental executou Python gerado pelo modelo no mesmo processo do app. Um código leu variável de ambiente e tentou enviar seu valor pela rede. O firewall bloqueou a saída, mas logs guardaram o segredo.
+O acesso indevido ocorreu fora do diretório autorizado; a resposta deve preservar evidência forense sem continuar expondo o arquivo sensível.
+\FonteDidatica
+\Comando Proponha contenção, rotação, preservação mínima de evidências, comunicação, investigação e redesenho com ferramentas permitidas ou sandbox. Inclua testes de abuso e critérios para reativação.
+
+\ItemHeader{14}{Discursiva}{Calcular funil e custo útil}{Avaliação semanal}
+\TextoBase
+Em 1.200 perguntas, 1.080 foram autorizadas, 972 geraram plano válido, 900 produziram cálculo correto e 846 exibiram evidência suficiente. O custo total foi R\$253,80. O gate exige pelo menos 75\% de sucesso útil sobre o total e custo útil máximo de R\$0,32.
+O custo semanal total foi R\$253,80, e a meta exige pelo menos 75\% de sucesso útil e custo inferior a R\$0,35 por resposta útil.
+\FonteDidatica
+\Comando Calcule as taxas condicionais de cada transição, o sucesso útil ponta a ponta e o custo por resposta útil. Compare com os gates e indique a etapa prioritária para análise de erros.
+
+\ItemHeader{15}{Discursiva}{Especificar teste de atualização}{Troca do modelo local}
+\TextoBase
+A equipe quer substituir Llama Q4 por uma versão nova e alterar simultaneamente prompt, parser e cache. O sistema atende perguntas numéricas, comparações e narrativas.
+A atualização só poderá substituir a versão atual se passar casos funcionais, adversariais, de segurança e de regressão com configuração registrada.
+\FonteDidatica
+\Comando Proponha protocolo com baseline congelado, conjunto estratificado, versões, ablações, testes sintáticos e semânticos, cálculos de referência, latência, memória, custo, segurança, execução paralela, canário e rollback.
+
+\newpage
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 — resposta B.} A margem é $819{,}2$ tokens. Restam $8.192-1.100-1.700-1.200-819{,}2=3.372{,}8$; $3.372{,}8/420\approx8{,}03$, portanto cabem oito blocos inteiros.
+\[\left\lfloor\frac{8.192-1.100-1.700-1.200-819{,}2}{420}\right\rfloor=8\]
+
+\paragraph{Questão 4 — resposta A.} Há $2.000(0{,}40)=800$ repetições elegíveis; o cache atende $800(0{,}75)=600$. A economia é $600(0{,}08)=\mathrm{R\$}48$.
+
+\paragraph{Questão 6 — resposta A.} As etapas externas ao modelo somam $0{,}2+1{,}1+0{,}5+0{,}4+0{,}3=2{,}5$ s. Restam 2,5 s no orçamento p95; remover validação do cálculo apenas esconderia latência necessária.
+
+\paragraph{Questão 8 — resposta A.} Autorização $=450/500=90\%$; validade condicionada $=405/450=90\%$; sucesso ponta a ponta $=360/500=72\%$. Denominadores distintos mostram onde ocorre cada perda.
+
+\paragraph{Questão 10 — resposta C.} Q4 alcança 83\%, 3,2 s e 6 GB, atendendo aos três gates. F16 viola latência e memória, Q8 viola latência e Q3 viola correção.
+
+\paragraph{Questão 12 — critérios.} Cada slot processa $60/8=7{,}5$ por minuto; quatro slots processam 30. O excedente é 15 por minuto. Uma rajada de 45 exige $\lceil45/4\rceil=12$ ondas, ou 96 s. São válidos fila com backpressure, cache, modelo mais rápido, batching ou mais capacidade, medidos por fila, throughput, p50/p95, erro e custo.
+
+\paragraph{Questão 14 — critérios.} Transições: $1.080/1.200=90\%$; $972/1.080=90\%$; $900/972\approx92{,}6\%$; $846/900=94\%$. Sucesso útil $=846/1.200=70{,}5\%$ e custo útil $=253{,}80/846=\mathrm{R\$}0{,}30$. Custo passa, sucesso não. A maior perda absoluta ocorre antes/na autorização, mas deve ser separada entre recusas corretas e falhas; depois, plano válido é a próxima queda.

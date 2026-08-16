@@ -1,0 +1,141 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\CadernoDisciplina}{Análise Exploratória de Dados}
+\newcommand{\CadernoCorHex}{17365D}
+\input{../../../caderno_exercicios/caderno_enade_style.tex}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\begin{center}
+{\Large\bfseries UNIFACOL}\\[2mm]
+{\large Avaliação da II Unidade}\\[1mm]
+{\Large\bfseries VERSÃO B}
+\end{center}
+\begin{DocumentBox}[Identificação]
+\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}p{.48\textwidth}@{}}
+Estudante: \hrulefill & Turma: \hrulefill\\[3mm]
+Professor: Cayo Oliveira & Data: \rule{2.7cm}{.2pt}/2026
+\end{tabularx}
+\end{DocumentBox}
+\textbf{Instruções.} Esta avaliação contém seis questões objetivas e duas discursivas. Nas objetivas, assinale uma única alternativa. Nas discursivas, mostre cálculos intermediários e justifique decisões com as evidências do texto-base. Respostas sem desenvolvimento podem não receber pontuação integral.
+\bigskip
+% origem: AED-C14-O05
+\ItemHeader{1}{Objetiva}{Distinguir alucinação de desatualização}{Política revogada}
+\TextoBase
+O recuperador trouxe uma política revogada, marcada como versão vigente por erro de metadado. O modelo citou fielmente o trecho e não inventou conteúdo, mas a decisão contrariou a norma atual.
+A resposta usou corretamente um documento que deixou de valer; a avaliação deve separar recuperação desatualizada de conteúdo sem sustentação.
+\FonteDidatica
+\Comando A classificação mais precisa é
+\begin{enumerate}[label=\Alph*)]
+  \item falha de custo, porque versões antigas usam mais tokens.
+  \item falha de vigência/proveniência na recuperação; fidelidade ao contexto não garantiu correção atual.
+  \item sucesso, porque a citação existe.
+  \item alucinação textual exclusiva, porque toda resposta incorreta é alucinação.
+  \item falha exclusiva de estilo, resolvida com prompt mais formal.
+\end{enumerate}
+
+% origem: AED-C13-O01
+\ItemHeader{2}{Objetiva}{Distinguir responsabilidades agentic}{Relatório mensal recorrente}
+\TextoBase
+Um fluxo recebe a solicitação, consulta métricas, compara o mês anterior, produz narrativa e pede aprovação humana. A equipe chama de ``agente'' tanto o modelo quanto uma função SQL e um manual de procedimento.
+O relatório alimenta decisões de estoque, e cada etapa deve possuir entrada, saída, permissão e condição de parada verificáveis.
+\FonteDidatica
+\Comando A descrição tecnicamente adequada é
+\begin{enumerate}[label=\Alph*)]
+  \item o agente coordena estado e decisões; SQL é ferramenta; o manual pode constituir skill ou playbook; o LLM apoia interpretação.
+  \item o LLM é a ferramenta, o SQL é o agente e o manual é a memória episódica.
+  \item todo componente é um agente porque participa do mesmo fluxo.
+  \item a skill executa diretamente qualquer ação e torna permissões desnecessárias.
+  \item a memória decide o próximo passo e o agente apenas armazena texto.
+\end{enumerate}
+
+% origem: AED-C10-D13
+\ItemHeader{3}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+As áreas comercial e financeira usam o nome ``receita líquida'', porém uma exclui apenas cancelamentos e a outra também exclui impostos. O agente responde de formas diferentes conforme as colunas disponíveis, sem informar versão, responsável ou grão da definição.
+
+\FonteDidatica
+
+\Comando Proponha uma entrada de catálogo para ``receita líquida'' contendo fórmula, grão, dimensões permitidas, filtros, responsável, vigência, versão e três testes. Explique como o agente deve tratar a ambiguidade entre as duas definições.
+\EspacoDiscursiva
+
+% origem: AED-C09-O03
+\ItemHeader{4}{Objetiva}{validação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O assistant afirma queda de 18\%, mas a tabela de referência contém 120 antes e 110 depois. A resposta será enviada à diretoria. Antes, a aplicação precisa recalcular a variação relativa e tratar a frase do modelo como hipótese sujeita à fonte.
+
+\FonteDidatica
+
+\Comando Recalcule a variação observada e selecione a ação de validação antes da publicação.
+
+\begin{enumerate}[label=\Alph*)]
+  \item aumentar contexto sem conferir
+  \item trocar system por user
+  \item aceitar 18\% por ser resposta do modelo
+  \item reduzir temperatura e publicar
+  \item recalcular: queda de 8,33\%; bloquear ou corrigir resposta e registrar divergência
+\end{enumerate}
+
+% origem: AED-C12-O07
+\ItemHeader{5}{Objetiva}{Garantir saída estruturada}{Gráfico sugerido pelo Llama}
+\TextoBase
+O modelo deve sugerir tipo de gráfico, campos e justificativa. Em testes, produz nomes de colunas inexistentes e ocasionalmente inclui código. A interface espera um objeto estruturado.
+A especificação do gráfico será consumida por componente separado, exigindo campos permitidos, tipos verificáveis e rejeição de propriedades inesperadas.
+\FonteDidatica
+\Comando O fluxo de validação deve
+\begin{enumerate}[label=\Alph*)]
+  \item inserir todas as colunas do DataFrame no prompt até o modelo parar de errar.
+  \item validar esquema, lista permitida de gráficos, existência e tipos das colunas; rejeitar ou reparar de modo controlado antes de renderizar.
+  \item remover justificativa e validação para diminuir tokens.
+  \item extrair nomes por expressão regular e executar eventual código junto da visualização.
+  \item aceitar qualquer JSON sintaticamente válido e renderizar os campos recebidos.
+\end{enumerate}
+
+% origem: AED-C11-O03
+\ItemHeader{6}{Objetiva}{Distinguir modelo semântico de visualização}{Dois totais para a mesma receita}
+\TextoBase
+No piloto, Looker com Gemini consulta uma medida certificada que exclui cancelamentos e usa câmbio do fechamento. Um app Streamlit soma a coluna bruta e usa câmbio do dia. Ambos desenham gráficos corretos para seus respectivos resultados, mas os totais divergem.
+A divergência afetará o fechamento financeiro, por isso uma mudança apenas visual não resolve o desacordo entre contratos de cálculo.
+\FonteDidatica
+\Comando O diagnóstico e a primeira correção adequados são
+\begin{enumerate}[label=\Alph*)]
+  \item alinhar definição, grão, filtros e regra cambial em uma camada semântica versionada antes de comparar interfaces.
+  \item aumentar o modelo de linguagem para que escolha o total mais plausível.
+  \item calcular a média dos dois totais e publicá-la como conciliação.
+  \item manter ambos os números, pois ferramentas diferentes necessariamente produzem verdades diferentes.
+  \item atribuir a divergência ao tipo de gráfico e padronizar as cores.
+\end{enumerate}
+
+% origem: AED-C10-O01
+\ItemHeader{7}{Objetiva}{semântica}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A métrica ``receita líquida'' possui contrato oficial que exclui cancelamentos e impostos, com vigência e responsável. O usuário não conhece a fórmula e pede apenas ``receita''. O agente precisa resolver a intenção pela camada semântica, não inventar cálculo a partir de nomes de colunas. O catálogo registra ainda moeda, data de competência e dimensão de canal permitida. Como o relatório será comparado ao fechamento financeiro, uma soma sintaticamente válida sobre coluna homônima seria rejeitada mesmo que produzisse um número plausível. O pedido abrange apenas lojas ativas no Nordeste e o segundo trimestre; esses filtros também pertencem ao plano semântico e devem aparecer na explicação. Antes da execução, o agente precisa mostrar qual métrica governada, quais dimensões e qual janela temporal resolveu, permitindo que o analista confirme a interpretação.
+
+Essa confirmação deve ocorrer antes do fechamento financeiro.
+
+\FonteDidatica
+
+\Comando Para responder sem criar uma definição paralela de receita, o agente deve
+
+\begin{enumerate}[label=\Alph*)]
+  \item duplicar definição em cada prompt
+  \item usar a maior medida
+  \item pedir ao LLM que invente a fórmula
+  \item resolver a expressão pela métrica governada, não pela soma inferida de uma coluna homônima
+  \item somar toda coluna receita
+\end{enumerate}
+
+% origem: AED-C11-D13
+\ItemHeader{8}{Discursiva}{Desenhar arquitetura híbrida}{BI corporativo e Streamlit}
+\TextoBase
+O time quer preservar a camada semântica corporativa, mas precisa de simulação customizada, comentários humanos e documento final assinado. Hoje o app usa credencial administrativa e copia dados para CSV.
+O documento assinado gera efeito administrativo, de modo que cada transição de estado deve conservar autor, horário e evidência consultada.
+\FonteDidatica
+\Comando Desenhe uma arquitetura corrigida, incluindo identidade do usuário, consulta governada, política por linha, serviço de simulação, estado de revisão, evidências, assinatura, logs minimizados e critérios de teste e rollback.
+\EspacoDiscursiva
+
+\end{document}

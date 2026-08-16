@@ -1,0 +1,118 @@
+\section{Capítulo 2 --- Estatística descritiva desde o início}
+
+\subsection{Questões objetivas}
+\ItemHeader{1}{Objetiva}{Distinguir população, amostra e unidade}{Pesquisa acadêmica}
+\TextoBase Uma instituição que reorganizará os horários quer descrever o tempo de deslocamento dos 1.200 estudantes ativos em 2026.2. A equipe sorteia 150 matrículas de todos os turnos e registra uma resposta válida por estudante. O relatório deverá explicitar sobre quem pretende concluir, quem foi efetivamente observado e qual unidade cada linha representa.
+\FonteDidatica
+\Comando Nesse desenho,
+\begin{enumerate}[label=\Alph*)]\item população e amostra possuem 150 estudantes.\item população tem 1.200, amostra 150 e unidade é o estudante ativo selecionado.\item população é o conjunto de tempos e unidade é a instituição.\item amostra tem 1.200 e população 150.\item unidade é cada minuto possível de deslocamento.\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Classificar variáveis e operações válidas}{Dicionário acadêmico}
+\TextoBase Ao preparar um painel de permanência, uma analista recebe o dicionário resumido no Quadro 1. Embora o sistema permita codificar qualquer campo com números, a equipe precisa escolher operações estatísticas que preservem o significado de cada variável.
+\begin{DocumentBox}[Quadro 1 --- dicionário acadêmico]
+\begin{tabularx}{\textwidth}{@{}YY@{}}\toprule
+\textbf{Campo} & \textbf{Valores ou unidade observada}\\\midrule
+curso & SI, ADS, Administração\\
+satisfação & baixa, média, alta\\
+número de faltas & contagem de ocorrências\\
+tempo de deslocamento & minutos, com medição contínua\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+\FonteDidatica
+\Comando A classificação correta é
+\begin{enumerate}[label=\Alph*)]\item curso ordinal; satisfação nominal; faltas contínua; tempo discreta.\item curso nominal; satisfação ordinal; faltas discreta; tempo contínua.\item curso discreto; satisfação contínua; faltas nominal; tempo ordinal.\item todas quantitativas, pois podem receber códigos.\item todas nominais, pois foram armazenadas como texto.\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Calcular frequências}{Preferência de ferramenta}
+\TextoBase Para dimensionar uma oficina, a coordenação perguntou a 20 estudantes qual ambiente usariam prioritariamente na análise: 8 escolheram planilha, 7 uma plataforma de BI e 5 Python. Cada estudante indicou apenas uma opção, de modo que as categorias são mutuamente exclusivas e as frequências devem reconciliar o total respondente.
+\FonteDidatica
+\Comando A frequência relativa de BI e a conferência do total são
+\begin{enumerate}[label=\Alph*)]\item $7/20=35\%$ e $8+7+5=20$.\item $7/8=87{,}5\%$ e $8+7=15$.\item $20/7\approx285{,}7\%$ e total 20.\item $7/5=140\%$ e total 13.\item $5/20=25\%$ e total 12.\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Comparar média e mediana}{Tempos de conclusão}
+\TextoBase Em um piloto com oito estudantes, os tempos para concluir uma atividade foram os apresentados no Quadro 2. O registro de 56 minutos foi conferido e é legítimo: houve uma interrupção, mas a tentativa pertence ao público analisado. A equipe quer comparar o centro por repartição do total com o centro por posição, sem excluir o caso silenciosamente.
+\begin{DocumentBox}[Quadro 2 --- tempos em minutos]
+\centering\begin{tabular}{@{}rrrrrrrr@{}}\toprule
+18 & 20 & 20 & 22 & 25 & 25 & 30 & 56\\\bottomrule
+\end{tabular}
+\end{DocumentBox}
+\FonteDidatica
+\Comando A média e a mediana são, respectivamente,
+\begin{enumerate}[label=\Alph*)]\item 23,5 e 27.\item 27 e 23,5.\item 24 e 25.\item 27 e 25.\item 216 e 23,5.\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Aplicar média ponderada}{Notas com pesos}
+\TextoBase O plano de avaliação atribui peso 2 a uma atividade prática e peso 8 à prova da unidade. Um estudante obteve, respectivamente, notas 9 e 6. O sistema precisa consolidar a nota respeitando a contribuição definida para cada componente, e não tratar as duas observações como igualmente representativas.
+\FonteDidatica
+\Comando A média que respeita os pesos é
+\begin{enumerate}[label=\Alph*)]\item $(9+6)/2=7{,}5$.\item $(2\times9+8\times6)/10=6{,}6$.\item $(2+8)/(9+6)=0{,}67$.\item $(9+6)/10=1{,}5$.\item $(8\times9+2\times6)/10=8{,}4$.\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Calcular quartis e IQR}{Distribuição ordenada}
+\TextoBase Para resumir oito tempos já ordenados, $2,4,5,7,8,10,12,14$, a equipe declarou previamente a convenção de calcular a mediana geral e as medianas das metades de mesmo tamanho. O objetivo é obter os três quartis e a largura ocupada pela metade central, mantendo a mesma convenção em todo o relatório.
+\FonteDidatica
+\Comando Os valores $Q_1$, $Q_2$, $Q_3$ e IQR são
+\begin{enumerate}[label=\Alph*)]\item 4,5; 7,5; 11; 6,5.\item 4; 7; 10; 6.\item 5; 8; 12; 7.\item 4,5; 8; 11; 7,5.\item 2; 7,5; 14; 12.\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Distinguir variância populacional e amostral}{Equipamentos}
+\TextoBase Um laboratório registrou as idades $2,4,4,6$ anos de quatro equipamentos. A média é 4 e a soma dos desvios quadráticos é 8. Em um relatório, os quatro equipamentos constituem toda a sala; em outro, são tratados como amostra de equipamentos da rede. A escolha do divisor deve acompanhar essas duas finalidades.
+\FonteDidatica
+\Comando Se forem população e, alternativamente, amostra, as variâncias são
+\begin{enumerate}[label=\Alph*)]\item $8/4=2$ e $8/3\approx2{,}67$.\item $8/3$ e $8/4$, porque amostras usam divisor maior.\item $8/2=4$ em ambos os casos.\item $\sqrt8$ e $\sqrt3$.\item 0 e 8, porque os desvios somam zero.\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Interpretar desvio-padrão e CV}{Comparação de processos}
+\TextoBase Dois serviços executam tarefas de escalas diferentes. O processo A tem tempo médio de 50 ms e desvio-padrão de 5 ms; B tem média de 10 ms e desvio de 2 ms. A gestão quer distinguir qual apresenta maior oscilação na unidade original e qual varia mais em relação ao próprio centro; ambas as médias são positivas e possuem zero significativo.
+\FonteDidatica
+\Comando Os coeficientes de variação e a leitura relativa são
+\begin{enumerate}[label=\Alph*)]\item A 10\%, B 20\%; B é relativamente mais variável.\item A 5\%, B 2\%; A é relativamente mais variável.\item A 100\%, B 200\%; ambos instáveis.\item A 10\%, B 5\%; A é relativamente mais variável.\item A 45\%, B 8\%; não podem ser comparados.\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Interpretar moda e centro}{Distribuição de canais}
+\TextoBase Em uma pesquisa de dispositivo preferencial, celular aparece 12 vezes, notebook 12, tablet 4 e desktop 2. As categorias são nominais, cada respondente escolheu uma, e a equipe deseja informar a maior repetição sem inventar uma ordem ou calcular média de códigos atribuídos aos dispositivos.
+\FonteDidatica
+\Comando A descrição adequada é
+\begin{enumerate}[label=\Alph*)]\item amodal, pois duas categorias empatam.\item bimodal, com celular e notebook; média dos códigos não tem interpretação.\item unimodal, com tablet por ser a categoria intermediária.\item mediana celular, independentemente da ordem adotada.\item média notebook, pois possui maior capacidade computacional.\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Calcular cercas e ler boxplot}{Tempos com extremo}
+\TextoBase Um conjunto de tempos foi conferido na fonte. Pela convenção declarada, $Q_1=20$, $Q_3=27{,}5$, o menor valor é 18, o maior valor ainda dentro da região central ampliada é 30 e existe uma observação 56. A equipe usará as cercas de Tukey apenas como sinalizador exploratório, não como ordem automática de exclusão.
+\FonteDidatica
+\Comando Pelo critério $1{,}5\,IQR$, a leitura é
+\begin{enumerate}[label=\Alph*)]\item $IQR=7{,}5$, cercas 8,75 e 38,75; 56 é sinalizado, não automaticamente excluído.\item $IQR=47{,}5$, cercas $-51{,}25$ e 98,75; nada é sinalizado.\item $IQR=23{,}5$, cerca superior 56; 56 deve ser apagado.\item $IQR=7{,}5$, cercas 12,5 e 35; 30 é extremo.\item $IQR=38$, cercas 18 e 56; o boxplot usa apenas amplitude.\end{enumerate}
+
+\subsection{Questões discursivas}
+\ItemHeader{11}{Discursiva}{Diagnosticar amostragem}{Pesquisa de deslocamento}
+\TextoBase Para estimar o deslocamento dos 1.200 estudantes ativos, foram usados os 150 primeiros que responderam a um formulário enviado às 8h por um canal mais acessado pelo turno da manhã. A instituição pretende usar o resultado para reorganizar horários de todos os turnos, embora estudantes com jornadas longas possam responder mais tarde ou não responder.
+\FonteDidatica
+\Comando Identifique população, amostra e unidade; explique dois vieses plausíveis; proponha seleção melhor e duas informações para avaliar representatividade.
+
+\ItemHeader{12}{Discursiva}{Calcular posição e dispersão}{Tempos de suporte}
+\TextoBase Os tempos $4,5,5,6,6,7,7,20$ minutos representam toda a equipe de um turno comparável. O valor 20 foi confirmado como atendimento real e não erro de digitação. A gerência quer um resumo que mostre centro, repetição, metade central, extensão total e sinalização do caso afastado antes de investigar a causa operacional.
+\FonteDidatica
+\Comando Calcule média, mediana, moda, $Q_1$, $Q_3$, IQR, cercas e amplitude. Compare centro e dispersão e indique a investigação sugerida pelo resultado.
+
+\ItemHeader{13}{Discursiva}{Explicar o divisor amostral}{Amostra de equipamentos}
+\TextoBase Uma equipe calculou os desvios dos valores $2,4,4,6$ em torno da média 4 e encontrou soma quadrática 8. Parte do relatório descreve exatamente essas quatro unidades; outra parte pretende usar as quatro como amostra de uma população maior. Os analistas discutem dividir por 4 ou por 3 e precisam justificar a escolha, não apenas citar uma regra.
+\FonteDidatica
+\Comando Explique quando cada divisor é apropriado, mostre os dois resultados e justifique $n-1$ pela estimação da média e pelo grau de liberdade.
+
+\ItemHeader{14}{Discursiva}{Comparar variabilidade relativa}{Indicadores operacionais}
+\TextoBase Dois processos medidos na mesma família de unidade possuem escalas positivas com zero significativo. A apresenta média 80 e desvio-padrão 8; B, média 20 e desvio 4. A direção quer comparar dispersão absoluta e relativa, evitando concluir apenas pelo maior desvio em unidades.
+\FonteDidatica
+\Comando Calcule os CVs, interprete variabilidade absoluta e relativa e proponha qual medida publicar para cada finalidade.
+
+\ItemHeader{15}{Discursiva}{Construir narrativa estatística}{Notas assimétricas}
+\TextoBase Uma turma de oito estudantes possui notas ordenadas $1,5,6,6,7,7,8,10$. A direção propõe divulgar apenas a média, mas o professor observa repetição no centro e valores afastados nas duas pontas. A síntese será usada para planejar recuperação e, por isso, deve comunicar posição, dispersão, tamanho do grupo e limite de generalização.
+\FonteDidatica
+\Comando Calcule ao menos média, mediana, modas, quartis e IQR; redija uma síntese que preserve forma, extremos, $n$ e limite da interpretação.
+
+\newpage\subsection{Respostas explicadas das questões pares}
+\paragraph{Questão 2 — resposta B.} Curso é qualitativa nominal: somar códigos de curso ou calcular sua média não produz uma quantidade. Satisfação é qualitativa ordinal porque baixa, média e alta possuem ordem, mas as distâncias não foram medidas como iguais. Faltas são quantitativas discretas, pois resultam de contagem; tempo é quantitativa contínua, ainda que o instrumento o arredonde para minutos inteiros. O tipo estatístico vem do significado, não do formato da coluna.
+\[\text{nominal}\ ;\ \text{ordinal}\ ;\ \text{discreta}\ ;\ \text{contínua}\]
+
+\paragraph{Questão 4 — resposta B.} Primeiro somamos os oito tempos: $18+20+20+22+25+25+30+56=216$. A média reparte esse total: $\bar x=216/8=27$ minutos. Para a mediana, os dados já estão ordenados e $n=8$ é par; usamos as posições $n/2=4$ e $n/2+1=5$: $\widetilde x=(22+25)/2=23{,}5$ minutos. O valor 56 participa integralmente da média e desloca o total, mas não muda quais observações ocupam as duas posições centrais.
+
+\paragraph{Questão 6 — resposta A.} Pela convenção declarada, a mediana geral usa o quarto e o quinto valores: $Q_2=(7+8)/2=7{,}5$. A metade inferior é $\{2,4,5,7\}$, então $Q_1=(4+5)/2=4{,}5$. A metade superior é $\{8,10,12,14\}$, logo $Q_3=(10+12)/2=11$. Finalmente, $IQR=Q_3-Q_1=11-4{,}5=6{,}5$. Outra convenção pode variar em amostras pequenas, por isso o método precisa acompanhar o resultado.
+
+\paragraph{Questão 8 — resposta A.} O coeficiente de variação divide o desvio pelo centro. Para A, $CV_A=(5/50)\times100\%=10\%$. Para B, $CV_B=(2/10)\times100\%=20\%$. A possui maior dispersão absoluta, pois $5$ ms supera $2$ ms; B possui maior dispersão relativa, pois seu desvio representa um quinto da média. O CV faz sentido porque as médias são positivas e o zero da escala representa ausência de tempo.
+
+\paragraph{Questão 10 — resposta A.} Calculamos $IQR=Q_3-Q_1=27{,}5-20=7{,}5$. Então $1{,}5\times IQR=11{,}25$. A cerca inferior é $LI=20-11{,}25=8{,}75$ e a superior $LS=27{,}5+11{,}25=38{,}75$. O valor 56 ultrapassa a cerca superior e será desenhado separadamente; isso o sinaliza para investigação, mas não demonstra erro nem autoriza exclusão automática.
+
+\paragraph{Questão 12 — cálculo e critérios.} A soma é $4+5+5+6+6+7+7+20=60$, portanto a média populacional é $60/8=7{,}5$. As posições centrais são 6 e 6, logo mediana 6; as maiores frequências pertencem a 5, 6 e 7. Pela convenção das medianas das metades, $Q_1=(5+5)/2=5$ e $Q_3=(7+7)/2=7$, de modo que $IQR=2$. As cercas são $5-3=2$ e $7+3=10$; a amplitude é $20-4=16$. O valor 20 explica por que a média supera a mediana e por que a amplitude é grande; deve ser investigado no processo.
+
+\paragraph{Questão 14 — cálculo e critérios.} Para A, $CV_A=(8/80)\times100\%=10\%$. Para B, $CV_B=(4/20)\times100\%=20\%$. Em unidades, A tem maior DP ($8>4$); relativamente ao centro, B varia mais. Um relatório operacional deve publicar média e DP para preservar unidade e pode acrescentar CV quando comparar escalas de razão positivas. CV não seria adequado se a média estivesse perto de zero ou se o zero fosse apenas convencional.

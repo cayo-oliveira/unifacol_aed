@@ -1,0 +1,237 @@
+\chapter[Cor, acessibilidade e layout]{Cor, acessibilidade e layout: quando o espaço também argumenta}
+
+\section{O alerta estava no painel, mas ninguém o viu}
+
+Às 8h15 de uma segunda-feira, a coordenação de uma rede de clínicas abriu o painel de atendimento e encontrou vinte e quatro cartões, seis gráficos, quatro filtros e uma tabela com rolagem. Tudo parecia profissional: fundo escuro, números coloridos, sombras, ícones e animações. Às 10h30, porém, uma unidade já acumulava pacientes esperando mais de duas horas. O indicador estava na tela desde cedo, em um cartão vermelho no canto inferior direito. Mesmo correto, ele não orientou a decisão porque disputava atenção com outros cinco cartões igualmente vermelhos, três títulos enormes e uma fotografia decorativa. O problema não foi ausência de dado; foi ausência de hierarquia.
+
+Esse caso mostra por que cor e espaço fazem parte do argumento analítico. Um dashboard não é uma prateleira neutra onde se depositam gráficos. A posição de um elemento sugere prioridade; sua proximidade sugere relação; seu tamanho sugere importância; a cor promete uma classificação; o espaço em branco separa ou conecta ideias. Quando essas pistas contradizem a pergunta, o leitor precisa reconstruir sozinho a estrutura. Sob pressão, ele tende a olhar o que parece mais saliente, não necessariamente o que possui maior consequência operacional.
+
+Nos capítulos anteriores, construímos a cadeia pergunta, dado, medida e gráfico. Agora acrescentamos uma camada: como organizar sinais para que a comparação necessária seja encontrada, compreendida e verificada. O objetivo não é ensinar uma receita de beleza. É tratar o design como uma hipótese sobre atenção. Se acreditamos que o risco de espera deve ser percebido primeiro, a composição precisa tornar esse percurso provável sem esconder contexto nem transformar uma diferença pequena em emergência visual.
+
+Ao final do encontro, você deverá distinguir paletas categóricas, sequenciais e divergentes; aplicar redundância além da cor; verificar contraste; usar proximidade, similaridade, continuidade e região comum com responsabilidade; ordenar conteúdo por hierarquia; desenhar uma grade; reduzir carga cognitiva; documentar filtros e estados de interação; e submeter um painel aos testes do relance e da auditoria. Cada decisão será ligada a uma pergunta concreta, porque ``gostei desta cor'' não constitui justificativa analítica.
+
+Nosso caso usa cinco métricas: pacientes aguardando, espera mediana, percentil 90 da espera, ocupação das salas e abandono de fila. Às 8h, os valores gerais parecem controlados, mas a unidade Norte tem P90 de 128 minutos contra meta de 60, enquanto a mediana de toda a rede permanece em 43. O painel original põe a mediana global no maior cartão e relega a cauda local ao rodapé. O redesenho precisará conservar ambos: a síntese global evita alarmismo, e a exceção local evita complacência.
+
+O percurso de três horas alterna leitura, cálculo, comparação e redesign. Primeiro, analisamos por que o painel original falha; depois, entendemos cor, contraste, acessibilidade e princípios perceptivos; em seguida, organizamos grade, zonas, tipografia e interação; por fim, reconstruímos o painel e o avaliamos. A chamada ocorre às 20h30 e a aula continua até 22h. O livro oferece matéria para acompanhar o encontro e também para refazer o raciocínio depois, sem depender de uma ferramenta específica.
+
+\begin{SummaryBox}
+\textbf{Ideia central.} Um valor pode estar visível em termos técnicos e continuar invisível para a decisão. Cor, posição, tamanho, proximidade e espaço precisam trabalhar juntos para indicar o que observar, como comparar e onde conferir o contexto.
+\end{SummaryBox}
+
+\section{Cor é um canal de dados, não uma camada de maquiagem}
+
+Cor pode codificar categoria, ordem, desvio ou destaque. Essas funções são diferentes. Quando cada unidade da clínica recebe uma identidade sem ordem --- Norte, Sul, Centro e Oeste ---, usamos uma paleta categórica com matizes distinguíveis. Quando representamos espera de 20 a 140 minutos, usamos uma paleta sequencial cuja luminosidade progride. Quando mostramos distância em relação à meta, valores abaixo e acima de zero pedem uma paleta divergente com centro substantivo. Escolher a família errada cria uma gramática visual incoerente antes mesmo de escolher os tons.
+
+Uma paleta categórica não deve insinuar grandeza. Se Norte aparece em azul muito escuro e Sul em amarelo claro, o leitor pode atribuir importância ou intensidade a uma distinção nominal. Para poucas categorias, diferenças moderadas de matiz funcionam; para muitas, legenda, rótulo direto, pequenos múltiplos ou agrupamento podem ser superiores. Aumentar indefinidamente o número de cores não aumenta a informação decodificável. Em vez de memorizar doze correspondências entre legenda e gráfico, o leitor precisa de uma estrutura que reduza a busca.
+
+Uma paleta sequencial comunica ordem principalmente pela luminosidade. No mapa de calor da espera por unidade e hora, tons claros podem indicar valores menores e tons escuros, maiores. Os limites da escala devem ser estáveis quando se comparam telas. Se cada filtro recalcula automaticamente mínimo e máximo, 70 minutos podem parecer o extremo em uma seleção e valor intermediário em outra. O painel precisa declarar se a escala é fixa ou local; sem isso, a mesma cor deixa de ter significado estável.
+
+A paleta divergente só faz sentido quando há um centro que muda a interpretação. Defina $d=x-m$, em que $x$ é o valor observado e $m$ é a meta. Para a unidade Norte, $d=128-60=68$ minutos; para a unidade Sul, com P90 de 54, $d=-6$. Um lado da paleta representa desempenho abaixo da referência e o outro, acima. Centrar a escala na média do conjunto apenas porque a ferramenta oferece essa opção seria arbitrário: a média muda com os filtros, enquanto a meta mantém o significado operacional.
+
+Destaque é outra tarefa. Para chamar atenção ao P90 da unidade Norte, não precisamos atribuir uma cor intensa a cada unidade. Podemos desenhar todas em cinza e usar um único laranja no ponto que exige investigação. O contraste relativo produz saliência. Se tudo recebe saturação alta, nada estabelece prioridade. Isso também explica por que um painel cheio de cartões verdes é ruim: a cor ocupa atenção para dizer repetidamente que não há exceção e reduz a capacidade de perceber quando uma exceção real aparece.
+
+A semântica cultural merece cuidado. Vermelho costuma indicar risco e verde, condição favorável, mas essa associação não é universal nem suficiente. Em finanças, vermelho pode ter convenções diferentes conforme o país; em saúde, uma mudança de cor não substitui o rótulo de criticidade. Além disso, uma taxa ``abaixo da meta'' pode ser boa para espera e ruim para cobertura. A legenda deve nomear o fenômeno, não depender de uma moral cromática fixa. Cores corporativas podem identificar a organização, mas não devem deformar a escala analítica.
+
+Por fim, uma paleta deve sobreviver ao contexto real: projetor descalibrado, notebook com brilho baixo, impressão em cinza, captura comprimida e visão de cores diversa. O arquivo perfeito no monitor do analista não é o produto final. Testar variantes faz parte da análise, assim como conferir uma agregação. A ferramenta pode sugerir uma paleta; a aprovação exige verificar tipo da variável, número de classes, ordem, centro, contraste, consistência e significado.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{p{2.7cm}Y Y}
+\toprule
+Função & Pergunta representada & Decisão de cor \\
+\midrule
+Categórica & Qual grupo é este? & Matizes distinguíveis, sem ordem implícita \\
+Sequencial & Quanto há, do menor ao maior? & Luminosidade ordenada e escala declarada \\
+Divergente & Quanto e em que direção se afasta da referência? & Dois sentidos e centro do domínio \\
+Destaque & Onde devo olhar primeiro? & Base neutra e uma ênfase justificada \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Contraste e acessibilidade são requisitos de qualidade}
+
+Acessibilidade começa pela recusa de usar cor como único portador de significado. Se a série Norte é vermelha e a Sul é verde, o leitor precisa de outro sinal: rótulo direto, forma de marcador, padrão de linha ou texto que nomeie a exceção. A WCAG 2.2 formaliza esse princípio para conteúdo digital. No dashboard, a aplicação é direta: estado crítico pode combinar cor, palavra ``crítico'', ícone identificável e posição na lista; a perda de um canal não elimina a informação.
+
+Contraste é uma relação entre luminosidades, não uma impressão subjetiva de que duas cores ``parecem diferentes''. Para texto e fundo, a razão é calculada por $C=(L_1+0{,}05)/(L_2+0{,}05)$, com $L_1$ sendo a luminância relativa mais clara e $L_2$ a mais escura. Se $L_1=1$ para branco e $L_2=0$ para preto, $C=1{,}05/0{,}05=21:1$. Valores hexadecimais precisam ser convertidos para RGB linear antes do cálculo completo; por isso, validadores confiáveis são melhores do que estimar visualmente.
+
+Como referência prática de nível AA, texto normal requer contraste de pelo menos 4,5:1 e texto grande, 3:1, conforme os critérios aplicáveis da WCAG 2.2. Componentes de interface e elementos gráficos necessários à compreensão também precisam de contraste suficiente em relação às cores adjacentes. Esses números são piso de conformidade, não garantia de leitura confortável. Fonte fina, tamanho reduzido, reflexo, distância de projeção e baixa resolução podem exigir escolhas mais fortes.
+
+Daltonismo não significa enxergar o mundo em preto e branco. Diferentes deficiências alteram de maneira distinta a separação entre matizes, com dificuldades frequentes em pares vermelho--verde ou azul--amarelo. O design robusto não tenta adivinhar um único perfil. Ele introduz redundância e testa simulações. Em uma linha temporal, podemos usar azul contínuo com círculos para o realizado e laranja tracejado com triângulos para a meta. Mesmo sem matiz, estilo, forma e rótulo conservam a distinção.
+
+Texto alternativo para um gráfico não deve repetir ``gráfico de linhas''. Ele precisa explicar propósito, eixos, período, padrão principal, exceção e limite. Para o caso clínico: ``P90 da espera por unidade entre 7h e 11h; Norte sobe de 61 para 128 minutos após 8h, enquanto as demais permanecem abaixo de 70; registros não incluem pacientes transferidos.'' Essa descrição permite compreender a mensagem e alerta sobre a população observada. Quando valores exatos importam, uma tabela acessível deve acompanhar a visualização.
+
+A ordem de foco e o uso por teclado também pertencem ao dashboard. Um usuário que navega sem mouse precisa alcançar filtros, gráficos e detalhes em sequência lógica, perceber onde está o foco e retornar ao estado inicial. Tooltips exclusivos ao passar o ponteiro são frágeis: falham em telas sensíveis ao toque, teclado, exportação e leitores de tela. Informações decisivas devem estar presentes no texto ou ser acessíveis por interação equivalente, não escondidas em um gesto específico.
+
+O teste de acessibilidade deve ocorrer antes da publicação e depois de mudanças de tema. Converta a tela para escala de cinza; use um simulador de visão de cores; meça contrastes; amplie para 200\%; navegue por teclado; confira a ordem de leitura; exporte para PDF; verifique se filtros e período permanecem registrados. Acessibilidade não é revisão cosmética posterior. Ela expõe dependências frágeis e normalmente melhora o painel para todos, especialmente em situações de pressa, cansaço ou baixa qualidade de exibição.
+
+\begin{GuidedBox}
+\textbf{Aluno, preste atenção aqui, porque esta parte é importante.} ``Consigo distinguir as cores'' não testa acessibilidade. O teste correto pergunta se a informação permanece compreensível quando a cor, o mouse, a tela grande ou a visão perfeita não estão disponíveis.
+\end{GuidedBox}
+
+\section{Gestalt: como o leitor transforma objetos em estrutura}
+
+O leitor não percebe cada objeto isoladamente e só depois monta o painel como um quebra-cabeça consciente. A percepção agrupa elementos rapidamente por proximidade, similaridade, continuidade, fechamento e região comum. Esses princípios, frequentemente associados à Gestalt, não são mandamentos decorativos; descrevem tendências de organização. O analista pode usá-las para aproximar o que compartilha significado e separar o que possui população, período ou função diferente.
+
+Proximidade é a relação mais econômica. Se o cartão ``P90: 128 min'' está próximo do subtítulo ``Unidade Norte, hoje, 7h--11h'', o leitor os interpreta como conjunto. Se a meta de 60 minutos aparece distante, junto a outra seção, a comparação exige memória. O espaço entre blocos deve ser maior que o espaço dentro do bloco. Essa diferença precisa ser consistente: um intervalo aleatório pode unir filtros ao gráfico errado ou sugerir que notas metodológicas pertencem somente ao último painel.
+
+Similaridade agrupa por aparência. Cartões com mesma forma, tipografia e fundo parecem ter o mesmo papel. No painel original, vinte e quatro cartões idênticos sugerem igual prioridade, embora alguns sejam indicadores de resultado, outros de capacidade e outros apenas contagens auxiliares. Podemos criar famílias visuais discretas, mas o significado não deve depender apenas de cor. Um título de grupo, posição e espaçamento reforçam a categoria. Similaridade sem semântica produz uniformidade; similaridade bem usada reduz reaprendizado.
+
+Continuidade guia o olhar por alinhamentos e trajetórias. Em uma série temporal, a linha favorece acompanhar o mesmo indicador. Em um dashboard, bordas alinhadas e colunas coerentes criam percursos previsíveis. Um cartão deslocado alguns pixels pode parecer descuido ou destaque acidental. Mais grave é alinhar visualmente métricas que não compartilham escala ou população, sugerindo comparação inválida. O alinhamento deve expressar uma relação legítima, não apenas preencher espaço.
+
+Região comum agrupa elementos colocados dentro do mesmo contêiner, painel sombreado ou moldura. É um sinal forte: dois gráficos em uma caixa intitulada ``Capacidade'' parecem responder à mesma questão. Por isso, contêineres demais criam uma hierarquia de caixas dentro de caixas e aumentam ruído. Uma mudança suave de fundo ou um título com espaço adequado pode bastar. A borda só deve existir quando ajuda a compreender pertencimento ou estado interativo.
+
+Fechamento explica por que o leitor completa formas e fronteiras ausentes. Em design, isso permite reduzir linhas de grade e bordas sem perder organização. Uma tabela não precisa de traço em cada célula quando alinhamento e espaçamento já separam linhas e colunas. Remover tinta não informativa favorece os dados, mas minimalismo cego também pode apagar referências necessárias. Linhas leves de eixo, meta e seção continuam quando sustentam comparação ou orientação.
+
+Os princípios podem entrar em conflito. Aproximar dois gráficos para mostrar relação pode diminuir o espaço necessário aos rótulos; usar a mesma cor para indicar pertencimento pode enfraquecer a distinção de estados; cercar todos os blocos cria regiões comuns concorrentes. A saída é retornar à tarefa: o leitor precisa primeiro identificar a exceção, depois comparar com a meta e, por fim, investigar turno e unidade. A composição é avaliada pelo percurso, não pelo número de princípios aplicados.
+
+\section{Hierarquia visual: decidir o que será percebido primeiro}
+
+Hierarquia visual é uma ordem provável de atenção. Tamanho, posição, contraste, peso tipográfico, espaço e conteúdo trabalham juntos para dizer ``comece aqui'', ``compare isto'' e ``consulte aquilo se precisar''. Ela não deve substituir a hierarquia analítica. Se a métrica mais importante recebe o maior cartão apenas por tradição, mas a decisão depende de uma distribuição por unidade, o layout promove um resumo que esconde o problema.
+
+No caso das clínicas, a pergunta é ``onde a espera extrema requer intervenção agora?''. A primeira camada deve mostrar estado e exceção: P90 por unidade comparado à meta, com Norte destacado e horário de atualização. A segunda explica composição: evolução por hora, pacientes na fila e ocupação. A terceira permite auditoria: definição, amostra, filtros, fonte e lista detalhada. Essa ordem transforma a tela em caminho de investigação, sem afirmar que uma única métrica contém toda a decisão.
+
+Tamanho precisa ser parcimonioso. Um número de 48 pontos chama atenção, mas não informa importância por si só. Se seis KPIs recebem o mesmo tamanho, o leitor percorre todos; se um valor global enorme ocupa metade da tela, detalhes críticos parecem secundários. A diferença entre níveis deve ser perceptível sem virar espetáculo. Título da pergunta, evidência principal, comparadores e metadados formam uma escala tipográfica pequena e consistente.
+
+Posição costuma ter força maior que decoração. Em contextos de leitura ocidental, o topo e a esquerda frequentemente recebem atenção cedo, embora dispositivo, idioma e hábito possam alterar o percurso. A regra prática não é ``sempre ponha o KPI no canto superior esquerdo'', mas colocar a pergunta e o estado no começo do fluxo escolhido. Em tela estreita, a ordem vertical se torna decisiva; um layout responsivo não pode empurrar o alerta para depois de vinte cartões.
+
+Contraste orienta, mas também pode manipular. Um vermelho saturado faz uma variação parecer urgente. Antes de aplicá-lo, precisamos definir limiares: normal até 60 minutos, atenção entre 61 e 90, crítico acima de 90, por exemplo. Esses limites devem vir de política ou impacto, não de quantis automáticos que sempre pintam algum grupo como pior. O painel precisa revelar a regra; caso contrário, a cor produz emoção sem critério auditável.
+
+Rótulos e títulos são componentes da hierarquia. ``Tempo de espera'' apenas identifica assunto. ``Unidade Norte supera em 68 min a meta do P90'' expressa a comparação principal, preservando valor e referência. O título não deve inventar causa; ``falta de equipe provoca espera'' seria inadequado sem análise causal. Subtítulos registram unidade, período e filtros. Uma nota discreta explica limitações. Cada camada textual responde a uma necessidade diferente.
+
+Hierarquia madura também permite silêncio. O espaço em branco não é área desperdiçada; ele separa grupos e dá repouso à atenção. Remover logotipo repetido, borda, sombra, ícone e legenda redundante abre espaço para rótulos úteis e torna o destaque raro novamente. O painel não precisa demonstrar quanto a ferramenta consegue desenhar. Precisa permitir que o leitor encontre a evidência certa, entenda sua escala e saiba qual pergunta investigar em seguida.
+
+\begin{SummaryBox}
+\textbf{Então, aluno, veja só o que você aprendeu aqui.} Hierarquia não é fazer tudo importante parecer grande. É escolher uma ordem de leitura coerente com a decisão e reservar destaque para diferenças que possuem critério explícito.
+\end{SummaryBox}
+
+\section{Carga cognitiva e contexto}
+
+Todo dashboard exige memória de trabalho. O leitor precisa lembrar a pergunta, interpretar escalas, relacionar legenda e marcas, comparar valores e conservar filtros. Parte desse esforço é intrínseca ao problema: avaliar capacidade clínica realmente exige várias medidas. Outra parte é imposta pelo design: legendas distantes, siglas não definidas, escalas diferentes, cores decorativas e informação duplicada. O objetivo é reduzir o esforço desnecessário sem eliminar complexidade relevante.
+
+Considere três linhas coloridas e uma legenda no rodapé. Para identificar a unidade Norte, o leitor olha a linha, memoriza a cor, procura a legenda e retorna ao ponto. Rótulos diretos junto ao final das linhas diminuem esse movimento. Se as linhas se cruzam, o rótulo pode incluir nome e marcador. Essa alteração não simplifica os dados; simplifica a decodificação. O princípio geral é aproximar explicação e objeto sempre que o espaço permitir.
+
+Consistência reduz reaprendizado. Se verde significa ``dentro da meta'' em um cartão e ``unidade Sul'' em outro gráfico, a mesma cor assume papéis incompatíveis. Se percentuais aparecem ora como 0,32 e ora como 32\%, o leitor recalibra. Datas, casas decimais, abreviações, ordem das categorias e posição dos filtros devem obedecer regras comuns. Consistência não é rigidez estética: quando o significado muda, a representação deve mudar de maneira explícita.
+
+Divulgação progressiva organiza profundidade. A tela inicial mostra pergunta, estado, exceção e evidência principal. Selecionar a unidade abre diagnóstico por hora; expandir um painel revela distribuição ou registros. Esse mecanismo reduz congestionamento, mas não pode esconder informação indispensável atrás de interações desconhecidas. Sinais de expansão, foco visível, estado atual e caminho de retorno são necessários. Na exportação estática, o painel precisa conservar uma síntese suficiente.
+
+Quantidade de elementos é uma medida imperfeita de carga. Um gráfico com cinquenta pontos alinhados pode ser fácil de ler; cinco indicadores com unidades, cores e escalas inconsistentes podem ser difíceis. Em vez de perseguir um número mágico de visuais, identifique operações mentais: quantas correspondências de legenda, mudanças de escala, filtros implícitos e comparações cruzadas são exigidas? Remova as que não participam da decisão e agrupe as restantes em uma sequência compreensível.
+
+Animação e atualização automática também consomem atenção. Um cartão que pisca, um mapa que se move e números que recarregam em tempos diferentes podem impedir uma leitura estável. Em monitoramento, atualização é necessária, mas deve registrar horário e evitar movimento decorativo. Mudanças críticas podem gerar alerta com confirmação; mudanças rotineiras não precisam disputar o olhar. Um dashboard de controle é uma interface temporal, e sua estabilidade faz parte da confiança.
+
+Simplificar não significa ocultar denominador, incerteza ou ausência. Retirar essas informações deixa a tela mais limpa e a decisão mais frágil. O desenho adequado usa camadas: valor principal com meta; tamanho da amostra próximo; definição e completude acessíveis; detalhes sob demanda. O leitor obtém uma leitura rápida sem perder a possibilidade de auditoria. Clareza é complexidade organizada, não complexidade apagada.
+
+\section{Grid, zonas e distribuição de um dashboard decisório}
+
+Uma grade é uma estrutura de colunas, linhas, margens e intervalos que alinha elementos. Ela não aparece como dado, mas torna relações previsíveis. Antes de abrir Tableau, Power BI ou Streamlit, desenhe o retângulo da tela e marque uma grade simples. Para desktop, poderíamos usar doze colunas; para um protótipo de aula, quatro já bastam. O número não é sagrado. O importante é que larguras e espaços respondam ao conteúdo e se adaptem a telas menores.
+
+No caso clínico, a primeira zona ocupa a largura total com pergunta, estado da atualização e filtros ativos. A segunda contém a evidência principal: ranking do P90 por unidade em oito colunas e um resumo do impacto em quatro. A terceira oferece diagnóstico temporal e de capacidade em dois painéis equivalentes. A última reúne tabela auditável, definição e limitações. Essa distribuição acompanha contexto, exceção, diagnóstico e verificação, mas o storytelling completo será aprofundado em capítulo próprio.
+
+Cartões de KPI devem responder a uma comparação, não apenas exibir um número. Um cartão completo pode conter valor atual, referência, diferença, direção, período e tamanho da base. Para Norte: ``P90 128 min; meta 60; +68; 7h--11h; n=94''. Se todas essas informações forem esmagadas em letras minúsculas, o cartão falha. Talvez um bullet chart ou ponto contra meta seja mais eficiente. A forma deriva da pergunta e do espaço disponível.
+
+Distribuição espacial precisa considerar proporção. Uma tabela longa exige largura para rótulos; uma série temporal exige extensão horizontal; um gráfico de barras com categorias extensas favorece orientação horizontal. Dar o mesmo quadrado a todos os visuais cria áreas vazias em uns e compressão em outros. O grid coordena, mas não obriga uniformidade. Elementos podem ocupar múltiplas colunas desde que preservem alinhamento e hierarquia.
+
+Filtros precisam de zona reconhecível e escopo explícito. Um filtro de período aplicado a todos os painéis deve aparecer junto ao cabeçalho; um filtro local fica junto ao gráfico. O estado deve ser legível em título dinâmico ou resumo textual, inclusive na exportação. O botão ``limpar filtros'' precisa estar próximo. Um controle escondido em menu economiza espaço, mas aumenta risco de o leitor interpretar um recorte como total.
+
+Responsividade muda ordem e não apenas tamanho. Em celular, dois painéis lado a lado tornam-se empilhados. A ordem do documento deve colocar pergunta e alerta antes do diagnóstico, conservar rótulos e evitar que um gráfico seja reduzido até ilegibilidade. Em projeção, fontes e contraste precisam crescer; em impressão, interação desaparece. Um único desenho raramente atende todos os meios sem adaptação, portanto o destino de uso faz parte do contrato.
+
+O espaço em branco define ritmo. Margem externa protege o conteúdo; intervalo entre zonas separa funções; espaçamento interno relaciona título, gráfico e nota. Usar o mesmo intervalo em todos os níveis apaga hierarquia. Uma escala de espaçamento, por exemplo 4, 8, 16 e 32 unidades, torna relações consistentes. Não precisamos expor esses números ao leitor, mas documentá-los ajuda a equipe a manter o painel quando novos componentes forem incorporados.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{p{2.8cm}Y Y}
+\toprule
+Zona & Pergunta do leitor & Conteúdo essencial \\
+\midrule
+Estado & O que estou vendo agora? & título, atualização, população e filtros \\
+Alerta & Onde está a exceção? & medida principal, meta, diferença e amostra \\
+Diagnóstico & Quando e com que fator coincide? & tendência, distribuição e capacidade \\
+Auditoria & Posso conferir? & definição, fonte, completude e detalhe \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Interação: cada clique muda o argumento}
+
+Filtros, destaques, tooltips, drill-down e parâmetros tornam o painel explorável. Eles também alteram população, período, denominador ou medida. Cada interação é uma transformação analítica e precisa deixar rastros. Quando o usuário seleciona Unidade Norte, o título deve mudar, o número de registros deve aparecer e todos os painéis afetados precisam indicar o mesmo estado. Um gráfico global ao lado de outro filtrado pode ser útil como comparação, mas deve ser rotulado como global.
+
+Filtro reduz linhas; parâmetro modifica lógica. Escolher ``últimos 30 dias'' filtra o período. Alternar de mediana para P90 muda a medida e talvez a pergunta. Tratar ambos como menus equivalentes esconde consequências. Parâmetros devem explicar unidade e definição; filtros devem listar seleção. Valores padrão precisam ser seguros: abrir sempre na última unidade visitada pode expor informação inadequada ou induzir uma leitura local como visão geral.
+
+Drill-down move entre níveis de granularidade, como rede, unidade, turno e atendimento. O caminho deve preservar contexto. Ao chegar ao registro, o leitor precisa saber de qual unidade, período e indicador partiu. Agregar protege privacidade e favorece padrão; desagregar ajuda auditoria, mas amplia risco de identificação. Permissões e supressão de pequenas contagens precisam acompanhar a navegação, não ser adicionadas apenas na tela inicial.
+
+Tooltip é bom para detalhe complementar, não para informação necessária. Ele pode mostrar valor exato, denominador e nota de qualidade, mas a conclusão principal deve existir sem hover. Em dispositivos móveis, o gesto pode ser incerto; em PDF, desaparece; para teclado e leitor de tela, precisa de alternativa. Tooltips extensos também cobrem o gráfico e criam uma pequena janela de leitura. Rótulo direto ou painel lateral selecionável pode funcionar melhor.
+
+Destacar por seleção é diferente de filtrar. O destaque conserva contexto e enfatiza um subconjunto; o filtro remove o restante. Para comparar Norte com a rede, destaque é frequentemente superior, porque o leitor vê ambos. Para investigar somente os registros da Norte, filtro pode ser necessário. O controle precisa nomear a ação. Um clique silencioso que transforma toda a tela em recorte é um erro de interface e de análise.
+
+Estados vazios, carregamento e erro também comunicam. ``Nenhum dado'' pode significar ausência real, filtro incompatível, atraso na atualização ou falha de permissão. Um painel responsável diferencia esses casos. Durante carregamento, não deve exibir valores antigos como atuais sem aviso. Em erro parcial, registra quais blocos estão indisponíveis. A cor vermelha sozinha não explica a situação; texto, horário e ação possível reduzem interpretação errada.
+
+Antes de publicar, percorra estados extremos: nenhum filtro, uma unidade, várias unidades, período curto, período longo, ausência, valor negativo, categoria nova e tela estreita. Capture evidências e confira se títulos, escalas, metas e fontes acompanham a mudança. A interatividade não é um acabamento aplicado ao gráfico; é uma família de versões do argumento. Cada versão precisa continuar compreensível, acessível e auditável.
+
+\section{Redesenho guiado}
+
+Começamos inventariando o painel original. Há vinte e quatro cartões, seis gráficos, quatro filtros, uma tabela e uma fotografia. Para cada componente, registramos pergunta, população, métrica, ação possível e custo de atenção. A fotografia não responde a pergunta alguma e sai. Dez cartões repetem contagens que já aparecem nos gráficos e migram para detalhe. Dois mapas usam localização sem decisão geográfica e são substituídos por ranking. Redesenhar começa retirando funções inexistentes, não escolhendo um tema.
+
+Em seguida, definimos a afirmação operacional com limites: ``Entre 7h e 11h, a unidade Norte apresentou P90 de espera de 128 minutos, 68 acima da meta, em 94 pacientes registrados; a mediana da rede permaneceu em 43 minutos.'' Essa frase conserva exceção e contexto. Não diz que falta de equipe causou o atraso. Ela determina os elementos necessários: P90 por unidade, meta, amostra, período, mediana global e diagnóstico de capacidade.
+
+O cálculo ajuda a calibrar destaque. O desvio absoluto é $128-60=68$ minutos. O desvio relativo à meta é $68/60\times100\approx113{,}3\%$. Informar ``113\% acima'' pode soar mais dramático que ``68 minutos acima''; ambos são verdadeiros, mas a unidade operacional é mais acionável. Usamos minutos no título e deixamos o percentual como detalhe. A escolha evita que um número relativo grande domine sem necessidade.
+
+Construímos então um wireframe. No topo: pergunta, atualização e filtros. No corpo esquerdo: dot plot ordenado de P90 por unidade, meta vertical e Norte em laranja. No corpo direito: cartão textual com valor, diferença e amostra. Abaixo: linha horária do P90 e barras de ocupação em painéis alinhados, com rótulos diretos. No rodapé: completude, definição e link para registros permitidos. A paleta base usa cinzas e azul; laranja fica reservado à exceção.
+
+O design acessível acrescenta redundância. A unidade Norte recebe marcador triangular, linha mais espessa e rótulo ``Norte --- crítico'', não apenas laranja. A meta é tracejada e nomeada diretamente. O estado crítico aparece em texto. Contraste é medido, a tela é testada em cinza e os elementos mantêm sentido. A ordem de foco percorre filtros, alerta, gráfico principal, diagnóstico e auditoria. A versão PDF inclui filtros e horário no cabeçalho.
+
+Depois, verificamos o argumento contra os dados. A tabela de referência confirma P90, mediana e $n$. Aplicamos o filtro Norte e conferimos se todos os painéis mudam; retornamos à rede e verificamos a escala fixa. Testamos a ausência de uma hora e impedimos que a linha atravesse a lacuna. Testamos uma unidade com apenas quatro pacientes e exibimos aviso de base pequena. O painel não está pronto enquanto apenas o caso feliz funciona.
+
+O antes e depois podem ser comparados por tarefas. No original, localizar a unidade crítica exige procurar cartões e interpretar cores concorrentes. No redesenho, ela aparece no ranking contra meta. No original, o filtro é invisível na captura; no novo, está no subtítulo. No original, vermelho e verde carregam o estado; no novo, texto, forma e posição dão redundância. A melhora não é ``ficou mais bonito'', mas ``reduziu passos e preservou evidência''.
+
+\begin{GuidedBox}
+\textbf{Aluno, observe a sequência do redesign.} Inventário $\rightarrow$ pergunta $\rightarrow$ cálculo $\rightarrow$ wireframe $\rightarrow$ acessibilidade $\rightarrow$ validação. Abrir a ferramenta antes dessas decisões costuma cristalizar o layout padrão e fazer a análise caber nele.
+\end{GuidedBox}
+
+\section{Testes de relance e auditoria}
+
+O teste do relance pergunta se, em poucos segundos, uma pessoa consegue identificar assunto, estado e exceção. Não é competição de velocidade nem substitui leitura profunda. Mostre a tela sem explicação por cerca de cinco segundos, retire-a e peça que a pessoa descreva a mensagem. Se ela lembra o logotipo, a fotografia ou o KPI global, mas não a unidade Norte, a hierarquia não corresponde à decisão. Registre respostas em vez de defender o design.
+
+O teste do relance precisa de tarefas realistas. ``O painel está bonito?'' mede preferência. Perguntas melhores são ``qual unidade exige atenção?'', ``qual é a meta?'', ``que período está selecionado?'' e ``o que você faria em seguida?''. Diferentes participantes revelam problemas diferentes: alguém do domínio conhece siglas, enquanto um gestor eventual mostra onde faltam definições. A amostra pequena não produz estatística universal, mas fornece evidência para iterar.
+
+O teste de auditoria vem depois. Peça ao leitor que encontre população, unidade de análise, período, atualização, filtros, definição do P90, tamanho da amostra, fonte e limitações. Ele deve conseguir reproduzir a interpretação sem adivinhar. Um dashboard pode passar no relance e falhar aqui: alerta grande, mas sem denominador ou fonte. Também pode passar na auditoria e falhar no relance: documentação completa, porém sem prioridade. Qualidade exige as duas velocidades.
+
+Podemos medir tarefas sem reduzir experiência a um único número. Registre taxa de acerto, tempo até a resposta, cliques, retornos e erros de interpretação. Antes do redesign, quatro de seis participantes localizaram a unidade crítica em até vinte segundos; depois, seis de seis a localizaram em até oito. Esse resultado apoia a mudança, mas não prova que o painel sempre produzirá decisão correta. Cenário, treinamento e consequência também importam.
+
+A aprovação inclui acessibilidade e robustez. Verifique contraste, uso de cor, teclado, foco, texto alternativo, zoom, tela estreita, projeção, impressão e exportação. Verifique dados ausentes, base pequena, filtro vazio, atraso, categoria nova e falha parcial. Confira alinhamento, rótulos cortados, legenda, casas decimais e unidade. Compare números com uma tabela independente. Cada item corresponde a uma forma concreta de falha, não a um ritual burocrático.
+
+Também precisamos avaliar excesso de persuasão. O título respeita a evidência? O destaque corresponde a limiar definido? O eixo e a escala permanecem visíveis? O vermelho produz urgência desproporcional? Há contexto global suficiente? O painel oferece hipótese como causa? Design pode tornar uma conclusão convincente demais. A revisão ética procura equilíbrio entre direcionar atenção e preservar contestação.
+
+Uma ficha de decisão registra componente alterado, motivo, evidência do teste, limite e responsável. Por exemplo: ``mapa removido; geografia não participava da ação; participantes confundiam área com volume; ranking melhora comparação; reavaliar se a logística entre municípios entrar no escopo''. Esse histórico mantém o raciocínio quando outra pessoa atualiza a tela. O artefato visual passa a ter linhagem de projeto, assim como o dado possui linhagem de transformação.
+
+\section{Síntese do encontro e ponte para a narrativa}
+
+Voltamos ao caso inicial: o alerta existia, mas era encoberto por competição visual. A correção não consistiu em aumentar o vermelho. Primeiro definimos a decisão, calculamos desvio e denominador, escolhemos canal e referência, organizamos uma hierarquia, distribuímos zonas em grade, adicionamos redundância acessível e testamos estados. A imagem final resulta de decisões analíticas sucessivas. Seu valor está no percurso justificável, não na aparência isolada.
+
+Cor exerce quatro papéis que não devem ser misturados: distinguir categorias, ordenar valores, mostrar desvio e destacar exceção. Paleta categórica evita ordem indevida; sequencial conserva progressão de luminosidade; divergente depende de centro substantivo; destaque funciona quando é raro. Escalas estáveis permitem comparação entre filtros. Semântica de cor ajuda, mas texto, forma, posição e padrão precisam conservar a mensagem.
+
+Acessibilidade amplia a definição de qualidade. Contraste mensurável, informação além da cor, texto alternativo útil, ordem de foco, teclado, zoom e exportação fazem parte do produto. Esses cuidados atendem pessoas com necessidades diversas e também situações comuns: projetor ruim, tela pequena, cansaço, impressão e leitura apressada. Um painel que só funciona na estação do autor não está concluído.
+
+Gestalt e hierarquia explicam como a composição orienta agrupamento e atenção. Proximidade liga, espaço separa, similaridade cria famílias, continuidade guia percursos e região comum define pertencimento. Tamanho e contraste estabelecem prioridade, mas precisam obedecer à pergunta. Espaço em branco reduz competição. O grid transforma essas relações em estrutura reutilizável e responsiva, distribuindo estado, alerta, diagnóstico e auditoria.
+
+Interação não suspende essas regras. Cada filtro cria uma nova população; cada parâmetro muda a medida; cada drill-down altera o grão; cada tooltip depende de um modo de acesso. Estado, escopo, horário e caminho de retorno precisam permanecer visíveis. Testar extremos e exportação impede que a versão interativa seja clara apenas em uma combinação ideal de dados.
+
+Os testes do relance e da auditoria fecham o ciclo. O primeiro verifica prioridade; o segundo, confiança. Uma tela aprovada permite localizar a mensagem, reconstruir contexto, conferir números e reconhecer limites. Evidência de uso orienta iteração, enquanto uma ficha de decisão preserva as razões do redesign. Assim, design deixa de ser gosto pessoal e se torna hipótese passível de teste.
+
+No próximo capítulo, avançaremos da organização de uma tela para a construção de insights e evidências. Depois, o storytelling mostrará como selecionar e ordenar essas evidências para uma audiência e uma decisão. A ponte é importante: layout não substitui narrativa, mas pode apoiá-la ou sabotá-la. Antes de contar uma história, precisamos garantir que cada quadro torna visível o que os dados sustentam e não promete mais do que foi medido.
+
+\begin{SummaryBox}
+\textbf{Síntese final.} Pergunta $\rightarrow$ hierarquia analítica $\rightarrow$ cor e canais redundantes $\rightarrow$ grid e zonas $\rightarrow$ interação explícita $\rightarrow$ testes de relance, acessibilidade e auditoria. Cor e espaço argumentam; por isso, precisam de evidência, critério e revisão.
+\end{SummaryBox}
+
+\bigskip
+\noindent\textbf{Referências essenciais}
+
+\begingroup\small
+
+CAIRO, Alberto. \textit{The Functional Art: An Introduction to Information Graphics and Visualization}. Berkeley: New Riders, 2013.
+
+FEW, Stephen. \textit{Information Dashboard Design: Displaying Data for At-a-Glance Monitoring}. 2. ed. Burlingame: Analytics Press, 2013.
+
+MUNZNER, Tamara. \textit{Visualization Analysis and Design}. Boca Raton: CRC Press, 2014.
+
+WARE, Colin. \textit{Information Visualization: Perception for Design}. 4. ed. Cambridge: Morgan Kaufmann, 2020.
+
+W3C. \textit{Web Content Accessibility Guidelines (WCAG) 2.2}. Disponível em: \url{https://www.w3.org/TR/WCAG22/}. Acesso em: 7 ago. 2026.
+\endgroup

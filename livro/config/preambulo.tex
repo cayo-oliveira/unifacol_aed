@@ -1,0 +1,20 @@
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern,microtype,booktabs,tabularx,array,graphicx,xcolor,hyperref,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,patterns}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\definecolor{guidedorange}{HTML}{FFF0DE}
+\definecolor{guidedorangeframe}{HTML}{C76600}
+\definecolor{guidedblue}{HTML}{EAF3FF}
+\definecolor{guidedblueframe}{HTML}{2367A6}
+\definecolor{articlegrey}{HTML}{F1F3F5}
+\definecolor{articlegreyframe}{HTML}{555F69}
+\newtcolorbox{SummaryBox}{enhanced,breakable,colback=guidedorange,colframe=guidedorangeframe,boxrule=.7pt,arc=2mm,title=Síntese da trilha,fonttitle=\bfseries,coltitle=white,before skip=1.1em,after skip=1.1em}
+\newtcolorbox{GuidedBox}{enhanced,breakable,colback=guidedblue,colframe=guidedblueframe,boxrule=.7pt,arc=2mm,title=Explicação guiada,fonttitle=\bfseries,coltitle=white,before skip=1.1em,after skip=1.1em}
+\newtcolorbox{ArticleBox}[1][]{enhanced,breakable,colback=articlegrey,colframe=articlegreyframe,boxrule=.7pt,arc=2mm,title={No artigo --- #1},fonttitle=\bfseries,coltitle=white,before skip=1.1em,after skip=1.1em}

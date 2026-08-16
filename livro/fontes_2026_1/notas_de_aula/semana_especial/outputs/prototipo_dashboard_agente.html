@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Educacional — Prototipo Agente</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --c-bg:    #F5F6FA;
+    --c-card:  #FFFFFF;
+    --c-brand: #0B3D2E;
+    --c-acc:   #E35D22;
+    --c-blue:  #2563EB;
+    --c-ok:    #16A34A;
+    --c-warn:  #DC2626;
+    --c-text:  #1E293B;
+    --c-muted: #64748B;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--c-bg); font-family:'Segoe UI',Arial,sans-serif; color:var(--c-text); }
+
+  header { background:var(--c-brand); color:#fff; padding:18px 28px; display:flex; justify-content:space-between; align-items:center; }
+  header h1 { font-size:1.2rem; font-weight:700; }
+  header .big-idea { font-size:.82rem; max-width:640px; color:#a8d5be; font-style:italic; }
+
+  .dash { padding:20px 28px; max-width:1280px; margin:0 auto; }
+
+  /* ZONA 1 — KPIs */
+  .kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+  .kpi { background:var(--c-card); border-radius:10px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,.07); border-left:4px solid var(--c-brand); }
+  .kpi .val { font-size:2.1rem; font-weight:700; }
+  .kpi .lbl { font-size:.78rem; color:var(--c-muted); margin-top:4px; }
+  .kpi .delta { font-size:.82rem; margin-top:6px; }
+  .kpi.warn   { border-left-color:var(--c-warn); }
+  .kpi.ok     { border-left-color:var(--c-ok); }
+
+  /* ZONA 2 — Charts */
+  .charts-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
+  .chart-card  { background:var(--c-card); border-radius:10px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+  .chart-card h3 { font-size:.9rem; font-weight:700; margin-bottom:12px; color:var(--c-text); }
+  .chart-card p.sub { font-size:.75rem; color:var(--c-muted); margin-bottom:10px; }
+
+  /* ZONA 3 — Insight + CTA */
+  .insight-row { display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-bottom:20px; }
+  .insight-card { background:#FFF8F0; border:1.5px solid #E35D22; border-radius:10px; padding:20px; }
+  .insight-card .tag { font-size:.7rem; font-weight:700; color:#E35D22; text-transform:uppercase; letter-spacing:.04em; }
+  .insight-card .titulo { font-size:1rem; font-weight:700; margin:8px 0; }
+  .insight-card .body   { font-size:.84rem; line-height:1.6; color:var(--c-text); }
+  .insight-card .meta   { display:flex; gap:12px; margin-top:12px; font-size:.75rem; color:var(--c-muted); }
+
+  .cta-card { background:var(--c-brand); color:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; justify-content:space-between; }
+  .cta-card h3 { font-size:.88rem; font-weight:700; color:#a8d5be; margin-bottom:10px; }
+  .cta-card p  { font-size:.85rem; line-height:1.5; }
+  .cta-card .btn { display:inline-block; background:var(--c-acc); color:#fff; border-radius:6px; padding:10px 16px; font-size:.82rem; font-weight:700; margin-top:14px; text-align:center; }
+
+  /* Tabela Analítica */
+  .table-card { background:var(--c-card); border-radius:10px; padding:20px; box-shadow:0 1px 4px rgba(0,0,0,.07); margin-bottom:20px; }
+  .table-card h3 { font-size:.9rem; font-weight:700; margin-bottom:12px; }
+  table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  th { background:var(--c-brand); color:#fff; padding:8px 12px; text-align:left; }
+  td { padding:7px 12px; border-bottom:1px solid #eee; }
+  tr:hover td { background:#f1f5f9; }
+
+  footer { text-align:center; font-size:.72rem; color:var(--c-muted); padding:16px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Dashboard Educacional &mdash; Desempenho Estudantil</h1>
+    <p style="font-size:.75rem; color:#a8d5be; margin-top:4px;">Gerado por Pipeline Multi-Agente &bull; Base: StudentPerformanceFactors.csv &bull; n=6,607</p>
+  </div>
+  <div class="big-idea">&ldquo;Se não identificarmos os 3.4% de alunos em risco agora, a taxa de reprovação vai manter-se em 1.0% — uma intervenção de envolvimento familiar dirigida pode elevar a aprovação em 8 pp.&rdquo;</div>
+</header>
+
+<div class="dash">
+
+  <!-- ZONA 1 — Contexto / KPIs -->
+  <p style="font-size:.72rem;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">ZONA 1 &mdash; Contexto</p>
+  <div class="kpi-row">
+    <div class="kpi ok">
+      <div class="val">99.0%</div>
+      <div class="lbl">Taxa de Aprovação</div>
+      <div class="delta" style="color:var(--c-ok)">&#9650; Meta: 80%</div>
+    </div>
+    <div class="kpi">
+      <div class="val">67.2</div>
+      <div class="lbl">Nota Média (0&ndash;100)</div>
+      <div class="delta" style="color:var(--c-muted)">DP: 3.9</div>
+    </div>
+    <div class="kpi warn">
+      <div class="val" style="color:var(--c-warn)">3.4%</div>
+      <div class="lbl">Alunos em Alto Risco</div>
+      <div class="delta" style="color:var(--c-warn)">&#9660; Envol.Baixo + &lt;15h</div>
+    </div>
+    <div class="kpi">
+      <div class="val">20.0h</div>
+      <div class="lbl">Horas Médias de Estudo/sem</div>
+      <div class="delta" style="color:var(--c-muted)">Correlação c/ nota: 0.45</div>
+    </div>
+  </div>
+
+  <!-- ZONA 2 — Diagnóstico -->
+  <p style="font-size:.72rem;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">ZONA 2 &mdash; Diagnóstico</p>
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Nota Média por Faixa de Horas de Estudo</h3>
+      <p class="sub">Insight: retorno marginal cai acima de 30h/semana</p>
+      <canvas id="chartHoras" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Nota Média por Envolvimento Familiar</h3>
+      <p class="sub">Gap entre Alto e Baixo: 1.7 pontos</p>
+      <canvas id="chartParental" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- ZONA 3 — Recomendação -->
+  <p style="font-size:.72rem;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">ZONA 3 &mdash; Recomendação</p>
+  <div class="insight-row">
+    <div class="insight-card">
+      <div class="tag">[Insight IA] Acionavel &bull; INS-001</div>
+      <div class="titulo">Alunos em risco: envolvimento familiar baixo + < 15h estudo</div>
+      <div class="body">
+        <strong>Observação:</strong> Alunos com Parental_Involvement=Low e Hours_Studied<15 têm nota média estimada ~63.4, contra média geral de 67.2.<br><br>
+        <strong>Impacto:</strong> 3.4% dos alunos na base<br><br>
+        <strong>Ação:</strong> Criar flag de risco automático + disparar comunicação aos responsáveis em até 2 semanas
+      </div>
+      <div class="meta">
+        <span>&#128197; Prazo: Início do próximo semestre</span>
+        <span>&#128100; Coordenador + Sistema de BI</span>
+      </div>
+    </div>
+    <div class="cta-card">
+      <div>
+        <h3>CALL TO ACTION</h3>
+        <p>Ativar flag de risco e protocolo de comunicação familiar até 31/05/2026</p>
+      </div>
+      <div class="btn">Aprovar Protocolo &rarr;</div>
+    </div>
+  </div>
+
+  <!-- Tabela Analítica -->
+  <div class="table-card">
+    <h3>Tabela Analítica — Top Fatores de Impacto na Nota</h3>
+    <table>
+      <tr><th>Fator</th><th>Correlação c/ Nota</th><th>Tipo</th><th>Acão Sugerida</th></tr>
+      <tr><td>Attendance</td><td>0.581</td><td>Numerico</td><td>Monitorar</td></tr><tr><td>Hours_Studied</td><td>0.445</td><td>Numerico</td><td>Monitorar</td></tr><tr><td>Previous_Scores</td><td>0.175</td><td>Numerico</td><td>Monitorar</td></tr><tr><td>Tutoring_Sessions</td><td>0.157</td><td>Numerico</td><td>Monitorar</td></tr>
+      <tr><td>Parental_Involvement (High vs Low)</td><td>~0.24 (eta²)</td><td>Categórico</td><td>Programa familiar</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>Gerado por Pipeline Multi-Agente (Discovery → Insights → Storyboard → HTML) &bull; 2026</footer>
+
+<script>
+const horasData = {
+  labels: ["<10h", "10-20h", "20-30h", ">30h"],
+  datasets: [{
+    label: 'Nota Média',
+    data: [64.0, 66.2, 68.5, 71.0],
+    backgroundColor: ['#B0B0B0','#4A7FB5','#4A7FB5','#E35D22'],
+    borderRadius: 5,
+  }]
+};
+new Chart(document.getElementById('chartHoras'), {
+  type: 'bar',
+  data: horasData,
+  options: {
+    plugins: { legend: { display: false } },
+    scales: { y: { min: 55, title: { display: true, text: 'Nota Média' } } },
+  }
+});
+
+const parentalData = {
+  labels: ["High", "Low", "Medium"],
+  datasets: [{
+    label: 'Nota Média',
+    data: [68.1, 66.4, 67.1],
+    backgroundColor: ['#E35D22','#4A7FB5','#B0B0B0'],
+    borderRadius: 5,
+  }]
+};
+new Chart(document.getElementById('chartParental'), {
+  type: 'bar',
+  data: parentalData,
+  options: {
+    plugins: { legend: { display: false } },
+    scales: { y: { min: 60, title: { display: true, text: 'Nota Média' } } },
+  }
+});
+</script>
+</body>
+</html>

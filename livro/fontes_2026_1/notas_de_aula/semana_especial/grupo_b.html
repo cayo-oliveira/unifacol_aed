@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard IBM HR — Turnover em TI</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --brand: #003DA5;
+  --accent: #FFA500;
+  --bg: #F0F7FF;
+  --text: #1A1A1A;
+  --light: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, var(--bg) 0%, #E6F2FF 100%); }
+header { background: linear-gradient(135deg, var(--brand) 0%, #1E3A5F 100%); color: white; padding: 25px 30px; }
+header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+.dash { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+.section-title { font-size: 0.85rem; font-weight: 700; color: var(--brand); text-transform: uppercase; margin: 25px 0 12px; letter-spacing: 0.08em; }
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi { background: white; padding: 15px; border-radius: 8px; border-top: 4px solid var(--brand); }
+.kpi .val { font-size: 1.8rem; font-weight: 700; color: var(--brand); }
+.kpi .lbl { font-size: 0.75rem; color: #888; margin-top: 6px; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.chart-card { background: white; padding: 18px; border-radius: 8px; border: 1px solid #E0E0E0; }
+.chart-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; color: var(--brand); }
+.insight { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-left: 4px solid var(--accent); padding: 15px; border-radius: 6px; margin: 15px 0; }
+.insight .tag { font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; }
+.insight .txt { font-size: 0.85rem; margin-top: 6px; line-height: 1.4; color: var(--text); }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.85rem; }
+th { background: var(--brand); color: white; padding: 10px; text-align: left; font-weight: 700; }
+td { padding: 8px; border-bottom: 1px solid #eee; }
+tr:hover { background: #f5f5f5; }
+.cta { background: var(--brand); color: white; padding: 20px; border-radius: 8px; margin: 15px 0; }
+.cta h3 { font-size: 1rem; margin-bottom: 10px; }
+footer { text-align: center; padding: 20px; font-size: 0.75rem; color: #999; }
+</style>
+</head>
+<body>
+<header>
+  <h1>👥 IBM HR Analytics — Turnover em Tecnologia</h1>
+  <p>Análise de saída de talentos em TI | Custo anual: R$ 450k | Base: 1470 colaboradores</p>
+</header>
+
+<div class="dash">
+  <p class="section-title">Contexto — Emergência</p>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="val" style="color:#DC143C;">28%</div>
+      <div class="lbl">Turnover TI<br>(Meta: 15%)</div>
+    </div>
+    <div class="kpi">
+      <div class="val">3x</div>
+      <div class="lbl">Risco relativo<br>Júnior sem promoção</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:#FF6B6B;">41</div>
+      <div class="lbl">Funcionários<br>em perfil alto risco</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:#FF6B6B;">R$ 270k</div>
+      <div class="lbl">Economia potencial<br>com mentoria</div>
+    </div>
+  </div>
+
+  <p class="section-title">Diagnóstico — Quem Sai?</p>
+  <div class="charts">
+    <div class="chart-card">
+      <h3>Turnover por Departamento</h3>
+      <p style="font-size:0.75rem; color:#999; margin-bottom:8px;">Linha vermelha = meta 15%</p>
+      <canvas id="chart1" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Perfil de Saída: Anos Empresa vs Promoção</h3>
+      <p style="font-size:0.75rem; color:#999; margin-bottom:8px;">Cor = probabilidade de saída</p>
+      <canvas id="chart2" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="tag">[Insight IA] Acionável — Alto Impacto</div>
+    <div class="txt"><strong>Funcionários de TI com menos de 2 anos de empresa e sem promoção nos últimos 3 anos têm 3× mais probabilidade de saída (taxa de 28% vs 9% na base). Esse perfil representa 41 colaboradores. Implantar programa de mentoria acelerada + revisão salarial para esse grupo pode reduzir turnover de 28% para 15% e economizar R$ 270k/ano em custos de reposição.</strong></div>
+  </div>
+
+  <div class="cta">
+    <h3>🎯 CALL TO ACTION</h3>
+    <p><strong>Ativar programa de mentoria + revisão salarial para 41 talentos em risco até 30 dias.</strong><br>
+    Responsável: HRBP TI + Diretor de Engenharia | Impacto: turnover TI 28% → 15% em 6 meses</p>
+  </div>
+
+  <p class="section-title">Análise Detalhada por Departamento</p>
+  <table>
+    <thead><tr><th>Depto</th><th>Turnover</th><th>Meta</th><th>Gap</th><th>Ação</th></tr></thead>
+    <tbody>
+      <tr><td><strong>TI</strong></td><td style="color:#DC143C;"><strong>28%</strong></td><td>15%</td><td>+13pp</td><td>MENTORIA URGENTE</td></tr>
+      <tr><td>Vendas</td><td>22%</td><td>20%</td><td>+2pp</td><td>Monitorar</td></tr>
+      <tr><td>Operações</td><td>12%</td><td>15%</td><td>-3pp</td><td>OK</td></tr>
+      <tr><td>RH</td><td>9%</td><td>15%</td><td>-6pp</td><td>OK</td></tr>
+    </tbody>
+  </table>
+
+  <footer>Dashboard gerado via Pipeline Multi-Agente | Dados: IBM HR Dataset | Atualização: mai/2026</footer>
+</div>
+
+<script>
+new Chart(document.getElementById('chart1'), {
+  type: 'bar',
+  data: {
+    labels: ['TI', 'Vendas', 'Operações', 'RH', 'Financeiro'],
+    datasets: [{
+      label: 'Turnover %',
+      data: [28, 22, 12, 9, 16],
+      backgroundColor: ['#DC143C', '#FF8C00', '#FFD700', '#90EE90', '#FF8C00']
+    },
+    {
+      label: 'Meta 15%',
+      data: [15, 15, 15, 15, 15],
+      type: 'line',
+      borderColor: '#FF0000',
+      borderWidth: 2,
+      fill: false,
+      pointRadius: 0,
+      tension: 0
+    }]
+  },
+  options: {
+    plugins: { legend: { display: true } },
+    scales: { y: { min: 0, max: 35 } }
+  }
+});
+
+new Chart(document.getElementById('chart2'), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Alto Risco (3x)',
+      data: [{x:0.5, y:4}, {x:1.2, y:4.5}, {x:1.8, y:3.8}],
+      backgroundColor: '#FF0000',
+      pointRadius: 8
+    },
+    {
+      label: 'Médio',
+      data: [{x:3.0, y:2.5}, {x:3.5, y:3}, {x:4, y:2}],
+      backgroundColor: '#FFA500',
+      pointRadius: 6
+    },
+    {
+      label: 'Baixo',
+      data: [{x:5.5, y:1}, {x:6, y:1.5}, {x:7, y:0.8}],
+      backgroundColor: '#00AA00',
+      pointRadius: 6
+    }]
+  },
+  options: {
+    plugins: { legend: { display: true } },
+    scales: {
+      x: { title: { display: true, text: 'Anos na Empresa' }, min: 0, max: 8 },
+      y: { title: { display: true, text: 'Anos Sem Promoção' }, min: 0, max: 5 }
+    }
+  }
+});
+</script>
+</body>
+</html>

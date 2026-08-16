@@ -1,0 +1,104 @@
+\section{Capítulo 4 --- Gráficos, cor e acessibilidade}
+\subsection{Questões objetivas}
+\ItemHeader{1}{Objetiva}{Escolher gráfico por tarefa}{Comparação de categorias}
+\TextoBase Uma gestora de suporte quer comparar a quantidade de chamados em oito categorias nominais com nomes longos. A tarefa é identificar rapidamente maiores volumes e diferenças entre categorias, sem sugerir continuidade temporal nem obrigar o leitor a alternar repetidamente entre marcas e uma legenda distante. O painel será lido em notebook durante a reunião semanal e impresso no relatório; cada categoria precisa permanecer associada ao próprio rótulo, e pequenas diferenças de comprimento devem ser comparáveis a partir de uma origem comum. A ata registra que a ordem alfabética atrasou a identificação das filas críticas no mês anterior. A nova versão deve ordenar pelo volume observado, manter os nomes legíveis e permitir que a chefia reconheça imediatamente onde deslocar a equipe de triagem.
+\FonteDidatica
+\Comando O gráfico mais adequado é
+\begin{enumerate}[label=\Alph*)]\item barras horizontais ordenadas, com eixo começando em zero.\item linha conectando categorias em ordem alfabética.\item pizza com oito fatias e legenda distante.\item área empilhada sem dimensão temporal.\item mapa de calor com uma única coluna.\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Representar distribuição}{Tempo de atendimento}
+\TextoBase Após uma mudança operacional, a média do tempo caiu, mas reclamações sugerem uma cauda longa. O Quadro 1 resume 600 tempos individuais em dois canais; como esses resumos não mostram a forma completa, a equipe precisa selecionar visuais que revelem distribuição e comparação.
+\begin{DocumentBox}[Quadro 1 --- resumo por canal]
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}\toprule
+\textbf{Canal} & $n$ & \textbf{Média} & \textbf{Mediana} & \textbf{p90}\\\midrule
+Aplicativo & 360 & 18 min & 13 min & 44 min\\
+Telefone & 240 & 17 min & 12 min & 39 min\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+\FonteDidatica
+\Comando Para examinar forma e comparar grupos, deve-se usar
+\begin{enumerate}[label=\Alph*)]\item cartões com média de cada grupo apenas.\item histogramas com classes comparáveis e boxplots por grupo.\item pizzas com proporção de minutos.\item linhas ligando observações em ordem de cadastro.\item pictogramas com um ícone por cem minutos.\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Evitar distorção de eixo}{Variação mensal}
+\TextoBase Um relatório executivo informa que uma taxa passou de 79\% para 81\%, diferença de 2 pontos percentuais. O gráfico de barras inicia o eixo em 78,5\% e, pela área das barras, faz o segundo resultado parecer várias vezes maior. A revisão deve preservar a mudança observada sem ampliar visualmente sua magnitude.
+\FonteDidatica
+\Comando A revisão apropriada é
+\begin{enumerate}[label=\Alph*)]\item manter o corte porque toda variação merece máximo destaque.\item iniciar barras em zero ou usar linha/pontos com escala e valores explicitados, comunicando diferença de 2 p.p.\item transformar percentuais em volumes sem informar denominadores.\item aplicar efeito tridimensional para mostrar profundidade.\item retirar rótulos de eixo para evitar interpretação tendenciosa.\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Aplicar paleta acessível}{Estados de serviço}
+\TextoBase Um painel de operação usa somente vermelho e verde de luminosidade semelhante para distinguir ``crítico'' de ``normal''. Ele será projetado, impresso em escala de cinza e consultado por pessoas com diferentes formas de visão de cores. Se a matiz desaparecer, o significado atual também desaparece.
+\FonteDidatica
+\Comando A solução mais robusta é
+\begin{enumerate}[label=\Alph*)]\item aumentar a saturação das duas cores e retirar texto.\item combinar paleta com contraste, rótulos/ícones ou padrões redundantes e testar em cinza.\item usar sete tons de arco-íris sem legenda.\item representar ambos por cinza idêntico para evitar discriminação.\item animar o estado crítico, pois movimento resolve impressão.\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Escolher escala de cor}{Mapa de desvio}
+\TextoBase Um mapa regional mostra variação percentual de vendas em torno de um ponto de referência igual a zero. Valores negativos representam queda, valores próximos de zero estabilidade e positivos alta. A tarefa é comunicar duas direções e a intensidade do afastamento sem atribuir uma cor categórica aleatória a cada região.
+\FonteDidatica
+\Comando A codificação coerente é
+\begin{enumerate}[label=\Alph*)]\item escala divergente com ponto neutro em zero e extremos distinguíveis.\item escala sequencial escura apenas para valores negativos.\item cor aleatória por região para maximizar variedade.\item matiz cíclica sem indicar zero.\item vermelho para todos os valores, variando apenas o título.\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Calcular taxa antes de visualizar}{Comparação de falhas}
+\TextoBase Dois sistemas processaram volumes diferentes no mesmo período: A teve 30 falhas em 3.000 execuções; B, 12 em 600. A diretoria quer comparar confiabilidade, e a contagem isolada faria A parecer pior. O visual deve usar oportunidades como denominador e conservar os tamanhos das bases.
+\FonteDidatica
+\Comando As taxas e o visual adequado são
+\begin{enumerate}[label=\Alph*)]\item A 1\%, B 2\%; barras de taxa com denominadores informados.\item A 10\%, B 20\%; pizza por sistema.\item A 30\%, B 12\%; barras de contagem apenas.\item A 0,1\%, B 0,2\%; linha temporal sem datas.\item A 2\%, B 1\%; mapa geográfico sem localização.\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Avaliar dupla escala}{Receita e satisfação}
+\TextoBase Um gráfico combina receita de R\$0 a R\$1 milhão no eixo esquerdo e satisfação de 0 a 5 no direito. O autor ajustou manualmente os intervalos para que as linhas coincidissem em vários meses e escreveu que existe relação forte. Como qualquer uma das escalas pode ser deslocada, a coincidência visual não é evidência suficiente.
+\FonteDidatica
+\Comando A decisão visual mais responsável é
+\begin{enumerate}[label=\Alph*)]\item manter, pois coincidência visual demonstra associação.\item separar em painéis alinhados ou padronizar explicitamente, evitando sugerir relação pela escolha arbitrária das escalas.\item remover o eixo direito e conservar a linha sem unidade.\item converter satisfação em reais sem justificativa.\item usar 3D para diferenciar escalas.\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Projetar hierarquia visual}{Dashboard executivo}
+\TextoBase Um dashboard executivo precisa responder três perguntas encadeadas: houve ruptura, onde ela se concentrou e qual ação deve ser priorizada? A tela atual possui 28 cartões do mesmo tamanho, 12 cores e nenhuma ordem de leitura; filtros e limites operacionais ficam distantes dos indicadores. A hierarquia visual deve seguir a decisão.
+\FonteDidatica
+\Comando O redesenho mais coerente é
+\begin{enumerate}[label=\Alph*)]\item destacar o indicador principal, mostrar tendência e decomposição relevante, reduzir cores e colocar ação/limite junto da evidência.\item aumentar todos os cartões e preservar a equivalência visual.\item ordenar alfabeticamente métricas e retirar o contexto da decisão.\item converter tudo em velocímetros para uniformidade.\item ocultar filtros e denominadores para liberar espaço.\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Garantir alternativa textual}{Publicação acessível}
+\TextoBase Um relatório web contém gráfico de linhas com três séries mensais e pontos de mudança importantes. Usuários visuais recebem legenda e eixos, mas leitores de tela ouvem apenas ``imagem gráfico.png''. A publicação deve conservar propósito, tendências e valores essenciais mesmo quando a imagem não puder ser percebida.
+\FonteDidatica
+\Comando A melhoria necessária é
+\begin{enumerate}[label=\Alph*)]\item incluir texto alternativo com propósito e tendência, tabela acessível dos valores essenciais e legenda/rótulos claros.\item aumentar a resolução do PNG, pois leitor de tela interpreta pixels.\item colocar toda a explicação apenas na cor da série.\item substituir o gráfico por uma imagem sem eixos.\item usar siglas nos rótulos para encurtar a navegação.\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Escolher visual para parte--todo}{Composição orçamentária}
+\TextoBase Cinco categorias orçamentárias positivas somam 100\% em cada ano. A direção precisa comparar a participação atual com o ano anterior e detectar diferenças de um ou dois pontos percentuais. O visual deve colocar valores em escala comum, pois julgamentos de ângulo e área dificultam comparações pequenas.
+\FonteDidatica
+\Comando A melhor escolha é
+\begin{enumerate}[label=\Alph*)]\item barras agrupadas ou pontos por categoria e ano, ordenados, com percentuais.\item duas pizzas 3D, pois ângulos permitem diferenças pequenas.\item área empilhada com apenas dois instantes e ordem variável.\item linhas conectando fatias em ordem aleatória.\item nuvem de palavras proporcional ao gasto.\end{enumerate}
+
+\subsection{Questões discursivas}
+\ItemHeader{11}{Discursiva}{Redesenhar visual enganoso}{Indicador de aprovação}
+\TextoBase Um relatório de aprovação compara 78\%, 80\% e 81\% em um gráfico tridimensional. O eixo começa em 77\%, as barras usam perspectiva e sombras, e o título declara ``crescimento explosivo''. O documento será usado em reunião pública e precisa distinguir a evidência numérica da ênfase editorial.
+\FonteDidatica
+\Comando Diagnostique quatro problemas e descreva um redesenho acessível, incluindo tipo, escala, rótulos, contexto e redação da conclusão.
+
+\ItemHeader{12}{Discursiva}{Propor dashboard orientado à decisão}{Atendimento}
+\TextoBase Uma gestão de atendimento acompanha volume, mediana, percentil 90, reabertura e satisfação por semana e canal. Há alertas aprovados quando p90 ultrapassa 40 minutos ou reabertura supera 12\%. O dashboard precisa permitir visão geral, localização do problema e ação, sem esconder denominadores nem depender somente de cor.
+\FonteDidatica
+\Comando Esboce a hierarquia do dashboard, escolha gráficos, cores e filtros, inclua denominadores e alternativa textual e explique como o alerta leva a uma ação verificável.
+
+\ItemHeader{13}{Discursiva}{Comparar gráficos de distribuição}{Dois grupos}
+\TextoBase Dois grupos possuem a mesma média. No grupo A, a maioria dos valores está concentrada perto do centro, mas existem dois extremos; B é aproximadamente simétrico e possui metade central mais espalhada. A equipe precisa escolher representações que revelem forma, posição, dispersão, tamanho da amostra e observações individuais influentes.
+\FonteDidatica
+\Comando Indique combinação de gráficos que revele forma, centro e extremos; explique o que boxplot, histograma e pontos mostram ou escondem.
+
+\ItemHeader{14}{Discursiva}{Calcular e comunicar diferença}{Taxas por canal}
+\TextoBase Três canais registraram oportunidades e resultados no mesmo período: web, 90 compras em 1.500 visitas; aplicativo, 72 em 800; loja, 110 em 2.000. A gerência quer comparar taxas e quantificar a vantagem do aplicativo sobre a web tanto em pontos percentuais quanto relativamente.
+\FonteDidatica
+\Comando Calcule taxas, ordene canais e proponha gráfico acessível. Diferencie pontos percentuais de variação relativa ao comparar aplicativo e web.
+
+\ItemHeader{15}{Discursiva}{Auditar acessibilidade visual}{Relatório institucional}
+\TextoBase Um relatório institucional em PDF usa fonte tamanho 8, contraste baixo, vermelho e verde sem rótulos redundantes, legendas distantes e mapas sem descrição textual. A versão web herda os mesmos problemas e não foi testada por teclado nem leitor de tela. A auditoria deve priorizar correções e evidências de validação.
+\FonteDidatica
+\Comando Produza checklist priorizado de correções e explique como validar contraste, daltonismo, leitura em cinza, teclado/leitor de tela e compreensão por usuários.
+
+\newpage\subsection{Respostas explicadas das questões pares}
+\paragraph{Questão 2 — resposta B.} Histograma revela forma e possíveis modos; boxplots compactam quartis, dispersão e pontos sinalizados para comparação. Cartões de média esconderiam a cauda.
+\[\text{média próxima}\ \not\Rightarrow\ \text{distribuição semelhante}\]
+\paragraph{Questão 4 — resposta B.} Cor não deve ser o único canal. Contraste, texto, forma e teste em cinza preservam significado para diferentes percepções e impressão.
+\paragraph{Questão 6 — resposta A.} A: $30/3.000=1\%$; B: $12/600=2\%$. Contagem faria A parecer pior, embora B tenha o dobro da taxa.
+\paragraph{Questão 8 — resposta A.} A hierarquia parte da pergunta, reduz competição visual e liga indicador, decomposição e ação. Uniformidade de tamanho trataria sinais de importância diferente como equivalentes.
+\paragraph{Questão 10 — resposta A.} Posição em escala comum permite comparar diferenças pequenas entre anos melhor que ângulos, áreas 3D ou nuvens de palavras.
+\paragraph{Questão 12 — critérios de resposta.} Deve priorizar situação geral, tendências e decomposição; usar linhas para séries e barras/pontos para canais; cores redundantes; filtros essenciais; denominadores; descrição textual; e ação ligada a cada limiar.
+\paragraph{Questão 14 — cálculo e critérios.} Web 6\%, aplicativo 9\%, loja 5,5\%. Aplicativo supera web em 3 p.p. ou 50\% relativamente: $(9-6)/6$. Gráfico de barras/pontos com eixo e rótulos acessíveis.

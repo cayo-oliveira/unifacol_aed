@@ -1,0 +1,262 @@
+\chapter[Da exploração à história verificável]{Da exploração à história verificável: evidência que orienta decisão}
+
+\section{Muitos gráficos corretos e nenhuma decisão}
+
+Uma instituição de ensino encerrou o primeiro bimestre com queda de frequência e aumento de pedidos de trancamento. A equipe de dados preparou trinta e dois gráficos: médias por curso, histogramas de notas, mapas de calor de presença, perfis de acesso ao ambiente virtual e séries de atendimentos pedagógicos. Nenhum gráfico continha erro evidente. Ainda assim, a reunião terminou sem decisão. A pró-reitoria precisava escolher, até o dia seguinte, onde aplicar uma verba limitada de apoio; a apresentação descreveu o conjunto de dados, mas não organizou evidências em torno dessa escolha.
+
+Esse contraste separa exploração de explicação. Na análise exploratória, produzimos vistas, testamos definições, encontramos padrões, investigamos exceções e descartamos hipóteses. O público principal é a própria equipe analítica, e a incerteza sobre o caminho faz parte do trabalho. Na comunicação explanatória, selecionamos somente as evidências necessárias para que uma audiência compreenda uma situação, avalie limites e decida. Ocultar a exploração seria errado; projetá-la inteira sobre o gestor também é. O produto final precisa conservar rastreabilidade sem reproduzir cada tentativa.
+
+Storytelling com dados não significa inventar personagens, dramatizar números nem forçar começo, meio e fim sobre qualquer tabela. Significa ordenar informações para responder a uma pergunta decisória. A história é verificável quando cada afirmação aponta para uma medida, uma população, um período, uma fonte e um limite. A narrativa reduz a distância entre evidência e ação, mas não autoriza causalidade que o desenho do estudo não sustenta. Persuasão responsável torna o raciocínio mais claro, não mais conveniente.
+
+Nos capítulos anteriores, aprendemos a definir unidade de observação, distinguir média e mediana, medir variabilidade, construir camadas SOR, SOT e SPEC, escolher gráficos e organizar cor e layout. Agora essas competências precisam funcionar juntas. Uma Big Idea baseada em uma taxa mal definida continua errada; um storyboard acessível baseado em uma junção com duplicação continua errado; uma recomendação bem escrita sem incerteza continua frágil. A narrativa é a última camada visível de uma cadeia que começa no problema.
+
+O caso deste capítulo envolve 1.200 estudantes ativos no início do período. A base integra matrícula, frequência semanal, notas parciais, acesso ao ambiente virtual e registros de apoio. A decisão não é ``quem vai abandonar'', porque os dados observacionais não permitem conhecer o futuro individual com certeza. A pergunta é ``em quais grupos e momentos uma intervenção de apoio, reversível e não punitiva, deve ser priorizada, e como acompanhar se ela alcança quem precisa?'' Essa formulação muda métrica, linguagem e proteção ética.
+
+Ao final do encontro, você deverá separar descoberta de comunicação, definir público e decisão, formular uma Big Idea com evidência e limite, construir uma cadeia problema--evidência--decisão, ordenar um storyboard, anotar gráficos, comunicar incerteza e interpretar textos, tabelas e visuais contextualizados como os encontrados no ENADE. O encontro de três horas termina a Unidade I. A chamada ocorre às 20h30, e a síntese integra fundamentos, estatística, arquitetura, gráficos, cor e layout sem transformar o capítulo em lista de revisão.
+
+\begin{SummaryBox}
+\textbf{Ideia central.} Explorar é procurar o que merece ser dito. Explicar é selecionar e ordenar o que a audiência precisa verificar para decidir. A passagem entre os dois exige evidência, não apenas eloquência.
+\end{SummaryBox}
+
+\section{Começar pelo público e pela decisão}
+
+A mesma análise muda conforme quem decide. A coordenação de curso pode remanejar monitorias por turno; a assistência estudantil pode ampliar acolhimento; a direção financeira pode liberar verba; um professor pode ajustar a sequência de conteúdo; o estudante pode procurar apoio. Cada audiência possui autoridade, vocabulário, horizonte e risco diferentes. Um painel genérico tenta servir a todos e frequentemente não oferece contexto suficiente a ninguém.
+
+Definir público não é escolher uma persona decorativa. É registrar qual ação está ao alcance dessa pessoa. Se a pró-reitoria pode financiar duas frentes durante seis semanas, a recomendação precisa caber nesse limite. ``Melhorar a experiência acadêmica'' é desejo, não decisão. ``Priorizar monitoria noturna nas disciplinas iniciais e busca ativa não punitiva para ausências consecutivas, com revisão em três semanas'' descreve direção, alvo, prazo e mecanismo de acompanhamento, embora ainda exija análise de custo e capacidade.
+
+Uma boa pergunta de decisão explicita alternativas. Podemos manter a distribuição atual, concentrar monitoria em disciplinas com reprovação elevada, concentrar apoio em turmas noturnas com ausências crescentes ou combinar ações menores. As alternativas evitam que a apresentação trate a recomendação favorita como única possibilidade. Também ajudam a identificar evidência faltante: para comparar duas frentes, precisamos saber população alcançada, custo, magnitude do problema e possibilidade de medir resultado.
+
+O horizonte temporal altera o que importa. Uma decisão para amanhã usa sinais disponíveis e ações reversíveis; uma política anual exige coortes, sazonalidade, capacidade e avaliação de efeito. Frequência de uma semana pode orientar contato acolhedor, mas não justificar rotular um estudante como evasor. Uma tendência de quatro semestres pode embasar planejamento, mas esconder mudanças recentes. Narrativa responsável declara quando os dados foram produzidos e por quanto tempo a recomendação pretende valer.
+
+Risco também muda a exigência de evidência. Escolher a ordem de leitura de um relatório é reversível e barato; suspender benefício ou negar matrícula é grave. Quanto maior a consequência, maior a necessidade de validação, contestação e supervisão humana. No caso estudantil, os dados serão usados apenas para ofertar suporte, nunca para punir ou excluir. Essa restrição ética faz parte da especificação analítica e precisa permanecer no título, na recomendação e na operação.
+
+Antes de abrir o arquivo de gráficos, complete uma frase: ``Ao final desta comunicação, [audiência] precisa escolher entre [alternativas] para [resultado], no horizonte [prazo], respeitando [restrições].'' Para o caso: ``A pró-reitoria precisa escolher duas frentes de apoio para as próximas seis semanas, buscando reduzir ausências persistentes sem rotular indivíduos nem usar dados além da finalidade acadêmica.'' Essa frase funciona como filtro editorial. Tudo que não ajuda a avaliar a escolha pode ficar na análise técnica ou no apêndice.
+
+A clareza sobre decisão também impede uma inversão comum: encontrar um gráfico curioso e procurar uma ação que o justifique. A ordem correta é problema, decisão, evidência necessária, fonte e visual. Descobertas inesperadas continuam valiosas, mas entram na história somente se alteram a escolha ou o entendimento de seu risco. Assim, storytelling não encerra exploração; ele disciplina a transição entre descobrir e comunicar.
+
+\section{Big Idea: uma frase que pode ser contestada}
+
+A Big Idea é a proposição central que a audiência deve compreender e avaliar. Ela combina situação, tensão e direção, apoiadas por evidência. ``A frequência caiu'' é observação incompleta. ``As ausências persistentes concentram-se nas disciplinas iniciais do turno noturno; priorizar monitoria e contato de apoio nesse ponto alcança a maior parcela observada do problema, mas o efeito deverá ser medido antes de expansão'' é uma Big Idea. Há foco, relevância, ação e limite.
+
+Uma Big Idea não precisa caber em slogan publicitário. Precisa ser específica o suficiente para ser falsa ou verdadeira diante dos dados. Expressões como ``dados geram valor'' ou ``devemos investir nos alunos'' não indicam medida, contraste ou decisão. A frase verificável nomeia população, fenômeno e direção. Se o leitor perguntar ``onde isso aparece?'', a equipe deve apontar para uma tabela ou visual que reproduza a afirmação.
+
+No caso, definimos ausência persistente como presença abaixo de 75\% em três semanas consecutivas, calculada no grão estudante--disciplina--semana. Entre 1.200 estudantes, 216 atendem ao critério em pelo menos uma disciplina. Desses, 132 estão em componentes do primeiro ano no turno noturno. A participação é $132/216\times100\approx61{,}1\%$. Esse cálculo sustenta ``concentram-se'', mas não prova que a noite ou o primeiro ano causem a ausência.
+
+Magnitude precisa de base de comparação. Os 132 estudantes representam 61,1\% dos casos persistentes, mas correspondem a 17,6\% dos 750 matriculados no primeiro ano noturno. No primeiro ano diurno, são 44 de 300, ou 14,7\%; nos demais grupos, 40 de 150, ou 26,7\%. A maior contagem e a maior taxa estão em grupos diferentes. Se a decisão busca alcance absoluto, o noturno inicial é central; se busca risco relativo, os demais grupos merecem investigação. A Big Idea precisa dizer qual critério prioriza.
+
+Tensão explica por que a descoberta importa. Sem intervenção, ausências podem preceder reprovação e trancamento, mas o verbo ``podem'' é importante: associação não garante destino individual. Há também custo de oportunidade. Concentrar toda a verba em um grupo deixa outros sem cobertura. Uma Big Idea honesta apresenta o trade-off: a frente escolhida alcança mais casos observados, enquanto uma reserva menor investiga o grupo com maior taxa.
+
+Direção não equivale a certeza. Podemos recomendar um piloto porque a ação é plausível e reversível, não porque o efeito já foi demonstrado. A frase deve indicar como aprender: ``implementar por seis semanas, acompanhar alcance e tendência de presença, e comparar com linha de base, reconhecendo que a avaliação observacional não isola causalidade''. A recomendação passa a conter mecanismo de validação. Se os dados seguintes contradisserem a hipótese, a organização deve adaptar a ação.
+
+Teste a Big Idea por quatro critérios: decisão, evidência, contestabilidade e limite. Ela orienta uma escolha concreta? Os números a sustentam? Um leitor consegue dizer o que a refutaria? A linguagem respeita o desenho do estudo? Quando uma frase falha, não a compense com cor intensa ou confiança verbal. Volte à definição e à análise. O título final deve ser conclusão calibrada, não promessa.
+
+Uma técnica útil é criar uma tabela de afirmações antes do storyboard. Para cada oração da Big Idea, registre o campo ou cálculo que a sustenta, o recorte aplicado, uma hipótese alternativa e o nível de confiança. ``Concentra 61\%'' aponta para 132 de 216 e depende da deduplicação por estudante; ``deve receber a maior frente'' combina alcance e capacidade; ``o efeito deverá ser medido'' reconhece ausência de desenho causal. Se uma oração não encontra fonte, ela sai ou é reescrita como hipótese.
+
+Também convém escrever uma versão adversária da frase. Uma equipe que prioriza equidade poderia dizer: ``Os demais grupos têm a maior taxa, 26,7\%, e não devem desaparecer porque possuem menor base.'' Essa objeção não destrói a análise; obriga a recomendação a reservar investigação e capacidade. Uma Big Idea forte não vence o contraditório escondendo métricas. Ela incorpora o conflito legítimo e explica por que um critério recebe precedência temporária.
+
+\begin{GuidedBox}
+\textbf{Aluno, preste atenção aqui, porque esta parte é importante.} Big Idea não é o maior número da tela. É uma proposição decisória cuja evidência, população e limite podem ser reconstruídos por outra pessoa.
+\end{GuidedBox}
+
+\section{Problema, evidência e decisão formam uma cadeia}
+
+Uma narrativa verificável pode ser lida como cadeia de cinco elos: problema, pergunta, evidência, interpretação e decisão. O problema descreve a consequência real; a pergunta define o que precisa ser conhecido; a evidência traz medidas e comparações; a interpretação delimita o que elas significam; a decisão escolhe uma ação proporcional. Se um elo falta, a história salta. Uma recomendação sem evidência vira opinião; um gráfico sem decisão vira inventário; uma correlação sem limite vira causalidade falsa.
+
+O problema não deve ser confundido com um indicador. ``A frequência média caiu dois pontos'' é medida. O problema pode ser ``estudantes deixam de acompanhar conteúdos sequenciais e chegam tarde ao apoio''. A distinção ajuda a selecionar variáveis. Frequência média, distribuição de ausências, reprovação anterior, horários e disponibilidade de apoio tornam-se possíveis evidências. Nenhum indicador isolado representa toda a experiência.
+
+A pergunta transforma o problema em comparação. ``Onde a ausência persistente está concentrada, em contagem e taxa, e quais ações de apoio são executáveis nas próximas seis semanas?'' exige denominadores e capacidade. Ela impede o erro de escolher o grupo com maior contagem sem considerar tamanho, ou o grupo com maior taxa sem considerar alcance. Também expõe a necessidade de dados operacionais: número de monitores, horários, canais de contato e consentimento.
+
+Evidência é mais que número. Inclui procedência, definição, período, completude e incerteza. A taxa de 17,6\% depende de 132 casos entre 750 estudantes; se 12\% das presenças noturnas ainda não foram lançadas, a comparação pode mudar. O painel precisa mostrar atualização e completude. Um gráfico de barras com taxas não corrige registros atrasados. Arquitetura e qualidade continuam dentro da narrativa, ainda que apareçam como nota ou critério de confiança.
+
+Interpretação conecta padrão a significado sem extrapolar. ``O primeiro ano noturno reúne a maior contagem de casos persistentes'' é sustentado. ``O trabalho causa ausência'' não foi medido. Entrevistas poderiam revelar transporte, jornada de trabalho, saúde, cuidado familiar ou dificuldade acadêmica. O dado administrativo localiza onde perguntar e oferecer apoio; não conhece sozinho o motivo. A narrativa conserva hipóteses alternativas.
+
+Decisão precisa definir responsável, ação, prazo e critério de acompanhamento. ``A coordenação acadêmica abrirá duas turmas de monitoria noturna nas disciplinas A e B por seis semanas; a assistência fará contato voluntário após ausências consecutivas; o comitê revisará alcance, presença e feedback em três semanas.'' Essa redação permite execução e auditoria. ``Tomar providências'' não permite nenhuma das duas.
+
+O encadeamento funciona também de trás para frente. Dada a decisão proposta, pergunte que evidência a justificaria; dada a evidência, qual pergunta ela responde; dada a pergunta, qual problema real a torna importante. Essa leitura reversa encontra saltos lógicos. Se a recomendação menciona custo, mas nenhum dado de custo aparece, o elo está ausente. Se a evidência mostra associação e a decisão pressupõe causa, o elo é excessivo.
+
+\section{A integração da Unidade I aparece dentro da história}
+
+Fundamentos de AED entram quando delimitamos população e unidade. A população são os 1.200 estudantes ativos no início do período. A unidade de observação bruta é o registro de presença por estudante, disciplina e encontro. A unidade analítica para persistência é estudante--disciplina--semana; para priorização, estudante único por grupo. Se somarmos ocorrências semanais como pessoas, um estudante ausente em três disciplinas será contado três vezes. A narrativa inflará o problema antes de chegar ao gráfico.
+
+Estatística básica entra na escolha entre centro, dispersão, contagem e taxa. Frequência média global de 82\% pode coexistir com um grupo persistente abaixo de 75\%. A média oculta cauda e recorrência. Mediana e quartis mostram experiência típica; P10 localiza a parte inferior; contagens informam alcance; taxas permitem comparação entre grupos de tamanhos diferentes. A Big Idea deve usar a medida ligada à decisão, e as demais fornecem contexto.
+
+Arquitetura de dados entra na confiança. O SOR preserva lançamentos de presença e suas correções; o SOT padroniza estudantes, disciplinas, turnos e datas; o SPEC materializa a regra de ausência persistente e denominadores por grupo. A linhagem registra versão, atualização e transformação. Se o dashboard recalcular o critério de maneira distinta do relatório, a organização terá duas verdades. Storytelling não resolve divergência semântica; apenas a espalha com eficiência.
+
+Qualidade entra como limite da afirmação. Verificamos unicidade de matrícula, cobertura por encontro, atraso de lançamento, validade de percentuais e coerência de status. Se uma disciplina registra presença uma vez por semana e outra por aula, a taxa precisa respeitar encontros previstos. Ausências por falha no diário não podem ser confundidas com ausência do estudante. Uma nota de completude na história não é desculpa; é informação que calibra a decisão.
+
+Gráficos entram pela tarefa. Barras ou pontos ordenados com taxa e contagem respondem onde há concentração; linha semanal mostra quando o padrão se acentua; distribuição de presença revela cauda; pequenos múltiplos com mesma escala comparam turnos; uma tabela preserva valores e base. Setor, treemap ou mapa geográfico não entram apenas porque existem campos categóricos ou endereço. O visual é escolhido pela comparação necessária.
+
+Cor e layout entram para organizar atenção e acessibilidade. Uma base cinza mostra todos os grupos; laranja destaca a prioridade; forma, rótulo e posição fornecem redundância. A primeira zona apresenta Big Idea e métricas; a segunda compara grupos; a terceira mostra tempo e incerteza; a última registra definição, filtros e fonte. A ordem do painel acompanha a cadeia, não a ordem em que os gráficos foram produzidos.
+
+O ponto integrador é simples: cada camada responde a uma falha possível. Unidade errada duplica pessoas; estatística inadequada esconde a cauda; arquitetura inconsistente muda definição; gráfico impróprio dificulta comparação; cor exclusiva exclui leitores; narrativa exagerada transforma associação em causa. A qualidade final é limitada pelo elo mais fraco. Fechar a Unidade I significa aprender a percorrer a cadeia inteira.
+
+Essa cadeia pode ser auditada com um número escolhido ao acaso. Pegue os 132 casos do primeiro ano noturno e caminhe para trás: confirme o cartão no painel; reproduza a consulta na SPEC; compare a lista deduplicada com a SOT; encontre lançamentos correspondentes no SOR; verifique encontros previstos e regras de ausência; recalcule $132/750$ e $132/216$; leia o título e o limite. Se alguma passagem não puder ser refeita, a afirmação precisa ser marcada como provisória. A auditoria por amostra não substitui testes completos, mas revela que narrativa e engenharia pertencem ao mesmo sistema.
+
+Também devemos comparar versões da história. Uma versão anterior pode usar frequência média global; outra, ausência persistente; uma terceira, risco predito. Guardar data, regra, consulta e aprovação impede que um slide antigo circule como resultado atual. Em ambiente institucional, decisões sobrevivem à reunião e podem ser copiadas para atas, mensagens e sistemas. A rastreabilidade precisa acompanhar a figura exportada por meio de fonte, período, versão e contato responsável. Sem isso, a melhor apresentação perde contexto quando sai da tela original.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{p{2.6cm}Y Y}
+\toprule
+Camada & Pergunta de controle & Evidência no caso \\
+\midrule
+Fundamentos & Quem e em qual grão? & estudante único por grupo e período \\
+Estatística & Qual medida responde à decisão? & contagem, taxa e persistência \\
+Arquitetura & De onde veio e como foi transformado? & SOR, SOT, SPEC e linhagem \\
+Visualização & Que comparação deve ser fácil? & grupos contra base e meta \\
+Narrativa & O que se pode concluir e decidir? & piloto de apoio com limite causal \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Storyboard: ordenar a descoberta antes da ferramenta}
+
+Storyboard é o esboço da sequência de leitura. Pode ser feito em papel, quadro ou documento simples antes de abrir a ferramenta. Cada quadro contém uma mensagem, a evidência necessária, a transição e o papel na decisão. Esse planejamento evita montar um dashboard cheio de objetos e procurar uma história depois. Também facilita discutir lacunas com a equipe antes de investir em acabamento.
+
+O primeiro quadro estabelece contexto e pergunta. No caso: ``216 estudantes apresentam ausência persistente; a verba permite duas frentes por seis semanas.'' Uma barra curta pode mostrar casos sobre a população total, mas o texto precisa definir o critério. A transição é ``os casos não se distribuem igualmente''. O leitor sabe por que a análise existe e que escolha deverá fazer.
+
+O segundo quadro mostra concentração em contagem e taxa. Uma tabela curta ou dois gráficos de pontos alinhados evita misturar denominadores. Os dados são: primeiro ano noturno, 132 de 750; primeiro ano diurno, 44 de 300; demais grupos, 40 de 150. Contagens priorizam alcance; taxas mostram risco relativo. A transição é ``onde o volume é maior, quais disciplinas e semanas concentram o padrão?''.
+
+O terceiro quadro diagnostica sem declarar causa. Pequenos múltiplos mostram evolução semanal nas disciplinas iniciais noturnas, com uma faixa indicando atraso de lançamento. Uma anotação marca o começo das avaliações, mas diz ``coincide com'', não ``provocou''. O quadro pode incluir capacidade de monitoria por horário. A transição é ``diante do alcance e da capacidade, qual ação é proporcional?''.
+
+O quarto quadro apresenta recomendação e plano de aprendizagem. Duas frentes são destacadas: monitoria noturna em disciplinas com maior concentração e contato voluntário de apoio após ausências consecutivas. Uma reserva de investigação cobre o grupo menor com taxa alta. Métricas de acompanhamento incluem alcance, adesão, presença e feedback, não apenas uma promessa de reduzir evasão. O leitor entende o que fazer e como revisar.
+
+O storyboard precisa conservar alternativas rejeitadas. Um mapa foi descartado porque geografia não participa da decisão; um ranking individual foi removido por risco ético e baixa adequação à ação; a média global foi mantida apenas como contexto; um modelo preditivo não foi incluído porque a Unidade I trabalha evidência descritiva e a ação não exige classificação individual. Registrar essas escolhas torna o projeto revisável.
+
+A sequência não precisa ser linear em toda interação. O dashboard pode permitir explorar cursos e semanas, mas a leitura padrão deve permanecer coerente. Cada mudança de filtro atualiza títulos e bases. A exportação conserva o estado. No modo apresentação, os quatro quadros orientam a conversa; no modo auditoria, definições e tabelas ficam acessíveis. Storyboard coordena essas duas velocidades.
+
+\begin{SummaryBox}
+\textbf{Então, aluno, veja só o que você aprendeu aqui.} Storyboard é a arquitetura da leitura: contexto, contraste, diagnóstico, decisão e verificação. Ele organiza a evidência antes que a ferramenta imponha seus contêineres.
+\end{SummaryBox}
+
+\section{Anotação e ordem de leitura reduzem ambiguidade}
+
+Uma anotação útil responde por que um ponto merece atenção. ``Pico'' apenas nomeia forma. ``Ausência persistente sobe após a segunda semana de avaliações; lançamentos estão 88\% completos'' liga padrão, evento e limite sem afirmar causa. A anotação deve ficar próxima do elemento, usar linguagem calibrada e não cobrir dados. Quando há muitas, a hierarquia colapsa. Selecione as que alteram a interpretação ou a decisão.
+
+Títulos podem formar uma sequência. ``Casos persistentes atingem 216 estudantes'' abre o contexto; ``primeiro ano noturno reúne 61\% dos casos'' mostra concentração; ``o aumento coincide com avaliações, mas registros recentes estão incompletos'' delimita diagnóstico; ``piloto prioriza alcance e mede adesão em três semanas'' apresenta ação. Lidos sozinhos, os títulos contam o argumento; os gráficos permitem verificá-lo. Isso não dispensa eixos, bases nem notas.
+
+Ordem de leitura nasce de posição, tamanho, contraste e espaço. O título da pergunta vem primeiro; a evidência principal ocupa posição dominante; comparadores aparecem próximos; a nota metodológica permanece legível; a recomendação encerra o fluxo. Em tela estreita, a ordem vertical deve ser a mesma. Se o alerta aparece depois da tabela detalhada, a composição contradiz a narrativa.
+
+Rótulos diretos reduzem a viagem até legendas. A linha ``primeiro ano noturno'' pode ser nomeada no fim; a meta recebe texto; a barra destacada inclui contagem e taxa. Cor não carrega a identidade sozinha. Unidades aparecem em eixo e rótulo. Casas decimais seguem a precisão necessária: 17,6\% pode ser útil, enquanto 17,6000\% sugere exatidão inexistente. Anotar é também decidir o que não precisa ser lido.
+
+Setas e áreas sombreadas têm força causal implícita. Uma seta do início das avaliações para a curva de ausência pode sugerir que o evento causou a mudança. Use linha vertical com rótulo temporal e linguagem de coincidência. Uma área sombreada pode representar incerteza, período incompleto ou política; a legenda precisa dizer qual. Símbolos não são neutros, e a leitura deve ser prevista.
+
+Texto alternativo acompanha a ordem visual. Ele resume mensagem, comparação, período, base, exceção e limite. A tabela acessível conserva valores. A ordem de foco percorre título, filtros, visual principal, diagnóstico, recomendação e notas. Um leitor de tela não recebe posição e cor da mesma maneira; a estrutura programática precisa refletir o percurso pretendido.
+
+Anotações devem ser verificadas contra a fonte. Se o título diz 61\%, confira $132/216$ e a versão do dado. Se uma nota menciona atraso, indique como completude foi calculada. Se a recomendação cita duas disciplinas, confirme que o ranking usa estudante único e não ocorrências. O texto que parece simples na tela é uma afirmação de dados e merece o mesmo controle que uma consulta.
+
+O vocabulário da anotação precisa distinguir constatação, comparação e hipótese. Verbos como ``representa'', ``supera'' e ``coincide'' descrevem relações observáveis; ``sugere'' abre hipótese; ``causa'', ``determina'' e ``comprova'' exigem evidência mais forte. Advérbios também mudam o tom: ``claramente'' não corrige um intervalo amplo, e ``apenas'' pode minimizar uma diferença relevante. Revisar linguagem é revisar inferência.
+
+Em apresentações orais, a fala e a tela devem compartilhar a mesma ordem. Se o apresentador começa pela metodologia enquanto o painel destaca a recomendação, a audiência divide atenção. Uma transição curta pode preparar o próximo visual: ``agora que vimos onde se concentram os casos, comparemos a capacidade disponível''. O texto não narra cada barra; orienta a operação mental. Essa coordenação mantém ritmo sem substituir o raciocínio do apresentador.
+
+\section{Incerteza, causalidade e ética na narrativa}
+
+Narrativas tendem a criar direção e propósito, enquanto dados observacionais frequentemente mostram associação incompleta. Essa tensão exige linguagem cuidadosa. ``Após o início das avaliações, houve aumento de ausências registradas'' descreve tempo. ``As avaliações causaram ausência'' exige desenho que descarte alternativas. Mudança no calendário, atraso de lançamento, trabalho, transporte e saúde podem coexistir. A história deve deixar espaço para o que não foi medido.
+
+Incerteza pode vir da amostra, do processo de medição, da definição e da atualização. No caso, trabalhamos com a população registrada, mas o registro pode estar incompleto. A regra de três semanas é uma escolha operacional; outro limiar muda a contagem. Turno é cadastro, não descrição completa da rotina. O painel deve dizer ``nos registros disponíveis'' e oferecer análise de sensibilidade quando a decisão depende do limiar.
+
+Considere variar o critério de presença. Com limite de 75\%, há 216 casos; com 70\%, há 154; com 80\%, há 292. Se o primeiro ano noturno continua concentrando perto de 60\% em todos, a prioridade é robusta à regra. Se desaparece em um pequeno ajuste, a história é frágil. Análise de sensibilidade não produz a definição correta, mas mostra quanto a conclusão depende dela.
+
+Comparações pequenas pedem intervalos ou, ao menos, tamanho da base. A taxa de 26,7\% nos demais grupos vem de 40 em 150; a de 17,6\% vem de 132 em 750. Um intervalo aproximado para proporção é $\hat p\pm1{,}96\sqrt{\hat p(1-\hat p)/n}$. Para $40/150$, o erro-padrão é aproximadamente $0{,}036$ e o intervalo, cerca de $[19{,}6\%;33{,}7\%]$. A incerteza não impede ação; impede precisão excessiva.
+
+Dados estudantis exigem finalidade e minimização. Para ofertar apoio, a equipe pode precisar de contato e condição de frequência; não precisa expor ranking nominal em apresentação ampla. A visão executiva usa agregados. A lista operacional tem acesso restrito, registro de uso e prazo. O estudante deve ter canal para corrigir dado e recusar contato quando apropriado. Uma narrativa sobre cuidado não pode operar como vigilância silenciosa.
+
+Recomendação responsável prefere ações proporcionais e reversíveis. Oferecer monitoria e contato voluntário possui risco diferente de restringir matrícula. O painel não atribui culpa a curso, professor ou estudante. Termos como ``grupo de risco'' podem congelar uma condição dinâmica; ``grupo com maior taxa observada no período'' é mais preciso. Linguagem muda consequência social e precisa ser auditada.
+
+Toda história deveria incluir o que a faria mudar. Se a completude cair abaixo do limite, suspendemos comparação; se entrevistas indicarem que horários são incompatíveis, adaptamos a ação; se adesão for baixa, investigamos canal; se a taxa não mudar, não concluímos automaticamente que o apoio falhou, pois alcance e implementação precisam ser verificados. Esse compromisso transforma recomendação em hipótese operacional, não em sentença.
+
+Uma matriz de riscos torna essa condição operacional. Para cada falha, registre probabilidade, impacto, sinal e resposta. Lançamento atrasado tem sinal de completude; ação inadequada tem adesão baixa; seleção injusta aparece em diferenças de cobertura; vazamento de identidade aparece em acesso fora do perfil. A matriz não cabe inteira no dashboard executivo, mas orienta notas, alertas e rotina de revisão. Narrativa confiável inclui capacidade de detectar quando deixou de ser confiável.
+
+Há ainda incerteza sobre consequências indiretas. Ampliar monitoria noturna pode deslocar monitores de outro horário, sobrecarregar professores ou favorecer quem já consegue permanecer no campus. Uma decisão baseada somente no indicador primário pode melhorar presença registrada e piorar equidade de acesso. Por isso, o acompanhamento combina resultado, alcance e efeitos adversos. A ética não é uma frase final; é um conjunto de medidas e possibilidades de correção.
+
+\section{Caso integrado: da tabela à recomendação verificável}
+
+A tabela de decisão reúne três grupos e evita esconder denominadores. Primeiro ano noturno: 750 estudantes, 132 casos persistentes, taxa de 17,6\% e 68 vagas semanais de monitoria disponíveis. Primeiro ano diurno: 300, 44, 14,7\% e 40 vagas. Demais grupos: 150, 40, 26,7\% e 16 vagas. O total é 1.200 estudantes e 216 casos. As vagas são capacidade, não resultado.
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Grupo & Estudantes & Casos & Taxa & Vagas \\
+\midrule
+1º ano noturno & 750 & 132 & 17,6\% & 68 \\
+1º ano diurno & 300 & 44 & 14,7\% & 40 \\
+Demais grupos & 150 & 40 & 26,7\% & 16 \\
+\midrule
+Total & 1.200 & 216 & 18,0\% & 124 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Se a prioridade fosse apenas maior taxa, escolheríamos demais grupos. Se fosse maior contagem, escolheríamos primeiro ano noturno. Se fosse cobertura imediata, calcularíamos vagas/casos: $68/132\approx51{,}5\%$, $40/44\approx90{,}9\%$ e $16/40=40\%$. A capacidade relativa é maior no diurno, mas o alcance absoluto adicional pode ser menor. A decisão combina magnitude, equidade e viabilidade; o gráfico não calcula valores institucionais.
+
+O primeiro quadro mostra contagem e taxa em painéis alinhados, com mesma ordem de grupos. O noturno recebe destaque na contagem; demais grupos, na taxa. A cor laranja não afirma vencedor único. Títulos dizem ``noturno concentra 132 dos 216 casos'' e ``demais grupos têm maior taxa, sobre base de 150''. A leitura simultânea impede que uma métrica silencie a outra.
+
+O segundo quadro mostra tendência de quatro semanas e completude. No noturno, casos sobem de 88 para 132; no diurno, de 37 para 44; nos demais, de 31 para 40. A última semana possui 88\% de lançamentos, então sua barra recebe hachura e nota. Não projetamos o valor faltante sem modelo; informamos que a comparação poderá mudar. O leitor entende direção e limitação.
+
+O terceiro quadro conecta capacidade. As 124 vagas não atendem automaticamente 124 estudantes, pois horários, disciplinas e adesão variam. A recomendação distribui 68 vagas no noturno, mantém 40 no diurno e cria busca de capacidade adicional para o grupo de maior taxa. Contato de apoio não é contado como monitoria. Cada frente terá indicador de convite, adesão e presença, evitando declarar sucesso apenas por ofertar vagas.
+
+A Big Idea final é: ``O primeiro ano noturno concentra 61\% das ausências persistentes e deve receber a maior frente imediata de monitoria, enquanto o grupo menor com taxa de 26,7\% exige investigação e capacidade adicional; o piloto será revisto em três semanas porque registros recentes estão 88\% completos e os dados não identificam causa.'' Cada fragmento aponta para número, decisão ou limite.
+
+O plano de verificação registra linha de base, alcance, adesão, presença e feedback. Comparar antes e depois sem controle não identifica efeito causal, mas ajuda a monitorar implementação e sinaliza necessidade de desenho mais forte. Uma análise posterior pode usar grupos comparáveis, adoção escalonada ou outra estratégia. Na Unidade I, o compromisso é não confundir painel operacional com experimento.
+
+O caso mostra que a recomendação não sai de um gráfico isolado. Ela depende de grão correto, taxas e contagens, completude, capacidade, visual acessível, linguagem calibrada e governança. A narrativa seleciona esses elementos na ordem necessária. O leitor pode discordar da prioridade, mas consegue reconstruir os critérios e propor alternativa. Essa contestabilidade é sinal de qualidade.
+
+\begin{GuidedBox}
+\textbf{Leitura da tabela.} Maior contagem, maior taxa e maior cobertura apontam para grupos diferentes. A decisão precisa declarar qual critério recebe prioridade e qual compensação protege os demais.
+\end{GuidedBox}
+
+\section{Leitura crítica em contextos do ENADE}
+
+Questões contextualizadas no estilo ENADE raramente entregam apenas uma definição. Elas podem trazer texto jornalístico, política pública, tabela, gráfico, nota metodológica e uma situação profissional. O desafio é reconhecer qual competência está sendo mobilizada e separar informação relevante de cenário. Ler bem não significa ignorar o contexto; significa transformá-lo em estrutura: problema, população, medida, comparação, limite e decisão.
+
+Comece identificando o comando. Verbos como analisar, avaliar, justificar, selecionar e propor pedem operações diferentes. ``Calcular'' exige resultado numérico; ``interpretar'' exige significado e limite; ``avaliar'' exige critério; ``propor'' exige ação sustentada. Uma alternativa pode conter frase tecnicamente verdadeira e ainda não responder ao verbo. Em resposta discursiva, a primeira frase deve enfrentar a pergunta antes de desenvolver justificativa.
+
+Depois, leia fonte, período, unidade e denominador. Uma tabela de casos por curso não permite comparar risco sem matrículas; uma taxa não informa impacto absoluto; média não descreve cauda; percentual acumulado não é percentual do último grupo; correlação não implica causalidade. Faça a conta mínima necessária e escreva a unidade. No caso, $132/216$ responde composição dos casos, enquanto $132/750$ responde incidência observada no grupo. Trocar denominadores troca pergunta.
+
+Em gráficos, reconstrua marca, canal, escala e transformação. Barras pedem base; linhas pedem ordem temporal; área e cor são menos precisas que posição; eixo truncado pode exagerar; escalas distintas impedem comparação; filtros mudam população. Leia título e nota, mas confira se são sustentados. Uma alternativa que repete o título pode estar errada se ignora amostra pequena ou incompletude declarada.
+
+Textos longos frequentemente misturam evidência e opinião. Marque mentalmente afirmações observadas, inferências e recomendações. ``A taxa subiu'' é observação; ``a mudança curricular causou a alta'' é inferência causal; ``deve-se ampliar monitoria'' é recomendação. Avalie se o caminho entre elas existe. Uma recomendação pode ser razoável como piloto mesmo sem causalidade estabelecida, desde que seja proporcional e inclua verificação.
+
+Alternativas plausíveis costumam errar por excesso ou insuficiência. Uma generaliza a partir de um grupo; outra confunde contagem e taxa; outra propõe ferramenta sem resolver a pergunta; outra declara causa; outra preserva contexto e limite. Não procure palavras mágicas. Compare cada alternativa com o contrato do problema. A melhor resposta é aquela que usa todas as evidências relevantes sem afirmar além delas.
+
+Na dissertação, uma estrutura curta e forte contém conclusão, evidência, limite e ação. Exemplo: ``Priorize o primeiro ano noturno para alcance imediato, pois reúne 132 dos 216 casos, mas reserve investigação aos demais grupos, cuja taxa é 26,7\%. A decisão é provisória porque a última semana possui 88\% de completude e os dados observacionais não identificam causa. Monitore adesão e presença antes de expandir.'' A resposta mostra raciocínio, não decoração verbal.
+
+Interpretar em padrão ENADE é a mesma competência usada no trabalho. Gestores recebem relatórios incompletos, gráficos persuasivos e prazos curtos. O profissional precisa reconstruir definição, fazer conta, reconhecer limite e propor ação auditável. A prova apenas concentra essa situação. Estudar a cadeia inteira prepara melhor que memorizar nomes de gráficos ou fórmulas isoladas.
+
+\section{Fechamento da Unidade I e ponte para a IA aplicada}
+
+A Unidade I começou com uma pergunta: o que torna uma análise confiável antes da ferramenta? A resposta percorreu população, amostra, variáveis, grão, qualidade, estatística, distribuição, arquitetura, gráficos, cor, acessibilidade, layout e narrativa. Nenhuma camada substitui a anterior. A história final é curta porque a cadeia foi longa e controlada. Brevidade na apresentação deve ser resultado de seleção, não falta de trabalho.
+
+Neste capítulo, a Big Idea não surgiu por inspiração. Ela foi calculada, comparada e limitada. Os 61,1\% respondem à composição; os 17,6\% respondem à taxa do grupo; os 26,7\% mostram outra prioridade possível; a completude de 88\% reduz confiança; as vagas impõem viabilidade. A recomendação declara critério e proteção. Esse é o núcleo do storytelling verificável.
+
+O storyboard ordenou contexto, concentração, diagnóstico, capacidade e ação. Anotações indicaram o que observar sem inventar causa. Cor e posição criaram hierarquia com redundância acessível. A arquitetura garantiu uma definição única de ausência persistente. A leitura crítica examinou denominadores, escalas, comandos e inferências. A integração não é uma lista de tópicos; é um percurso de decisão.
+
+O fechamento também delimita o que não sabemos. Não sabemos a causa individual das ausências, não conhecemos o efeito futuro do piloto e não devemos usar agregados para rotular pessoas. Sabemos onde os casos registrados se concentram, quais bases sustentam as taxas, onde há incompletude e quais ações reversíveis estão disponíveis. Decidir com dados não elimina incerteza; torna explícito como agir dentro dela.
+
+Na Unidade II, sistemas de IA poderão consultar bases em linguagem natural, gerar SQL, recomendar gráficos, resumir painéis e executar etapas agentic. Eles acelerarão partes da cadeia, mas também poderão errar grão, juntar tabelas com fanout, escolher denominador incorreto, criar causalidade verbal e ocultar permissões. O profissional só perceberá esses erros se dominar a base construída na Unidade I.
+
+A pergunta transversal --- para que dataviz se a IA responde diretamente? --- ganha resposta parcial. Visualização continua necessária para comparar, contestar, perceber distribuição, conferir contexto e compartilhar uma evidência que não depende apenas da frase do modelo. Uma resposta automática pode sugerir Big Idea; o analista deve reconstruir cálculo, fonte, transformação e limite. Narrativa não será terceirizada sem governança.
+
+O roteiro de três horas acompanha essa progressão. O primeiro bloco separa exploração, público, decisão e Big Idea; o segundo constrói cadeia, integração e storyboard; após a chamada, o terceiro trabalha anotação, incerteza, caso completo e leitura crítica contextualizada; o fechamento prepara IA aplicada. Cada bloco retoma o mesmo caso, evitando uma revisão fragmentada e preservando matéria suficiente para leitura autônoma.
+
+A síntese profissional cabe em uma sequência: formule o problema, identifique quem decide, declare alternativas, confira unidade e fonte, calcule medidas, escolha comparações, organize storyboard, anote limites, recomende ação proporcional e defina como aprender com o resultado. Se uma etapa não pode ser explicada, a história ainda não está pronta. Clareza é a forma visível da rastreabilidade.
+
+Essa disciplina de explicação protege a decisão quando o contexto muda e novos dados chegam.
+
+\begin{SummaryBox}
+\textbf{Síntese final.} Problema $\rightarrow$ público e decisão $\rightarrow$ evidência rastreável $\rightarrow$ interpretação calibrada $\rightarrow$ Big Idea $\rightarrow$ storyboard $\rightarrow$ ação e verificação. Uma boa história permite decidir e também discordar com base nos mesmos dados.
+\end{SummaryBox}
+
+\bigskip
+\noindent\textbf{Referências essenciais}
+
+\begingroup\small
+
+CAIRO, Alberto. \textit{The Truthful Art: Data, Charts, and Maps for Communication}. Berkeley: New Riders, 2016.
+
+DUARTE, Nancy. \textit{Resonate: Present Visual Stories that Transform Audiences}. Hoboken: Wiley, 2010.
+
+KNAFLIC, Cole Nussbaumer. \textit{Storytelling with Data: A Data Visualization Guide for Business Professionals}. Hoboken: Wiley, 2015.
+
+MUNZNER, Tamara. \textit{Visualization Analysis and Design}. Boca Raton: CRC Press, 2014.
+
+\endgroup

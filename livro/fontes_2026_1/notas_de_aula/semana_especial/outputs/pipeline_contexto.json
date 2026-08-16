@@ -1,0 +1,67 @@
+{
+  "contexto": {
+    "n_registros": 6607,
+    "n_variaveis": 20,
+    "media_nota": 67.2,
+    "dp_nota": 3.9,
+    "pct_aprovados": 99.0,
+    "top_correlacoes": {
+      "Attendance": 0.581,
+      "Hours_Studied": 0.445,
+      "Previous_Scores": 0.175,
+      "Tutoring_Sessions": 0.157
+    },
+    "horas_impacto": 0.289,
+    "envolvimento_familiar": {
+      "High": 68.1,
+      "Low": 66.4,
+      "Medium": 67.1
+    },
+    "dores_identificadas": [
+      "27% dos alunos têm nota abaixo de 60 (reprovação)",
+      "Alunos com baixo envolvimento familiar têm desempenho 8% inferior",
+      "Cada hora semanal extra de estudo vale apenas +0.29 pts — sinal de ineficiência de método"
+    ],
+    "perguntas_negocio": [
+      "Qual combinação de fatores melhor prevê a reprovação?",
+      "O envolvimento familiar compensa baixas horas de estudo?",
+      "Quais alunos devem ser priorizados para intervenção pedagógica imediata?"
+    ]
+  },
+  "insights": [
+    {
+      "id": "INS-001",
+      "tipo": "acionavel",
+      "titulo": "Alunos em risco: envolvimento familiar baixo + < 15h estudo",
+      "observacao": "Alunos com Parental_Involvement=Low e Hours_Studied<15 têm nota média estimada ~63.4, contra média geral de 67.2.",
+      "impacto": "3.4% dos alunos na base",
+      "acao": "Criar flag de risco automático + disparar comunicação aos responsáveis em até 2 semanas",
+      "stakeholder": "Coordenador + Sistema de BI",
+      "prazo": "Início do próximo semestre"
+    },
+    {
+      "id": "INS-002",
+      "tipo": "acionavel",
+      "titulo": "Cada hora extra de estudo rende apenas +0.29 pts — revisar metodologia",
+      "observacao": "Correlação de 0.45 entre horas e nota indica que quantidade sem qualidade tem retorno decrescente.",
+      "impacto": "Alunos com > 35h/semana têm nota média similar aos de 25h — desperdício de esforço",
+      "acao": "Implantar programa de estudo orientado com metas por competência, não por horas",
+      "stakeholder": "Coordenador Pedagógico",
+      "prazo": "Q3 2026"
+    },
+    {
+      "id": "INS-003",
+      "tipo": "informativo",
+      "titulo": "Taxa de aprovação atual: 99.0%",
+      "observacao": "Média=67.2 ± 3.9",
+      "impacto": "Benchmark de referência para monitoramento contínuo",
+      "acao": "Nenhuma ação imediata — monitorar mensalmente",
+      "stakeholder": "Analista de Dados",
+      "prazo": "Contínuo"
+    }
+  ],
+  "storyboard": {
+    "big_idea": "Se não identificarmos os 3.4% de alunos em risco agora, a taxa de reprovação vai manter-se em 1.0% — uma intervenção de envolvimento familiar dirigida pode elevar a aprovação em 8 pp.",
+    "cta": "Ativar flag de risco e protocolo de comunicação familiar até 31/05/2026"
+  }
+}

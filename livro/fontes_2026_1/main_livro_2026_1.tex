@@ -1,0 +1,118 @@
+\documentclass[12pt,openany]{book}
+
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage[most]{tcolorbox}
+
+\usepackage{appendix}
+
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=teal}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=pastelblue]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+% ---------- Colors (pastel palette) ----------
+\definecolor{pastelblue}{HTML}{E6F0FF}    % light blue
+\definecolor{pastelgray}{HTML}{F2F2F2}    % very light gray
+\definecolor{pastelorange}{HTML}{FFEBD6}  % light orange
+\definecolor{pastelteal}{HTML}{DFF7F2}    % accent (optional)
+% added to match Tópicos palette
+\definecolor{pastelgreen}{HTML}{E8F5E9}   % green - atenção software
+\definecolor{pastelyellow}{HTML}{FFF9E6}  % yellow - dicas
+
+% ---------- tcolorbox styles ----------
+\tcbset{sharp corners, boxrule=0pt, coltitle=black, fonttitle=\bfseries, left=8pt, right=8pt, top=6pt, bottom=6pt}
+
+\newtcolorbox{FormulaBox}[1][]{colback=pastelblue, coltitle=white, title=Fórmula, #1}
+\newtcolorbox{ProofBox}[1][]{colback=pastelgray, coltitle=white, title=Demonstração (Resumo), #1}
+\newtcolorbox{SolvedBox}[1][]{colback=pastelorange, coltitle=white, title=Questão ENADE Resolvida, #1}
+\newtcolorbox{NoteBox}[1][]{colback=pastelteal, coltitle=white, title=Nota, #1}
+
+% Attention and Tip boxes (aligned with Tópicos)
+\newtcolorbox{AttentionBox}[1][]{colback=pastelgreen, coltitle=white, title=Atenção para o Software, #1}
+\newtcolorbox{TipBox}[1][]{colback=pastelyellow, coltitle=white, title=Dica, #1}
+
+% Common box separator macro
+\newcommand{\BoxSeparator}{\vspace{0.5em}\hrule\vspace{0.5em}}
+
+
+% ---------- Listings (Python & SQL) ----------
+\lstdefinestyle{codeblock}{
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=6pt,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  framerule=0.2pt,
+  framesep=6pt,
+  rulecolor=\color{pastelgray},
+  xleftmargin=1em,
+  xrightmargin=1em
+}
+\lstdefinelanguage{SQL}{morekeywords={SELECT,FROM,WHERE,AND,OR,JOIN,LEFT,RIGHT,INNER,OUTER,ON,AS,GROUP,BY,ORDER,INSERT,INTO,VALUES,UPDATE,DELETE,CREATE,TABLE,VIEW,DROP,ALTER,PRIMARY,KEY,NOT,NULL,DEFAULT,DISTINCT}, sensitive=false}
+\lstset{style=codeblock}
+
+% ---------- Common macros ----------
+\newcommand{\mean}{\bar{x}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\sd}{\mathrm{DP}}
+\newcommand{\cov}{\mathrm{Cov}}
+\newcommand{\corr}{\mathrm{Corr}}
+\newcommand{\given}{\;\middle|\;}
+
+\title{\Huge \textbf{Análise Exploratória de Dados}\\ \Large Um Livro-Guia Prático com Exercícios e Soluções}
+\author{Cayo Oliveira (org.)}
+\date{2025}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+
+
+\input{chapters/00_plano.tex}
+\input{chapters/01_aed.tex}
+\input{chapters/02_uni.tex}
+\input{chapters/03_bi.tex}
+\input{chapters/04_multi.tex}
+\input{chapters/05_fundamentos.tex}
+\input{chapters/06_gaficos.tex}
+\input{chapters/07_insights.tex}
+\input{chapters/08_storytelling.tex}
+\input{chapters/09_real_cases.tex}
+\input{chapters/10_tableau.tex}
+
+\appendix
+\chapter*{Referências}
+\addcontentsline{toc}{chapter}{Referências}
+\begin{itemize}
+  \item Tukey, John W. \textit{Exploratory Data Analysis}. 1977.
+  \item Bruce, Peter; Bruce, Andrew; Gedeck, Peter. \textit{Estatística Prática para Cientistas de Dados}. O'Reilly.
+  \item Fávero, Luiz Paulo. \textit{Manual de Análise de Dados}. Elsevier.
+\end{itemize}
+
+\end{document}

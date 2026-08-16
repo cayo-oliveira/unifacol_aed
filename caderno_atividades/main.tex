@@ -1,0 +1,902 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.65cm,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern,microtype,enumitem,booktabs,tabularx,longtable,array,xcolor,hyperref,fancyhdr,newunicodechar}
+\newunicodechar{—}{---}
+\newunicodechar{–}{--}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\definecolor{aedblue}{HTML}{17365D}
+\definecolor{softblue}{HTML}{EEF4F8}
+\definecolor{linegrey}{HTML}{9AA5B1}
+\hypersetup{colorlinks=true,urlcolor=aedblue,linkcolor=black}
+\urlstyle{same}
+\setlist[itemize]{leftmargin=*,itemsep=.3em}
+\setlist[enumerate]{leftmargin=*,itemsep=.4em}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{UNIFACOL -- AED}
+\rhead{Caderno de atividades -- 2026.2}
+\cfoot{\thepage}
+\emergencystretch=3em
+\raggedbottom
+\newenvironment{AccessBox}{\par\smallskip\begin{quote}\small}{\end{quote}\par\smallskip}
+\title{Caderno de atividades\\\large Análise Exploratória de Dados --- Unidade I --- 2026.2}
+\author{Professor Cayo Oliveira}
+\date{Encontros presenciais: quintas-feiras, 19h--22h}
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+\section*{Finalidade e pontuação}
+\addcontentsline{toc}{section}{Finalidade e pontuação}
+\begin{AccessBox}
+Cada estudante participa de quatro apresentações científicas em quatro dias distintos, com um artigo de 2026 diferente por rodada. Cada fala vale 0,5 ponto; as quatro totalizam 2,0 pontos. A apresentação dura quatro minutos e é seguida de até um minuto de pergunta ou conexão.
+\end{AccessBox}
+
+As apresentações não substituem a aula. Em cada data, aproximadamente 80 minutos preservam conteúdo e síntese; até 100 minutos acomodam vinte falas e suas conexões.
+
+\section*{Calendário e progressão}
+\addcontentsline{toc}{section}{Calendário e progressão}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}c c Y Y@{}}
+\toprule
+\textbf{Rodada} & \textbf{Data} & \textbf{Foco da fala} & \textbf{Conexão com a aula}\\
+\midrule
+1 & 20/08/2026 & problema e contexto & probabilidade, distribuições, covariância e correlação\\
+2 & 03/09/2026 & método e evidência & bronze/prata/ouro, SOR/SOT/SPEC e linhagem\\
+3 & 17/09/2026 & resultados, limites e conexão & integração de estatística, arquitetura, visual e narrativa\\
+4 & 24/09/2026 & decisão e síntese & fechamento integrado da Unidade I\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section*{O que fazer em cada rodada}
+\addcontentsline{toc}{section}{O que fazer em cada rodada}
+\begin{enumerate}
+\item \textbf{Problema e contexto:} identifique a pergunta, sua relevância, o recorte e o vocabulário indispensável.
+\item \textbf{Método e evidência:} explique dados, arquitetura, procedimento, experimento ou modelo e separe afirmação de evidência.
+\item \textbf{Resultados, limites e conexão:} interprete os achados, apresente um limite e conecte-o ao conteúdo estudado.
+\item \textbf{Decisão e síntese:} defenda o que pode ser aplicado, o que não deve ser generalizado e a ligação com a Unidade I.
+\end{enumerate}
+Em toda rodada, informe título, autores, veículo, ano, DOI e páginas lidas. LLM pode apoiar o estudo, mas cada afirmação deve ser conferida no artigo e defendida oralmente.
+
+\section*{Rubrica -- 0,5 ponto por rodada}
+\addcontentsline{toc}{section}{Rubrica -- 0,5 ponto por rodada}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}Y c Y@{}}
+\toprule
+\textbf{Critério} & \textbf{Valor} & \textbf{Evidência observável}\\
+\midrule
+Compreensão fiel do problema e do recorte & 0,15 & apresenta a pergunta sem atribuir ao artigo algo que ele não afirma\\
+Método ou evidência em vocabulário próprio & 0,15 & explica de onde vem a conclusão e separa procedimento de resultado\\
+Conexão tecnicamente correta com a aula & 0,10 & mobiliza conceito da semana de modo pertinente\\
+Limite, risco ou condição de validade & 0,05 & explicita uma restrição sustentada pelo texto\\
+Clareza, referência e respeito ao tempo & 0,05 & identifica a fonte e conclui dentro do tempo\\
+\midrule
+\textbf{Total} & \textbf{0,50} & \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Síntese decorada sem evidência não recebe pontuação integral. Os campos de status e observações ficam vazios até o professor registrar o que realmente ocorreu.
+
+\clearpage
+\section*{Atribuições por rodada}
+\addcontentsline{toc}{section}{Atribuições por rodada}
+\section*{Rodada 1 -- 20/08/2026}
+\textbf{Foco:} problema e contexto. \textbf{Conexão:} probabilidade, distribuições, covariância e correlação.
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1.15cm}>{\raggedright\arraybackslash}p{1.25cm}>{\raggedright\arraybackslash}p{1.65cm}@{}}
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endhead
+Estudante 01 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470383}{\textbf{A01} -- Comparative Analysis of Estimation of SoC Using Various...} & problema e contexto & 4+1 min & & \\
+Estudante 02 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469842}{\textbf{A02} -- Predictive Maintainance in Leveraging Superivsed Machine...} & problema e contexto & 4+1 min & & \\
+Estudante 03 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470369}{\textbf{A03} -- A Multimodel Approach to Brain Stroke Risk Analysis Using...} & problema e contexto & 4+1 min & & \\
+Estudante 04 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470323}{\textbf{A04} -- Real-Time Multi-Modal Risk Assessment in Public Spaces...} & problema e contexto & 4+1 min & & \\
+Estudante 05 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470352}{\textbf{A05} -- Predicting Chronic Kidney Disease Through Machine...} & problema e contexto & 4+1 min & & \\
+Estudante 06 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470384}{\textbf{A06} -- Intelligent Hybrid Edge–Cloud AI Predictive Maintenance...} & problema e contexto & 4+1 min & & \\
+Estudante 07 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470491}{\textbf{A07} -- Toporiskformer-GNN: A Topological Riskaware Graph...} & problema e contexto & 4+1 min & & \\
+Estudante 08 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470501}{\textbf{A08} -- Performance Comparison of Machine Learning Algorithms in...} & problema e contexto & 4+1 min & & \\
+Estudante 09 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470429}{\textbf{A09} -- A Unified Framework for Image Segmentation, Object...} & problema e contexto & 4+1 min & & \\
+Estudante 10 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470333}{\textbf{A10} -- Kidney Stone Classification Using Modified DenseNet for...} & problema e contexto & 4+1 min & & \\
+Estudante 11 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470543}{\textbf{A11} -- Synthetic Data Augmentation for Robust Solar Flare...} & problema e contexto & 4+1 min & & \\
+Estudante 12 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469851}{\textbf{A12} -- Handwriting Analysis Using Deep Learning and Image...} & problema e contexto & 4+1 min & & \\
+Estudante 13 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470520}{\textbf{A13} -- Advancements in Drought Prediction: A Comparative Study...} & problema e contexto & 4+1 min & & \\
+Estudante 14 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470398}{\textbf{A14} -- Epilepsy Simulation With AI-Driven Insights \& Detection ...} & problema e contexto & 4+1 min & & \\
+Estudante 15 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470497}{\textbf{A15} -- A Deep Federated Learning Approach for Secure Malware...} & problema e contexto & 4+1 min & & \\
+Estudante 16 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470388}{\textbf{A16} -- Deep Learning-Based Plant Disease Detection and Severity...} & problema e contexto & 4+1 min & & \\
+Estudante 17 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469787}{\textbf{A17} -- A Digital Twin-Enhanced Battery Management System with...} & problema e contexto & 4+1 min & & \\
+Estudante 18 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470363}{\textbf{A18} -- DeepTrustChain: A Blockchain-Anchored Hybrid Deep...} & problema e contexto & 4+1 min & & \\
+Estudante 19 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470556}{\textbf{A19} -- Real-Time Multi-Input Diabetic Retinopathy Stage...} & problema e contexto & 4+1 min & & \\
+Estudante 20 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470422}{\textbf{A20} -- AI Powered Liver Cancer Detection System using Genetic...} & problema e contexto & 4+1 min & & \\
+\bottomrule
+\end{longtable}
+\normalsize
+\clearpage
+\section*{Rodada 2 -- 03/09/2026}
+\textbf{Foco:} método e evidência. \textbf{Conexão:} bronze/prata/ouro, SOR/SOT/SPEC e linhagem.
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1.15cm}>{\raggedright\arraybackslash}p{1.25cm}>{\raggedright\arraybackslash}p{1.65cm}@{}}
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endhead
+Estudante 01 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469836}{\textbf{A21} -- Cloud-Integrated IoT Architecture for Scalable and...} & método e evidência & 4+1 min & & \\
+Estudante 02 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469777}{\textbf{A22} -- Edge-Efficient Crop Health Monitoring using...} & método e evidência & 4+1 min & & \\
+Estudante 03 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470386}{\textbf{A23} -- An IoT-Enabled Hybrid Machine Learning Framework for...} & método e evidência & 4+1 min & & \\
+Estudante 04 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470364}{\textbf{A24} -- Dynamic Deception Framework for Mitigating Advanced Cyber...} & método e evidência & 4+1 min & & \\
+Estudante 05 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470413}{\textbf{A25} -- DRPS: Interactive Visualization of Data Replication...} & método e evidência & 4+1 min & & \\
+Estudante 06 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469877}{\textbf{A26} -- FloodSense-VLM: A Lightweight Vision-Language Model for...} & método e evidência & 4+1 min & & \\
+Estudante 07 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470493}{\textbf{A27} -- MEDILOCK: Biometric-Enabled Emergency Gateway for Secure...} & método e evidência & 4+1 min & & \\
+Estudante 08 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469835}{\textbf{A28} -- EcoSphere: AI-Driven Waste Management and Recycling...} & método e evidência & 4+1 min & & \\
+Estudante 09 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469856}{\textbf{A29} -- AI-Driven Cloud Security Framework Using Deep Feature...} & método e evidência & 4+1 min & & \\
+Estudante 10 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470373}{\textbf{A30} -- Systematic Approach of Integrating Artificial...} & método e evidência & 4+1 min & & \\
+Estudante 11 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469847}{\textbf{A31} -- Brand-Flow: A Resource-Efficient Framework for...} & método e evidência & 4+1 min & & \\
+Estudante 12 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470344}{\textbf{A32} -- Deep Reinforcement Learning for Autonomous Control and...} & método e evidência & 4+1 min & & \\
+Estudante 13 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469882}{\textbf{A33} -- NeuroSymbolic AI Framework for Interpretable STEM...} & método e evidência & 4+1 min & & \\
+Estudante 14 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469789}{\textbf{A34} -- Digital Twin-Enabled Intelligent Battery Health...} & método e evidência & 4+1 min & & \\
+Estudante 15 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469889}{\textbf{A35} -- Petri-Net-Driven Cognitive Monitoring Architecture for...} & método e evidência & 4+1 min & & \\
+Estudante 16 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470450}{\textbf{A36} -- Lightweight CNN Model for Real Time Aerial Image...} & método e evidência & 4+1 min & & \\
+Estudante 17 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470354}{\textbf{A37} -- Edge Optimized CNN For Real Time Aerial Image Analysis} & método e evidência & 4+1 min & & \\
+Estudante 18 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470458}{\textbf{A38} -- Wavelet Packet Transform and SVM-Based Framework for...} & método e evidência & 4+1 min & & \\
+Estudante 19 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470325}{\textbf{A39} -- A Robust Access Control and Logging Mechanism for...} & método e evidência & 4+1 min & & \\
+Estudante 20 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469769}{\textbf{A40} -- Smart Track Surveillance for Railway Safety Using...} & método e evidência & 4+1 min & & \\
+\bottomrule
+\end{longtable}
+\normalsize
+\clearpage
+\section*{Rodada 3 -- 17/09/2026}
+\textbf{Foco:} resultados, limites e conexão. \textbf{Conexão:} integração de estatística, arquitetura, visual e narrativa.
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1.15cm}>{\raggedright\arraybackslash}p{1.25cm}>{\raggedright\arraybackslash}p{1.65cm}@{}}
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endhead
+Estudante 01 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469802}{\textbf{A41} -- PCOS Detection using Logistic Regression with SHAP...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 02 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470487}{\textbf{A42} -- A Multimodal Explainable Deep Learning Approach for...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 03 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470380}{\textbf{A43} -- Brain Tumor MRI Interpretation and Classification using...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 04 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470437}{\textbf{A44} -- Transforming MRI Data Into Latent Space Embeddings Using...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 05 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470355}{\textbf{A45} -- An Interpretable Deep Learning Framework with...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 06 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470327}{\textbf{A46} -- Interactive Online Compiler with Code Visualization and...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 07 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470428}{\textbf{A47} -- AI-Driven Multimodal Radiology Assistant for Unified...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 08 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470359}{\textbf{A48} -- Lightweight Interpretable CNN for Four-Class Lung Lesion...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 09 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470324}{\textbf{A49} -- Smart Monitoring of Automotive Engine Health for...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 10 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470511}{\textbf{A50} -- DenseNet121 Based Off-Type Sunflower Plant Detection} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 11 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470467}{\textbf{A51} -- Policy Gradient-Based Reinforcement Learning for...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 12 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470371}{\textbf{A52} -- Leveraging the ConvNeXt-L Model for Tomato Leaf Disease...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 13 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470342}{\textbf{A53} -- Real-Time Sleep Apnea Detection System Using Multi-Sensor...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 14 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470474}{\textbf{A54} -- Graph Neural Network—Based Constellation Recognizer Model...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 15 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470471}{\textbf{A55} -- CyberSentinel: An AI-Powered Secure Browser with Parental...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 16 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469806}{\textbf{A56} -- Replay Attack Detection in Automatic Speaker Verification...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 17 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470441}{\textbf{A57} -- A Hybrid Correlation-PSO Feature Selection Framework with...} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 18 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470377}{\textbf{A58} -- Semantic Twin Search Using Fractal Cosmic Net} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 19 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470479}{\textbf{A59} -- Leaf Care CNN Framework for Automated Plant Pathology} & resultados, limites e conexão & 4+1 min & & \\
+Estudante 20 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470404}{\textbf{A60} -- Transforming Information Retrieval with AI: Semantic...} & resultados, limites e conexão & 4+1 min & & \\
+\bottomrule
+\end{longtable}
+\normalsize
+\clearpage
+\section*{Rodada 4 -- 24/09/2026}
+\textbf{Foco:} decisão e síntese. \textbf{Conexão:} fechamento integrado da Unidade I.
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1.15cm}>{\raggedright\arraybackslash}p{1.25cm}>{\raggedright\arraybackslash}p{1.65cm}@{}}
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Estud.} & \textbf{Artigo 2026} & \textbf{Foco} & \textbf{Tempo} & \textbf{Status} & \textbf{Obs.}\\
+\midrule
+\endhead
+Estudante 01 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470507}{\textbf{A61} -- Intelligent Graph-Convolutional Cleaner Fish Attentive...} & decisão e síntese & 4+1 min & & \\
+Estudante 02 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470550}{\textbf{A62} -- IPO Performance Predictor: Using Pre-Listing Sentiment...} & decisão e síntese & 4+1 min & & \\
+Estudante 03 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470412}{\textbf{A63} -- AI-Driven Voice-Controlled Virtual Assistant Framework...} & decisão e síntese & 4+1 min & & \\
+Estudante 04 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470430}{\textbf{A64} -- Machine Learning Approach for Pneumonia Detection from...} & decisão e síntese & 4+1 min & & \\
+Estudante 05 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470335}{\textbf{A65} -- Agro E-Commerce Platform with AI-Based Disease Outbreak...} & decisão e síntese & 4+1 min & & \\
+Estudante 06 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470560}{\textbf{A66} -- Detection of Covid-19 and Prediction of Post-Recovery...} & decisão e síntese & 4+1 min & & \\
+Estudante 07 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470417}{\textbf{A67} -- Enhancing Heart Attack Prediction Through Hybrid Ensemble...} & decisão e síntese & 4+1 min & & \\
+Estudante 08 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470526}{\textbf{A68} -- A Robust Misuse-Based Intrusion Detection Using Deep...} & decisão e síntese & 4+1 min & & \\
+Estudante 09 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470396}{\textbf{A69} -- Advancing Sustainable Agriculture: Harnessing Machine...} & decisão e síntese & 4+1 min & & \\
+Estudante 10 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470405}{\textbf{A70} -- Multi-Modal Cyberbullying Detection Using Deep Learning...} & decisão e síntese & 4+1 min & & \\
+Estudante 11 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470438}{\textbf{A71} -- Multistage ViT-DQN-LSTM Neuroimaging Architecture for...} & decisão e síntese & 4+1 min & & \\
+Estudante 12 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470397}{\textbf{A72} -- Machine Learning-Based Attack Detection System with AES...} & decisão e síntese & 4+1 min & & \\
+Estudante 13 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470381}{\textbf{A73} -- AI Enhanced Intrusion Detection with Facial Biometrics} & decisão e síntese & 4+1 min & & \\
+Estudante 14 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470562}{\textbf{A74} -- Smart Certificate Validation and Fraud Detection...} & decisão e síntese & 4+1 min & & \\
+Estudante 15 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470545}{\textbf{A75} -- Automated Academic Planning Using Machine Learning for...} & decisão e síntese & 4+1 min & & \\
+Estudante 16 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469794}{\textbf{A76} -- A Feature-Optimized PLSR Framework for Non-Destructive...} & decisão e síntese & 4+1 min & & \\
+Estudante 17 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469782}{\textbf{A77} -- SafeFusion: A YOLO-Transformer Hybrid Model for...} & decisão e síntese & 4+1 min & & \\
+Estudante 18 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470451}{\textbf{A78} -- A Transfer Learning Framework for Multimodal Emotion...} & decisão e síntese & 4+1 min & & \\
+Estudante 19 & \href{https://doi.org/10.1109/ICVADV67766.2026.11470442}{\textbf{A79} -- LSTM Networks for Thermal Management in Power Converters...} & decisão e síntese & 4+1 min & & \\
+Estudante 20 & \href{https://doi.org/10.1109/ICVADV67766.2026.11469838}{\textbf{A80} -- Adaptive Real-Time Ransomware Detection Using...} & decisão e síntese & 4+1 min & & \\
+\bottomrule
+\end{longtable}
+\normalsize
+\clearpage
+\section*{Catálogo legível dos artigos de 2026}
+\addcontentsline{toc}{section}{Catálogo legível dos artigos de 2026}
+\begin{AccessBox}
+\textbf{Aviso de acesso.} Os DOIs levam às páginas oficiais. As fontes locais consultadas não informaram PDF aberto para nenhum dos 80 artigos. O texto integral pode exigir biblioteca institucional, assinatura ou obtenção legal pelo professor. Os resumos são sínteses conservadoras dos abstracts e não substituem a leitura.
+\end{AccessBox}
+\clearpage
+\section*{Catálogo da Rodada 1 -- 20/08/2026}
+\textit{Foco: problema e contexto.}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470383}{A01 -- Comparative Analysis of Estimation of SoC Using Various Machine Learning Models for Electric Vehicles}}\par\smallskip
+\textbf{Autoria abreviada:} Singh, S.; Gupta, P.; Tomar, H. et al.\quad \textbf{Páginas:} 1233-1238 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de análise de dados aplicada, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470383}{\nolinkurl{10.1109/ICVADV67766.2026.11470383}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469842}{A02 -- Predictive Maintainance in Leveraging Superivsed Machine Learning for Wireless Sensor Netowrks}}\par\smallskip
+\textbf{Autoria abreviada:} V, T.R.; K., Y.; E, A.D.\quad \textbf{Páginas:} 661-666 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de análise de dados aplicada, empregando IoT, ensemble. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469842}{\nolinkurl{10.1109/ICVADV67766.2026.11469842}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470369}{A03 -- A Multimodel Approach to Brain Stroke Risk Analysis Using Medical Imaging}}\par\smallskip
+\textbf{Autoria abreviada:} Shalini, V.; K, S.; Devi, E.\quad \textbf{Páginas:} 566-570 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando Transformer. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470369}{\nolinkurl{10.1109/ICVADV67766.2026.11470369}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470323}{A04 -- Real-Time Multi-Modal Risk Assessment in Public Spaces Using Vision}}\par\smallskip
+\textbf{Autoria abreviada:} S, D.; Shafana, N.; Easter, E.V.\quad \textbf{Páginas:} 996-1002 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de mobilidade e risco, empregando CNN, XAI/explicabilidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470323}{\nolinkurl{10.1109/ICVADV67766.2026.11470323}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470352}{A05 -- Predicting Chronic Kidney Disease Through Machine Learning and Modelling Applied to Big Data}}\par\smallskip
+\textbf{Autoria abreviada:} Harini, G.; Vaishnavi, P.; Sai, V.\quad \textbf{Páginas:} 479-483 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470352}{\nolinkurl{10.1109/ICVADV67766.2026.11470352}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470384}{A06 -- Intelligent Hybrid Edge–Cloud AI Predictive Maintenance for Industrial Electrical Systems}}\par\smallskip
+\textbf{Autoria abreviada:} Brindha, S.; V., H.; K, I. et al.\quad \textbf{Páginas:} 941-945 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de manutenção e sistemas industriais, empregando Transformer. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470384}{\nolinkurl{10.1109/ICVADV67766.2026.11470384}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470491}{A07 -- Toporiskformer-GNN: A Topological Riskaware Graph Transformer for Cybersecurity Anomaly Detection and Risk Assessment}}\par\smallskip
+\textbf{Autoria abreviada:} Linda, C.; Sharan, B.; Vetrivel, K. et al.\quad \textbf{Páginas:} 1022-1029 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando SHAP, CNN, Transformer. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470491}{\nolinkurl{10.1109/ICVADV67766.2026.11470491}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470501}{A08 -- Performance Comparison of Machine Learning Algorithms in Predictive Maintenance Applications}}\par\smallskip
+\textbf{Autoria abreviada:} Sahu, A.; Tanwani, S.N.\quad \textbf{Páginas:} 1050-1054 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando SVM, XAI/explicabilidade, ensemble. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470501}{\nolinkurl{10.1109/ICVADV67766.2026.11470501}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470429}{A09 -- A Unified Framework for Image Segmentation, Object Detection, and Generation using Deep Learning and OpenCV}}\par\smallskip
+\textbf{Autoria abreviada:} Minu, R.; Banerjee, S.; M., T.\quad \textbf{Páginas:} 1-5 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de processamento de imagens e multimodalidade, empregando CNN, visão computacional. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470429}{\nolinkurl{10.1109/ICVADV67766.2026.11470429}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470333}{A10 -- Kidney Stone Classification Using Modified DenseNet for Feature Extraction and SVM for Classification}}\par\smallskip
+\textbf{Autoria abreviada:} Seeniammal, G.; Singaravelan, S.; Devi, G. et al.\quad \textbf{Páginas:} 190-194 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando SVM. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470333}{\nolinkurl{10.1109/ICVADV67766.2026.11470333}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470543}{A11 -- Synthetic Data Augmentation for Robust Solar Flare Classification: A Comparative Analysis of Conditional DCGAN, VAE, and Diffusion Models}}\par\smallskip
+\textbf{Autoria abreviada:} S, S.; Prakash, G.S.; Thomas, J. et al.\quad \textbf{Páginas:} 896-901 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de análise de dados aplicada, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470543}{\nolinkurl{10.1109/ICVADV67766.2026.11470543}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469851}{A12 -- Handwriting Analysis Using Deep Learning and Image Processing for Early Dyslexia, Dysgraphia and Dyspraxia Screening}}\par\smallskip
+\textbf{Autoria abreviada:} M, G.; M, G.; S., M. et al.\quad \textbf{Páginas:} 1078-1084 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469851}{\nolinkurl{10.1109/ICVADV67766.2026.11469851}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470520}{A13 -- Advancements in Drought Prediction: A Comparative Study of SARIMA, SARIMAX, Multivariate LSTM and STAT-LSTM}}\par\smallskip
+\textbf{Autoria abreviada:} Ahamed, B.; S, G.; Neelakantan, H.\quad \textbf{Páginas:} 909-915 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando séries temporais SARIMA/SARIMAX, LSTM. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470520}{\nolinkurl{10.1109/ICVADV67766.2026.11470520}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470398}{A14 -- Epilepsy Simulation With AI-Driven Insights \& Detection - EpiSimAiD}}\par\smallskip
+\textbf{Autoria abreviada:} Meenakshi; Hariharan; Pattan, K.I. et al.\quad \textbf{Páginas:} 9-16 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de saúde e diagnóstico, empregando métodos computacionais descritos no artigo. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470398}{\nolinkurl{10.1109/ICVADV67766.2026.11470398}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470497}{A15 -- A Deep Federated Learning Approach for Secure Malware Detection in Cloud Computing}}\par\smallskip
+\textbf{Autoria abreviada:} Chermadurai, B.; Singaravelan, S.; Gopalsamy, P.\quad \textbf{Páginas:} 744-750 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando Transformer, federated learning, ensemble. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470497}{\nolinkurl{10.1109/ICVADV67766.2026.11470497}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470388}{A16 -- Deep Learning-Based Plant Disease Detection and Severity Estimation: A Comprehensive Framework for Precision Agriculture}}\par\smallskip
+\textbf{Autoria abreviada:} Sundar, T.T.; Vamsi, K.S.; S, G.\quad \textbf{Páginas:} 774-780 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de agricultura e monitoramento ambiental, empregando CNN. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470388}{\nolinkurl{10.1109/ICVADV67766.2026.11470388}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469787}{A17 -- A Digital Twin-Enhanced Battery Management System with Adaptive Learning for Electric Vehicle Applications}}\par\smallskip
+\textbf{Autoria abreviada:} Depakkumar, M.; Gururagavendran, G.; Sam, B.\quad \textbf{Páginas:} 1407-1412 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando digital twin. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469787}{\nolinkurl{10.1109/ICVADV67766.2026.11469787}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470363}{A18 -- DeepTrustChain: A Blockchain-Anchored Hybrid Deep Learning Framework for High-Integrity Fake News Detection}}\par\smallskip
+\textbf{Autoria abreviada:} Sravanthi, D.; Shanmukha, O.; Prasad, H. et al.\quad \textbf{Páginas:} 155-162 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando Transformer, ensemble. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470363}{\nolinkurl{10.1109/ICVADV67766.2026.11470363}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470556}{A19 -- Real-Time Multi-Input Diabetic Retinopathy Stage Detection Using EfficientNet-B3 and Fundus Images}}\par\smallskip
+\textbf{Autoria abreviada:} J, E.; G, D.; T., P.\quad \textbf{Páginas:} 864-871 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470556}{\nolinkurl{10.1109/ICVADV67766.2026.11470556}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470422}{A20 -- AI Powered Liver Cancer Detection System using Genetic Algorithms}}\par\smallskip
+\textbf{Autoria abreviada:} Sheena, B.; Naveen, E.; Nanthini, K. et al.\quad \textbf{Páginas:} 697-704 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando CNN, XAI/explicabilidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Identificar problema, população/dados, variável-alvo e evidência que motiva a análise.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470422}{\nolinkurl{10.1109/ICVADV67766.2026.11470422}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\clearpage
+\section*{Catálogo da Rodada 2 -- 03/09/2026}
+\textit{Foco: método e evidência.}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469836}{A21 -- Cloud-Integrated IoT Architecture for Scalable and Real-Time Industrial Automation}}\par\smallskip
+\textbf{Autoria abreviada:} Prabu, M.; Basha, S.M.; Tf, M. et al.\quad \textbf{Páginas:} 635-642 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando IoT, visualização interativa. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469836}{\nolinkurl{10.1109/ICVADV67766.2026.11469836}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469777}{A22 -- Edge-Efficient Crop Health Monitoring using Selfsupervised Shufflenet and Attention-Based Multimodal Fusion}}\par\smallskip
+\textbf{Autoria abreviada:} Vanathi, M.; Gokul, M.K.; Kumar, M.N. et al.\quad \textbf{Páginas:} 872-877 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando multimodalidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469777}{\nolinkurl{10.1109/ICVADV67766.2026.11469777}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470386}{A23 -- An IoT-Enabled Hybrid Machine Learning Framework for Early Plant Disease Detection and Crop Health Monitoring}}\par\smallskip
+\textbf{Autoria abreviada:} Sapra, P.K.; Bixapathi, A.; P, S. et al.\quad \textbf{Páginas:} 1360-1365 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando CNN, SVM, IoT. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470386}{\nolinkurl{10.1109/ICVADV67766.2026.11470386}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470364}{A24 -- Dynamic Deception Framework for Mitigating Advanced Cyber Threats in Cloud Infrastructures}}\par\smallskip
+\textbf{Autoria abreviada:} J, V.; B., Y.\quad \textbf{Páginas:} 81-86 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando métodos computacionais descritos no artigo. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470364}{\nolinkurl{10.1109/ICVADV67766.2026.11470364}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470413}{A25 -- DRPS: Interactive Visualization of Data Replication Trade-Offs in Edge-Cloud Systems}}\par\smallskip
+\textbf{Autoria abreviada:} R, D.; A, S.; Shalini, T.\quad \textbf{Páginas:} 50-57 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de visualização e arquitetura de dados, empregando visualização interativa. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470413}{\nolinkurl{10.1109/ICVADV67766.2026.11470413}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469877}{A26 -- FloodSense-VLM: A Lightweight Vision-Language Model for Real-Time Disaster Management}}\par\smallskip
+\textbf{Autoria abreviada:} Govindaraj, D.S.P.; M, A.K.; Talukdar, M.J. et al.\quad \textbf{Páginas:} 859-863 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de mobilidade e risco, empregando Transformer, multimodalidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469877}{\nolinkurl{10.1109/ICVADV67766.2026.11469877}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470493}{A27 -- MEDILOCK: Biometric-Enabled Emergency Gateway for Secure Patient Health Records}}\par\smallskip
+\textbf{Autoria abreviada:} Geetha, M.; Mathi, S.; Akshaya, M. et al.\quad \textbf{Páginas:} 1603-1608 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de análise de dados aplicada, empregando métodos computacionais descritos no artigo. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470493}{\nolinkurl{10.1109/ICVADV67766.2026.11470493}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469835}{A28 -- EcoSphere: AI-Driven Waste Management and Recycling Recommendation System}}\par\smallskip
+\textbf{Autoria abreviada:} Dr.K.Seethalakshmi; Sree, P.; Reddy, B.\quad \textbf{Páginas:} 962-967 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de recomendação e comportamento, empregando CNN. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469835}{\nolinkurl{10.1109/ICVADV67766.2026.11469835}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469856}{A29 -- AI-Driven Cloud Security Framework Using Deep Feature Learning and Hybrid Threat Classification}}\par\smallskip
+\textbf{Autoria abreviada:} Vutla, P.; Yenugu, T.\quad \textbf{Páginas:} 163-167 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando CNN, SVM. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469856}{\nolinkurl{10.1109/ICVADV67766.2026.11469856}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470373}{A30 -- Systematic Approach of Integrating Artificial Intelligence into Kidney Health Monitoring for Diabetic Care}}\par\smallskip
+\textbf{Autoria abreviada:} Murugesan, A.; Nabila, A.; Sangameswaran, B.B. et al.\quad \textbf{Páginas:} 1694-1698 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando IoT, XAI/explicabilidade, multimodalidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470373}{\nolinkurl{10.1109/ICVADV67766.2026.11470373}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469847}{A31 -- Brand-Flow: A Resource-Efficient Framework for Multilingual Marketing Generation Using Quantized Flow-Matching and RAG}}\par\smallskip
+\textbf{Autoria abreviada:} J, B.K.; M, G.; P, U.\quad \textbf{Páginas:} 1681-1687 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de recomendação e comportamento, empregando RAG. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469847}{\nolinkurl{10.1109/ICVADV67766.2026.11469847}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470344}{A32 -- Deep Reinforcement Learning for Autonomous Control and Optimization in 5G Communications}}\par\smallskip
+\textbf{Autoria abreviada:} Akurati, M.; Mounika, P.; Mahender, M. et al.\quad \textbf{Páginas:} 1388-1394 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de análise de dados aplicada, empregando aprendizado por reforço. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470344}{\nolinkurl{10.1109/ICVADV67766.2026.11470344}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469882}{A33 -- NeuroSymbolic AI Framework for Interpretable STEM Tutoring Systems}}\par\smallskip
+\textbf{Autoria abreviada:} V.S.Chandrika; Sugirtha, T.; A.Punitha et al.\quad \textbf{Páginas:} 259-264 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de sistemas inteligentes aplicados, empregando Transformer, XAI/explicabilidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469882}{\nolinkurl{10.1109/ICVADV67766.2026.11469882}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469789}{A34 -- Digital Twin-Enabled Intelligent Battery Health Management System for Electric Vehicles}}\par\smallskip
+\textbf{Autoria abreviada:} Abraham, E.; Sridharan, D.S.; Joseph's, S.\quad \textbf{Páginas:} 1246-1252 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando IoT, digital twin. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469789}{\nolinkurl{10.1109/ICVADV67766.2026.11469789}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469889}{A35 -- Petri-Net-Driven Cognitive Monitoring Architecture for Intelligent Aeroponics with ML-Enhanced Growth Optimization}}\par\smallskip
+\textbf{Autoria abreviada:} Amshavalli, R.S.; Abhinay, N.; Vamsi, N. et al.\quad \textbf{Páginas:} 627-634 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de análise de dados aplicada, empregando IoT. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469889}{\nolinkurl{10.1109/ICVADV67766.2026.11469889}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470450}{A36 -- Lightweight CNN Model for Real Time Aerial Image Segmentation}}\par\smallskip
+\textbf{Autoria abreviada:} Balasubramaniam, N.; Shalini, M.; C, K. et al.\quad \textbf{Páginas:} 360-366 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de processamento de imagens e multimodalidade, empregando CNN. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470450}{\nolinkurl{10.1109/ICVADV67766.2026.11470450}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470354}{A37 -- Edge Optimized CNN For Real Time Aerial Image Analysis}}\par\smallskip
+\textbf{Autoria abreviada:} Azhagusundari, B.; Nithya, A.; Ramamoorthi, R. et al.\quad \textbf{Páginas:} 354-359 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de processamento de imagens e multimodalidade, empregando CNN. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470354}{\nolinkurl{10.1109/ICVADV67766.2026.11470354}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470458}{A38 -- Wavelet Packet Transform and SVM-Based Framework for Real-Time Power Quality Event Detection}}\par\smallskip
+\textbf{Autoria abreviada:} Banwar, S.; Barman, A.\quad \textbf{Páginas:} 1487-1492 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando SVM. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470458}{\nolinkurl{10.1109/ICVADV67766.2026.11470458}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470325}{A39 -- A Robust Access Control and Logging Mechanism for Sensitive Information Systems}}\par\smallskip
+\textbf{Autoria abreviada:} S., K.; Nath, S.S.; K, G. et al.\quad \textbf{Páginas:} 643-648 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de análise de dados aplicada, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470325}{\nolinkurl{10.1109/ICVADV67766.2026.11470325}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469769}{A40 -- Smart Track Surveillance for Railway Safety Using Computer Vision}}\par\smallskip
+\textbf{Autoria abreviada:} P, S.M.; R, V.; Shalini, S.\quad \textbf{Páginas:} 1366-1372 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de mobilidade e risco, empregando visão computacional. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Explicar método, preparação dos dados, arquitetura/pipeline e métricas usadas como evidência.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469769}{\nolinkurl{10.1109/ICVADV67766.2026.11469769}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\clearpage
+\section*{Catálogo da Rodada 3 -- 17/09/2026}
+\textit{Foco: resultados, limites e conexão.}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469802}{A41 -- PCOS Detection using Logistic Regression with SHAP Interpretability}}\par\smallskip
+\textbf{Autoria abreviada:} B, N.; Sp, M.; As, H.\quad \textbf{Páginas:} 95-101 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando regressão logística, SHAP, XAI/explicabilidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469802}{\nolinkurl{10.1109/ICVADV67766.2026.11469802}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470487}{A42 -- A Multimodal Explainable Deep Learning Approach for E-Commerce Recommendation and Behaviour Prediction}}\par\smallskip
+\textbf{Autoria abreviada:} Brindha, K.; Subha, V.; P., N. et al.\quad \textbf{Páginas:} 810-815 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de recomendação e comportamento, empregando SHAP, CNN, Transformer. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470487}{\nolinkurl{10.1109/ICVADV67766.2026.11470487}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470380}{A43 -- Brain Tumor MRI Interpretation and Classification using Swin Transformer Framework with Multi-Method Explainable AI}}\par\smallskip
+\textbf{Autoria abreviada:} Prasad, C.; Moola, R.\quad \textbf{Páginas:} 1009-1013 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando SHAP, Transformer, XAI/explicabilidade. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470380}{\nolinkurl{10.1109/ICVADV67766.2026.11470380}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470437}{A44 -- Transforming MRI Data Into Latent Space Embeddings Using Multi-Head Learning to Understand Alzheimer's Progression}}\par\smallskip
+\textbf{Autoria abreviada:} Singh, M.\quad \textbf{Páginas:} 182-189 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando visualização interativa. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470437}{\nolinkurl{10.1109/ICVADV67766.2026.11470437}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470355}{A45 -- An Interpretable Deep Learning Framework with Attention-Enhanced VGG19 for Pneumonia Detection}}\par\smallskip
+\textbf{Autoria abreviada:} Jany, S.M.; Mahankali, M.; Mullamuri, S. et al.\quad \textbf{Páginas:} 655-660 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando visualização interativa. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470355}{\nolinkurl{10.1109/ICVADV67766.2026.11470355}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470327}{A46 -- Interactive Online Compiler with Code Visualization and Optimization for Programming Languages}}\par\smallskip
+\textbf{Autoria abreviada:} R, S.A.F.; Sourabh, R.; Verma, A. et al.\quad \textbf{Páginas:} 390-395 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de visualização e arquitetura de dados, empregando visualização interativa. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470327}{\nolinkurl{10.1109/ICVADV67766.2026.11470327}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470428}{A47 -- AI-Driven Multimodal Radiology Assistant for Unified Image Interpretation and Report Generation}}\par\smallskip
+\textbf{Autoria abreviada:} I, S.; S, S.c.\quad \textbf{Páginas:} 1413-1420 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de saúde e diagnóstico, empregando XAI/explicabilidade, multimodalidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470428}{\nolinkurl{10.1109/ICVADV67766.2026.11470428}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470359}{A48 -- Lightweight Interpretable CNN for Four-Class Lung Lesion Classification on CT}}\par\smallskip
+\textbf{Autoria abreviada:} S, P.; V, V.K.; Anjanikumar, V. et al.\quad \textbf{Páginas:} 240-245 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de análise de dados aplicada, empregando CNN, XAI/explicabilidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470359}{\nolinkurl{10.1109/ICVADV67766.2026.11470359}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470324}{A49 -- Smart Monitoring of Automotive Engine Health for Predictive Maintenance Using SVM Model}}\par\smallskip
+\textbf{Autoria abreviada:} S, R.; Mohankumar, N.; M, B.Y. et al.\quad \textbf{Páginas:} 1055-1060 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando SVM. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470324}{\nolinkurl{10.1109/ICVADV67766.2026.11470324}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470511}{A50 -- DenseNet121 Based Off-Type Sunflower Plant Detection}}\par\smallskip
+\textbf{Autoria abreviada:} D, G.; I, P.; G, B.P. et al.\quad \textbf{Páginas:} 571-576 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando CNN, visão computacional. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470511}{\nolinkurl{10.1109/ICVADV67766.2026.11470511}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470467}{A51 -- Policy Gradient-Based Reinforcement Learning for Driver-Passenger Matching in Ride-Hailing Platforms}}\par\smallskip
+\textbf{Autoria abreviada:} Pandikumar, S.; Maram, B.; Menaka, C. et al.\quad \textbf{Páginas:} 878-884 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de mobilidade e risco, empregando aprendizado por reforço. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470467}{\nolinkurl{10.1109/ICVADV67766.2026.11470467}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470371}{A52 -- Leveraging the ConvNeXt-L Model for Tomato Leaf Disease Classification}}\par\smallskip
+\textbf{Autoria abreviada:} Rajesh, R.; Shanmugam, P.; Rajasekar, A. et al.\quad \textbf{Páginas:} 443-448 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470371}{\nolinkurl{10.1109/ICVADV67766.2026.11470371}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470342}{A53 -- Real-Time Sleep Apnea Detection System Using Multi-Sensor Fusion and Embedded Machine Learning}}\par\smallskip
+\textbf{Autoria abreviada:} S, P.; R, S.; S, S.\quad \textbf{Páginas:} 1289-1293 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de saúde e diagnóstico, empregando SVM. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470342}{\nolinkurl{10.1109/ICVADV67766.2026.11470342}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470474}{A54 -- Graph Neural Network—Based Constellation Recognizer Model with Conversational Artificial Intelligence}}\par\smallskip
+\textbf{Autoria abreviada:} Saranya, S.; Rajesh, H.; S., A. et al.\quad \textbf{Páginas:} 946-954 (9 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de análise de dados aplicada, empregando CNN, Transformer, GNN. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470474}{\nolinkurl{10.1109/ICVADV67766.2026.11470474}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470471}{A55 -- CyberSentinel: An AI-Powered Secure Browser with Parental Dashboard and Automated Website Blocking for Child Safety}}\par\smallskip
+\textbf{Autoria abreviada:} Clemency, C.D.; N, A.K.; K, A.\quad \textbf{Páginas:} 594-599 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470471}{\nolinkurl{10.1109/ICVADV67766.2026.11470471}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469806}{A56 -- Replay Attack Detection in Automatic Speaker Verification using Transformer-Based Audio Representations}}\par\smallskip
+\textbf{Autoria abreviada:} J, J.J.R.; A, K.; S, S.\quad \textbf{Páginas:} 1264-1269 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando Transformer. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469806}{\nolinkurl{10.1109/ICVADV67766.2026.11469806}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470441}{A57 -- A Hybrid Correlation-PSO Feature Selection Framework with Extreme Learning Machines for High-Accuracy Cancer Classification in Microarray Data}}\par\smallskip
+\textbf{Autoria abreviada:} Ali, M.A.; Devasani, V.; Vardhan, S.H. et al.\quad \textbf{Páginas:} 717-722 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470441}{\nolinkurl{10.1109/ICVADV67766.2026.11470441}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470377}{A58 -- Semantic Twin Search Using Fractal Cosmic Net}}\par\smallskip
+\textbf{Autoria abreviada:} Harshavardhini, B.; Srinivas, B.; D, N.\quad \textbf{Páginas:} 693-696 (4 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de sistemas inteligentes aplicados, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470377}{\nolinkurl{10.1109/ICVADV67766.2026.11470377}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470479}{A59 -- Leaf Care CNN Framework for Automated Plant Pathology}}\par\smallskip
+\textbf{Autoria abreviada:} P, J.; R., J.; P, K. et al.\quad \textbf{Páginas:} 831-838 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando CNN, visão computacional. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470479}{\nolinkurl{10.1109/ICVADV67766.2026.11470479}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470404}{A60 -- Transforming Information Retrieval with AI: Semantic, Neural, and Multimodal Approaches}}\par\smallskip
+\textbf{Autoria abreviada:} S, A.; C, S.T.; J, G.P. et al.\quad \textbf{Páginas:} 416-423 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de sistemas inteligentes aplicados, empregando Transformer, RAG, federated learning. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Interpretar resultados e visualizações, contrastar métricas e explicitar limites, vieses ou validade.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470404}{\nolinkurl{10.1109/ICVADV67766.2026.11470404}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\clearpage
+\section*{Catálogo da Rodada 4 -- 24/09/2026}
+\textit{Foco: decisão e síntese.}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470507}{A61 -- Intelligent Graph-Convolutional Cleaner Fish Attentive Network for Personalized E-Learning Recommendation in IT}}\par\smallskip
+\textbf{Autoria abreviada:} P, Y.; P, S.; R, S.\quad \textbf{Páginas:} 621-626 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de recomendação e comportamento, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470507}{\nolinkurl{10.1109/ICVADV67766.2026.11470507}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470550}{A62 -- IPO Performance Predictor: Using Pre-Listing Sentiment and Fundamentals}}\par\smallskip
+\textbf{Autoria abreviada:} Janagi, R.; A, U.; S, V.P.S. et al.\quad \textbf{Páginas:} 207-211 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de análise de dados aplicada, empregando regressão logística, multimodalidade. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470550}{\nolinkurl{10.1109/ICVADV67766.2026.11470550}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470412}{A63 -- AI-Driven Voice-Controlled Virtual Assistant Framework for Smart Home Automation}}\par\smallskip
+\textbf{Autoria abreviada:} S, V.; S, S.; Maruthai, S.\quad \textbf{Páginas:} 1344-1351 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de sistemas inteligentes aplicados, empregando IoT. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470412}{\nolinkurl{10.1109/ICVADV67766.2026.11470412}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470430}{A64 -- Machine Learning Approach for Pneumonia Detection from X-Rays Amid H3n2 Virus Spread}}\par\smallskip
+\textbf{Autoria abreviada:} S, Y.; G, A.; K, B. et al.\quad \textbf{Páginas:} 431-437 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de saúde e diagnóstico, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470430}{\nolinkurl{10.1109/ICVADV67766.2026.11470430}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470335}{A65 -- Agro E-Commerce Platform with AI-Based Disease Outbreak Prediction}}\par\smallskip
+\textbf{Autoria abreviada:} Vanitha, K.; Jayanthi, K.B.; V, H. et al.\quad \textbf{Páginas:} 583-588 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de agricultura e monitoramento ambiental, empregando IoT. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470335}{\nolinkurl{10.1109/ICVADV67766.2026.11470335}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470560}{A66 -- Detection of Covid-19 and Prediction of Post-Recovery Health Issues Using CT Scans}}\par\smallskip
+\textbf{Autoria abreviada:} V, D.; Kumar, G.M.; Sai, G.Y.N.V. et al.\quad \textbf{Páginas:} 600-607 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de análise de dados aplicada, empregando CNN, ensemble. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470560}{\nolinkurl{10.1109/ICVADV67766.2026.11470560}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470417}{A67 -- Enhancing Heart Attack Prediction Through Hybrid Ensemble Learning and Advanced Feature Engineering}}\par\smallskip
+\textbf{Autoria abreviada:} Mounika, M.; Srinu, N.; Swathi, A. et al.\quad \textbf{Páginas:} 272-276 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando regressão logística, ensemble, feature engineering. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470417}{\nolinkurl{10.1109/ICVADV67766.2026.11470417}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470526}{A68 -- A Robust Misuse-Based Intrusion Detection Using Deep Learning on UNSW-NB15 Dataset}}\par\smallskip
+\textbf{Autoria abreviada:} Kalaivani, P.; S, A.B.; C, G. et al.\quad \textbf{Páginas:} 315-321 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando Transformer, GNN. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470526}{\nolinkurl{10.1109/ICVADV67766.2026.11470526}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470396}{A69 -- Advancing Sustainable Agriculture: Harnessing Machine Learning and IoT for Precision Crop Management}}\par\smallskip
+\textbf{Autoria abreviada:} Arunkumar, V.; Rani, C.\quad \textbf{Páginas:} 1187-1194 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de agricultura e monitoramento ambiental, empregando IoT. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470396}{\nolinkurl{10.1109/ICVADV67766.2026.11470396}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470405}{A70 -- Multi-Modal Cyberbullying Detection Using Deep Learning and NLP Techniques}}\par\smallskip
+\textbf{Autoria abreviada:} Rathi, V.N.; M, V.; Vinse, R.P.S.\quad \textbf{Páginas:} 1627-1633 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de segurança e detecção de ameaças, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470405}{\nolinkurl{10.1109/ICVADV67766.2026.11470405}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470438}{A71 -- Multistage ViT-DQN-LSTM Neuroimaging Architecture for Robust and Scalable Dyslexia Screening Across High-Resolution Brain MRI Slices}}\par\smallskip
+\textbf{Autoria abreviada:} J, J.J.; M, P.; A, N.\quad \textbf{Páginas:} 1036-1042 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de saúde e diagnóstico, empregando LSTM, Transformer, aprendizado por reforço. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470438}{\nolinkurl{10.1109/ICVADV67766.2026.11470438}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470397}{A72 -- Machine Learning-Based Attack Detection System with AES Encryption for Secure CSV Data Processing}}\par\smallskip
+\textbf{Autoria abreviada:} Vignesh, J.; Preetham, J.; Vanathi, M. et al.\quad \textbf{Páginas:} 1061-1066 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de segurança e detecção de ameaças, empregando visualização interativa. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470397}{\nolinkurl{10.1109/ICVADV67766.2026.11470397}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470381}{A73 -- AI Enhanced Intrusion Detection with Facial Biometrics}}\par\smallskip
+\textbf{Autoria abreviada:} Jeyanathan, J.S.; Subashini, V.; Boginipeta, L.S. et al.\quad \textbf{Páginas:} 288-294 (7 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de segurança e detecção de ameaças, empregando CNN, SVM, IoT. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470381}{\nolinkurl{10.1109/ICVADV67766.2026.11470381}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470562}{A74 -- Smart Certificate Validation and Fraud Detection Framework Using Blockchain and CNN-OCR}}\par\smallskip
+\textbf{Autoria abreviada:} Scholar, S.K.S.U.; Scholar, U.; Varshana, M.M.\quad \textbf{Páginas:} 1615-1619 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando CNN. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470562}{\nolinkurl{10.1109/ICVADV67766.2026.11470562}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470545}{A75 -- Automated Academic Planning Using Machine Learning for College Students}}\par\smallskip
+\textbf{Autoria abreviada:} S., K.; Nath, S.S.; M, V. et al.\quad \textbf{Páginas:} 649-654 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de recomendação e comportamento, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470545}{\nolinkurl{10.1109/ICVADV67766.2026.11470545}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469794}{A76 -- A Feature-Optimized PLSR Framework for Non-Destructive Assessment of Mango Pulp Firmness Using Vis/NIR Hyperspectral Imaging}}\par\smallskip
+\textbf{Autoria abreviada:} Meenakshi, S.; Kumar, P.; S, S.\quad \textbf{Páginas:} 277-281 (5 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de agricultura e monitoramento ambiental, empregando PLSR. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469794}{\nolinkurl{10.1109/ICVADV67766.2026.11469794}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469782}{A77 -- SafeFusion: A YOLO-Transformer Hybrid Model for Intelligent Accident Surveillance}}\par\smallskip
+\textbf{Autoria abreviada:} Karthikeya, I.K.; Ramakrishna, V.; Kalaichelvi, T. et al.\quad \textbf{Páginas:} 968-973 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de mobilidade e risco, empregando Transformer. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469782}{\nolinkurl{10.1109/ICVADV67766.2026.11469782}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470451}{A78 -- A Transfer Learning Framework for Multimodal Emotion Detection using Wav2Vec, EfficientNet, and LSTM}}\par\smallskip
+\textbf{Autoria abreviada:} Jagadeesh, M.; Duraimurugan, N.; U, K. et al.\quad \textbf{Páginas:} 282-287 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta no domínio de processamento de imagens e multimodalidade, empregando LSTM, multimodalidade. O resumo delimita arquitetura e aplicação; resultados e limites devem ser conferidos no texto.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470451}{\nolinkurl{10.1109/ICVADV67766.2026.11470451}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11470442}{A79 -- LSTM Networks for Thermal Management in Power Converters of Electric Vehicles}}\par\smallskip
+\textbf{Autoria abreviada:} Kasinathan, P.; Vijayan, R.; Sindhuja, K. et al.\quad \textbf{Páginas:} 1277-1282 (6 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de manutenção e sistemas industriais, empregando LSTM. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11470442}{\nolinkurl{10.1109/ICVADV67766.2026.11470442}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\par\medskip\noindent
+{\large\bfseries\href{https://doi.org/10.1109/ICVADV67766.2026.11469838}{A80 -- Adaptive Real-Time Ransomware Detection Using Processor-Disk Behavior Analysis with Intelligent Threat Response Mechanisms}}\par\smallskip
+\textbf{Autoria abreviada:} Lakshmi, M.; Reddy, N.S.S.; Reddy, G. et al.\quad \textbf{Páginas:} 498-505 (8 páginas)\par
+\textbf{Resumo breve:} O trabalho apresenta uma proposta e sua avaliação no domínio de segurança e detecção de ameaças, empregando métodos computacionais descritos no artigo. O resumo informa comparação ou avaliação empírica, que deve ser conferida nas páginas indicadas.\par
+\textbf{Conexão:} Defender decisão de uso, condições de generalização, rastreabilidade e conexão com a trilha completa de AED.\par
+\textbf{DOI:} \href{https://doi.org/10.1109/ICVADV67766.2026.11469838}{\nolinkurl{10.1109/ICVADV67766.2026.11469838}}\par
+\textbf{Acesso:} PDF aberto não informado na fonte; conferir biblioteca institucional ou obtenção legal.\par
+\noindent\rule{\textwidth}{0.35pt}
+\clearpage
+\section*{Checklist antes da fala}
+\begin{itemize}
+\item confirme o ID atribuído;
+\item leia as páginas indicadas e confira cada afirmação no artigo original;
+\item escolha uma ideia central compatível com o foco da rodada;
+\item selecione uma evidência concreta e um limite;
+\item conecte o artigo ao conceito da aula sem forçar equivalência;
+\item ensaie para concluir em quatro minutos e responder à pergunta;
+\item registre corretamente a referência e as páginas lidas.
+\end{itemize}
+\begin{AccessBox}
+Os rótulos Estudante 01 a Estudante 20 serão substituídos pela lista real da turma. Status e observações permanecem vazios nesta versão e somente serão preenchidos após cada encontro.
+\end{AccessBox}
+\end{document}

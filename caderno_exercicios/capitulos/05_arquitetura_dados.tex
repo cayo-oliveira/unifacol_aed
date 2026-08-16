@@ -1,0 +1,110 @@
+\section{Capítulo 5 --- Arquitetura de dados para AED}
+\subsection{Questões objetivas}
+\ItemHeader{1}{Objetiva}{Distinguir bronze, prata e ouro}{Pipeline de vendas}
+\TextoBase Eventos de venda chegam de caixa, aplicativo e marketplace com esquemas e horários distintos. Auditoria exige preservar conteúdo e metadados da origem; análises exigem tipos, chaves e regras consistentes; a direção consome receita líquida por semana e canal. A arquitetura precisa permitir correção e reprocessamento sem transformar o painel em fonte.
+\begin{center}
+\begin{tikzpicture}[node distance=5mm and 6mm,>=Latex,every node/.style={draw,rounded corners,font=\footnotesize,text width=2.3cm,align=center}]
+\node (s) {loja, app e marketplace}; \node[right=of s] (b) {bronze: origem preservada};
+\node[right=of b] (p) {prata: regras testadas}; \node[right=of p] (o) {ouro: visão de consumo};
+\draw[->] (s)--(b);\draw[->] (b)--(p);\draw[->] (p)--(o);
+\end{tikzpicture}
+\end{center}
+\LegendaDidatica{Fluxo usado para localizar responsabilidades de preservação, transformação e publicação}
+\FonteDidatica
+\Comando A organização coerente é
+\begin{enumerate}[label=\Alph*)]\item bronze com eventos preservados; prata validada/padronizada; ouro com métricas orientadas ao consumo.\item bronze com dashboard; prata com PDFs; ouro com cópia bruta.\item bronze apenas com erros; prata sem histórico; ouro com todas as colunas pessoais.\item cada camada recalcula a fonte e apaga a anterior.\item ouro substitui SOR e torna linhagem desnecessária.\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Relacionar SOR, SOT e SPEC}{Dados acadêmicos}
+\TextoBase O sistema acadêmico é a autoridade operacional para matrícula. Uma representação integrada harmoniza estudantes, turmas e períodos antes do consumo. As áreas pedagógica e financeira precisam de projeções diferentes, com finalidade e acesso próprios, mas devem reconciliar os conceitos comuns e retornar à origem quando um indicador for contestado.
+\FonteDidatica
+\Comando A associação correta é
+\begin{enumerate}[label=\Alph*)]\item SOR é consumo; SOT é fonte transacional; SPEC é cópia irrestrita.\item SOR registra a fonte de autoridade; SOT integra/padroniza; SPEC publica projeção adequada ao consumidor.\item SOR e bronze são obrigatoriamente sinônimos em toda arquitetura.\item SOT elimina reconciliação, pois toda transformação é verdadeira.\item SPEC deve expor todas as colunas para permitir exploração livre.\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Declarar grão}{Tabela de pedidos}
+\TextoBase Uma tabela possui uma linha por item do pedido, porém o campo \texttt{total\_pedido} é repetido em cada item. Um pedido de R\$100 com três itens aparece em três linhas. Um dashboard somou a coluna e publicou R\$300, embora o evento econômico continue sendo um único pedido de R\$100.
+\FonteDidatica
+\Comando Para calcular receita sem triplicar,
+\begin{enumerate}[label=\Alph*)]\item somar \texttt{total\_pedido} nas linhas de item.\item agregar uma vez por pedido ou usar valor do item conforme contrato, declarando o grão antes do cálculo.\item tirar média dos totais e multiplicar pela quantidade de itens.\item remover pedidos com mais de um item.\item contar linhas como pedidos porque cada linha possui identificador.\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Diagnosticar explosão de join}{Clientes e contatos}
+\TextoBase A dimensão contém 1.000 clientes, uma linha por cliente, e o histórico possui 2.400 contatos, várias linhas por cliente. Após uma junção, a saída tem 2.500 linhas: há contatos sem correspondência e clientes sem contato. Antes de agregar atributos do cliente, a equipe precisa declarar o grão desejado e medir a cardinalidade.
+\FonteDidatica
+\Comando A verificação inicial adequada é
+\begin{enumerate}[label=\Alph*)]\item aceitar 2.500 como número de clientes.\item declarar grão desejado, medir cardinalidade da chave, contar clientes distintos e correspondências antes/depois e decidir agregação dos contatos.\item remover duplicatas de todas as colunas sem investigar.\item usar join cartesiano para garantir completude.\item somar indicadores de cliente após o join porque repetição preserva totais.\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Escolher chave e tratamento temporal}{Cadastro versionado}
+\TextoBase Um cliente muda do segmento básico para premium em setembro. Relatórios históricos precisam atribuir vendas de agosto ao segmento vigente em agosto; a visão cadastral atual deve mostrar premium. Sobrescrever a coluna produziria números consistentes tecnicamente, mas reescreveria silenciosamente a interpretação do passado.
+\FonteDidatica
+\Comando A solução precisa
+\begin{enumerate}[label=\Alph*)]\item sobrescrever o segmento e aceitar reescrita histórica.\item manter vigência das versões e realizar associação temporal conforme a finalidade do relatório.\item criar um novo cliente sem relacioná-lo ao identificador anterior.\item guardar segmento apenas na camada ouro atual.\item usar nome como chave porque permanece legível.
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Reconciliar transformação}{Receita líquida}
+\TextoBase Para o mesmo período, a bronze registra vendas de R\$100.000, cancelamentos de R\$8.000 e descontos de R\$7.000. O contrato da camada ouro define receita líquida como vendas menos cancelamentos e descontos. A equipe precisa calcular o valor esperado e registrar uma igualdade de reconciliação que possa ser testada após cada carga.
+\FonteDidatica
+\Comando O valor e o teste de reconciliação são
+\begin{enumerate}[label=\Alph*)]\item R\$85.000 e conferir $100.000-8.000-7.000=85.000$.\item R\$99.985 e conferir quantidade de colunas.\item R\$108.000 e somar cancelamentos como receita.\item R\$92.000 e ignorar descontos.\item R\$100.000 e validar apenas que o dashboard abriu.
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Aplicar linhagem e impacto}{Mudança de regra}
+\TextoBase O comitê propõe mudar ``cliente ativo'' de compra nos últimos 90 dias para compra nos últimos 60 dias. O indicador alimenta três painéis, uma campanha automática e um modelo. A alteração pode mudar contagens e decisões mesmo que nenhuma linha bruta seja modificada, exigindo análise de impacto antes da vigência.
+\FonteDidatica
+\Comando Antes de publicar, a equipe deve
+\begin{enumerate}[label=\Alph*)]\item alterar a SQL e aguardar reclamações.\item usar linhagem para identificar consumidores, versionar regra e vigência, comparar impacto e comunicar migração.\item atualizar somente o painel executivo por ser mais visível.\item manter o mesmo nome sem registrar a quebra semântica.\item recalcular apenas dados futuros e misturar definições na mesma série.
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Distinguir qualidade técnica e semântica}{Taxa de aprovação}
+\TextoBase Uma coluna de taxa possui valores entre 0 e 100, sem nulos nem falhas de tipo. Durante uma reconciliação, descobre-se que uma área calculou aprovados sobre matriculados e outra aprovados sobre avaliados. Os dois resultados passam nos testes técnicos, mas representam populações de referência distintas.
+\FonteDidatica
+\Comando O diagnóstico é
+\begin{enumerate}[label=\Alph*)]\item qualidade garantida porque faixa e completude passaram.\item problema semântico: numeradores podem coincidir, mas denominadores representam populações diferentes; o contrato deve ser unificado ou nomeado.\item erro de tipo, resolvido convertendo percentual em texto.\item duplicidade de chave, resolvida por distinct.\item atraso de carga, resolvido aumentando frequência.
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Aplicar minimização por consumo}{SPEC de gestão}
+\TextoBase A fonte acadêmica contém CPF, nome, curso, frequência e nota por matrícula. A SPEC executiva necessita apenas de taxas agregadas por curso e período; casos individuais são usados em acompanhamento pedagógico restrito. A publicação deve atender finalidade e acesso sem replicar identificadores ``para eventual uso futuro''.
+\FonteDidatica
+\Comando A publicação coerente é
+\begin{enumerate}[label=\Alph*)]\item incluir CPF para permitir futuras perguntas.\item publicar agregados necessários na SPEC executiva e manter detalhe identificado apenas onde finalidade e acesso o justificam.\item aplicar hash no CPF e publicar todos os demais detalhes, pois hash elimina qualquer risco.\item copiar a SOR inteira e ocultar colunas na cor do painel.\item remover curso e período, porque agregação impede decisão.
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Selecionar arquitetura para reprocessamento}{Correção de parser}
+\TextoBase Durante duas semanas, um parser da camada prata interpretou dia e mês de forma invertida. A camada bronze preservou arquivos originais imutáveis e metadados de ingestão; ouros e SPEC derivadas receberam datas incorretas. A correção precisa reproduzir a transformação e identificar todos os consumidores impactados.
+\FonteDidatica
+\Comando A resposta operacional apropriada é
+\begin{enumerate}[label=\Alph*)]\item corrigir a prata, reprocessar da bronze, validar reconciliação e registrar impacto nas ouros e SPEC.\item editar manualmente os painéis e manter a prata incorreta.\item apagar a bronze para impedir repetição do erro.\item corrigir apenas novos dados, mantendo série inconsistente.\item trocar a ferramenta de BI, pois o erro ocorreu antes do consumo.
+\end{enumerate}
+
+\subsection{Questões discursivas}
+\ItemHeader{11}{Discursiva}{Desenhar arquitetura em camadas}{Integração multicanal}
+\TextoBase Caixa, aplicativo e marketplace enviam vendas com esquemas, chaves e horários diferentes. A gestão precisa de margem diária por canal; auditoria exige retorno ao evento original; dados pessoais têm acesso restrito. A arquitetura deverá tornar explícitos grão, fonte de autoridade, testes e projeções por consumidor.
+\FonteDidatica
+\Comando Desenhe bronze--prata--ouro e SOR--SOT--SPEC, indicando grão, chaves, testes, tratamento de acesso, linhagem e um caminho de reprocessamento.
+
+\ItemHeader{12}{Discursiva}{Diagnosticar join e granularidade}{Pedidos e itens}
+\TextoBase A tabela de pedidos contém 100 linhas e receita total de R\$50.000; a de itens contém 280 linhas. Após a junção um-para-muitos, a soma de \texttt{total\_pedido} passa a R\$142.000, embora a soma de valores dos itens permaneça R\$50.000. A divergência precisa ser explicada pelo grão, não corrigida por fator arbitrário.
+\FonteDidatica
+\Comando Explique a inflação, proponha duas correções válidas conforme a pergunta e liste controles antes/depois do join.
+
+\ItemHeader{13}{Discursiva}{Criar contrato de dados}{Métrica institucional}
+\TextoBase O conceito ``estudante ativo'' é usado por matrícula, financeiro, biblioteca e permanência. Cada sistema aplica uma regra implícita diferente para trancamento, inadimplência e período, e os painéis não informam qual versão utilizaram. A instituição precisa transformar o nome compartilhado em contrato governado.
+\FonteDidatica
+\Comando Proponha contrato com definição, grão, fonte de autoridade, vigência, estados, qualidade, responsável, consumidores e estratégia de mudança.
+
+\ItemHeader{14}{Discursiva}{Reconciliar camadas}{Fluxo financeiro}
+\TextoBase Para um período fechado, a bronze registra vendas 200.000, cancelamentos 12.000 e descontos 8.000. A prata removeu uma duplicata comprovada de venda no valor 5.000, preservando a evidência da correção. A ouro deve publicar receita líquida reconciliável com a fonte e a transformação.
+\FonteDidatica
+\Comando Calcule o valor esperado, escreva equação de reconciliação e proponha quatro testes que separem correção técnica de validade semântica.
+
+\ItemHeader{15}{Discursiva}{Planejar análise de impacto por linhagem}{Mudança de calendário}
+\TextoBase Uma nova regra altera as datas de início e fim na dimensão de período acadêmico. Frequência, evasão, receita, três painéis e um modelo de risco dependem dessa dimensão e podem mudar retrospectivamente. A equipe precisa planejar versão, comparação e retorno seguro antes de substituir a definição vigente.
+\FonteDidatica
+\Comando Descreva procedimento de linhagem e migração: consumidores, versões, comparação, reprocessamento, aprovação, comunicação e rollback.
+
+\newpage\subsection{Respostas explicadas das questões pares}
+\paragraph{Questão 2 — resposta B.} SOR preserva a autoridade operacional, SOT cria representação integrada e coerente, e SPEC adapta campos e regras ao consumo governado. Os conceitos se relacionam, mas não são sinônimos automáticos de bronze/prata/ouro.
+\paragraph{Questão 4 — resposta B.} Um join um-para-muitos muda o grão. Contagens de linhas, chaves, distintos, correspondências e totais permitem decidir se contatos devem ser agregados antes ou depois.
+\paragraph{Questão 6 — resposta A.} Receita líquida $=100.000-8.000-7.000=85.000$. A mesma identidade deve reconciliar origem e ouro, com definições e período iguais.
+\paragraph{Questão 8 — resposta B.} Faixa e completude verificam forma, não significado. Denominadores distintos produzem indicadores diferentes e precisam de contratos/nomeação explícita.
+\paragraph{Questão 10 — resposta A.} A bronze imutável permite corrigir a regra e reproduzir derivados. Validação e linhagem mostram quais saídas precisam ser republicadas.
+\paragraph{Questão 12 — critérios de resposta.} O total do pedido repetiu por item. Corrigir agregando itens por pedido e comparando ao cabeçalho, ou somando \texttt{valor\_item} quando a pergunta é por item. Exigir cardinalidade, linhas/distintos, correspondências e reconciliação.
+\paragraph{Questão 14 — cálculo e critérios.} Primeiro corrigir venda duplicada: $200.000-5.000=195.000$; depois $195.000-12.000-8.000=175.000$. Testes devem cobrir duplicidade, domínios, reconciliação, vigência e contrato.

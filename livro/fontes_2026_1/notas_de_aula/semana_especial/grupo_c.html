@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Superstore — Margens Negativas</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --brand: #2E7D52;
+  --accent: #FF6B35;
+  --bg: #F0FFF4;
+  --text: #1A1A1A;
+  --light: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, var(--bg) 0%, #E6FFED 100%); }
+header { background: linear-gradient(135deg, var(--brand) 0%, #1A4D2E 100%); color: white; padding: 25px 30px; }
+header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+.dash { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+.section-title { font-size: 0.85rem; font-weight: 700; color: var(--brand); text-transform: uppercase; margin: 25px 0 12px; letter-spacing: 0.08em; }
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi { background: white; padding: 15px; border-radius: 8px; border-right: 4px solid var(--brand); }
+.kpi .val { font-size: 1.8rem; font-weight: 700; color: var(--brand); }
+.kpi .lbl { font-size: 0.75rem; color: #888; margin-top: 6px; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.chart-card { background: white; padding: 18px; border-radius: 8px; border: 1px solid #E8F5E9; }
+.chart-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; color: var(--brand); }
+.insight { background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-left: 4px solid var(--accent); padding: 15px; border-radius: 6px; margin: 15px 0; }
+.insight .tag { font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; }
+.insight .txt { font-size: 0.85rem; margin-top: 6px; line-height: 1.4; color: var(--text); }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.85rem; }
+th { background: var(--brand); color: white; padding: 10px; text-align: left; font-weight: 700; }
+td { padding: 8px; border-bottom: 1px solid #eee; }
+tr:hover { background: #f9f9f9; }
+.cta { background: var(--brand); color: white; padding: 20px; border-radius: 8px; margin: 15px 0; }
+.cta h3 { font-size: 1rem; margin-bottom: 10px; }
+footer { text-align: center; padding: 20px; font-size: 0.75rem; color: #999; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 Superstore — Controle de Margens por Região</h1>
+  <p>Tecnologia/Sul drenam R$ 120k/trimestre | Análise de desconto vs margem | Base: 9995 transações</p>
+</header>
+
+<div class="dash">
+  <p class="section-title">Contexto — Prejuízo Concentrado</p>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="val" style="color:#FF4444;">-4.2%</div>
+      <div class="lbl">Margem<br>Tech/Sul</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:#FF4444;">R$ 120k</div>
+      <div class="lbl">Prejuízo trimestral<br>esta combinação</div>
+    </div>
+    <div class="kpi">
+      <div class="val">73%</div>
+      <div class="lbl">do prejuízo vem de<br>descontos > 20%</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:#2E7D52;">+5.8%</div>
+      <div class="lbl">Margem potencial<br>com desconto ≤ 12%</div>
+    </div>
+  </div>
+
+  <p class="section-title">Diagnóstico — Onde Está o Prejuízo?</p>
+  <div class="charts">
+    <div class="chart-card">
+      <h3>Desconto vs Margem Unitária (Tech/Sul)</h3>
+      <p style="font-size:0.75rem; color:#999; margin-bottom:8px;">Linha em 20% = limite de risco; Linha Y=0 = breakeven</p>
+      <canvas id="chart1" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Distribuição de Descontos em Tech/Sul</h3>
+      <p style="font-size:0.75rem; color:#999; margin-bottom:8px;">Foco: reduzir a fatia vermelha</p>
+      <canvas id="chart2" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="tag">[Insight IA] Acionável</div>
+    <div class="txt"><strong>Descontos acima de 20% em Máquinas e Copiadoras na Região Sul concentram 73% do prejuízo total (R$ 87.6k). Capear o desconto máximo em 12% mantém a competitividade de preço percebida e projeta recuperação de R$ 85k de margem trimestral, transformando -4.2% em +5.8%.</strong></div>
+  </div>
+
+  <div class="cta">
+    <h3>⚙️ CALL TO ACTION</h3>
+    <p><strong>Implementar política de desconto máximo 12% em Tecnologia/Sul até 01/junho.</strong><br>
+    Responsável: Gerência Comercial | Impacto: +R$ 85k margem trimestral</p>
+  </div>
+
+  <p class="section-title">Top Subcategorias com Prejuízo</p>
+  <table>
+    <thead><tr><th>Subcategoria</th><th>Região</th><th>Desconto Médio</th><th>Margem %</th><th>Prejuízo Trimestral</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Máquinas</strong></td><td><strong>Sul</strong></td><td><strong>26%</strong></td><td style="color:#FF4444;"><strong>-6.2%</strong></td><td style="color:#FF4444;"><strong>R$ 45k</strong></td></tr>
+      <tr><td><strong>Copiadoras</strong></td><td><strong>Sul</strong></td><td><strong>23%</strong></td><td style="color:#FF4444;"><strong>-2.8%</strong></td><td style="color:#FF4444;"><strong>R$ 32k</strong></td></tr>
+      <tr><td>Telefone</td><td>Sul</td><td>18%</td><td>1.5%</td><td>R$ 8k</td></tr>
+      <tr><td>Máquinas</td><td>Norte</td><td>14%</td><td>4.2%</td><td>OK</td></tr>
+    </tbody>
+  </table>
+
+  <footer>Dashboard gerado via Pipeline Multi-Agente | Dados: Superstore Public Dataset | Atualização: mai/2026</footer>
+</div>
+
+<script>
+new Chart(document.getElementById('chart1'), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Transações (Tech/Sul)',
+      data: [{x:8, y:2.1}, {x:12, y:1.5}, {x:15, y:0.8}, {x:20, y:-0.5}, {x:23, y:-2.8}, {x:26, y:-6.2}, {x:28, y:-8.1}],
+      backgroundColor: function(ctx) { return ctx.raw.x > 20 ? '#FF4444' : '#2E7D52'; },
+      pointRadius: 6
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { title: { display: true, text: 'Desconto %' } },
+      y: { title: { display: true, text: 'Margem Unitária %' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart2'), {
+  type: 'doughnut',
+  data: {
+    labels: ['0-10%', '10-20%', '20-30%', '>30%'],
+    datasets: [{
+      data: [15, 35, 40, 10],
+      backgroundColor: ['#90EE90', '#FFD700', '#FF8C00', '#FF4444']
+    }]
+  },
+  options: {
+    plugins: { legend: { position: 'bottom' } }
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\CadernoDisciplina}{Análise Exploratória de Dados}
+\newcommand{\CadernoCorHex}{17365D}
+\input{../../../caderno_exercicios/caderno_enade_style.tex}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\begin{center}
+{\Large\bfseries UNIFACOL}\\[2mm]
+{\large Segunda Chamada}\\[1mm]
+{\Large\bfseries VERSÃO B}
+\end{center}
+\begin{DocumentBox}[Identificação]
+\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}p{.48\textwidth}@{}}
+Estudante: \hrulefill & Turma: \hrulefill\\[3mm]
+Professor: Cayo Oliveira & Data: \rule{2.7cm}{.2pt}/2026
+\end{tabularx}
+\end{DocumentBox}
+\textbf{Instruções.} Esta avaliação contém seis questões objetivas e duas discursivas. Nas objetivas, assinale uma única alternativa. Nas discursivas, mostre cálculos intermediários e justifique decisões com as evidências do texto-base. Respostas sem desenvolvimento podem não receber pontuação integral.
+\bigskip
+% origem: AED-C11-O01
+\ItemHeader{1}{Objetiva}{Selecionar ferramenta pela fronteira de governança}{Consulta executiva multifuente}
+\TextoBase
+Uma rede varejista possui métricas certificadas no warehouse, políticas por linha e um catálogo corporativo. O protótipo com respostas em linguagem natural será usado por 300 gestores. A diretoria exige que toda resposta identifique métrica, filtros, consulta executada e fonte; protótipos fora da camada semântica não podem publicar números oficiais.
+A escolha será submetida ao comitê de dados, que rejeita soluções incapazes de reconstruir uma resposta contestada.
+\FonteDidatica
+\Comando A decisão arquitetural mais coerente é
+\begin{enumerate}[label=\Alph*)]
+  \item escolher a interface com o gráfico mais elaborado e recriar métricas no prompt.
+  \item permitir SQL livre para todos os gestores e auditar apenas respostas denunciadas como erradas.
+  \item usar qualquer chatbot, pois o catálogo torna desnecessário aplicar políticas na consulta.
+  \item exportar dados para planilhas individuais e comparar as respostas manualmente ao final do mês.
+  \item integrar a experiência conversacional à camada semântica e à identidade corporativa, registrando consulta, versão e evidência.
+\end{enumerate}
+
+% origem: AED-C10-O09
+\ItemHeader{2}{Objetiva}{recusa}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A pergunta ``qual cliente fraudará amanhã?'' não possui rótulo, modelo validado nem base individual autorizada. Produzir uma lista nominal criaria inferência de alto impacto sem evidência. O agente deve recusar de forma útil e oferecer análise agregada permitida.
+
+\FonteDidatica
+
+\Comando Qual resposta do agente é compatível com as evidências e com o risco da solicitação?
+
+\begin{enumerate}[label=\Alph*)]
+  \item criar rótulo no prompt
+  \item recusar inferência e explicar dados/competência ausentes, sem fabricar SQL
+  \item retornar todos os clientes
+  \item gerar ranking por gasto
+  \item usar receita como fraude
+\end{enumerate}
+
+% origem: AED-C07-O09
+\ItemHeader{3}{Objetiva}{recomendação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um campus adotou intervenção de permanência no mesmo mês em que o calendário acadêmico mudou; os demais não adotaram. A evasão caiu no campus participante. A secretaria precisa decidir o próximo passo sem atribuir toda a mudança à intervenção por simples comparação antes/depois.
+
+\FonteDidatica
+
+\Comando Selecione o desenho de continuidade que gera evidência comparável antes de uma expansão definitiva.
+
+\begin{enumerate}[label=\Alph*)]
+  \item comparar apenas antes/depois
+  \item ocultar mudança de calendário
+  \item recomendar piloto ampliado com comparação e métricas prévias, não expansão causal definitiva
+  \item cancelar porque não há ensaio perfeito
+  \item expandir imediatamente por correlação temporal
+\end{enumerate}
+
+% origem: AED-C07-D11
+\ItemHeader{4}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma base de evasão deveria possuir uma linha por estudante-semestre, mas transferências duplicam matrículas, frequência apresenta falhas por campus e regras mudaram durante o período. A recomendação final será usada para priorizar atendimento e precisa sobreviver a auditoria.
+
+\FonteDidatica
+
+\Comando Desenhe, em até 15 linhas, o fluxo da fonte à recomendação. Inclua teste de grão, ausência e domínio, transformação versionada, visual apropriado, reconciliação e evidência necessária para auditoria.
+\EspacoDiscursiva
+
+% origem: AED-C02-O07
+\ItemHeader{5}{Objetiva}{Distinguir variância populacional e amostral}{Equipamentos}
+\TextoBase Um laboratório registrou as idades $2,4,4,6$ anos de quatro equipamentos. A média é 4 e a soma dos desvios quadráticos é 8. Em um relatório, os quatro equipamentos constituem toda a sala; em outro, são tratados como amostra de equipamentos da rede. A escolha do divisor deve acompanhar essas duas finalidades.
+\FonteDidatica
+\Comando Se forem população e, alternativamente, amostra, as variâncias são
+\begin{enumerate}[label=\Alph*)]
+  \item 0 e 8, porque os desvios somam zero.
+  \item $\sqrt8$ e $\sqrt3$.
+  \item $8/4=2$ e $8/3\approx2{,}67$.
+  \item $8/2=4$ em ambos os casos.
+  \item $8/3$ e $8/4$, porque amostras usam divisor maior.
+\end{enumerate}
+
+% origem: AED-C13-O09
+\ItemHeader{6}{Objetiva}{Aplicar recusa segura}{Pergunta sem evidência autorizada}
+\TextoBase
+O usuário pede previsão de demissões por pessoa. O agente tem apenas dados agregados autorizados, e a política proíbe inferência individual. Uma ferramenta de busca não encontra fonte adicional.
+A resposta será usada em decisão de crédito; ausência de fonte autorizada exige abstenção útil, sem fabricar aproximação nem executar ferramenta privilegiada.
+\FonteDidatica
+\Comando O comportamento correto é
+\begin{enumerate}[label=\Alph*)]
+  \item executar várias buscas até alguma resposta parecer confiante.
+  \item guardar a pergunta na memória e responder depois sem nova autorização.
+  \item recusar a inferência individual, explicar a restrição e oferecer análise agregada autorizada ou encaminhamento humano.
+  \item estimar indivíduos a partir da média da unidade e omitir a incerteza.
+  \item pedir ao modelo que invente dados sintéticos com nomes reais.
+\end{enumerate}
+
+% origem: AED-C11-D11
+\ItemHeader{7}{Discursiva}{Projetar matriz de comparação governada}{Seleção institucional}
+\TextoBase
+Uma universidade quer escolher entre as seis abordagens do capítulo para perguntas acadêmicas e financeiras. Há métricas certificadas, dados pessoais, grupos com menos de cinco estudantes e orçamento limitado.
+O piloto precisa incluir perguntas rotineiras, ambíguas e proibidas, além de perfis com permissões distintas e decisões de publicação observáveis.
+\FonteDidatica
+\Comando Proponha, em até 15 linhas, um piloto comparável. Defina perguntas, perfis, fontes, critérios de semântica, acesso, evidência, auditoria, custo e latência; explique como tratar grupos pequenos e formule uma regra de aprovação sem escolher marca antecipadamente.
+\EspacoDiscursiva
+
+% origem: AED-C03-O03
+\ItemHeader{8}{Objetiva}{Calcular união sem dupla contagem}{Eventos em um dado}
+\TextoBase Na validação de uma regra de eventos, utiliza-se um dado honesto com seis resultados equiprováveis. Define-se $A=\{2,4,6\}$, resultado par, e $B=\{5,6\}$, resultado maior que quatro. O resultado 6 pertence aos dois eventos, portanto a probabilidade da união precisa evitar dupla contagem.
+\FonteDidatica
+\Comando $P(A\cup B)$ é
+\begin{enumerate}[label=\Alph*)]
+  \item $2/3-1/2=1/6$.
+  \item $(3+2-1)/6=4/6$.
+  \item $3/6+2/6=5/6$.
+  \item $6/6$, pois união inclui o espaço inteiro.
+  \item $1/6$, pois somente 6 pertence aos dois.
+\end{enumerate}
+
+\end{document}

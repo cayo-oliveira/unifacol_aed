@@ -1,0 +1,45 @@
+% Preâmbulo compartilhado dos cadernos de exercícios UNIFACOL.
+% Definir \CadernoDisciplina e, opcionalmente, \CadernoCorHex antes deste input.
+\providecommand{\CadernoDisciplina}{Disciplina}
+\providecommand{\CadernoCorHex}{17365D}
+\usepackage[a4paper,margin=2.05cm,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern,microtype,amsmath,amssymb}
+\usepackage{enumitem,booktabs,tabularx,array,longtable,adjustbox,multirow}
+\usepackage{xcolor,hyperref,graphicx,fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,patterns,shapes.geometric}
+\definecolor{disciplinecolor}{HTML}{\CadernoCorHex}
+\definecolor{stimulusgrey}{HTML}{EEF2F5}
+\definecolor{answerorange}{HTML}{FFF0DE}
+\definecolor{answerframe}{HTML}{B85C00}
+\definecolor{supportgrey}{HTML}{F7F7F7}
+\hypersetup{colorlinks=true,linkcolor=disciplinecolor,urlcolor=disciplinecolor}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{.42em}
+\setlist[enumerate]{leftmargin=*,itemsep=.28em,topsep=.35em}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{UNIFACOL --- \CadernoDisciplina}
+\rhead{Caderno ENADE --- 2026.2}
+\cfoot{\thepage}
+\newcommand{\ItemHeader}[4]{%
+  \par\medskip\noindent
+  \colorbox{disciplinecolor}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\color{white}\bfseries Questão #1\hfill #2}}%
+  \par\smallskip\noindent\textbf{Competência:} #3\par
+  \noindent\textbf{Suporte:} #4\par\smallskip
+}
+\newcommand{\TextoBase}{\noindent\colorbox{stimulusgrey}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\textbf{TEXTO-BASE}}}\par\smallskip}
+\newcommand{\Comando}{\par\smallskip\noindent\textbf{COMANDO.} }
+\newcommand{\FonteDidatica}{\par\smallskip\noindent{\footnotesize\textit{Fonte: situação e dados elaborados para fins didáticos.}}}
+\newcommand{\FonteExterna}[1]{\par\smallskip\noindent{\footnotesize\textit{Fonte: #1}}}
+\newcommand{\EspacoDiscursiva}{\par\noindent\rule{\textwidth}{.2pt}\vspace{1.15cm}\par\noindent\rule{\textwidth}{.2pt}}
+\newtcolorbox{AnswerBox}{enhanced,breakable,colback=answerorange,colframe=answerframe,boxrule=.7pt,arc=1mm,title=Resposta explicada,fonttitle=\bfseries,coltitle=white,before skip=7pt,after skip=7pt}
+\newtcolorbox{DocumentBox}[1][Documento ou artefato]{enhanced,breakable,colback=supportgrey,colframe=black!55,boxrule=.6pt,arc=.7mm,title={#1},fonttitle=\bfseries,coltitle=white,before skip=7pt,after skip=7pt}
+\newtcolorbox{MemoBox}{enhanced,breakable,colback=white,colframe=disciplinecolor,boxrule=.7pt,arc=.7mm,title=Memorando,fonttitle=\bfseries,coltitle=white,before skip=7pt,after skip=7pt}
+\newcommand{\LegendaDidatica}[1]{\par\smallskip{\footnotesize\textit{#1. Fonte: elaborado para fins didáticos.}}}

@@ -1,0 +1,209 @@
+\section{Capítulo 14 --- Avaliação ponta a ponta de GenBI}
+
+Os itens avaliam o sistema como cadeia: autorização, interpretação semântica, consulta, cálculo, geração, evidência e decisão. Métricas médias não compensam violação de privacidade, acesso ou segurança. Dados, custos e situações foram elaborados para fins didáticos.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{Separar níveis de correção}{Resposta fluente com SQL errado}
+\TextoBase
+O sistema interpretou corretamente a intenção ``receita líquida por região'', mas gerou SQL que incluiu cancelamentos. A narrativa resumiu fielmente o resultado retornado e citou a consulta executada.
+A resposta orientaria pagamento, portanto fluência textual não compensa erro de consulta, métrica, autorização ou evidência.
+\FonteDidatica
+\Comando O diagnóstico adequado é
+\begin{enumerate}[label=\Alph*)]
+\item falha de fluência, pois a narrativa deveria corrigir o banco.
+\item falha de consulta/semântica operacional; a geração foi fiel a um resultado incorreto.
+\item sucesso completo, porque intenção e citação estavam corretas.
+\item falha exclusiva de latência, porque SQL incorreto tende a ser mais lento.
+\item falha de privacidade, mesmo sem dado protegido no cenário.
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Calcular funil ponta a ponta}{Conjunto de avaliação}
+\TextoBase
+Em 500 perguntas autorizadas, 460 tiveram interpretação correta; 420 geraram consulta correta; 390 produziram número correto; 360 apresentaram evidência suficiente.
+Como cada etapa recebe apenas os casos aprovados na anterior, as taxas intermediárias devem usar denominadores sucessivos; o sucesso final permanece calculado sobre as 500 perguntas iniciais.
+\FonteDidatica
+\Comando As taxas condicionais sucessivas e o sucesso final são aproximadamente
+\begin{enumerate}[label=\Alph*)]
+\item 92\%; 91,3\%; 92,9\%; 92,3\%; 72\%.
+\item 92\%; 84\%; 78\%; 72\%; 92,3\%.
+\item 91,3\%; 92\%; 92,3\%; 92,9\%; 72\%.
+\item 84\%; 78\%; 72\%; 92\%; 91,3\%.
+\item 8\%; 8,7\%; 7,1\%; 7,7\%; 28\%.
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Construir conjunto de avaliação representativo}{Perguntas de BI}
+\TextoBase
+O conjunto atual contém cem paráfrases de ``vendas totais do mês'', todas feitas por analistas especialistas. O produto atenderá gestores com perguntas de comparação, ranking, causa aparente, período ambíguo, acesso restrito e casos sem resposta.
+O conjunto apoiará decisão de produção e precisa representar frequências, riscos, ambiguidades, perfis de acesso e segmentos menos comuns.
+\FonteDidatica
+\Comando A melhoria mais importante é
+\begin{enumerate}[label=\Alph*)]
+\item aumentar para mil paráfrases da mesma pergunta.
+\item estratificar tarefas, perfis, domínios, ambiguidades, recusas, acessos e casos adversos, com respostas e fontes de referência versionadas.
+\item medir somente satisfação dos especialistas que criaram o sistema.
+\item remover casos sem resposta, pois reduzem a média de correção.
+\item permitir que o próprio modelo escreva e aprove todo o gabarito.
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Calcular custo de erro}{Matriz de impactos}
+\TextoBase
+Em 1.000 respostas houve 40 números incorretos sem decisão, 12 recomendações incorretas usadas em reunião e 2 exposições de dado restrito. Os custos didáticos atribuídos são R\$20, R\$500 e R\$10.000 por ocorrência.
+Foram observados 40 erros leves de R\$20, doze relevantes de R\$500 e dois críticos de R\$10.000 cada.
+\FonteDidatica
+\Comando O custo total estimado é
+\begin{enumerate}[label=\Alph*)]
+\item R\$6.800, somando apenas erros analíticos.
+\item R\$20.000, considerando somente privacidade.
+\item R\$26.800, somando as três categorias de impacto.
+\item R\$32.000, multiplicando todas as ocorrências pelo maior custo.
+\item R\$10.520, usando a média simples dos custos unitários.
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Distinguir alucinação de desatualização}{Política revogada}
+\TextoBase
+O recuperador trouxe uma política revogada, marcada como versão vigente por erro de metadado. O modelo citou fielmente o trecho e não inventou conteúdo, mas a decisão contrariou a norma atual.
+A resposta usou corretamente um documento que deixou de valer; a avaliação deve separar recuperação desatualizada de conteúdo sem sustentação.
+\FonteDidatica
+\Comando A classificação mais precisa é
+\begin{enumerate}[label=\Alph*)]
+\item alucinação textual exclusiva, porque toda resposta incorreta é alucinação.
+\item falha de vigência/proveniência na recuperação; fidelidade ao contexto não garantiu correção atual.
+\item falha exclusiva de estilo, resolvida com prompt mais formal.
+\item sucesso, porque a citação existe.
+\item falha de custo, porque versões antigas usam mais tokens.
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Interpretar percentis de latência}{Duas configurações}
+\TextoBase
+A configuração A tem média 2,0 s, p95 7,5 s e p99 14 s. A B tem média 2,8 s, p95 4,9 s e p99 7 s. O SLA exige p95 até 5 s e a central prioriza previsibilidade.
+A configuração A tem média 2,8 s e p95 6,3 s; B tem média 3,1 s, p95 4,9 s e p99 7 s.
+\FonteDidatica
+\Comando A decisão coerente é
+\begin{enumerate}[label=\Alph*)]
+\item escolher A pela menor média, ignorando a cauda.
+\item escolher B, que atende ao p95 e apresenta cauda menor, apesar da média maior.
+\item calcular a média de A e B e publicar uma terceira configuração.
+\item escolher A porque p99 não participa de qualquer análise operacional.
+\item considerar equivalentes, pois ambas têm média inferior a 3 s.
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Aplicar privacidade diferencial de decisão}{Pequenos grupos}
+\TextoBase
+Um gestor pergunta salário médio de uma equipe com duas pessoas. Possui acesso ao painel agregado, mas a política exige grupos com pelo menos cinco registros e impede decomposição que revele indivíduos.
+A publicação contém grupos pequenos; utilidade analítica deve ser preservada sem permitir inferência individual por combinações de atributos.
+\FonteDidatica
+\Comando O sistema deve
+\begin{enumerate}[label=\Alph*)]
+\item responder a média porque não mostra nomes.
+\item recusar o recorte, explicar o limiar e oferecer agregação autorizada mais ampla.
+\item adicionar casas decimais para dificultar inferência.
+\item consultar salários individuais e esconder a consulta do trace.
+\item gerar valor aproximado a partir da média da empresa.
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Calcular custo e latência de retry}{Falhas transitórias}
+\TextoBase
+Uma chamada custa R\$0,10 e leva 2 s. Dez por cento das 10.000 solicitações falham na primeira tentativa; 80\% dessas têm sucesso em um único retry. Não há retries adicionais.
+Em dez mil solicitações, 10\% recebem um retry de dois segundos, com recuperação de 80\% e custo de R\$0,10 por tentativa.
+\FonteDidatica
+\Comando O custo adicional, o número de recuperações e a latência adicional média por solicitação são
+\begin{enumerate}[label=\Alph*)]
+\item R\$100; 800 recuperações; 0,2 s.
+\item R\$80; 1.000 recuperações; 2,0 s.
+\item R\$100; 1.000 recuperações; 0,16 s.
+\item R\$800; 800 recuperações; 2,0 s.
+\item R\$1.000; 8.000 recuperações; 0,2 s.
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Exigir auditabilidade suficiente}{Contestação de indicador}
+\TextoBase
+Uma diretora contesta um indicador. O sistema guardou prompt e resposta, mas não identidade, métrica, versão semântica, SQL, snapshot, ferramentas nem validações.
+O gestor contesta um indicador já usado; a equipe precisa reconstruir pergunta, identidade, fonte, contrato, consulta, filtros e versão do artefato.
+\FonteDidatica
+\Comando Para permitir reconstrução, a versão seguinte deve
+\begin{enumerate}[label=\Alph*)]
+\item guardar apenas mais texto da conversa.
+\item registrar trace correlacionado com identidade/política, versões, consulta, fonte, parâmetros, cálculos, evidências e decisões, com conteúdo minimizado.
+\item armazenar o banco inteiro junto de cada resposta.
+\item remover todos os registros para evitar contestação futura.
+\item pedir ao modelo que explique retrospectivamente o caminho provável.
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Selecionar versão por gates não compensatórios}{Candidatas GenBI}
+\TextoBase
+O gate exige correção $\geq85\%$, evidência $\geq90\%$, p95 $\leq6$ s, custo $\leq$R\$0,25 e zero vazamento.
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}Yrrrrr@{}}\toprule
+\textbf{Versão} & \textbf{Correção} & \textbf{Evidência} & \textbf{p95} & \textbf{Custo} & \textbf{Vaz.}\\\midrule
+A & 88\% & 92\% & 5,5 s & R\$0,24 & 0\\
+B & 91\% & 89\% & 5,1 s & R\$0,23 & 0\\
+C & 87\% & 94\% & 6,4 s & R\$0,22 & 0\\
+D & 90\% & 93\% & 5,8 s & R\$0,27 & 0\\
+E & 93\% & 95\% & 5,9 s & R\$0,25 & 1\\\bottomrule
+\end{tabularx}\end{center}
+\FonteDidatica
+Cada candidata é comparada por correção, evidência, p95, custo e vazamento; qualquer falha de segurança elimina a versão.
+\Comando A versão aprovada é
+\begin{enumerate}[label=\Alph*)]
+\item A, pois atende simultaneamente aos cinco gates.
+\item B, porque apresenta a segunda maior correção com menor custo.
+\item C, porque maximiza evidência sem vazamento.
+\item D, porque correção e evidência compensam o custo.
+\item E, porque maior qualidade compensa uma exposição isolada.
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Projetar avaliação ponta a ponta}{Assistente financeiro}
+\TextoBase
+O sistema traduz perguntas, consulta métricas, calcula comparações e redige recomendações. Será usado em fechamento mensal, com revisão humana antes de decisão.
+O assistente financeiro será avaliado antes de autorizar recomendações, devendo incluir casos normais, ambíguos, proibidos e de alto impacto.
+\FonteDidatica
+\Comando Proponha conjunto estratificado, gabaritos e métricas por etapa; inclua autorização, interpretação, SQL, cálculo, evidência, recusa, latência, custo, privacidade, revisão humana, subgrupos e gates de publicação.
+
+\ItemHeader{12}{Discursiva}{Calcular intervalo e comparar versões}{Amostras de correção}
+\TextoBase
+Em 400 perguntas, A acertou 344; B acertou 356. Use erro-padrão aproximado $EP=\sqrt{p(1-p)/n}$ e intervalo de 95\% $p\pm1{,}96EP$ para cada proporção.
+A versão A acertou 258 de 300 casos; B, 267 de 300, em amostras que exigem análise de incerteza antes da migração.
+\FonteDidatica
+\Comando Calcule proporções e intervalos aproximados. Avalie se a diferença observada, sozinha, sustenta migração e indique evidências adicionais de segurança, custo e distribuição de erros.
+
+\ItemHeader{13}{Discursiva}{Investigar regressão segmentada}{Média estável, falha nova}
+\TextoBase
+A correção global permaneceu em 87\%, mas perguntas de comparação temporal caíram de 90\% para 68\%. Perguntas simples aumentaram e passaram a dominar a amostra.
+A média global permaneceu estável, mas perguntas de uma regional passaram a falhar depois da troca do catálogo semântico.
+\FonteDidatica
+\Comando Explique por que a média esconde a regressão e proponha estratificação, pesos, testes de hipótese prática, análise de traces, rollback e critério para reintrodução.
+
+\ItemHeader{14}{Discursiva}{Calcular custo operacional esperado}{Decisão com impactos}
+\TextoBase
+Por mês há 50.000 perguntas. A versão X custa R\$0,18 por pergunta, tem 3\% de erro numérico (R\$15 cada) e 0,2\% de recomendação indevida (R\$800 cada). Y custa R\$0,24, tem 2\% e 0,08\%, respectivamente. Não houve vazamento nos testes.
+Na versão X, custos técnico, numérico e de decisão indevida precisam ser somados; a versão Y reduz erros, porém custa mais para operar.
+\FonteDidatica
+\Comando Calcule custo técnico, custo esperado dos dois tipos de erro e total mensal para X e Y. Compare e explique por que a decisão ainda precisa de intervalos, cauda de impacto e gate de privacidade.
+
+\ItemHeader{15}{Discursiva}{Responder a contestação e corrigir o sistema}{Decisão baseada em número errado}
+\TextoBase
+Um relatório GenBI levou a reduzir estoque. Depois, descobriu-se que o snapshot tinha atraso de dois dias e o trace não registrava versão. Houve perda operacional, mas a extensão ainda está em apuração.
+A recomendação equivocada já afetou clientes; correção técnica deve ocorrer junto com contenção, comunicação, reparação e prevenção de recorrência.
+\FonteDidatica
+\Comando Proponha contenção, correção da decisão, preservação de evidências, comunicação de fatos e hipóteses, reconstrução, compensação/encaminhamento, correção de versionamento e gates para retorno.
+
+\newpage
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 — resposta A.} As transições são $460/500=92\%$, $420/460\approx91{,}3\%$, $390/420\approx92{,}9\%$ e $360/390\approx92{,}3\%$. O sucesso final é $360/500=72\%$.
+\[\frac{360}{500}=72\%\qquad\text{(sucesso sobre o conjunto inicial)}\]
+
+\paragraph{Questão 4 — resposta C.} O custo é $40(20)+12(500)+2(10.000)=800+6.000+20.000=\mathrm{R\$}26.800$. Contagens iguais não implicam impactos iguais.
+
+\paragraph{Questão 6 — resposta B.} O SLA foi definido sobre p95, e B alcança 4,9 s, com p99 de 7 s. A menor média de A esconde cauda incompatível com a operação.
+
+\paragraph{Questão 8 — resposta A.} Há 1.000 retries, logo custo adicional de R\$100. Oitocentos recuperam a solicitação. Como cada retry acrescenta 2 s a 10\% das solicitações, a latência adicional média é $0{,}10(2)=0{,}2$ s.
+
+\paragraph{Questão 10 — resposta A.} A tem 88\%, 92\%, 5,5 s, R\$0,24 e zero vazamento. B viola evidência, C latência, D custo e E segurança; gates obrigatórios não são compensados por médias.
+
+\paragraph{Questão 12 — critérios.} A: $p=0{,}86$, $EP\approx0{,}0173$, IC aproximado $[0{,}826;0{,}894]$. B: $p=0{,}89$, $EP\approx0{,}0156$, IC $[0{,}859;0{,}921]$. Os intervalos se sobrepõem; o ganho observado de 3 pontos, isoladamente, não sustenta migração. Exigir teste pareado ou amostra maior, erros críticos, subgrupos, custo, p95 e segurança.
+
+\paragraph{Questão 14 — critérios.} X: técnico R\$9.000; erro numérico $1.500(15)=22.500$; indevida $100(800)=80.000$; total R\$111.500. Y: técnico R\$12.000; numérico $1.000(15)=15.000$; indevida $40(800)=32.000$; total R\$59.000. Y lidera sob custos esperados, mas médias de impacto não substituem distribuição, incerteza nem tolerância zero a vazamento.

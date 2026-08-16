@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trilha UNIFACOL"
+  short_description: "Livro-aula, exercícios e provas ENADE"
+  default_prompt: "Use $trilha-unifacol para planejar e produzir uma semana integrada da UNIFACOL."

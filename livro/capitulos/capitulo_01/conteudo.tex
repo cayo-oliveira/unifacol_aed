@@ -1,0 +1,648 @@
+\chapter{Ver, perguntar e decidir: dataviz com IA}
+
+Um gráfico pode estar matematicamente correto e ainda conduzir a uma decisão ruim. Pode esconder incerteza, comparar escalas incompatíveis ou destacar um padrão que desaparece quando mudamos o recorte. Agora imagine acrescentar IA generativa: em segundos, ela sugere consultas, escreve código e cria uma narrativa convincente. A velocidade aumenta; a responsabilidade do analista também.
+
+Esta disciplina não será um curso sobre clicar em uma ferramenta. Vamos estudar como perguntas, dados, percepção visual e evidências se transformam em decisões. Tableau, Python, Streamlit e LLMs serão meios diferentes para experimentar esse processo.
+
+\bigskip
+\noindent\textbf{O caminho que percorreremos em 2026.2.} Antes de aprofundar o primeiro conceito, observe o plano nas Tabelas~\ref{tab:plano-aed-u1} e~\ref{tab:plano-aed-u2}. Ele foi organizado a partir das quintas-feiras disponíveis no calendário acadêmico. A Unidade I constrói a capacidade de compreender e representar o dado; a Unidade II usa essa base para avaliar o que a IA consegue automatizar e o que ainda precisa ser verificado pelo analista.
+
+Na Tabela~\ref{tab:plano-aed-u1}, estatística não aparece como uma coleção de fórmulas isoladas. Nas Semanas 2 e 3, cada conceito seguirá a sequência: para que serve, como surgiu a necessidade da medida, fórmula, significado dos símbolos, substituição dos dados, conta linha a linha, interpretação e limite. Não haverá código nessas duas semanas. Arquitetura de dados também entra na Unidade I porque nenhum gráfico ou agente consegue corrigir silenciosamente uma fonte sem granularidade, sem semântica ou sem linhagem.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Plano dos encontros da Unidade I.}
+\label{tab:plano-aed-u1}
+\begin{tabularx}{0.98\textwidth}{@{}p{1.05cm}p{1.35cm}Yp{3.0cm}@{}}
+\toprule
+\textbf{Cap.} & \textbf{Data} & \textbf{Tema} & \textbf{Marco} \\
+\midrule
+1 & 06/08 & Fundamentos de AED e horizonte da BI agentic & orientação do curso e das apresentações \\
+2 & 13/08 & Estatística descritiva completa, do dado ao boxplot & contas manuais, sem código \\
+3 & 20/08 & Probabilidade, distribuições, covariância e correlação & apresentação 1: problema e contexto \\
+4 & 27/08 & Gráficos, cor, percepção e acessibilidade & escolha e redesign de visual \\
+5 & 03/09 & Arquitetura: bronze/prata/ouro e SOR/SOT/SPEC & apresentação 2: método e evidência \\
+6 & 10/09 & Dashboard, storytelling e Big Idea & composição, evidência e decisão \\
+7 & 17/09 & Integração da tabela imperfeita à recomendação & apresentação 3: resultados, limites e conexão \\
+8 & 24/09 & Revisão e fechamento integrado da Unidade I & apresentação 4: decisão e síntese \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A Tabela~\ref{tab:plano-aed-u2} não abandona gráficos para falar de IA. Ela retorna às mesmas decisões --- pergunta, definição, consulta, medida, visual e ação --- e pergunta quais delas passaram a ser executadas por um modelo, um copiloto ou um conjunto de agentes. Esse encadeamento permite comparar Tableau, Power BI/Fabric, Amazon Quick Sight, Looker, Databricks Genie e Streamlit sem confundir interface nova com evidência correta.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Plano dos encontros da Unidade II.}
+\label{tab:plano-aed-u2}
+\begin{tabularx}{0.98\textwidth}{@{}p{1.05cm}p{1.35cm}Yp{3.0cm}@{}}
+\toprule
+\textbf{Cap.} & \textbf{Data} & \textbf{Tema} & \textbf{Produto principal} \\
+\midrule
+9 & 15/10 & IA aplicada ao ciclo analítico & protocolo de verificação \\
+10 & 22/10 & Text-to-SQL, NL2Vis e semântica & trilha pergunta--SQL--visual \\
+11 & 29/10 & Plataformas de BI com IA & matriz comparativa \\
+12 & 05/11 & Streamlit com modelo Llama gratuito & protótipo reproduzível \\
+13 & 12/11 & BI agentic e multiagente & arquitetura observável \\
+14 & 19/11 & Avaliação, segurança, custo e contestação & auditoria e simulado \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+As provas estão previstas nas janelas institucionais: 01/10 para a Unidade I e 26/11 para a Unidade II, sujeitas à confirmação da coordenação. O encontro de 12/11 coincide com a EXPOFACOL, e 15/10 está sinalizado como Dia do Professor. O plano detalhado mantém ainda 08/10, 03/12 e 17/12 como datas institucionais ou pendentes de confirmação, sem inventar capítulo regular onde o calendário exige decisão administrativa.
+
+O plano não é uma lista de assuntos independentes. A estatística descritiva do Capítulo 2 sustenta a probabilidade e a associação do Capítulo 3; gráficos, cor e acessibilidade no Capítulo 4 tornam essas relações perceptíveis; a arquitetura do Capítulo 5 preserva o caminho da fonte ao indicador; dashboards e storytelling no Capítulo 6 organizam evidência e decisão; e os Capítulos 7 e 8 integram e revisam toda essa base. Esse percurso será usado para contestar as respostas produzidas por IA nos Capítulos 9 a 14. Ao final, você deverá conseguir explicar não apenas qual visual foi produzido, mas de onde veio, que cálculo sustenta sua mensagem e em que condição a recomendação deve ser recusada.
+
+\section{Como usar este livro-aula}
+
+Cada capítulo corresponde a uma quinta-feira de três horas. O texto reúne a leitura do aluno e o apoio conceitual da aula. As caixas laranja sintetizam o que passou; as azuis explicam uma dificuldade. Exercícios, respostas e atividades avaliativas ficam em cadernos separados.
+
+Para o professor, o capítulo é uma base de condução, não um conjunto de slides disfarçado. A narrativa permite ler um trecho, interromper para comparar dois visuais, ouvir interpretações da turma e retornar ao caso com uma pergunta mais precisa. Os exemplos e as transições precisam sustentar o encontro mesmo quando uma ferramenta falha ou quando a discussão exige mais tempo do que o previsto.
+
+Para o estudante, uma boa leitura começa antes do código. Observe que decisão está em jogo, quem utilizará a análise e que dado poderia mudar a conclusão. Depois acompanhe a transformação e o visual. Somente então examine a ferramenta usada. Essa ordem impede que um gráfico pronto seja confundido com uma pergunta respondida e torna mais fácil transferir o conceito entre Tableau, Python, Streamlit ou outra plataforma.
+
+Leia procurando sempre cinco peças: pergunta, dado, transformação, visual e decisão. Quando uma delas faltar, a análise ainda está incompleta.
+
+Mantenha um registro com cinco linhas correspondentes a essas peças. Em ``pergunta'', escreva população, período e comparação; em ``dado'', anote granularidade e limitações; em ``transformação'', registre filtros e cálculos; em ``visual'', explique a comparação favorecida; em ``decisão'', declare ação e risco. Esse pequeno hábito deixa lacunas visíveis antes que a narrativa as esconda.
+
+Ao final de cada seção, tente explicar a relação principal sem olhar o texto. Dizer que um histograma mostra distribuição é reconhecimento; explicar por que ele pode revelar concentração, caudas ou múltiplos grupos e como isso muda a investigação já demonstra compreensão. As caixas servem para conferir seu mapa mental depois da tentativa, e não para substituir a reconstrução.
+
+Tabelas e fluxos também devem ser lidos como argumentos. Em uma tabela, acompanhe linha, coluna, unidade e ordem; em um fluxo, identifique entrada, transformação, saída e retorno. Pergunte sempre o que ficou de fora. Um recurso visual reduz esforço apenas quando o leitor sabe que relação deve observar e consegue conectá-la ao texto ao redor.
+
+O caderno separado permitirá praticar essa leitura com questões no padrão ENADE e resoluções comentadas. Primeiro tente resolver sem consultar a explicação; depois compare sua linha de raciocínio, inclusive quando acertar. Acerto por eliminação frágil precisa de revisão tanto quanto erro, porque a prova mudará o contexto e exigirá transferência da competência.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: a disciplina não começa pelo gráfico nem pela ferramenta. Começa por uma pergunta que pode mudar uma decisão. O gráfico é uma interface entre evidência e raciocínio.
+\end{SummaryBox}
+
+\section{Exploratória e explanativa são momentos diferentes}
+
+Na análise exploratória, procuramos padrões, exceções, erros e novas perguntas. Criamos muitos rascunhos e aceitamos caminhos que não levam a uma conclusão. Na análise explanativa, selecionamos a evidência necessária para comunicar uma mensagem a um público específico.
+
+Explorar é trabalhar com incerteza de forma organizada. Um pico pode representar comportamento real, erro de registro ou mudança de regra. Em vez de escolher imediatamente a explicação mais interessante, o analista cria recortes, verifica frequência, retorna à origem e procura evidências concorrentes. O resultado da exploração não precisa ser uma descoberta; pode ser a constatação de que os dados disponíveis não sustentam a pergunta original.
+
+Explicar exige escolhas diferentes. Depois da investigação, o público não precisa percorrer todos os rascunhos, mas precisa receber evidência suficiente para avaliar a conclusão. Selecionar não significa esconder incerteza. Significa remover caminhos redundantes, destacar comparação relevante e declarar limite com clareza, preservando a possibilidade de alguém compreender como a mensagem foi construída.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{3cm}YY@{}}
+\toprule
+\textbf{Dimensão} & \textbf{Exploratória} & \textbf{Explanativa} \\
+\midrule
+Pergunta & pode evoluir durante a investigação & precisa estar delimitada \\
+Público & analista e equipe técnica & pessoa que decidirá \\
+Quantidade & muitos recortes e visuais & somente evidência essencial \\
+Incerteza & é investigada & é comunicada com clareza \\
+Resultado & hipótese e entendimento & mensagem e ação proposta \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Uma ferramenta de IA pode ajudar nas duas fases. Na exploração, pode sugerir recortes e código. Na explicação, pode revisar clareza e propor texto. Em nenhuma fase ela conhece automaticamente a intenção, a qualidade do dado ou o custo de uma decisão errada.
+
+Confundir os momentos produz erros comuns. Um gráfico exploratório cheio de controles pode sobrecarregar uma apresentação executiva; um gráfico explanativo simplificado pode esconder detalhes necessários para investigar uma anomalia. A mesma base pode gerar muitos visuais provisórios e apenas um visual final. A qualidade está na adequação entre estágio, público e pergunta, não na quantidade de elementos ou no acabamento visual.
+
+Considere a evasão estudantil. Durante a exploração, comparamos cursos, turnos, formas de ingresso, períodos e disponibilidade de apoio, procurando qualidade e padrões. Na comunicação, talvez a decisão seja priorizar contato com um grupo específico nas primeiras semanas. O visual final deve sustentar essa ação e mostrar incerteza relevante; não precisa exibir todo cruzamento realizado, mas a análise precisa guardar seu caminho.
+
+A passagem entre explorar e explicar também é um ponto de governança. Precisamos registrar qual recorte foi escolhido, que alternativas foram descartadas e por quê. Sem esse histórico, uma narrativa elegante pode parecer inevitável, quando na verdade dependeu de decisões interpretativas. Documentar o caminho permite revisão, atualização e contestação responsável.
+
+Uma exploração saudável procura também evidência contrária. Se a média aumentou, verifique distribuição, tamanho dos grupos e mudanças de composição. Se duas variáveis se movem juntas, procure período, subgrupo ou fator que enfraqueça a relação. Essa postura não busca impedir conclusões; busca descobrir qual formulação sobrevive melhor ao contato com os dados.
+
+Na fase explanativa, o contexto do público altera vocabulário e detalhe, mas não a integridade. Uma equipe técnica pode receber definição e diagnóstico; a liderança pode precisar de impacto, risco e ação; estudantes afetados podem precisar de transparência e canal de contestação. Versões diferentes da comunicação devem continuar apontando para a mesma medida governada.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui: ``a IA encontrou um insight'' é uma frase incompleta. Um insight combina padrão, contexto e consequência. A IA pode apontar um padrão; você precisa verificar o dado, explicar o contexto e mostrar qual decisão muda.
+\end{GuidedBox}
+
+\section{O artigo que abre o semestre}
+
+Usaremos como caso o artigo open access da ACM \href{https://doi.org/10.1145/3816713.3819784}{\textit{Phebe: A Multi-Agent Natural Language Interface for Interactive Data Visualization}}, publicado no IAIT 2026. Phebe permite que uma pessoa envie dados tabulares, faça limpeza assistida por IA e solicite análises e visualizações em linguagem natural. O sistema transforma intenção em SQL, executa, corrige falhas, analisa resultados e recomenda uma codificação visual. O link DOI permanece para referência, e o PDF integral em inglês está no apêndice deste capítulo para leitura offline.
+
+O artigo nos permite abrir a pergunta incômoda que guiará o semestre: \textbf{para que aprender dataviz se a IA pode receber uma pergunta e entregar a resposta?} Não vamos proteger a disciplina fingindo que a tecnologia não existe. Vamos usar a própria arquitetura de Phebe para descobrir que partes do trabalho são automatizadas, que novas camadas aparecem e onde o julgamento visual continua decisivo.
+
+\begin{ArticleBox}[Abstract, p. 1 --- trecho real]
+``Most data visualization tools require technical expertise, creating significant accessibility barriers. We present Phebe, an open-source web application that provides a complete natural language-driven workflow for data exploration and visualization. Users upload tabular data, receive AI-assisted cleaning recommendations, and generate interactive visualizations through conversational queries---without writing SQL or code.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} O problema inicial é acesso. Python, JavaScript, Tableau e Power BI exigem sintaxe, modelos mentais e operações que afastam pessoas com boas perguntas de negócio. A IA reduz essa barreira ao permitir que a intenção seja expressa em linguagem comum. Democratizar acesso é uma contribuição real, mas acesso a uma resposta não garante que a pergunta esteja bem formulada nem que o dado represente o fenômeno desejado.
+
+\noindent\textbf{Ligação com o semestre.} Começaremos por pergunta e qualidade do dado antes de escolher ferramenta; no fim, avaliaremos se a interface conversacional realmente ampliou compreensão e decisão.
+
+\begin{ArticleBox}[Section 1, Introduction, p. 1 --- trecho real]
+``Natural Language to Visualization (NL2Vis) extends this paradigm by mapping a natural language question not only to a data query but also to an appropriate visual encoding. While Text-to-SQL focuses on retrieving correct result sets, NL2Vis must additionally determine how data should be visually represented---which chart type, which axes, which aggregation, and which visual properties best communicate the answer.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Text-to-SQL termina quando produz uma consulta; NL2Vis precisa ainda decidir gráfico, eixos, agregação e filtros. Isso responde parcialmente à pergunta central: dataviz não morre, porque alguém --- agora possivelmente um agente --- continua tomando decisões de visualização. O risco é essas decisões desaparecerem atrás de uma resposta fluente. Nossa competência será torná-las visíveis, verificáveis e contestáveis.
+
+\noindent\textbf{Ligação com o semestre.} Percepção, escolha de gráfico e storytelling oferecerão critérios para auditar a decisão visual tomada pelo agente.
+
+Phebe organiza o fluxo em quatro agentes: um orquestrador classifica a intenção, um agente produz SQL, um agente realiza análises estatísticas e outro recomenda o gráfico. Essa decomposição é mais informativa do que a frase ``a IA fez o dashboard''. Ela mostra responsabilidades diferentes e permite perguntar que contexto cada componente recebe, como falha e que evidência produz.
+
+Antes de apresentar sua arquitetura, os autores situam Phebe entre interfaces de linguagem natural para dados, sistemas NL2Vis e benchmarks Text-to-SQL. Eles contrastam componentes isolados com uma aplicação ponta a ponta e destacam que sistemas anteriores ou dependiam de regras frágeis ou pressupunham dados já limpos. Essa revisão justifica por que Phebe inclui preparação interativa, consulta e visualização no mesmo fluxo.
+
+\begin{ArticleBox}[Section 2.2, NL2Vis Systems, p. 2 --- trecho real]
+``Mirror represents a more recent shift toward LLM-backed NL interfaces: it translates user queries into SQL, summarizes results, and renders visualizations, with a human-in-the-loop design allowing users to review and edit generated SQL. Phebe extends this direction by additionally incorporating automated data cleaning and AI-driven chart recommendation, removing the need for users to inspect or correct raw SQL.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} A passagem mostra que a contribuição não é apenas produzir SQL. Limpeza e recomendação visual tornam o sistema mais próximo de uma ferramenta de BI, mas também ampliam sua responsabilidade. Uma decisão errada no começo altera consulta, gráfico e narrativa; portanto, cada estágio precisa ser observável e reversível.
+
+\noindent\textbf{Ligação com o semestre.} A cadeia completa será nossa estrutura: dado, transformação, consulta, visual e decisão, com revisão humana em cada fronteira relevante.
+
+\begin{ArticleBox}[Section 3, System Architecture, p. 2 --- trecho real]
+``Phebe is built on a three-tier web architecture with clear separation between the frontend presentation layer, the backend application layer, and the data persistence layer. All tiers communicate over a RESTful HTTP/JSON contract.''
+
+``The client is developed with React 19 [...] All chart rendering is performed client-side using D3.js, which provides full SVG control.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} As três camadas são frontend React com D3.js, backend Python/FastAPI e persistência MySQL, conectadas por contratos HTTP/JSON. Essa descrição responde à ideia de que GenBI seria somente um chatbot. Existe uma arquitetura de software tradicional sustentando autenticação, estado, consultas e renderização. A IA ocupa serviços específicos dentro de um produto maior.
+
+\noindent\textbf{Ligação com o semestre.} Ao comparar Tableau, Streamlit e outras ferramentas, perguntaremos que partes dessa arquitetura cada escolha assume, esconde ou deixa sob responsabilidade do analista.
+
+\begin{ArticleBox}[Section 6, Text-to-Visualization Agent, p. 4 --- trecho real]
+``The core user-facing capability is the text-to-visualization agent, composed of four cooperating LLM-powered components: the Orchestrator Agent, the Text-to-SQL Agent, the Analysis Agent, and the Chart Recommendation Agent.''
+
+``The Orchestrator classifies intent and routes to either the Text-to-SQL Agent or the Analysis Agent; results flow to the Chart Recommendation Agent for visual encoding selection.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} O usuário vê conversa e gráfico, mas por trás existe ingestão, banco MySQL, regras, execução e D3.js. A interface conversacional não elimina a engenharia de dados nem a visualização; ela troca a porta de entrada. Para o semestre, essa arquitetura conecta dados, qualidade, SQL, análise, percepção, storytelling e construção de aplicação com Streamlit ou outra ferramenta.
+
+\noindent\textbf{Ligação com o semestre.} Voltaremos aos quatro agentes quando estudarmos IA no fluxo analítico e quando construirmos uma aplicação conversacional simples em Streamlit.
+
+Antes de consultar, o sistema constrói contexto de esquema com tabelas, colunas, tipos, amostras, quantidade de linhas e descrição fornecida pelo usuário. Sem esse aterramento, o LLM poderia inventar campos ou interpretar nomes de forma errada. Essa etapa é a ponte para granularidade, metadados, dicionário de dados e camada semântica de BI.
+
+O dado entra por um pipeline de oito estágios: extensão e tamanho, encoding, delimitador, limites de linhas e colunas, consistência dos registros, cabeçalho, tratamento de arquivo sem cabeçalho e inferência de tipos. O usuário ainda pode corrigir os tipos inferidos antes da persistência. Essa preparação revela trabalho de engenharia que desaparece na interface conversacional, mas determina o que poderá ser perguntado depois.
+
+\begin{ArticleBox}[Section 4, Data Ingestion and Validation, p. 2 --- trecho real]
+``Users upload CSV files through the web interface. Before storage, each file passes through a sequential eight-stage validation pipeline: extension and size check, encoding detection, delimiter detection, row and column bounds, column consistency, header validation and sanitization, headerless file handling, and type inference and persistence.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Validar ingestão não garante qualidade semântica, mas evita que problemas de formato contaminem todas as etapas seguintes. Um separador incorreto muda colunas; um encoding errado muda valores; um tipo numérico inferido como texto muda agregações. A leitura conecta ETL, arquitetura de dados e IA: o agente só raciocina sobre a representação que recebeu.
+
+\noindent\textbf{Ligação com o semestre.} Granularidade, tipos, ausências e transformação serão estudados antes de qualquer promessa de insight automático.
+
+\begin{ArticleBox}[Section 6.1, Schema Injection, p. 4 --- trecho real]
+``When a user opens a dataset for conversation, a session is created and a schema context object is constructed from table metadata: table name, column names and inferred types, up to three sample string values per column, row count, and user-provided description. This context is injected into every LLM system prompt, ensuring the model reasons over the actual dataset structure rather than hallucinating columns or value ranges.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Mesmo com esquema real, significado de negócio pode continuar ausente. Uma coluna chamada \texttt{revenue} pode representar valor bruto, líquido, reconhecido ou previsto. A IA precisa de definições governadas e exemplos, não apenas nomes técnicos. É aqui que a promessa de ``conversar com os dados'' depende de catálogo, qualidade e pessoas responsáveis pelas métricas.
+
+\noindent\textbf{Ligação com o semestre.} Dicionário de dados, camada semântica e contexto serão a ponte entre nomes técnicos e perguntas de negócio.
+
+O artigo também recusa a ideia de que dados chegam prontos. Phebe procura inconsistências de formato, ausências, outliers, linhas e colunas duplicadas e alta cardinalidade. Em vez de corrigir tudo silenciosamente, apresenta problemas e recomendações ao usuário. A decisão humana permanece porque remover um outlier estatístico pode apagar justamente o evento que precisa ser investigado.
+
+\begin{ArticleBox}[Section 5, AI-Assisted Data Cleaning, p. 3 --- trecho real]
+``Rather than applying automatic bulk corrections, the cleansing subsystem presents data quality issues to the user one at a time, in a fixed priority order that reflects downstream dependencies. Format inconsistencies are detected first because the missing value detector produces less accurate results when string null-like values remain un-normalized.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Essa passagem conecta a primeira metade do semestre à IA generativa. Antes de perguntar, precisamos saber o que representa uma linha, como ausências foram codificadas e quais transformações alteraram a população. A conversa parece imediata para o usuário, mas a resposta confiável depende de trabalho acumulado na arquitetura e na governança dos dados.
+
+\noindent\textbf{Ligação com o semestre.} Ausências, outliers, duplicatas e cardinalidade serão tratados como decisões analíticas, não como uma função automática de limpeza.
+
+O artigo permite aceitar, substituir ou ignorar a recomendação de limpeza e guarda cada operação numa pilha. O mecanismo de desfazer é pedagogicamente importante: IA recomenda, mas o usuário mantém agência e pode retornar ao estado anterior. Uma mudança irreversível e silenciosa dificultaria comparar alternativas e descobrir em que ponto o conjunto foi alterado.
+
+\begin{ArticleBox}[Section 5.2, AI Recommendations and Undo, p. 4 --- trecho real]
+``Each confirmed operation is applied to the in-memory pandas DataFrame and pushed onto a session-scoped stack. Undo pops the most recent entry and restores the DataFrame from a disk-backed snapshot. Backup files are cleaned up after a 30-minute idle timeout and by an hourly background job.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Reversibilidade é um princípio de boa ferramenta analítica. Ela permite experimentar tratamento de ausências ou outliers e verificar o efeito no resultado. Ainda assim, a pilha registra operação técnica, não justificativa de negócio; para governança, precisamos também de autor, momento, motivo e consequência esperada.
+
+\noindent\textbf{Ligação com o semestre.} Ao explorar, compararemos versões do dado e registraremos por que uma transformação foi aceita, substituída ou desfeita.
+
+As conversas, consultas executadas, resultados e payloads de visualização são persistidos. As seis mensagens mais recentes retornam ao orquestrador, permitindo perguntas como ``mostre isso em barras''. A experiência parece natural porque o sistema preserva contexto, mas essa memória cria novas perguntas de acesso, retenção e privacidade.
+
+\begin{ArticleBox}[Section 6.2, Conversation History, p. 4 --- trecho real]
+``Each user and assistant message is persisted to the MySQL conversations table, including message content, role, executed SQL, result set, and visualization payload. Every Orchestrator call includes the most recent six messages from the conversation history, enabling multi-turn follow-up questions and anaphora resolution.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Uma pergunta curta pode depender de uma resposta anterior, de um filtro ou de um gráfico. Se o histórico estiver incompleto, a referência ``isso'' pode apontar para o objeto errado. Se estiver excessivo, aumenta custo e exposição. A gestão de contexto é uma decisão de arquitetura de informação, não somente um detalhe do prompt.
+
+\noindent\textbf{Ligação com o semestre.} Contexto conversacional será comparado à memória de um dashboard: ambos preservam estado, mas atendem tarefas e riscos diferentes.
+
+Na geração de SQL, Phebe limita a consulta a \texttt{SELECT}, aplica limite de linhas e valida segurança, sintaxe e esquema. Se a execução falha, o erro do banco retorna ao modelo por até três tentativas. O sistema também trata resultado vazio e somente nulos como falhas distintas. Isso mostra que SQL sintaticamente válido ainda pode estar semanticamente errado ou excessivamente restritivo.
+
+\begin{ArticleBox}[Section 6.5, Execution-Based Self-Correction, p. 5 --- trecho real]
+``If execution fails, an execution-based self-correction loop activates. The exact database error message is appended to a new LLM call together with the original query and schema. The model produces a revised query, which is re-validated through all three layers before re-execution. Up to three correction attempts are permitted.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Executar e corrigir reduz uma classe de erro, mas não confirma a intenção. Uma consulta pode rodar perfeitamente e calcular a taxa errada. Por isso, o usuário precisa ver pergunta interpretada, SQL ou definição equivalente, filtros e amostra do resultado.
+
+\noindent\textbf{Ligação com o semestre.} A diferença entre validade técnica e validade analítica orientará nossos testes, reconciliações e critérios de confiança.
+
+Nem toda pergunta cabe em SQL. Phebe direciona correlação e importância de fatores para um agente estatístico, que escolhe técnica segundo os tipos das colunas. Essa separação evita forçar toda intenção a uma consulta relacional, mas introduz premissas de modelagem que também precisam ser explicadas ao usuário.
+
+\begin{ArticleBox}[Section 6.6, Analysis Agent, p. 5 --- trecho real]
+``The Analysis Agent handles statistical queries that SQL cannot express: correlations and factor-importance analysis. It retrieves the relevant columns via SQL and then applies the appropriate statistical method based on data types.''
+
+``For feature importance, a Random Forest model is trained with 100 estimators and random state 42.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} O artigo usa Pearson, correlação ponto-bisserial, Cramér's V e Random Forest em cenários definidos. O valor calculado não é uma explicação causal. Ao usar IA para escolher automaticamente uma análise, precisamos verificar tipos, tamanho amostral, independência e significado.
+
+\noindent\textbf{Ligação com o semestre.} Fundamentos estatísticos permitirão avaliar o método escolhido pelo agente; a interface reduz código, não elimina premissas.
+
+Depois da consulta, outro agente escolhe entre barras, linha, pizza, dispersão, área e histograma. Resultado escalar vira tabela; pedido explícito pode sobrescrever a recomendação. Essa etapa cria uma ótima discussão: obedecer ao usuário é sempre correto? Se a pessoa pedir pizza para vinte categorias, o sistema deve executar, alertar ou propor alternativa?
+
+\begin{ArticleBox}[Section 6.7, Chart Recommendation Agent, p. 5 --- trecho real]
+``After a successful SQL or analysis result, the Chart Recommendation Agent receives the original question, column names and types, row count, and up to five sample rows. It selects one of six chart types---bar, line, pie, scatter, area, or histogram---and maps columns to visual encodings.''
+
+``Single-value scalar results are rendered as a table. Users may explicitly request a chart type, overriding the recommendation.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Uma única regra já revela conhecimento de dataviz: nem todo resultado precisa de gráfico. Automatizar escolha visual requer codificar relações entre tipo de dado, tarefa perceptiva e público. Obedecer a um pedido explícito também não torna a escolha adequada.
+
+\noindent\textbf{Ligação com o semestre.} Percepção e codificação visual darão ao aluno critérios para corrigir a recomendação e justificar uma alternativa melhor.
+
+Como o sistema aceita CSV enviado pelo usuário e gera SQL, os autores adicionam guardrails contra prompt injection, conteúdo malicioso no esquema e comandos destrutivos. Três validadores independentes separam entrada, conteúdo indireto e consulta final. A arquitetura reconhece que o dado também pode carregar instruções adversariais.
+
+\begin{ArticleBox}[Section 6.8, Security Guardrails, p. 5 --- trecho real]
+``Three independent validators protect the pipeline against prompt injection and destructive SQL. An input validator classifies every user message before routing. A dataset content validator scans column names and sample values for embedded instructions that could hijack the model. A final SQL validator enforces SELECT-only execution.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} O detalhe mais crítico é que classificadores por IA falham de forma aberta para preservar disponibilidade, enquanto somente o bloqueio síncrono de SQL é sempre aplicado. Essa escolha cria um debate real de arquitetura: quando disponibilidade deve vencer proteção?
+
+\noindent\textbf{Ligação com o semestre.} Ao construir aplicações, compararemos falhar aberto e fechado, dados sensíveis, permissões e limites de ação. Segurança não é um selo; é decisão contextual.
+
+Depois da conversa, os gráficos podem ser fixados num dashboard, reposicionados, renomeados, recoloridos e exportados em PDF. A conversa não substitui a visão composta; ela alimenta um espaço em que resultados diferentes são comparados e organizados. Isso já oferece uma resposta concreta à pergunta do semestre: dashboards podem mudar de origem, sem necessariamente desaparecer.
+
+\begin{ArticleBox}[Section 7, Dashboard and PDF Export, p. 5 --- trecho real]
+``Users can pin any chart to a persistent dashboard. Pinned charts retain their original query, SQL, result set, and visualization configuration. Within the dashboard, users can reposition charts via drag-and-drop, resize them, edit titles, change chart types, switch color palettes, and toggle legends.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Uma resposta conversacional é eficiente para uma pergunta pontual. Um dashboard persistente favorece monitoramento, comparação simultânea e memória compartilhada. A conversa produz visuais, mas o artigo preserva painel, organização e exportação.
+
+\noindent\textbf{Ligação com o semestre.} Compararemos conversa, visual isolado e dashboard conforme a tarefa; GenAI acrescenta uma interface, não torna todas as formas de consumo equivalentes.
+
+A avaliação usa 500 consultas do BIRD-Mini. O artigo informa 61,6\% de acurácia de execução, oito pontos acima do baseline GPT, e taxa zero de erro de sintaxe atribuída ao ciclo de autocorreção. Uma pesquisa com 27 participantes relata que 85\% deram nota quatro ou cinco à capacidade de explorar dados sem escrever SQL ou código.
+
+\begin{ArticleBox}[Section 8.1, BIRD-Mini Results, p. 6 --- trecho real]
+``Phebe achieved an overall execution accuracy of 61.60\%, an 8.0 percentage point improvement over the raw GPT baseline. The self-correction loop fixed 30 out of 500 questions (6.0\% of the total), and reduced syntax errors to zero.''
+
+``The largest gains appeared in the Challenging category, where Phebe reached 51.96\% compared to 32.35\% for the baseline.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} O resultado permite separar contribuição de exagero. A autocorreção resolveu 6\% do conjunto total e zerou erros de sintaxe, mas a acurácia geral ficou abaixo de sistemas de estado da arte citados pelos autores. Nas consultas desafiadoras, quase metade ainda falha.
+
+\noindent\textbf{Ligação com o semestre.} Métricas, baselines e estratificação por dificuldade serão usados para avaliar sistemas sem transformar ganho real em promessa universal.
+
+A pesquisa de usuários traz outra forma de evidência. Vinte e sete participantes realizaram quatro tarefas no conjunto Titanic sem escrever SQL. Quatorze obtiveram a visualização na primeira tentativa, doze precisaram reformular e um não conseguiu. A dificuldade de formular uma pergunta compreensível pelo agente continua sendo parte da interação analítica.
+
+\begin{ArticleBox}[Section 8.2, User Survey Results, p. 7 --- trecho real]
+``The NL-to-visualization task was completed on the first attempt by 14 participants, required one or two rephrasing attempts for 12 participants, and could not be completed by one participant.''
+
+``On the five-point Likert scale, 23 of 27 participants rated the platform 4 or 5 for enabling data exploration without SQL or programming knowledge.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Os 85\% que avaliaram positivamente a exploração sem código sustentam democratização, mas a amostra é pequena e formada principalmente por estudantes. Reformulações e uma falha mostram que linguagem natural também precisa ser aprendida e negociada.
+
+\noindent\textbf{Ligação com o semestre.} Usabilidade será lida junto de confiança, clareza da limpeza e adequação do gráfico; facilidade não torna automaticamente as decisões compreensíveis.
+
+\begin{ArticleBox}[Section 9, Conclusion, p. 7 --- trecho real]
+``Future work will focus on multi-candidate SQL generation to close the gap, richer cleansing explanations to improve user trust, a supervisor agent for cross-agent consistency, and support for additional data sources beyond CSV.''
+
+``Phebe demonstrates that a carefully engineered multi-agent architecture can make data visualization accessible to non-technical users while maintaining data quality, query correctness, and security.''
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} A conclusão reconhece a distância para os melhores resultados e propõe múltiplas consultas candidatas, explicações melhores e um supervisor. ``Mantendo'' qualidade, correção e segurança deve ser confrontado com os resultados e limites, não aceito apenas por estar na conclusão.
+
+\noindent\textbf{Ligação com o semestre.} GenBI avança não porque elimina dataviz ou arquitetura, mas porque exige critérios ainda mais claros para dado, consulta, percepção, explicação e decisão.
+
+Com o artigo integral conferido, nossa resposta provisória fica mais precisa: dataviz não morre; parte de sua produção é automatizada e sua superfície de interação se torna conversacional. O trabalho humano migra para formular perguntas, governar significado, validar consultas e análises, julgar codificações, comunicar limites e decidir. Quem desconhece dataviz pode gerar mais gráficos, mas terá menos condições de reconhecer quando eles conduzem ao raciocínio errado.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: Phebe não mata dataviz; ele desloca parte da construção para agentes. A pergunta, a semântica dos dados, a validação da consulta, a escolha perceptiva e a responsabilidade continuam existindo. Agora precisamos saber também como auditar o agente que tomou essas decisões.
+\end{SummaryBox}
+
+\section{A cadeia pergunta--dado--visual--decisão}
+
+Phebe parece começar quando o usuário escreve uma pergunta, mas o artigo mostra validação, persistência, esquema e limpeza anteriores, além de consulta, análise e recomendação posteriores. Nossa cadeia torna esse percurso legível e acrescenta o que a arquitetura não pode decidir sozinha: que ação será tomada e que evidência a justifica.
+
+Considere uma instituição que deseja reduzir evasão. ``Faça um dashboard'' não é uma pergunta analítica. Podemos reformular:
+
+Uma pergunta analítica precisa delimitar quem, quando, o que será comparado e qual ação pode ser influenciada. Sem população, misturamos estudantes com trajetórias distintas; sem período, confundimos tendência com fotografia; sem comparação, um número não possui referência; sem ação, o dashboard corre o risco de acumular indicadores que ninguém utiliza.
+
+\begin{quote}
+Em quais grupos a taxa de evasão aumentou no último período, que fatores aparecem associados e onde uma intervenção deve ser investigada primeiro?
+\end{quote}
+
+Agora podemos mapear elementos:
+
+No dado, a pergunta central é ``o que representa uma linha?''. Uma linha pode ser estudante, matrícula, disciplina cursada ou evento de acesso. Contar linhas sem compreender granularidade produz duplicações silenciosas. Também precisamos distinguir ausência de valor, ausência de evento e valor igual a zero, pois cada caso possui interpretação e tratamento diferentes.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{3cm}Y@{}}
+\toprule
+\textbf{Elemento} & \textbf{Decisão necessária} \\
+\midrule
+Pergunta & definir população, período, comparação e ação possível \\
+Dado & verificar significado, granularidade, ausências e vieses \\
+Transformação & documentar filtros, categorias e cálculo da taxa \\
+Visual & escolher codificação que favoreça a comparação correta \\
+Decisão & declarar ação, evidência, risco e próxima verificação \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A transformação liga a matéria-prima à medida apresentada. Para calcular taxa de evasão, precisamos declarar numerador, denominador, janela e regras para transferência, trancamento ou retorno. Uma fórmula simples pode esconder decisões institucionais complexas. Documentar essas escolhas permite repetir a análise e entender por que dois relatórios aparentemente iguais divergem.
+
+O visual deve facilitar a comparação exigida pela pergunta. Se queremos localizar aumento por curso ao longo do tempo, uma linha por categoria pode funcionar até certo número de grupos; depois disso, pequenos múltiplos ou uma tabela destacada talvez sejam mais legíveis. A escolha não nasce de uma galeria de gráficos, mas da tarefa perceptiva que o leitor realizará.
+
+A decisão fecha a cadeia e reabre a investigação. Priorizar contato com um grupo exige capacidade operacional, critério justo e acompanhamento do efeito. Se a intervenção for realizada, novos eventos serão gerados e a análise deverá verificar alcance, resultado e possíveis consequências não desejadas. Dataviz participa de um ciclo, e não de uma entrega que termina na publicação.
+
+Por isso, cada elo deve permitir retorno. Um leitor questiona a barra; o analista consulta o cálculo; o cálculo aponta para registros; os registros revelam uma mudança de sistema. Essa rastreabilidade protege contra narrativas excessivamente confiantes e ajuda a transformar desacordo em investigação concreta.
+
+Podemos representar a cadeia como um contrato. A pergunta define o que precisa ser conhecido; o dado informa o que pode ser observado; a transformação declara como construímos a medida; o visual oferece uma tarefa perceptiva; a decisão especifica consequência. Se o contrato quebra em um elo, voltar à etapa anterior costuma ser mais produtivo do que adicionar mais gráficos.
+
+Suponha que um curso apresente taxa maior, mas também tenha concentrado matrículas recentes que ainda não completaram a janela de observação. O valor calculado mistura exposição diferente e não pode ser comparado diretamente. O problema parece visual, mas nasceu na definição do denominador. Esse exemplo mostra por que a análise deve começar antes da biblioteca de gráficos.
+
+\section{Percepção antes de decoração}
+
+O Chart Recommendation Agent de Phebe escolhe entre seis tipos e pode obedecer à preferência explícita do usuário. Essa passagem abre o problema desta seção: escolher uma marca visual não é apenas combinar tipos de coluna. Precisamos saber qual comparação o olho realiza com mais precisão e quando uma preferência produz uma leitura enganosa.
+
+Visualização funciona porque olhos e cérebro detectam algumas diferenças mais rapidamente que outras. Posição em uma escala comum costuma facilitar comparação precisa. Comprimento também funciona bem. Área, volume e ângulo exigem mais esforço e podem distorcer diferenças.
+
+Essa hierarquia perceptiva explica por que dois gráficos com os mesmos números não oferecem a mesma leitura. Barras alinhadas compartilham uma origem e tornam diferenças de comprimento comparáveis. Setores exigem comparar ângulos e áreas, uma tarefa menos precisa, sobretudo quando valores são próximos. A escolha adequada reduz trabalho cognitivo sem alterar o dado.
+
+Escalas merecem a mesma atenção. Cortar o eixo de barras pode ampliar visualmente uma diferença pequena porque o leitor associa comprimento à magnitude total. Em linhas, um intervalo truncado pode ser legítimo para observar variação, desde que a escala esteja clara e a interpretação não sugira proporção inexistente. Regra automática sem considerar a codificação também produz erro.
+
+Por isso, a escolha do gráfico nasce da relação que queremos enxergar:
+
+\begin{itemize}[leftmargin=*]
+  \item comparar categorias: barras alinhadas;
+  \item observar mudança no tempo: linha com granularidade adequada;
+  \item examinar distribuição: histograma, boxplot ou densidade;
+  \item investigar relação: dispersão, com atenção a escala e sobreposição;
+  \item mostrar composição: barras empilhadas quando a comparação continuar legível.
+\end{itemize}
+
+Cor deve carregar significado. Muitas cores sem função competem pela atenção. Um título informativo diz a conclusão principal ou a pergunta; ``Gráfico de barras'' apenas nomeia o formato.
+
+Uma paleta pode distinguir categorias, ordenar intensidade ou destacar exceção. Essas funções pedem esquemas diferentes. Cores qualitativas não implicam ordem; cores sequenciais variam com a magnitude; uma escala divergente exige ponto central significativo. Usar vermelho e verde sem alternativa ainda cria barreira para parte do público e pode associar julgamento onde existe apenas diferença.
+
+Automação visual pede cuidado adicional. Em Phebe, o agente escolhe uma codificação a partir de nomes, tipos e amostra do resultado. Isso é diferente de compreender sozinho a consequência da decisão. Quando a recomendação não revela a tarefa perceptiva, o usuário pode aceitar um gráfico bonito que favorece a comparação errada. Precisamos oferecer justificativa, possibilidade de troca e vistas complementares.
+
+Títulos, anotações e ordem completam a codificação. Ordenar barras pelo valor revela ranking; manter ordem temporal preserva sequência; destacar um ponto orienta atenção. Um título que afirma ``evasão cresceu principalmente no turno noturno'' precisa ser sustentado pelo recorte apresentado e acompanhado de período e fonte. Texto não corrige gráfico ruim, mas ajuda o leitor a interpretar um gráfico bem escolhido.
+
+Incerteza também precisa de codificação. Intervalos, faixas, transparência ou pequenos múltiplos podem revelar variação, desde que sejam explicados. Esconder incerteza para ``limpar'' o visual cria precisão aparente; exibir todos os detalhes de uma vez pode torná-lo ilegível. O desenho busca uma forma honesta de permitir comparação principal e acesso ao limite relevante.
+
+Acessibilidade não é acabamento posterior. Contraste, tamanho de fonte, ordem de leitura, rótulos e descrição textual determinam quem consegue acessar a informação. Um gráfico publicado em tela pequena precisa sobreviver à redução; um painel usado por teclado precisa de navegação coerente. Projetar para condições diversas frequentemente melhora a clareza para todo o público.
+
+\begin{GuidedBox}
+E aqui, aluno, veja que legal: uma ferramenta pode sugerir o tipo de gráfico, mas você pode testar a sugestão com uma pergunta simples: qual comparação o leitor precisa fazer? Se ele precisa comparar valores com precisão, uma codificação baseada em posição e comprimento tende a ser mais segura que área ou volume.
+\end{GuidedBox}
+
+\section{O papel da IA no fluxo analítico}
+
+Os quatro agentes de Phebe serão nossa referência para localizar IA sem atribuir tudo a um único modelo. Orquestração, SQL, estatística e recomendação visual recebem contextos e critérios diferentes. Ao montar um fluxo, perguntaremos qual estágio automatiza, que evidência devolve e onde uma pessoa precisa revisar.
+
+Um LLM pode apoiar tarefas como:
+
+O primeiro uso produtivo é ajudar a decompor uma pergunta ampla. Podemos pedir que o modelo identifique população, unidade de análise, medidas, comparações e riscos de interpretação. A resposta vira uma lista de hipóteses para o analista revisar com o domínio. Se o modelo inventar disponibilidade de campos, a revisão deve removê-los antes de qualquer código.
+
+\begin{itemize}[leftmargin=*]
+  \item transformar uma pergunta ampla em hipóteses verificáveis;
+  \item propor checagens de qualidade e escrever um rascunho de código;
+  \item explicar uma transformação e gerar documentação;
+  \item sugerir alternativas de visualização;
+  \item criticar um título ou uma narrativa;
+  \item criar uma interface inicial em Streamlit.
+\end{itemize}
+
+Ele também pode inventar colunas, aplicar fórmula errada, omitir grupo vulnerável e escrever uma história mais confiante que a evidência. A resposta deve entrar no fluxo como proposta, não como verdade.
+
+Ao gerar código, o modelo precisa receber esquema real, amostra não sensível, versões e resultado esperado. Depois, executamos em ambiente controlado, inspecionamos transformações intermediárias e criamos testes simples: contagem antes e depois de junção, unicidade de chave, limites e casos ausentes. Um gráfico renderizado sem erro apenas prova que o código executou; não prova que calculou a medida correta.
+
+Um ciclo seguro é: pedir, inspecionar, executar, comparar, documentar e explicar. Se o aluno não consegue explicar a transformação ou o gráfico, ainda não terminou o trabalho.
+
+Na crítica visual, a IA pode atuar como um segundo leitor. Podemos fornecer objetivo, público e descrição acessível do gráfico e pedir possíveis ambiguidades. Ainda assim, o modelo não vê automaticamente o contexto organizacional nem conhece a consequência de uma interpretação. A decisão de remover, destacar ou explicar permanece com o analista e deve ser justificada pela tarefa perceptiva.
+
+Em Streamlit, a IA pode gerar a estrutura inicial de filtros, gráficos e texto, mas o aplicativo introduz estado, entrada de usuário, acesso e publicação. Um filtro sem valor padrão pode produzir tela vazia; um upload pode expor dado; uma chamada a LLM pode enviar conteúdo externo. Construir interface torna o fluxo mais útil e também amplia a superfície que precisa ser testada.
+
+O princípio transversal é manter artefatos verificáveis. Prompt, versão, código, conjunto de dados, resultado e decisão devem poder ser relacionados. Se a resposta mudar, conseguimos comparar; se um indicador for questionado, retornamos ao cálculo; se uma narrativa for revisada, sabemos que evidência a sustentava. IA acelera propostas, enquanto rastreabilidade preserva responsabilidade.
+
+Um exemplo concreto é pedir uma função que calcule taxa por grupo. Antes de aceitar, escrevemos casos pequenos à mão: grupo sem evento, grupo com duplicidade, valor ausente e denominador zero. A execução contra esses casos expõe interpretações que a função precisa declarar. Depois comparamos a saída com uma implementação simples ou cálculo manual, mantendo o prompt apenas como parte do histórico.
+
+Também devemos controlar viés de confirmação. Se pedimos à IA que ``prove que o turno noturno piorou'', a instrução já orienta seleção de evidência. Um prompt melhor solicita comparações, explicações alternativas, checagens de composição e condições que enfraqueceriam a hipótese. Mesmo assim, a neutralidade não vem do texto do prompt; vem do desenho e da revisão analítica.
+
+\section{Ferramentas são escolhas, não identidade}
+
+O artigo Phebe combina React, D3.js, FastAPI e MySQL, mas sua contribuição não depende de o estudante reproduzir essa pilha. Ele nos ensina a abrir a expressão ``ferramenta de BI'' em responsabilidades: conectar e preparar dados, preservar definições, calcular, explorar, representar, publicar, controlar acesso e acompanhar uma decisão. Tableau, Power BI, Amazon Quick Sight, Looker, Databricks AI/BI, Python e Streamlit distribuem essas responsabilidades de maneiras diferentes. Comparar marcas sem comparar camadas seria como escolher um veículo apenas pela tela do painel.
+
+Também precisamos distinguir quatro experiências que hoje aparecem misturadas no marketing. O \textit{BI visual} oferece uma tela para o analista construir gráficos e dashboards. O \textit{copiloto} auxilia uma pessoa dentro dessa tela, sugerindo cálculo, visual ou resumo. A \textit{análise conversacional} permite perguntar em linguagem natural e receber tabela, texto ou gráfico. O \textit{BI agentic} planeja vários passos, seleciona fontes ou ferramentas, executa consultas, testa hipóteses e pode acionar um fluxo. Uma plataforma pode oferecer mais de uma dessas experiências, e o rótulo ``agente'' não garante que ela possua autonomia, memória ou validação suficientes para qualquer pergunta.
+
+Para aprofundar essa transição, usaremos um segundo estudo disponível integralmente no apêndice: \href{https://arxiv.org/abs/2605.21027}{\textit{Beyond Text-to-SQL: An Agentic LLM System for Governed Enterprise Analytics APIs}}, de Singh et al., publicado como preprint em 2026. Enquanto Phebe parte de tabelas enviadas pelo usuário e produz SQL, o novo trabalho investiga um cenário empresarial em que métricas, permissões e regras já estão encapsuladas em APIs analíticas. A diferença parece técnica, mas muda a fonte de verdade: o LLM não deve reconstruir sozinho a regra de faturamento, conversão ou atendimento se a organização já possui uma interface governada que calcula essa medida.
+
+\begin{ArticleBox}[Abstract e System Overview, pp. 1--2 --- síntese fiel]
+O artigo apresenta um agente que interpreta intenção, resolve entidades, verifica permissões, escolhe uma API analítica, constrói uma requisição válida, executa e, quando adequado, produz uma visualização. O fluxo é coordenado em vários passos, em vez de depender de uma tradução única de linguagem natural para SQL.
+
+Os autores avaliam o sistema em 90 situações empresariais elaboradas por especialistas. A arquitetura separa orquestração, aterramento de entidades e permissões, consulta por APIs governadas e geração estruturada de visualizações.
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} A principal novidade não é o chat. É a recusa de entregar ao modelo todas as decisões. ``Equipe de suporte de Recife'', por exemplo, precisa ser resolvida para uma entidade autorizada; ``taxa de atendimento'' precisa apontar para uma definição estável; o intervalo precisa ser calculado; a requisição precisa respeitar um contrato. O agente interpreta e planeja, mas operações determinísticas e interfaces governadas preservam aquilo que não deveria variar a cada resposta.
+
+\noindent\textbf{Ligação com o semestre.} Essa arquitetura nos dará um critério para avaliar cada plataforma. Perguntaremos onde reside a semântica da métrica, como o contexto do negócio chega ao agente, qual identidade executa a consulta, como a resposta revela fonte e filtro e de que modo o usuário contesta o resultado. Dataviz passa a incluir a arquitetura que torna o gráfico confiável, não apenas a imagem final.
+
+O \textbf{Tableau clássico} --- Desktop, Cloud ou Server --- continua sendo forte em exploração por manipulação direta, composição de dashboards e publicação interativa. Campos em linhas, colunas, marcas, filtros e parâmetros tornam a construção observável para o analista. Isso favorece testar rapidamente se uma comparação funciona melhor como barras, linha ou pequenos múltiplos. O risco aparece quando cálculos, filtros de contexto, extrações e definições ficam presos ao workbook sem documentação suficiente. O arquivo pode funcionar e ainda ser difícil de auditar fora da interface.
+
+Na camada assistida, o \href{https://help.tableau.com/current/online/en-us/web_author_einstein.htm}{Tableau Agent} trabalha dentro do conjunto de dados selecionado para ajudar a criar ou alterar uma visualização e apoiar a leitura do dashboard. A própria documentação estabelece limites: não é um chatbot aberto e não realiza toda forma de análise consultiva. Já o \href{https://help.tableau.com/current/tableau-next/en-us/tableau_next_tableau_product_overview.htm}{Tableau Next} é apresentado como plataforma de analytics agentic sobre o ecossistema Salesforce, com Tableau Semantics e capacidades Agentforce Tableau como Concierge, Data Pro e Inspector. A direção é clara: o produto deixa de ser somente uma tela de autoria e passa a combinar camada semântica, assistentes especializados e ação no fluxo de negócio.
+
+Essa evolução não torna o conhecimento de visualização menos importante. Quando o Tableau Agent cria um gráfico, alguém ainda precisa verificar granularidade, agregação, eixo, comparação e acessibilidade. Quando Tableau Next usa semântica para responder, alguém precisou definir o significado de receita, cliente ativo ou churn. O aluno não precisa memorizar cada nome do portfólio; precisa enxergar a fronteira entre a experiência clássica de autoria, a assistência generativa e a plataforma agentic baseada em semântica governada.
+
+O \textbf{Power BI} também possui camadas distintas. Power BI Desktop e Service oferecem modelagem, DAX, relatórios, dashboards e distribuição; o modelo semântico é a base que relaciona tabelas, medidas e segurança. O \href{https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-introduction}{Copilot em Power BI} auxilia análise, criação e consumo, incluindo geração de DAX, resumos e respostas sobre dados. A conversa parece direta, mas sua qualidade depende de nomes, descrições, relacionamentos e medidas preparados para interpretação, além das permissões atribuídas ao usuário.
+
+Na direção agentic, um \href{https://learn.microsoft.com/en-us/fabric/data-science/data-agent-copilot-powerbi}{Fabric data agent} pode selecionar entre lakehouse, warehouse, modelo semântico, base KQL, ontologia ou índice e devolver a resposta ao Copilot em Power BI, preservando controles como segurança em linha e coluna. Há ainda o \href{https://learn.microsoft.com/en-us/power-bi/developer/agentic/power-bi-agentic-overview}{Power BI Agentic}, um pacote de skills e ferramentas MCP para agentes de desenvolvimento inspecionarem esquemas, executarem DAX e alterarem modelos ou relatórios. Isso revela dois públicos diferentes: o usuário de negócio conversa com dados governados; o desenvolvedor usa um agente para construir e verificar os artefatos de BI.
+
+No Power BI, portanto, ``a IA fez o relatório'' pode esconder três operações: um copiloto ajudou o autor, um agente de dados respondeu ao consumidor ou um agente de desenvolvimento modificou modelo e relatório. Cada operação pede avaliação própria. Uma boa resposta conversacional não prova que o modelo semântico foi bem projetado; um DAX compilável não prova que a medida representa o negócio; um relatório criado rapidamente ainda precisa de inspeção visual. A camada semântica e a visualização continuam sendo interfaces de controle.
+
+O produto da AWS que o professor mencionou como \textbf{QuickSight Q} aparece na documentação atual como \textbf{Amazon Q em Amazon Quick Sight}, dentro da experiência de Generative BI. Quick Sight continua oferecendo análises e dashboards; Amazon Q acrescenta perguntas e respostas, criação de visuais por linguagem natural, cálculos, resumos executivos e histórias de dados. A experiência pode inclusive ser incorporada a outra aplicação, respeitando identidade, domínio permitido e sessão. Assim, a conversa não precisa morar apenas dentro do dashboard tradicional.
+
+A \href{https://docs.aws.amazon.com/quick/latest/userguide/quicksight-gen-bi.html}{documentação de Generative BI do Amazon Quick Sight} mostra que o contexto muda conforme a tarefa: em uma análise, o chat pode construir cálculo ou visual; em um dashboard, pode responder, resumir ou criar história. ``Topics'' e instruções personalizadas ajudam a ligar linguagem do usuário aos campos e métricas. O ponto pedagógico é importante: o sistema não pergunta a um modelo vazio sobre um banco desconhecido; autores precisam preparar o domínio e conferir se linguagem, agregação e segurança representam o negócio.
+
+Amazon Q aproxima construção e consumo, mas não elimina a inspeção. Uma narrativa executiva pode omitir um segmento; um visual gerado pode escolher proporção quando a tarefa exige comparação precisa; uma pergunta vaga pode assumir período errado. O aluno deve pedir fonte, filtro e definição, abrir o visual quando a forma importa e reconhecer que o resumo é uma leitura possível do resultado. A conversa reduz cliques; não reduz automaticamente ambiguidade.
+
+A ferramenta do Google que estava faltando é principalmente o \textbf{Looker}; vale distingui-lo de \textbf{Looker Studio}. Looker Studio é voltado à criação acessível de relatórios e dashboards conectados, sendo adequado para comunicação e análises mais leves. Looker é a plataforma empresarial com camada semântica LookML, governança, desenvolvimento e integração por APIs. Os nomes parecem próximos, mas a arquitetura e o papel organizacional não são iguais. Para BI agentic governado, a discussão atual se concentra sobretudo em Looker com Gemini.
+
+Na \href{https://docs.cloud.google.com/looker/docs/conversational-analytics-overview}{Conversational Analytics do Looker}, Gemini interpreta perguntas sobre Explores e agentes de dados apoiados na semântica definida em LookML. Um agente pode receber instruções do domínio e consultar mais de um Explore; análises avançadas podem executar Python e gerar visualizações. Em versões recentes, agentes de dashboard e fluxos agentic aparecem como capacidades adicionais ou de prévia. Aqui a camada semântica funciona como contrato: ``receita'' e ``churn'' devem ter uma definição organizacional antes de se tornarem palavras convenientes no chat.
+
+Esse caso ajuda a entender por que Looker Studio e Looker não são simplesmente opções equivalentes de desenho. Para uma apresentação rápida, Looker Studio pode resolver com baixo atrito. Para um agente responder de forma consistente em diferentes áreas, a organização precisa modelar métricas, acesso e relações. O custo muda de lugar: há menos esforço para cada pergunta, mas mais responsabilidade na preparação da semântica compartilhada.
+
+No ecossistema Databricks, o nome atual é \textbf{AI/BI Genie Agent}, anteriormente chamado Genie Space. Ele oferece uma interface de linguagem natural sobre dados registrados no Unity Catalog e executados por um SQL warehouse. O analista configura tabelas ou visões autorizadas, instruções, exemplos de perguntas e SQL e \textit{trusted assets}. O usuário recebe consulta, tabela e visualização sem precisar conhecer o esquema inteiro. É próximo da promessa de Phebe, mas nasce dentro de uma plataforma de lakehouse com catálogo, computação e governança integrados.
+
+O \href{https://docs.databricks.com/aws/en/genie/set-up}{Genie Agent} mostra por que ``conversar com todos os dados'' é uma descrição perigosa. O espaço precisa ter escopo; permissões vêm do catálogo; exemplos ensinam lógica do domínio; funções e consultas confiáveis tratam perguntas que não deveriam depender de geração livre. No \href{https://docs.databricks.com/aws/en/genie/agent-mode}{Agent mode}, o sistema cria um plano de pesquisa, testa hipóteses, executa várias consultas e produz relatório com citações, tabelas e visuais. Isso é mais agentic do que gerar um SQL único, mas também amplia custo, tempo e quantidade de decisões que precisam ser auditadas.
+
+O Genie evidencia a diferença entre acesso e significado. Unity Catalog pode impedir uma pessoa de ler uma tabela, mas não garante que o agente escolha o denominador correto. Um exemplo de SQL pode preservar uma definição, mas envelhecer quando o processo muda. Trusted assets reduzem variação, porém alguém precisa mantê-los. A função do analista se desloca parcialmente da construção repetitiva de painéis para curadoria de dados, semântica, exemplos, critérios e experiências de contestação.
+
+\begin{ArticleBox}[System Overview e Why APIs instead of SQL?, pp. 2--3 --- síntese fiel]
+No Analytic Agent, a visualização é geração estruturada: regras associam séries temporais, categorias, proporções e distribuições a formas de gráfico, e o resultado preserva as mesmas permissões do dado. Informações sensíveis podem ser mascaradas conforme política.
+
+Os autores justificam APIs governadas porque elas aplicam isolamento e mascaramento, encapsulam lógica de negócio e oferecem validação, logs e cache. O modelo escolhe e combina interfaces; não redefine silenciosamente seus cálculos.
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} Esta passagem cria uma ponte direta com Power BI semantic models, Tableau Semantics, LookML, Quick Sight Topics e Unity Catalog/Genie. Os mecanismos não são idênticos, mas respondem à mesma necessidade: ensinar ao agente que ``receita'' não é qualquer soma sobre uma coluna chamada valor. Segurança e semântica precisam ser aplicadas antes da frase final e também ao visual que a acompanha.
+
+\noindent\textbf{Ligação com o semestre.} Nas próximas semanas, construiremos definições e transformações fora do gráfico, preservaremos granularidade e verificaremos codificação visual. Quando usarmos uma plataforma conversacional, a pergunta será dupla: ``o agente conseguiu executar?'' e ``o resultado está analiticamente correto?''. Essa separação será usada nas apresentações científicas, nos exercícios e nos casos práticos.
+
+Python e Streamlit ocupam outra posição. Python oferece pipelines explícitos, versionamento, testes e liberdade para integrar modelos e bibliotecas; Streamlit transforma esse código em aplicação conversacional ou visual com pouco atrito. Eles permitem reproduzir parte de Phebe ou do Analytic Agent e observar cada componente. Em contrapartida, não recebemos gratuitamente a camada semântica, o catálogo, a segurança em nível de linha, a auditoria ou a administração corporativa. Liberdade arquitetural significa responsabilidade arquitetural.
+
+Uma aplicação Streamlit pode usar um LLM para classificar intenção, uma skill para escolher análise, funções determinísticas para métricas, um banco somente leitura e Plotly ou Altair para renderizar. Podemos mostrar SQL, fonte, período e observações ao lado da resposta. Esse desenho é excelente para aprendizagem porque torna as fronteiras visíveis. Para produção, precisaríamos acrescentar identidade, isolamento, limites, observabilidade, avaliação e manutenção. Um protótipo didático não deve ser anunciado como substituto automático de uma plataforma governada.
+
+\noindent\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.7cm}YY@{}}
+\toprule
+\textbf{Ecossistema} & \textbf{Base de confiança} & \textbf{Movimento agentic} \\
+\midrule
+Tableau & fontes, cálculos e semântica & Agent, Tableau Next e Agentforce \\
+Power BI e Fabric & modelo semântico, RLS/CLS e ontologia & Copilot, agentes, skills e MCP \\
+Amazon Quick Sight & datasets, Topics e permissões AWS & Amazon Q, Q\&A, histórias e autoria \\
+Google Looker & LookML, Explores e permissões & Gemini, data e dashboard agents \\
+Databricks Genie & Unity Catalog e SQL warehouse & Genie Agent e modo de investigação \\
+Python e Streamlit & código, testes e contratos próprios & agente construído sob medida \\
+\bottomrule
+\end{tabularx}
+
+A tabela não declara um vencedor. Ela mostra que a experiência conversacional se apoia em algo menos visível: modelo semântico, catálogo, permissão, API ou código versionado. Sem essa base, o LLM tenta inferir definições pelo nome das colunas. Com a base, ainda pode escolher entidade, período ou ferramenta incorretos. O trabalho do aluno é aprender a localizar onde a plataforma reduz risco e onde continua exigindo julgamento.
+
+\begin{ArticleBox}[Results e Conclusion, pp. 4--5 --- síntese fiel]
+No estudo, o modelo mais forte obteve 96,67\% de sucesso de execução, mas 77,22\% de acurácia ponta a ponta. Os autores destacam que uma requisição estruturalmente válida pode errar endpoint, entidade, período ou filtro e permanecer analiticamente incorreta.
+
+Na conclusão, o LLM é colocado como planejador sobre interfaces estáveis, não como repositório da lógica do negócio. Autenticação, métricas, auditoria e renderização permanecem fora do modelo para que falhas sejam localizáveis.
+\end{ArticleBox}
+
+\noindent\textbf{Leitura guiada.} A distância entre execução e correção é a resposta mais forte à promessa de ``pergunte qualquer coisa aos dados''. Um gráfico pode aparecer, a consulta pode terminar e a frase pode soar coerente, embora a entidade ou o denominador esteja errado. Avaliar somente disponibilidade ou aparência premiaria uma falha silenciosa. Precisamos de casos de referência, revisão de especialistas, rastreabilidade e condições para o agente dizer que não sabe.
+
+\noindent\textbf{Ligação com o semestre.} Quando um aluno comparar plataformas, não bastará demonstrar que todas geram um gráfico. Ele deverá propor perguntas simples e difíceis, registrar fonte e consulta, conferir o cálculo manualmente, observar como o sistema trata ambiguidade e explicar que artefato preserva a regra do negócio. Esse será um ensaio da competência avaliada no padrão ENADE: interpretar tecnologia dentro de uma situação e justificar decisão.
+
+Então, \textbf{dataviz morreu?} O dashboard como única porta de entrada provavelmente perde espaço: um usuário pode perguntar, receber síntese e continuar a conversa sem navegar por dezenas de abas. A montagem manual de gráficos rotineiros também tende a diminuir. Mas visualização não se resume à montagem. Ela externaliza padrão, permite comparação simultânea, revela distribuição, apoia contestação e oferece uma superfície comum para pessoas discutirem a evidência. Um texto pode afirmar que vendas caíram; uma série temporal mostra quando, com que volatilidade e em quais segmentos vale investigar.
+
+O que muda é a função do dashboard. Ele pode deixar de ser um catálogo estático de todas as perguntas e tornar-se monitor de métricas estáveis, ponto de partida para conversa, evidência citada por um agente ou espaço de acompanhamento de decisão. Para perguntas novas, o agente monta uma análise temporária; para processos recorrentes, o dashboard preserva definição, alerta e contexto compartilhado. Conversa e visual não são rivais: a conversa orienta busca; o visual permite ver e contestar relações.
+
+Uma comparação justa usa critérios do problema, não preferência pessoal: natureza e volume dos dados, maturidade da camada semântica, reprodução, interação, identidade, privacidade, custo, integração, conhecimento da equipe e manutenção. É legítimo combinar ferramentas. Python pode preparar e testar uma camada; Power BI ou Tableau pode distribuí-la; Streamlit pode oferecer um agente especializado; uma API governada pode preservar a métrica. Os contratos entre elas precisam ser mais duráveis do que o painel que aparece na tela.
+
+O custo total deve incluir trabalho oculto. Uma demonstração pode depender de arquivo local, chave pessoal e exemplos escolhidos; um sistema corporativo precisa de catálogo, permissão, monitoramento, avaliação e recuperação. Produtos comerciais reduzem parte dessa construção, mas criam dependência de licença, capacidade, região e formato proprietário. Código aberto oferece controle, mas transfere operação à equipe. Nenhuma escolha elimina manutenção; apenas muda quem a realiza e onde ela fica visível.
+
+Portabilidade também será tratada sem promessa absoluta. Conceitos como granularidade, comparação e incerteza migram entre ferramentas; cálculos, interações, agentes e modelos semânticos nem sempre. Por isso, preservaremos definições, dados preparados, testes e critérios fora do painel sempre que possível. A ferramenta implementa uma expressão da análise; não deve ser o único lugar onde seu significado existe.
+
+\begin{GuidedBox}
+Aluno, preste atenção aqui, porque esta parte é importante: toda plataforma promete aproximar a pergunta do dado. A comparação correta não é ``qual chat responde mais bonito?'', mas ``qual arquitetura consegue provar de onde veio a resposta?''. Procure semântica, permissão, consulta, filtro, cálculo, visual, fonte e possibilidade de correção. Sem esses elementos, velocidade apenas faz o erro chegar mais cedo.
+\end{GuidedBox}
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: Tableau, Power BI, Amazon Quick Sight, Looker, Databricks e Streamlit estão aproximando linguagem natural, semântica e visualização por caminhos diferentes. Você não será avaliado por fidelidade a uma marca. Será avaliado por formular a pergunta, localizar a fonte de verdade, conferir o cálculo, escolher uma representação coerente e defender a decisão.
+\end{SummaryBox}
+
+\section{Avaliação e cadernos}
+
+A avaliação do Phebe combina benchmark de execução e pesquisa com usuários, revelando aspectos diferentes do sistema. Essa combinação orienta também a disciplina: exercícios medem raciocínio em situações delimitadas, apresentações científicas exigem leitura, conexão e defesa oral, e a explicação em sala torna visíveis premissas que uma síntese isolada pode esconder.
+
+Na Unidade I, a prova vale 8 pontos e quatro apresentações científicas individuais valem 0,5 ponto cada, totalizando 2 pontos. Elas ocorrerão presencialmente em quatro encontros distintos: 20/08, 03/09, 17/09 e 24/09. Cada estudante receberá um artigo de 2026 diferente em cada rodada, perfazendo quatro artigos distintos ao longo da unidade.
+
+As apresentações são atividades de aprendizagem, não apenas exposição de resumo. Na Rodada 1, o estudante explicará problema e contexto; na Rodada 2, método e evidência; na Rodada 3, resultados, limites e conexão com a aula; na Rodada 4, decisão e síntese. Cada fala terá quatro minutos e até um minuto de pergunta ou conexão. Com uma turma-base de vinte estudantes, até 100 minutos serão reservados às falas, enquanto aproximadamente 80 minutos preservarão conteúdo e síntese da aula.
+
+A rubrica de cada rodada distribui 0,15 ponto para compreensão fiel do problema e do recorte; 0,15 para explicação de método ou evidência em vocabulário próprio; 0,10 para conexão tecnicamente correta com a aula; 0,05 para limite, risco ou condição de validade; e 0,05 para clareza, referência e respeito ao tempo. Título, autores, veículo, ano, DOI ou URL persistente e páginas lidas devem ser informados. LLM pode apoiar o estudo, desde que o aluno confira a interpretação no artigo e consiga defendê-la oralmente.
+
+Na Unidade II, a prova vale 7 pontos e o simulado vale 3. As provas têm oito questões: seis objetivas e duas discursivas no padrão ENADE.
+
+O caderno de exercícios oferece prática e respostas explicadas. O caderno de atividades organiza as quatro apresentações, as datas, o catálogo verificado de artigos de 2026, as atribuições e a rubrica. A pasta de provas recebe somente instrumentos derivados de competências já estudadas e praticadas.
+
+O caderno de exercícios será produzido antes das provas para criar uma matriz de competências e dificuldades. As questões seguirão o estilo ENADE: situação contextualizada, informação relevante e decisão que exige interpretação. Nos itens quantitativos, alternativas representarão erros plausíveis de cálculo ou leitura, sem ambiguidade artificial. A resolução explicará tanto o caminho correto quanto o erro associado aos distratores.
+
+Na Unidade II, o simulado de três pontos aproxima conteúdos e prepara transferência entre contextos. Ele não será uma cópia da prova. A prova verificará as mesmas competências em situações novas, com seis questões objetivas e duas discursivas. As versões A e B manterão enunciado e raciocínio, alterando apenas a ordem das alternativas com mapeamento documentado.
+
+A cadeia entre livro, caderno, atividade e prova precisa ser auditável. Cada questão terá objetivo, conteúdo de origem e nível de dificuldade. Se uma competência não foi explicada e praticada, ela não pode aparecer de surpresa na avaliação. Se todas as questões medem reconhecimento superficial, o instrumento também precisa ser revisto, ainda que esteja formalmente bem diagramado.
+
+Nas questões objetivas, alternativas próximas representarão caminhos específicos: usar média quando a distribuição pede mediana, confundir correlação com causa, ignorar granularidade ou escolher codificação inadequada. Isso cria desafio legítimo porque o estudante precisa localizar o erro conceitual. Trocar palavras por sinônimos ou esconder uma exceção não produz a mesma qualidade.
+
+Nas discursivas, a resposta será avaliada por elementos observáveis: formulação da pergunta, leitura do dado, escolha visual, limite e decisão. Um texto longo sem evidência não supera uma justificativa curta e estruturada. A rubrica ajudará o aluno a compreender como raciocínio e comunicação se encontram, reduzindo dependência de adivinhação sobre o que o professor espera.
+
+\section{Nosso contrato de encontro}
+
+O PDF completo de Phebe permite estudo autônomo, mas as conexões entre limpeza, SQL, percepção e decisão são construídas na aula. O encontro, como o sistema do artigo, preserva estado: cada bloco depende do raciocínio anterior. A chamada registra presença sem transformar o material em punição, e a aula continua depois dela.
+
+A aula ocorre às quintas, das 19h às 22h. A chamada será feita às 20h30. Quem precisar sair poderá sair, mas a aula continua. Se não restar nenhum aluno após a chamada, o conteúdo daquele bloco não será incluído na revisão.
+
+O encontro alternará leitura, demonstração, comparação visual e discussão. Depois de um dia de trabalho, três horas de exposição contínua não favorecem atenção. A variação de atividade não reduz profundidade: cada mudança de ritmo deve retomar a mesma pergunta e acrescentar evidência, linguagem visual ou consequência decisória.
+
+A chamada estabelece um marco transparente no meio da aula. Antes dela, construiremos base comum e chegaremos ao caso central; depois, aprofundaremos aplicação e limites. Quem sair poderá estudar o capítulo integral, mas será responsável por reconstruir as demonstrações e interpretações discutidas no último bloco.
+
+Se nenhum estudante permanecer, o professor registrará o ponto alcançado. O material posterior continuará disponível e poderá aparecer em outro encontro planejado, mas não será presumido na revisão da aula que não aconteceu. Essa regra alinha revisão e experiência efetiva sem transformar presença em punição.
+
+O contrato também obriga o material a sustentar 180 minutos. Uma tabela de horários não compensa seções rasas. Antes da aula, o capítulo deve passar pela contagem mínima de parágrafos, pela leitura de profundidade e pela compilação individual e integral. Exemplos, limites e transições precisam estar escritos para que a explicação não dependa apenas de improviso.
+
+Perguntar e discordar fazem parte do contrato. Quando duas interpretações surgirem, retornaremos à definição, ao recorte e ao visual para descobrir em que premissa divergem. A autoridade do professor organiza a aula, mas não transforma uma afirmação sem evidência em análise. Essa postura prepara o aluno para ambientes em que decisões precisam ser defendidas diante de públicos distintos.
+
+O último bloco continuará sendo conteúdo de aula. A possibilidade de saída após a chamada não o transforma em apêndice opcional. Os exemplos mais integradores poderão ocorrer justamente nesse momento, quando a base já foi construída. O registro no capítulo permite continuidade, mas a discussão em sala acrescenta perguntas, comparações e feedback que a leitura solitária precisa reconstruir.
+
+\section{Roteiro de três horas}
+
+Phebe aparecerá em todo o roteiro, não apenas na leitura inicial. Sua pergunta abre o encontro, sua arquitetura estrutura a cadeia, seu agente de gráficos provoca a discussão perceptiva e seus resultados fundamentam o fechamento. O aluno lerá o mesmo artigo com lentes sucessivas e verá o semestre inteiro dentro de um único caso.
+
+Nos vinte minutos iniciais, apresentaremos o curso pela tensão entre um gráfico correto e uma decisão ruim. A turma observará que ferramenta, acabamento e velocidade não substituem pergunta e contexto. Em seguida, conhecerá a organização dos cadernos, a forma de avaliação e o papel do livro como leitura e base de condução.
+
+O segundo bloco separará análise exploratória de comunicação explanativa. Usaremos o mesmo problema de evasão para mostrar muitos recortes de investigação e uma seleção final destinada a uma ação. O professor pedirá que os alunos identifiquem o que pode ser removido sem perder evidência e que incerteza precisa permanecer visível.
+
+Na leitura de Phebe, as caixas cinza orientarão problema, arquitetura multiagente, preparação dos dados, Text-to-SQL, autocorreção, recomendação visual e avaliação. A turma acompanhará o caminho entre pergunta e gráfico e localizará onde uma resposta pode estar sintaticamente correta, mas analiticamente errada. Também discutiremos por que automação não torna invisíveis as decisões de dataviz.
+
+Antes da chamada, a cadeia pergunta--dado--visual--decisão será aplicada à evasão. Depois da chamada, aprofundaremos granularidade, transformação e percepção. O professor poderá mostrar duas codificações dos mesmos valores e pedir qual comparação cada uma facilita, tornando a escolha de gráfico um problema de leitura, e não de gosto.
+
+O bloco final colocará lado a lado Tableau, Power BI, Amazon Quick Sight, Looker, Databricks Genie e uma aplicação Python/Streamlit. O artigo sobre APIs governadas fornecerá o critério: localizaremos semântica, permissão, execução, visual e auditoria em cada arquitetura. Em vez de uma competição entre marcas, compararemos onde cada plataforma reduz atrito e que responsabilidade continua com analista, autor do modelo ou administrador.
+
+O roteiro possui folga pedagógica distribuída dentro dos blocos. Se a turma dominar uma distinção rapidamente, usaremos o tempo para aplicar a outro caso; se granularidade gerar dificuldade, reduziremos a quantidade de demonstrações sem cortar a explicação essencial. O objetivo é completar a narrativa e produzir compreensão, não apenas avançar por horários impressos.
+
+Ao longo do encontro, três sínteses curtas ligarão as partes: depois da distinção exploratória, depois do artigo e no fechamento. Em cada uma, um estudante poderá reconstruir a cadeia com suas palavras. Essa recuperação mostra o que precisa ser reexplicado e impede que o artigo, a percepção e as ferramentas pareçam assuntos independentes.
+
+\noindent\begin{tabularx}{\textwidth}{@{}p{2.8cm}Y@{}}
+\toprule
+\textbf{Horário} & \textbf{Trilha} \\
+\midrule
+19h00--19h15 & apresentação do curso, materiais e avaliação \\
+19h15--19h40 & exploratória versus explanativa \\
+19h40--20h15 & leitura guiada do artigo Phebe e a pergunta ``dataviz morreu?'' \\
+20h15--20h30 & cadeia pergunta--dado--visual--decisão \\
+20h30--20h40 & chamada e retomada \\
+20h40--21h05 & percepção visual e escolha de gráficos \\
+21h05--21h40 & plataformas de BI e o artigo sobre analytics agentic \\
+21h40--21h55 & debate: conversa substitui dashboard e dataviz? \\
+21h55--22h00 & síntese e ponte para a próxima semana \\
+\bottomrule
+\end{tabularx}
+
+\section{Fechamento}
+
+A conclusão de Phebe afirma que uma arquitetura multiagente torna dataviz mais acessível; nossos critérios acrescentam uma condição: acessível para produzir uma saída não significa suficiente para julgar sua adequação. A pergunta ``para que dataviz se há IA?'' termina o encontro mais precisa do que começou.
+
+Na próxima semana, começaremos pela matéria-prima: variáveis, granularidade, qualidade e perguntas. Antes de pedir à IA um dashboard, aprenderemos a dizer o que cada linha representa e o que uma comparação pode ou não demonstrar.
+
+Os dois artigos mostram caminhos complementares. Phebe transforma tabelas em um fluxo de limpeza, SQL, estatística e recomendação visual; o Analytic Agent opera sobre APIs que já preservam regras, permissões e métricas. Em ambos, a resposta contém decisões sobre dado, transformação e representação. Ler bem significa perguntar quais escolhas o agente fez, que interface limitou essas escolhas, que evidência as valida e como o usuário pode contestá-las.
+
+O caso de evasão mostrou o outro extremo da mesma estrutura. Uma pergunta institucional aparentemente simples exige granularidade, definição de taxa, comparação perceptível e ação possível. Se um elo estiver oculto, o dashboard pode ganhar aparência profissional e ainda orientar prioridade errada. A competência do analista está em tornar o caminho verificável.
+
+IA aumenta o número de caminhos que conseguimos experimentar. Ela pode sugerir consulta, código, gráfico e narrativa em poucos minutos. Essa velocidade é valiosa quando reduz trabalho mecânico e amplia hipóteses, mas perigosa quando elimina inspeção. Nosso acordo será receber cada resultado como proposta que precisa ser executada, comparada, documentada e explicada.
+
+Ao terminar o capítulo, o estudante deve conseguir olhar para qualquer visual e formular pelo menos cinco perguntas: qual decisão, qual população, que representa uma linha, que transformação ocorreu e que comparação a codificação favorece. Se conseguir responder com evidência e declarar os limites, a ferramenta escolhida torna-se secundária. Essa postura acompanhará todas as semanas, as apresentações e os exercícios.
+
+Na próxima semana, essas perguntas abrirão a estatística descritiva completa. Começaremos por população, amostra, unidade de análise, variáveis, tipos, escalas e frequências; avançaremos por média, mediana, moda, quartis, percentis, amplitude, intervalo interquartil, variância, desvio-padrão, coeficiente de variação e boxplot. Cada conceito será desenvolvido com fórmula, significado dos símbolos e conta manual linha a linha, sem código. A qualidade da visualização começa nessa interpretação.
+
+Leve também uma pergunta pessoal para o próximo encontro: que gráfico você já aceitou sem investigar o cálculo por trás dele? Não é necessário encontrar fraude ou erro grave. Basta escolher uma visualização cotidiana e tentar reconstruir fonte, unidade, transformação e comparação. O exercício prepara o olhar para perceber que todo gráfico é resultado de escolhas.
+
+Essa atenção não pretende produzir desconfiança permanente ou paralisar decisões. Pretende calibrar confiança. Algumas análises sustentam ação imediata de baixo risco; outras exigem coleta adicional, validação externa ou experimento. O bom analista não espera certeza impossível, mas declara o grau de evidência, a consequência do erro e a próxima verificação adequada.
+
+Com esse compromisso, visualização deixa de ser etapa cosmética e se torna linguagem de análise. Aprenderemos a usá-la para descobrir, confrontar, explicar e decidir, sempre preservando o caminho que liga a imagem aos dados.
+
+\begin{SummaryBox}
+Então, aluno, veja só o que você aprendeu aqui: dataviz não é enfeite e IA não é atalho para pular raciocínio. Nosso trabalho será construir uma cadeia verificável entre pergunta, dado, visual e decisão, usando a ferramenta que melhor servir ao problema.
+\end{SummaryBox}
+
+\clearpage
+\chapter*{Apêndice --- artigo completo}
+\addcontentsline{toc}{chapter}{Apêndice --- artigo completo}
+
+Nas páginas seguintes está o artigo \textit{Phebe: A Multi-Agent Natural Language Interface for Interactive Data Visualization}, de Guntawit Anurakboonying, Ratchaphon Proongpattanaskul, Chalantorn Sawangwongchinsri e Tanasanee Phienthrakul. O texto foi mantido em inglês e na diagramação original da ACM. As caixas cinza deste capítulo apontam para as páginas correspondentes deste documento, permitindo conferir cada passagem no contexto integral.
+
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}},scale=0.93]{\ArticlePDFPath}
+
+\clearpage
+\chapter*{Apêndice --- artigo sobre analytics agentic governado}
+\addcontentsline{toc}{chapter}{Apêndice --- artigo sobre analytics agentic governado}
+
+Nas páginas seguintes está o artigo \textit{Beyond Text-to-SQL: An Agentic LLM System for Governed Enterprise Analytics APIs}, de Singh et al. O texto integral permite conferir arquitetura, conjunto de avaliação, resultados, limitações e exemplos usados para comparar as plataformas de BI neste capítulo.
+
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}},scale=0.95]{\AgenticAnalyticsPDFPath}

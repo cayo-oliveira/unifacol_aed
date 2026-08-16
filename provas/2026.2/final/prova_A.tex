@@ -1,0 +1,130 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\CadernoDisciplina}{Análise Exploratória de Dados}
+\newcommand{\CadernoCorHex}{17365D}
+\input{../../../caderno_exercicios/caderno_enade_style.tex}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\begin{center}
+{\Large\bfseries UNIFACOL}\\[2mm]
+{\large Avaliação Final}\\[1mm]
+{\Large\bfseries VERSÃO A}
+\end{center}
+\begin{DocumentBox}[Identificação]
+\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}p{.48\textwidth}@{}}
+Estudante: \hrulefill & Turma: \hrulefill\\[3mm]
+Professor: Cayo Oliveira & Data: \rule{2.7cm}{.2pt}/2026
+\end{tabularx}
+\end{DocumentBox}
+\textbf{Instruções.} Esta avaliação contém seis questões objetivas e duas discursivas. Nas objetivas, assinale uma única alternativa. Nas discursivas, mostre cálculos intermediários e justifique decisões com as evidências do texto-base. Respostas sem desenvolvimento podem não receber pontuação integral.
+\bigskip
+% origem: AED-C09-O09
+\ItemHeader{1}{Objetiva}{alucinação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A resposta cita uma tabela inexistente, embora a redação seja coerente e os números pareçam plausíveis. Não há artefato que sustente a afirmação. Antes de publicar, a equipe precisa exigir fonte verificável ou recusar a conclusão.
+
+\FonteDidatica
+
+\Comando Selecione a resposta operacional compatível com uma citação sem fonte existente.
+
+\begin{enumerate}[label=\Alph*)]
+  \item exigir referência válida e sustentação de cada alegação; caso contrário, abster-se
+  \item aceitar pela coerência
+  \item aumentar criatividade
+  \item ocultar a citação
+  \item treinar imediatamente com a resposta
+\end{enumerate}
+
+% origem: AED-C05-O07
+\ItemHeader{2}{Objetiva}{Aplicar linhagem e impacto}{Mudança de regra}
+\TextoBase O comitê propõe mudar ``cliente ativo'' de compra nos últimos 90 dias para compra nos últimos 60 dias. O indicador alimenta três painéis, uma campanha automática e um modelo. A alteração pode mudar contagens e decisões mesmo que nenhuma linha bruta seja modificada, exigindo análise de impacto antes da vigência.
+\FonteDidatica
+\Comando Antes de publicar, a equipe deve
+\begin{enumerate}[label=\Alph*)]
+  \item alterar a SQL e aguardar reclamações.
+  \item usar linhagem para identificar consumidores, versionar regra e vigência, comparar impacto e comunicar migração.
+  \item atualizar somente o painel executivo por ser mais visível.
+  \item manter o mesmo nome sem registrar a quebra semântica.
+  \item recalcular apenas dados futuros e misturar definições na mesma série.
+\end{enumerate}
+
+% origem: AED-C14-D15
+\ItemHeader{3}{Discursiva}{Responder a contestação e corrigir o sistema}{Decisão baseada em número errado}
+\TextoBase
+Um relatório GenBI levou a reduzir estoque. Depois, descobriu-se que o snapshot tinha atraso de dois dias e o trace não registrava versão. Houve perda operacional, mas a extensão ainda está em apuração.
+A recomendação equivocada já afetou clientes; correção técnica deve ocorrer junto com contenção, comunicação, reparação e prevenção de recorrência.
+\FonteDidatica
+\Comando Proponha contenção, correção da decisão, preservação de evidências, comunicação de fatos e hipóteses, reconstrução, compensação/encaminhamento, correção de versionamento e gates para retorno.
+\EspacoDiscursiva
+
+% origem: AED-C03-D15
+\ItemHeader{4}{Discursiva}{Escolher distribuição}{Planejamento operacional}
+\TextoBase Uma equipe modelará quatro fenômenos: número de falhas em lote fixo sob condições estáveis; sucesso de uma única tentativa; instante de chegada em janela projetada sem preferência; e erro de medição aproximadamente simétrico produzido por muitos efeitos pequenos. A escolha da distribuição deverá decorrer do mecanismo e indicar o parâmetro e a premissa que pode falhar.
+\FonteDidatica
+\Comando Associe Bernoulli, binomial, uniforme ou normal a cada caso, explicando parâmetros, condições e uma razão que poderia invalidar cada escolha.
+\EspacoDiscursiva
+
+% origem: AED-C02-O05
+\ItemHeader{5}{Objetiva}{Aplicar média ponderada}{Notas com pesos}
+\TextoBase O plano de avaliação atribui peso 2 a uma atividade prática e peso 8 à prova da unidade. Um estudante obteve, respectivamente, notas 9 e 6. O sistema precisa consolidar a nota respeitando a contribuição definida para cada componente, e não tratar as duas observações como igualmente representativas.
+\FonteDidatica
+\Comando A média que respeita os pesos é
+\begin{enumerate}[label=\Alph*)]
+  \item $(9+6)/2=7{,}5$.
+  \item $(2\times9+8\times6)/10=6{,}6$.
+  \item $(2+8)/(9+6)=0{,}67$.
+  \item $(9+6)/10=1{,}5$.
+  \item $(8\times9+2\times6)/10=8{,}4$.
+\end{enumerate}
+
+% origem: AED-C08-O05
+\ItemHeader{6}{Objetiva}{visual}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um mapa de calor compara bairros, mas não apresenta escala, usa cores sem ordenação e mistura contagem de atrasos com percentual de entregas. Bairros possuem volumes muito diferentes. A revisão deve preservar unidade, denominador e acessibilidade antes de destacar uma região.
+
+\FonteDidatica
+
+\Comando Selecione o redesenho que separa medidas, explicita escala e permanece legível sem depender apenas de cor.
+
+\begin{enumerate}[label=\Alph*)]
+  \item aumentar o número de cores
+  \item retirar legenda
+  \item somar contagem e percentual
+  \item ordenar bairros alfabeticamente apenas
+  \item separar medidas, explicitar escala/unidade e oferecer rótulos acessíveis
+\end{enumerate}
+
+% origem: AED-C12-O05
+\ItemHeader{7}{Objetiva}{Gerenciar estado e reexecução}{Duplo envio no Streamlit}
+\TextoBase
+Ao alterar um filtro, o Streamlit reexecuta o script. O protótipo dispara novamente uma inferência cara e grava duas decisões idênticas. Não há chave que relacione pergunta, dados e versão do modelo.
+O incidente ocorre quando a interface reexecuta o script; a correção deve impedir duplicidade sem perder o histórico visível ao usuário.
+\FonteDidatica
+\Comando A correção adequada é
+\begin{enumerate}[label=\Alph*)]
+  \item desativar todos os widgets após a primeira execução da sessão.
+  \item usar estado de sessão, formulário para submissão explícita, chave idempotente e cache versionado pelos insumos relevantes.
+  \item guardar apenas a última resposta em variável global compartilhada por usuários.
+  \item aumentar o timeout para que as duas chamadas terminem na mesma ordem.
+  \item remover os logs duplicados sem impedir o efeito repetido.
+\end{enumerate}
+
+% origem: AED-C13-O05
+\ItemHeader{8}{Objetiva}{Escolher memória apropriada}{Correção de preferência e regra}
+\TextoBase
+Um usuário prefere gráficos em barras; a política corporativa determina que valores inferiores a cinco sejam suprimidos. O protótipo grava ambas as informações como lembranças livres produzidas pelo modelo.
+A preferência de formato pertence ao usuário, mas uma política revogada não pode persistir como memória nem ser reintroduzida pelo histórico.
+\FonteDidatica
+\Comando O redesenho adequado é
+\begin{enumerate}[label=\Alph*)]
+  \item armazenar preferência e política juntas em memória conversacional sem versão.
+  \item tratar preferência como dado de perfil revogável e política como regra governada, versionada e aplicada fora da memória livre.
+  \item converter a política em mensagem do usuário para que possa ser substituída em cada conversa.
+  \item descartar a preferência e manter somente o histórico integral indefinidamente.
+  \item permitir que o agente escolha qual regra lembrar conforme a tarefa.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,324 @@
+\section{Capítulo 9 --- LLM aplicado ao ciclo analítico}
+
+Uma central de operações adiciona um assistente para explicar indicadores. O sistema envia instruções, esquema, histórico e tabelas resumidas a um LLM, mas decisões continuam sujeitas a validação.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{papéis}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A política de sistema determina não revelar CPF e citar a fonte usada. Um usuário solicita a lista nominal e afirma ter autorização, mas a aplicação não fornece evidência desse acesso. A hierarquia de mensagens e controles determinísticos devem impedir que conteúdo do usuário revogue a política. O registro da sessão mostra que o pedido chegou pelo campo de pergunta comum, sem escopo de acesso nem finalidade aprovada. A resposta poderá oferecer apenas estatística agregada; eventual consulta nominal depende de autorização verificada antes da montagem do contexto e de filtragem posterior da saída. Em teste de segurança, a mesma solicitação apareceu dentro de um documento recuperado, redigida como se fosse instrução administrativa. Esse trecho é dado não confiável e não pode ganhar precedência sobre a política. A arquitetura deve separar papéis, consultar permissões em serviço próprio, limitar campos antes da chamada e verificar a resposta antes de exibi-la. O registro de auditoria precisa guardar versão da política, identidade autorizada, fontes consultadas e motivo de eventual recusa, sem armazenar o CPF em texto aberto. Temperatura ou redação persuasiva não substituem esses controles, porque apenas modificam o comportamento probabilístico do modelo.
+
+O parecer de conformidade exige ainda um teste em que a solicitação maliciosa aparece no histórico e outro em que aparece no documento recuperado; ambos devem resultar na mesma recusa registrada.
+
+\FonteDidatica
+
+\Comando Selecione a arquitetura que preserva a autoridade da política e aplica autorização fora do texto do usuário.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item colocá-la só na última mensagem do usuário
+
+\item pedir ao assistant que a memorize
+
+\item colocá-la em instrução de sistema e reforçá-la por controles determinísticos de saída e acesso
+
+\item esconder a regra no dado
+
+\item confiar apenas na temperatura
+
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{janela}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O chamado técnico apresenta no Quadro 1 o orçamento de uma janela de 20.000 tokens. Cada trecho recuperado usa 2.000 tokens; a aplicação precisa calcular quantos trechos completos cabem sem truncar instruções ou saída.
+\begin{DocumentBox}[Quadro 1 --- orçamento de contexto]
+\begin{tabularx}{\textwidth}{@{}Yr@{}}\toprule
+\textbf{Componente reservado} & \textbf{Tokens}\\\midrule
+resposta & 2.000\\ system e esquema & 3.000\\ histórico & 5.000\\\bottomrule
+\end{tabularx}
+\end{DocumentBox}
+
+\FonteDidatica
+
+\Comando Calcule o orçamento restante e selecione a quantidade máxima de trechos completos.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item cabem 5 trechos: restam 10.000 tokens
+
+\item cabem 10 porque saída não conta
+
+\item cabem 6 ignorando system
+
+\item cabem 7 arredondando histórico
+
+\item cabem 20 porque token é palavra
+
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{validação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O assistant afirma queda de 18\%, mas a tabela de referência contém 120 antes e 110 depois. A resposta será enviada à diretoria. Antes, a aplicação precisa recalcular a variação relativa e tratar a frase do modelo como hipótese sujeita à fonte.
+
+\FonteDidatica
+
+\Comando Recalcule a variação observada e selecione a ação de validação antes da publicação.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aceitar 18\% por ser resposta do modelo
+
+\item trocar system por user
+
+\item aumentar contexto sem conferir
+
+\item recalcular: queda de 8,33\%; bloquear ou corrigir resposta e registrar divergência
+
+\item reduzir temperatura e publicar
+
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{custo}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Cada chamada usa 8 mil tokens de entrada e 2 mil de saída. As tarifas são R\$1 por milhão de tokens de entrada e R\$3 por milhão de saída; o mês terá 10 mil chamadas. A equipe precisa separar os dois componentes antes de projetar o custo.
+
+\FonteDidatica
+
+\Comando Calcule separadamente custo de entrada, saída e total mensal e selecione a alternativa correta.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item R\$100
+
+\item entrada R\$80, saída R\$60, total R\$140
+
+\item R\$300
+
+\item R\$1.400
+
+\item R\$14
+
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{contexto}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O histórico recuperado contém uma regra revogada e um dado atual, sem vigência visível. Se ambos forem enviados, o modelo pode produzir resposta fluente baseada na política antiga. O contexto precisa privilegiar fonte vigente e preservar proveniência.
+
+\FonteDidatica
+
+\Comando Selecione a estratégia de contexto que remove regra revogada sem perder vigência e proveniência.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item enviar tudo porque mais contexto sempre melhora
+
+\item deixar o assistant decidir autoridade
+
+\item repetir regra antiga
+
+\item usar user para sobrescrever segurança
+
+\item selecionar/versionar contexto, marcar proveniência e excluir ou rotular conteúdo revogado
+
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{retry}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O serviço recebeu 20 mil chamadas, e 10\% foram repetidas integralmente após timeout. Cada execução custa R\$0,02, inclusive retries. A equipe precisa calcular execuções e custo reais antes de avaliar se idempotência e política de repetição devem mudar.
+
+\FonteDidatica
+
+\Comando Calcule o total de execuções e o custo mensal após retries e selecione a interpretação correta.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 20 mil e R\$400
+
+\item 2 mil e R\$40
+
+\item 22 mil execuções e custo R\$440
+
+\item 21 mil e R\$420
+
+\item 22 mil e R\$400
+
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{mensagens}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A aplicação grava uma resposta anterior do modelo como se fosse instrução de sistema na chamada seguinte. Assim, conteúdo probabilístico recebe autoridade de política. A arquitetura precisa manter papéis e proveniência sem promover mensagens do assistant.
+
+\FonteDidatica
+
+\Comando Selecione o tratamento que conserva os papéis system, user e assistant e sua autoridade relativa.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item promover toda saída a system
+
+\item preservar papéis e tratar saída anterior como conteúdo não confiável, sujeito a validação
+
+\item misturar todas as mensagens
+
+\item remover user
+
+\item usar assistant como autorização
+
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{latência}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+As etapas sequenciais têm p95: autenticação 0,2 s, busca 0,9 s, fila 1,4 s, modelo 2,1 s e validação 0,4 s. O SLA é avaliado ponta a ponta. A equipe precisa somar o caminho e localizar os maiores componentes sem remover controle de qualidade.
+
+\FonteDidatica
+
+\Comando Some a latência p95 sequencial e selecione os componentes prioritários para investigação.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 4,0s
+
+\item 3,5s total
+
+\item 5,0s e remover validação
+
+\item total 5,0s; fila+modelo somam 3,5s e devem ser investigados sem retirar validação
+
+\item 2,1s porque só modelo conta
+
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{alucinação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A resposta cita uma tabela inexistente, embora a redação seja coerente e os números pareçam plausíveis. Não há artefato que sustente a afirmação. Antes de publicar, a equipe precisa exigir fonte verificável ou recusar a conclusão.
+
+\FonteDidatica
+
+\Comando Selecione a resposta operacional compatível com uma citação sem fonte existente.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item exigir referência válida e sustentação de cada alegação; caso contrário, abster-se
+
+\item aceitar pela coerência
+
+\item aumentar criatividade
+
+\item ocultar a citação
+
+\item treinar imediatamente com a resposta
+
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{governança}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Analistas querem comparar versões de prompt e modelo ao longo do tempo. Casos, parâmetros, custos e latências também mudam. Para atribuir diferenças à versão, o experimento precisa controlar artefatos, executar conjunto de referência e registrar métricas multidimensionais.
+
+\FonteDidatica
+
+\Comando Selecione o protocolo versionado que permite uma comparação reproduzível entre configurações.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item trocar tudo simultaneamente
+
+\item medir apenas JSON válido
+
+\item guardar só a resposta final
+
+\item usar opinião do desenvolvedor
+
+\item versionar system, modelo, parâmetros, conjunto de casos e métricas sintáticas, semânticas e operacionais
+
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma central de atendimento pretende usar LLM para explicar indicadores. Usuários podem inserir CPF e solicitar decisões que extrapolam os dados disponíveis. Hoje, instruções, pergunta e resposta são concatenadas em uma única mensagem, e a aplicação não valida números nem registra recusas.
+
+\FonteDidatica
+
+\Comando Projete um contrato para mensagens system, user e assistant; separe controles determinísticos antes e depois do modelo; e defina política de recusa para dados pessoais, falta de evidência e ações de alto impacto.
+
+\ItemHeader{12}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Cada chamada usa 8 mil tokens de entrada e 2 mil de saída. A tarifa é R\$1 por milhão de entrada e R\$3 por milhão de saída. O mês prevê 25 mil chamadas, e 12\% delas serão repetidas integralmente após timeout.
+
+\FonteDidatica
+
+\Comando Calcule execuções totais, tokens de entrada e saída e custo mensal por componente, incluindo retries. Explique que controle operacional reduziria repetição sem produzir respostas duplicadas.
+
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Dois candidatos a produção usam modelos, prompts e estratégias de recuperação diferentes. O primeiro cita fontes em 92\% dos casos e custa menos, mas erra números críticos; o segundo é mais fiel, porém tem maior latência. A equipe não possui conjunto versionado de casos.
+
+\FonteDidatica
+
+\Comando Desenhe uma avaliação versionada por casos com métricas de factualidade numérica, suporte da citação, custo, latência e dano operacional. Defina critérios de aprovação e como comparar versões sem mascarar falhas críticas pela média.
+
+\ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma janela de 20 mil tokens reserva 2 mil à resposta, 3 mil às instruções e ao esquema e 5 mil ao histórico. A recuperação retorna oito trechos de 2 mil tokens, alguns redundantes, e a resposta correta depende de uma cláusula presente apenas no sexto trecho.
+
+\FonteDidatica
+
+\Comando Calcule o orçamento disponível para recuperação e proponha seleção, deduplicação e compressão do contexto. Defina ordem de descarte, registro de proveniência e teste que detecte a perda da cláusula necessária.
+
+\ItemHeader{15}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Após uma atualização, o custo por resposta subiu 35\% e a acurácia numérica caiu de 91\% para 84\%. Mudaram simultaneamente modelo, mensagem system e número de trechos recuperados; os logs armazenam também conteúdo pessoal desnecessário.
+
+\FonteDidatica
+
+\Comando Proponha investigação com traces e ablações que isole as três mudanças. Defina critérios de rollback, evidências para atribuir a regressão e medidas de minimização e retenção dos logs.
+
+\newpage
+
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 --- resposta A.} Dos 20.000 tokens, retiram-se 2.000 da resposta, 3.000 de system/esquema e 5.000 do histórico: $20.000-2.000-3.000-5.000=10.000$. Como cada trecho usa 2.000, cabem $10.000/2.000=5$ trechos. A alternativa A respeita todas as reservas.
+\[\left\lfloor\frac{20.000-2.000-3.000-5.000}{2.000}\right\rfloor=5\]
+
+\paragraph{Questão 4 --- resposta B.} Em 10 mil chamadas, a entrada soma $10.000\times8.000=80$ milhões de tokens, custando $80\times\text{R\$}1=\text{R\$}80$. A saída soma 20 milhões, custando $20\times\text{R\$}3=\text{R\$}60$. Total: R\$140. Logo, B.
+
+\paragraph{Questão 6 --- resposta C.} Dez por cento de 20 mil são $0{,}10\times20.000=2.000$ retries. Portanto, ocorreram $20.000+2.000=22.000$ execuções. A R\$0,02 cada, o custo foi $22.000\times0{,}02=\text{R\$}440$. A alternativa C inclui chamadas originais e repetições.
+
+\paragraph{Questão 8 --- resposta D.} Somando as etapas informadas no item obtém-se 5,0 s. Fila e modelo respondem juntos por 3,5 s, isto é, 70\% do total, e formam o primeiro alvo de investigação. Retirar a validação reduziria proteção, não a causa observada; por isso, D.
+
+\paragraph{Questão 10 --- resposta E.} Uma comparação reproduzível precisa fixar e identificar instrução system, modelo, parâmetros e conjunto de casos. Também deve registrar métricas sintáticas, semânticas e operacionais; caso contrário, uma melhora aparente pode resultar de mudança no teste. Esse pacote completo está em E.
+
+\paragraph{Questão 12 --- critérios.} Os 12\% de retry acrescentam 3.000 execuções, totalizando 28.000. Entrada: $28.000\times8.000=224$ milhões, custo R\$224. Saída: 56 milhões, custo R\$168. Total: R\$392. Espera-se ainda idempotência, chave de requisição e retry seletivo com backoff.
+
+\paragraph{Questão 14 --- critérios.} O orçamento de recuperação é 10 mil tokens, suficiente para cinco trechos de 2 mil. A resposta deve priorizar relevância e diversidade, deduplicar, comprimir sem remover cláusulas decisivas, registrar IDs/fontes e testar se a resposta muda quando o sexto trecho é excluído ou reincluído.

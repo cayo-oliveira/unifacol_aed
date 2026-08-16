@@ -1,0 +1,117 @@
+\section{Capítulo 3 --- Probabilidade, distribuições e associação}
+\subsection{Questões objetivas}
+\ItemHeader{1}{Objetiva}{Definir experimento, espaço e evento}{Monitoramento de chamados}
+\TextoBase Em um protocolo de qualidade, cada novo chamado encerrado é acompanhado por sete dias e classificado uma única vez como reaberto ($R$) ou não reaberto ($N$). Antes de estimar taxas, a equipe precisa formalizar o procedimento observado, o conjunto de resultados possíveis e o evento de interesse, sem presumir chances iguais por existirem duas categorias.
+\FonteDidatica
+\Comando A representação correta é
+\begin{enumerate}[label=\Alph*)]\item experimento $\{R\}$; espaço $N$; evento sistema.\item experimento observar a classificação; $\Omega=\{R,N\}$; evento $A=\{R\}$.\item experimento $R$; espaço probabilidade 1/2; evento $\Omega$.\item espaço contém todos os chamados históricos e evento contém somente percentuais.\item $P(R)=1/2$ obrigatoriamente por haver duas categorias.\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{Aplicar complemento}{Risco em lote}
+\TextoBase Um componente passa por cinco inicializações sob as mesmas condições. O histórico validado sustenta probabilidade de falha 0,1 em cada inicialização, e o desenho considera as tentativas independentes. A operação será interrompida se ocorrer ao menos uma falha; por isso, a equipe pode calcular primeiro o evento complementar de nenhuma falha.
+\begin{center}
+\begin{tikzpicture}[>=Latex,node distance=9mm and 17mm,every node/.style={font=\small}]
+\node (i) {inicialização};
+\node[right=of i,yshift=7mm] (f) {falha: $0{,}1$};
+\node[right=of i,yshift=-7mm] (n) {sem falha: $0{,}9$};
+\draw[->] (i) -- (f); \draw[->] (i) -- (n);
+\node[right=of n,text width=3.2cm] (r) {o ramo ``sem falha'' repete-se cinco vezes};
+\draw[->] (n) -- (r);
+\end{tikzpicture}
+\end{center}
+\LegendaDidatica{Árvore reduzida do evento complementar; os cinco ensaios seguem a mesma ramificação}
+\FonteDidatica
+\Comando A chance de ao menos uma falha é
+\begin{enumerate}[label=\Alph*)]\item $1-0{,}9^5\approx0{,}4095$.\item $0{,}1^5=0{,}00001$.\item $5\times0{,}1=0{,}5$ exatamente.\item $0{,}9^5\approx0{,}5905$.\item $1-0{,}1^5\approx0{,}99999$.\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{Calcular união sem dupla contagem}{Eventos em um dado}
+\TextoBase Na validação de uma regra de eventos, utiliza-se um dado honesto com seis resultados equiprováveis. Define-se $A=\{2,4,6\}$, resultado par, e $B=\{5,6\}$, resultado maior que quatro. O resultado 6 pertence aos dois eventos, portanto a probabilidade da união precisa evitar dupla contagem.
+\FonteDidatica
+\Comando $P(A\cup B)$ é
+\begin{enumerate}[label=\Alph*)]\item $3/6+2/6=5/6$.\item $(3+2-1)/6=4/6$.\item $1/6$, pois somente 6 pertence aos dois.\item $6/6$, pois união inclui o espaço inteiro.\item $2/3-1/2=1/6$.\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{Interpretar condicional}{Tabela de atraso}
+\TextoBase Em uma noite comparável, 24 estudantes declararam trabalhar durante o dia e 12 deles chegaram atrasados; entre 16 que não trabalham, 4 atrasaram. A coordenação quer comparar a chance de atraso dentro de cada condição de trabalho, preservando os denominadores dos grupos e sem transformar diferença observada em prova causal.
+\FonteDidatica
+\Comando A leitura correta é
+\begin{enumerate}[label=\Alph*)]\item $P(A\mid T)=12/24=50\%$ e $P(A\mid T^c)=4/16=25\%$.\item $P(A\mid T)=12/40=30\%$ e $P(T\mid A)=50\%$.\item $P(A\mid T)=24/12=200\%$.\item $P(A)=12/24$, pois a condição não muda o universo.\item trabalhar causa atraso porque as probabilidades condicionais diferem.\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{Testar independência}{Urgência e reabertura}
+\TextoBase Em uma central, $U$ representa chamado urgente e $R$ representa reabertura. Para o período e a população definidos, $P(U)=0{,}20$, $P(R)=0{,}14$ e $P(U\cap R)=0{,}06$. A equipe precisa verificar se conhecer urgência altera a chance de reabertura usando o critério do produto, sem confundir independência com exclusão mútua.
+\FonteDidatica
+\Comando Os eventos
+\begin{enumerate}[label=\Alph*)]\item são independentes porque $0{,}06<0{,}14$.\item são independentes porque urgência e reabertura são categorias distintas.\item não são independentes, pois $0{,}20\times0{,}14=0{,}028\neq0{,}06$.\item são mutuamente exclusivos, pois sua interseção é positiva.\item são complementares, pois as probabilidades somam 0,34.\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{Calcular esperança}{Resultado financeiro}
+\TextoBase Uma automação aplicada repetidamente gera economia de R\$20 quando conclui corretamente, com probabilidade 0,7, e custo adicional de R\$10 quando exige retrabalho, com probabilidade 0,3. Os dois resultados esgotam o modelo. A gerência quer o valor médio de longo prazo por ocorrência, reconhecendo que esse valor pode não ser um resultado individual possível.
+\FonteDidatica
+\Comando O valor esperado por ocorrência é
+\begin{enumerate}[label=\Alph*)]\item R\$17, pois se somam magnitudes ponderadas.\item R\$11, pois $20(0{,}7)-10(0{,}3)=14-3$.\item R\$5, média simples entre 20 e $-10$.\item R\$14, ignorando o cenário de perda.\item perda esperada de R\$3, pois risco deve substituir retorno.\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{Aplicar binomial}{Reaberturas}
+\TextoBase Um lote possui cinco chamados comparáveis, cada um classificado como reaberto ou não. A taxa histórica aplicável é $p=0{,}2$, considerada constante, e as reaberturas são modeladas como independentes. A equipe deseja a probabilidade de exatamente duas reaberturas, considerando também quantas posições diferentes os dois eventos podem ocupar.
+\FonteDidatica
+\Comando A chance de exatamente duas é
+\begin{enumerate}[label=\Alph*)]\item $\binom52(0{,}2)^2(0{,}8)^3=0{,}2048$.\item $(0{,}2)^2=0{,}04$, pois a posição não importa.\item $5(0{,}2)=1$.\item $\binom52(0{,}2)^3(0{,}8)^2=0{,}0512$.\item $1-(0{,}8)^5=0{,}67232$.\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{Aplicar uniforme contínua}{Janela de chegada}
+\TextoBase Um simulador agenda um evento em qualquer instante entre 0 e 20 minutos e, por projeto, atribui a mesma densidade a intervalos de igual largura. A variável contínua $X$ representa o instante. A equipe quer a chance de o evento ocorrer entre 5 e 9 minutos e o centro esperado da janela.
+\FonteDidatica
+\Comando $P(5\leq X\leq9)$ e $E(X)$ são
+\begin{enumerate}[label=\Alph*)]\item $4/20=0{,}20$ e 10 minutos.\item $9/20=0{,}45$ e 20 minutos.\item $5/9\approx0{,}56$ e 5 minutos.\item $4/15\approx0{,}267$ e 12,5 minutos.\item zero e 10, pois pontos contínuos têm probabilidade zero.\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{Interpretar normal e escore z}{Tempo padronizado}
+\TextoBase Após examinar o processo e a forma dos dados, uma equipe adota provisoriamente um modelo normal para tempos com média 50 minutos e desvio-padrão 5. Um atendimento levou 60 minutos. Para compará-lo na escala da distribuição, a equipe quer expressar sua distância em unidades de desvio-padrão, sem declarar o caso impossível.
+\FonteDidatica
+\Comando A interpretação correta é
+\begin{enumerate}[label=\Alph*)]\item $z=(60-50)/5=2$, dois desvios acima da média.\item $z=60/50=1{,}2$, 20\% acima em unidades padronizadas.\item $z=(50-60)/5=-2$, dois desvios acima.\item $z=10$, pois se usa apenas a diferença.\item o caso tem probabilidade zero e deve ser excluído.\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{Calcular correlação de Pearson}{Tabela de somas centradas}
+\TextoBase Em cinco pares de horas de estudo e nota, a tabela de desvios produziu $\sum (x_i-\bar x)(y_i-\bar y)=16$, $\sum(x_i-\bar x)^2=10$ e $\sum(y_i-\bar y)^2=36$. Os pares foram preservados por estudante e o gráfico sugere tendência aproximadamente linear. A equipe quer padronizar a variação conjunta, sem convertê-la em causalidade.
+\FonteDidatica
+\Comando A correlação é
+\begin{enumerate}[label=\Alph*)]\item $16/\sqrt{10\times36}\approx0{,}843$, associação linear positiva forte.\item $16/(10+36)\approx0{,}348$, associação fraca.\item $16/5=3{,}2$, correlação acima de um.\item $\sqrt{16/360}\approx0{,}211$.\item $16/(4\times4)=1$, relação causal perfeita.\end{enumerate}
+
+\subsection{Questões discursivas}
+\ItemHeader{11}{Discursiva}{Construir árvore de probabilidade}{Triagem de chamados}
+\TextoBase Em uma central, 20\% dos chamados são urgentes. Entre os urgentes, 30\% são reabertos; entre os não urgentes, 10\% são reabertos. A gestão precisa reconstruir os quatro caminhos possíveis, obter a taxa total de reabertura e calcular a composição dos reabertos antes de discutir associação.
+\FonteDidatica
+\Comando Construa árvore ou tabela, calcule as quatro conjuntas, $P(R)$ e $P(U\mid R)$ e avalie independência sem afirmar causalidade.
+
+\ItemHeader{12}{Discursiva}{Comparar esperança e risco}{Duas estratégias}
+\TextoBase Duas estratégias serão repetidas em operações comparáveis. A rende R\$10 em cada ocorrência. B rende R\$30 com probabilidade 0,5 e perde R\$10 com probabilidade 0,5. A direção sabe que médias iguais podem esconder riscos distintos e solicita esperança, variância e recomendação condicionada à tolerância a oscilação.
+\FonteDidatica
+\Comando Calcule esperança e variância das duas e recomende conforme uma organização avessa ou tolerante a risco, distinguindo média de resultado individual.
+
+\ItemHeader{13}{Discursiva}{Avaliar adequação binomial}{Dados agrupados}
+\TextoBase Uma equipe quer usar uma binomial para modelar reaberturas de 20 chamados. Entretanto, dez pertencem ao mesmo cliente, a probabilidade muda conforme a severidade e chamados sucessivos compartilham infraestrutura. O número de tentativas e a classificação binária estão definidos, mas constância e independência precisam ser auditadas antes da fórmula.
+\FonteDidatica
+\Comando Avalie cada condição binomial, explique quais falham e proponha estratificação ou modelo alternativo conceitual.
+
+\ItemHeader{14}{Discursiva}{Calcular covariância e correlação}{Pares de estudo e nota}
+\TextoBase Cinco estudantes forneceram os pares de horas de estudo e nota mostrados a seguir:
+\[
+(1,2),\ (2,4),\ (3,5),\ (4,4),\ (5,10).
+\]
+Cada par pertence à mesma pessoa e será tratado como amostra. A equipe quer abrir os desvios e produtos linha a linha, medir associação linear e verificar a influência do último ponto sem alegar causa.
+\FonteDidatica
+\Comando Calcule médias, tabela de desvios, covariância amostral, DPs e Pearson; interprete direção, força, ponto influente e limite causal.
+
+\ItemHeader{15}{Discursiva}{Escolher distribuição}{Planejamento operacional}
+\TextoBase Uma equipe modelará quatro fenômenos: número de falhas em lote fixo sob condições estáveis; sucesso de uma única tentativa; instante de chegada em janela projetada sem preferência; e erro de medição aproximadamente simétrico produzido por muitos efeitos pequenos. A escolha da distribuição deverá decorrer do mecanismo e indicar o parâmetro e a premissa que pode falhar.
+\FonteDidatica
+\Comando Associe Bernoulli, binomial, uniforme ou normal a cada caso, explicando parâmetros, condições e uma razão que poderia invalidar cada escolha.
+
+\newpage\subsection{Respostas explicadas das questões pares}
+\paragraph{Questão 2 — resposta A.} Em cada tentativa, não falhar tem probabilidade $1-0{,}1=0{,}9$. Sob independência, nenhuma falha nas cinco tem probabilidade $0{,}9^5=0{,}59049$. ``Ao menos uma'' é o complemento: $1-0{,}59049=0{,}40951$, aproximadamente $40{,}95\%$. Somar $5\times0{,}1$ não é exato porque os eventos de falha podem ocorrer em mais de uma tentativa.
+
+\paragraph{Questão 4 — resposta A.} A condição redefine o universo. Entre quem trabalha, há 24 estudantes e 12 atrasos: $P(A\mid T)=12/24=0{,}50$. Entre quem não trabalha, há 16 e 4 atrasos: $P(A\mid T^c)=4/16=0{,}25$. Sem condição, seriam 16 atrasos entre 40 estudantes, ou 40\%. A diferença condicional descreve associação no grupo observado; outras variáveis podem explicar parte dela.
+
+\paragraph{Questão 6 — resposta B.} O resultado financeiro é uma variável aleatória: $20$ com peso $0{,}7$ e $-10$ com peso $0{,}3$. Logo, $E(G)=20(0{,}7)+(-10)(0{,}3)=14-3=11$ reais por ocorrência. R\$11 não é um resultado individual possível; é a média de longo prazo sob as probabilidades do modelo. O cenário de perda entra com sinal negativo.
+
+\paragraph{Questão 8 — resposta A.} Na uniforme em $[0,20]$, intervalos de mesma largura têm a mesma probabilidade. A faixa de 5 a 9 mede $9-5=4$ minutos, enquanto a janela total mede $20-0=20$; assim, $P(5\le X\le9)=4/20=0{,}20$. A esperança é o ponto médio: $E(X)=(0+20)/2=10$ minutos. Probabilidade zero de um ponto isolado não implica probabilidade zero de um intervalo.
+
+\paragraph{Questão 10 — resposta A.} Pearson usa a soma dos produtos centrados dividida pela raiz do produto das somas quadráticas: $r=16/\sqrt{10\times36}=16/\sqrt{360}$. Como $\sqrt{360}\approx18{,}974$, $r\approx0{,}843$. O sinal positivo indica movimento no mesmo sentido e a magnitude sugere associação linear relevante neste conjunto. O coeficiente não demonstra que estudar causou a nota e deve ser lido com o gráfico e $n=5$.
+
+\paragraph{Questão 12 — cálculo e critérios.} A estratégia A vale sempre 10, então $E(A)=10$ e $Var(A)=(10-10)^2=0$. Para B, $E(B)=30(0{,}5)+(-10)(0{,}5)=15-5=10$. Seus desvios em torno de 10 são $20$ e $-20$; portanto, $Var(B)=0{,}5(20^2)+0{,}5((-20)^2)=200+200=400$. As esperanças coincidem, mas B possui DP $20$ e resultados extremos; a preferência depende da tolerância a risco.
+
+\paragraph{Questão 14 — cálculo e critérios.} As médias são $\bar x=(1+2+3+4+5)/5=3$ e $\bar y=(2+4+5+4+10)/5=5$. Os desvios de X são $-2,-1,0,1,2$; de Y, $-3,-1,0,-1,5$. Os produtos somam $6+1+0-1+10=16$; os quadrados somam 10 e 36. Assim, $s_{XY}=16/(5-1)=4$, $s_X=\sqrt{10/4}=\sqrt{2{,}5}$ e $s_Y=\sqrt{36/4}=3$. Finalmente, $r=4/(3\sqrt{2{,}5})\approx0{,}843$. O par $(5,10)$ contribui 10 dos 16 produtos e merece análise de influência; associação não prova causalidade.

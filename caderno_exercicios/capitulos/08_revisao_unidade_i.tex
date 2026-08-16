@@ -1,0 +1,321 @@
+\section{Capítulo 8 --- Revisão integrada da Unidade I}
+
+Uma cooperativa de entregas decide como reduzir atrasos sem transferir risco injustamente aos entregadores. O caso combina qualidade, estatística, arquitetura, gráficos e comunicação.
+
+\subsection{Questões objetivas}
+
+\ItemHeader{1}{Objetiva}{integração}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O painel declara uma linha por pedido, mas junta avaliações registradas por tentativa. Pedidos com várias tentativas repetem valor e distância, inflando receita e volume. A cooperativa precisa restaurar o grão antes de calcular qualquer indicador de atraso ou produtividade. Uma auditoria encontrou pedidos com até quatro tentativas e confirmou que receita pertence ao cabeçalho, enquanto avaliação pertence à tentativa. A correção precisa preservar as avaliações para diagnóstico sem multiplicar medidas do pedido na camada usada pelo painel. O fechamento financeiro usa o valor do pedido uma única vez, enquanto a operação precisa contar tentativas separadamente. O modelo de consumo deverá oferecer essas duas medidas em grãos explícitos e impedir que um join posterior recombine cabeçalho e detalhe sem agregação prévia ou teste de cardinalidade.
+
+\FonteDidatica
+
+\Comando Selecione a ação que corrige a cardinalidade antes de agregar valores por pedido.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item dividir todos os valores por dois
+
+\item usar DISTINCT no dashboard sem teste
+
+\item corrigir cardinalidade antes de calcular e documentar grão na camada de consumo
+
+\item trocar barras por linhas
+
+\item aceitar porque avaliações são legítimas
+
+\end{enumerate}
+
+\ItemHeader{2}{Objetiva}{centro}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+O registro de incidente apresenta no Quadro 1 os sete tempos de entrega do período. O valor 80 foi confirmado após pane e pertence à população observada; a operação quer representar o centro sem ocultar a cauda nem excluir o caso legítimo.
+\begin{DocumentBox}[{Quadro 1 --- tempos ordenados, em minutos}]
+\centering\begin{tabular}{@{}rrrrrrr@{}}\toprule
+18 & 19 & 20 & 21 & 22 & 23 & 80\\\bottomrule
+\end{tabular}
+\end{DocumentBox}
+
+\FonteDidatica
+
+\Comando Calcule média e mediana e selecione a medida que melhor representa o centro típico, comunicando o extremo.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item mediana 21 representa o centro típico melhor que média 29, pois há cauda extrema
+
+\item média 21
+
+\item moda 20
+
+\item mediana 29
+
+\item amplitude 21
+
+\end{enumerate}
+
+\ItemHeader{3}{Objetiva}{arquitetura}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Eventos brutos precisam permanecer reprocessáveis porque regras de atraso e distância podem ser corrigidas. A cooperativa deseja fontes preservadas, transformação validada e indicadores estáveis por consumidor, com linhagem suficiente para refazer uma publicação contestada.
+
+\FonteDidatica
+
+\Comando Selecione a arquitetura que preserva origem, permite correção e publica indicadores governados com linhagem.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item corrigir o bruto e apagar original
+
+\item calcular tudo no gráfico
+
+\item usar SPEC como nova fonte bruta
+
+\item preservar bruto/bronze ou SOR, transformar em prata/SOT e publicar ouro/SPEC com linhagem
+
+\item duplicar regras em cada painel
+
+\end{enumerate}
+
+\ItemHeader{4}{Objetiva}{probabilidade}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Em 500 entregas comparáveis, 75 atrasaram. Entre 100 realizadas sob chuva, 30 atrasaram. A equipe precisa calcular probabilidade geral e condicional, reconhecendo que chuva pode estar associada a região, horário e distância e que a tabela isolada não demonstra causa.
+
+\FonteDidatica
+
+\Comando Calcule $P(A)$ e $P(A\mid C)$ e selecione a interpretação proporcional à evidência observacional.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 15\% e 6\%
+
+\item P(atraso)=15\% e P(atraso|chuva)=30\%; há associação, não causalidade isolada
+
+\item 30\% e 15\%
+
+\item chuva causa exatamente metade dos atrasos
+
+\item P(chuva|atraso)=30\%
+
+\end{enumerate}
+
+\ItemHeader{5}{Objetiva}{visual}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um mapa de calor compara bairros, mas não apresenta escala, usa cores sem ordenação e mistura contagem de atrasos com percentual de entregas. Bairros possuem volumes muito diferentes. A revisão deve preservar unidade, denominador e acessibilidade antes de destacar uma região.
+
+\FonteDidatica
+
+\Comando Selecione o redesenho que separa medidas, explicita escala e permanece legível sem depender apenas de cor.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aumentar o número de cores
+
+\item retirar legenda
+
+\item somar contagem e percentual
+
+\item ordenar bairros alfabeticamente apenas
+
+\item separar medidas, explicitar escala/unidade e oferecer rótulos acessíveis
+
+\end{enumerate}
+
+\ItemHeader{6}{Objetiva}{IQR}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Para atrasos, $Q_1=8$ e $Q_3=20$ minutos; uma entrega levou 42. A equipe adotou o critério $1{,}5\,IQR$ apenas como sinalizador e confirmou a observação na fonte. Precisa calcular a cerca superior e decidir se o caso merece investigação.
+
+\FonteDidatica
+
+\Comando Calcule o IQR e a cerca superior e selecione o tratamento exploratório apropriado para 42.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item IQR=28 e 42 é comum
+
+\item cerca=32
+
+\item IQR=12, cerca superior=38; 42 é potencial outlier a investigar
+
+\item qualquer valor acima de Q3 deve ser removido
+
+\item outlier prova erro de coleta
+
+\end{enumerate}
+
+\ItemHeader{7}{Objetiva}{semântica}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+A expressão ``entrega concluída'' inclui devolução em uma fonte e a exclui em outra. Ambas passam em testes de tipo e completude, mas alimentam o mesmo indicador executivo. Antes de combinar dados, a cooperativa precisa governar definição, finalidade e vigência.
+
+\FonteDidatica
+
+\Comando Selecione a ação de governança necessária antes de combinar ou comparar o indicador entre fontes.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item calcular média das fontes
+
+\item governar definição antes de combinar e nomear métricas distintas se usos diferirem
+
+\item deixar o gráfico resolver
+
+\item usar definição com maior valor
+
+\item ocultar a divergência
+
+\end{enumerate}
+
+\ItemHeader{8}{Objetiva}{correlação}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Distância e atraso apresentam correlação agregada $r=0,70$. Ao segmentar por região, as correlações variam de 0,10 a 0,25, e as regiões possuem perfis de tráfego diferentes. A equipe precisa avaliar efeito de composição antes de afirmar relação operacional forte.
+
+\FonteDidatica
+
+\Comando Compare a correlação agregada às segmentadas e selecione a explicação que considera composição e confundidores.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item 70\% do atraso é causado pela distância
+
+\item segmentação invalida toda correlação
+
+\item somar os coeficientes
+
+\item associação agregada pode refletir composição; analisar segmentos e confundidores
+
+\item usar apenas o maior valor
+
+\end{enumerate}
+
+\ItemHeader{9}{Objetiva}{decisão}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Reduzir a janela prometida elevou o indicador de pontualidade, mas também aumentou acidentes relatados e jornadas prolongadas. A direção não autorizou compensar segurança por desempenho. A decisão precisa tratar qualidade e risco como restrições conjuntas, não como média.
+
+\FonteDidatica
+
+\Comando Selecione a decisão que usa pontualidade e segurança como critérios não compensatórios e verificáveis.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item formular decisão multicritério com limite de segurança não compensável por média
+
+\item otimizar somente pontualidade
+
+\item tirar média de acidentes e tempo
+
+\item ocultar efeito adverso
+
+\item escolher a métrica mais fácil
+
+\end{enumerate}
+
+\ItemHeader{10}{Objetiva}{auditoria}{Situação profissional e suporte quantitativo}
+
+\TextoBase
+
+Um insight gerado por IA afirma que atrasos cresceram, mas não informa consulta, snapshot, período, filtros, regra de atraso nem versão do modelo. A diretoria deseja agir sobre o resultado. Antes, precisa existir evidência suficiente para reproduzir e contestar a resposta.
+
+\FonteDidatica
+
+\Comando Selecione o pacote mínimo de proveniência necessário antes de aprovar o insight para decisão.
+
+\begin{enumerate}[label=\Alph*)]
+
+\item aceitar se a frase for plausível
+
+\item pedir resposta mais confiante
+
+\item validar só a gramática
+
+\item publicar com aviso genérico
+
+\item tratar como hipótese e exigir consulta, fonte, recorte, cálculo e reprodução
+
+\end{enumerate}
+
+\subsection{Questões discursivas}
+
+\ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma cooperativa de entregas precisa explicar atrasos a municípios associados. A base mistura pedidos e ocorrências, duas áreas usam definições distintas de ``entrega no prazo'' e o painel omite bairros com baixa cobertura. A diretoria quer uma recomendação que possa ser reproduzida e contestada.
+
+\FonteDidatica
+
+\Comando Estruture uma análise que conecte pergunta decisória, grão, qualidade, medida estatística, arquitetura, visual, narrativa e proteção aos grupos pouco observados. Indique evidências necessárias antes de recomendar uma ação.
+
+\ItemHeader{12}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma amostra de tempos de entrega contém $18,19,20,21,22,23,80$ minutos. No mesmo período, ocorreram 75 atrasos em 500 entregas; durante chuva, foram 30 atrasos em 100 entregas. A operação quer resumir centro, dispersão e associação com chuva.
+
+\FonteDidatica
+
+\Comando Calcule média, mediana e IQR dos tempos; calcule $P(\text{atraso})$, $P(\text{atraso}\mid\text{chuva})$ e a razão entre essas taxas. Interprete o extremo e explique por que a razão não demonstra causalidade.
+
+\ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Uma junção entre pedidos e ocorrências multiplicou linhas; além disso, comercial define prazo pela promessa ao cliente e logística pelo horário planejado. Registros sem município foram descartados silenciosamente. O total publicado diverge do sistema operacional e não pode ser reconstituído.
+
+\FonteDidatica
+
+\Comando Diagnostique fanout, divergência semântica e ausência. Distribua responsabilidades entre SOR, SOT e SPEC e proponha testes de unicidade, reconciliação, completude e contrato antes da publicação.
+
+\ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Três recomendações disputam orçamento: A reduz dois minutos no tempo médio, mas aumenta acidentes; B reduz atrasos em bairros periféricos com efeito médio menor; C maximiza produtividade, porém depende de dados pessoais sem base autorizada. A direção pede um ranking único.
+
+\FonteDidatica
+
+\Comando Compare A, B e C por segurança, efeito, equidade e auditabilidade. Declare um critério não compensável, justifique eliminações e explique quais evidências faltam para escolher entre alternativas admissíveis.
+
+\ItemHeader{15}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
+
+\TextoBase
+
+Um assistente de IA afirmou que atrasos cresceram 18\% e recomendou trocar a transportadora. A resposta não informa período, denominador, consulta, versão da métrica nem tratamento de pedidos cancelados. O gestor deseja aprovar a recomendação ainda hoje.
+
+\FonteDidatica
+
+\Comando Audite o insight e liste as evidências mínimas para reproduzir o percentual, contestar sua interpretação e avaliar a recomendação. Defina uma regra objetiva de aprovação, revisão ou recusa.
+
+\newpage
+
+\subsection{Respostas explicadas das questões pares}
+
+\paragraph{Questão 2 --- resposta A.} A soma é $18+19+20+21+22+23+80=203$, logo a média é $203/7=29$. Ordenados os sete valores, a mediana é o quarto: 21. O caso de 80 puxa a média oito minutos acima da mediana; por isso, 21 representa melhor o centro típico, sem autorizar a exclusão do extremo confirmado. Logo, A.
+\[\bar x=29\text{ min},\qquad \widetilde{x}=21\text{ min}\]
+
+\paragraph{Questão 4 --- resposta B.} No período, $75/500=0{,}15=15\%$. Sob chuva, $30/100=0{,}30=30\%$. A taxa condicional é o dobro da geral, evidenciando associação no recorte observado. Isso não isola chuva de rota, turno, distância ou outros fatores; portanto não basta para afirmar causalidade. A alternativa B preserva cálculo e interpretação.
+
+\paragraph{Questão 6 --- resposta C.} Com $Q_1=8$ e $Q_3=20$, $IQR=20-8=12$. A cerca superior de Tukey é $Q_3+1{,}5IQR=20+18=38$. Como $42>38$, o valor é sinalizado como potencial outlier. O boxplot pede investigação de origem e contexto, não exclusão automática; por isso, C.
+
+\paragraph{Questão 8 --- resposta D.} Uma correlação agregada pode mudar quando a composição dos grupos muda, mesmo sem alteração da relação dentro de cada segmento. Antes de agir, a equipe deve estratificar por variáveis relevantes, comparar denominadores e procurar confundidores. A alternativa D é a única que trata o coeficiente como evidência a investigar, não como prova causal.
+
+\paragraph{Questão 10 --- resposta E.} Sem período, denominador, fonte e transformação, os 18\% não são reproduzíveis. O texto da IA deve ser tratado como hipótese até que consulta, snapshot, versão da métrica, filtros e cálculo sejam registrados e reexecutados. Só depois se avalia a recomendação; esse encadeamento corresponde a E.
+
+\paragraph{Questão 12 --- critérios.} Esperam-se média $203/7=29$, mediana 21 e, pela convenção de metades sem a mediana, $Q_1=19$, $Q_3=23$ e $IQR=4$. Também: $75/500=15\%$, $30/100=30\%$ e razão $30/15=2$. A interpretação deve reconhecer o extremo e separar associação de causalidade.
+
+\paragraph{Questão 14 --- critérios.} A resposta deve tornar segurança um requisito não compensável, eliminando A; deve recusar C enquanto não houver base autorizada e governança; e deve avaliar B com evidência estratificada, incerteza e monitoramento. Um ranking puramente aditivo que permita compensar dano grave não atende ao comando.
