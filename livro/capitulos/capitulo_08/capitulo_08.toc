@@ -1,0 +1,13 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {8}Da exploração à história verificável}{3}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Muitos gráficos corretos e nenhuma decisão}{3}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Começar pelo público e pela decisão}{4}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Big Idea: uma frase que pode ser contestada}{5}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Problema, evidência e decisão formam uma cadeia}{6}{section.8.4}%
+\contentsline {section}{\numberline {8.5}A integração da Unidade I aparece dentro da história}{7}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Storyboard: ordenar a descoberta antes da ferramenta}{8}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Anotação e ordem de leitura reduzem ambiguidade}{9}{section.8.7}%
+\contentsline {section}{\numberline {8.8}Incerteza, causalidade e ética na narrativa}{10}{section.8.8}%
+\contentsline {section}{\numberline {8.9}Caso integrado: da tabela à recomendação verificável}{12}{section.8.9}%
+\contentsline {section}{\numberline {8.10}Leitura crítica em contextos do ENADE}{13}{section.8.10}%
+\contentsline {section}{\numberline {8.11}Fechamento da Unidade I e ponte para a IA aplicada}{14}{section.8.11}%

@@ -1,0 +1,13 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {7}Cor, acessibilidade e layout}{3}{chapter.7}%
+\contentsline {section}{\numberline {7.1}O alerta estava no painel, mas ninguém o viu}{3}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Cor é um canal de dados, não uma camada de maquiagem}{4}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Contraste e acessibilidade são requisitos de qualidade}{5}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Gestalt: como o leitor transforma objetos em estrutura}{6}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Hierarquia visual: decidir o que será percebido primeiro}{7}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Carga cognitiva e contexto}{8}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Grid, zonas e distribuição de um dashboard decisório}{9}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Interação: cada clique muda o argumento}{10}{section.7.8}%
+\contentsline {section}{\numberline {7.9}Redesenho guiado}{11}{section.7.9}%
+\contentsline {section}{\numberline {7.10}Testes de relance e auditoria}{12}{section.7.10}%
+\contentsline {section}{\numberline {7.11}Síntese do encontro e ponte para a narrativa}{13}{section.7.11}%

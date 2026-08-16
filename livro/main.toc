@@ -1,0 +1,98 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {1}Ver, perguntar e decidir: dataviz com IA}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Como usar este livro-aula}{7}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Exploratória e explanativa são momentos diferentes}{8}{section.1.2}%
+\contentsline {section}{\numberline {1.3}O artigo que abre o semestre}{9}{section.1.3}%
+\contentsline {section}{\numberline {1.4}A cadeia pergunta--dado--visual--decisão}{17}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Percepção antes de decoração}{18}{section.1.5}%
+\contentsline {section}{\numberline {1.6}O papel da IA no fluxo analítico}{19}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Ferramentas são escolhas, não identidade}{21}{section.1.7}%
+\contentsline {section}{\numberline {1.8}Avaliação e cadernos}{26}{section.1.8}%
+\contentsline {section}{\numberline {1.9}Nosso contrato de encontro}{27}{section.1.9}%
+\contentsline {section}{\numberline {1.10}Roteiro de três horas}{28}{section.1.10}%
+\contentsline {section}{\numberline {1.11}Fechamento}{29}{section.1.11}%
+\contentsline {chapter}{Apêndice --- artigo completo}{31}{chapter*.2}%
+\contentsline {chapter}{Apêndice --- artigo sobre analytics agentic governado}{39}{chapter*.3}%
+\contentsline {chapter}{\numberline {2}Antes da média: que dado representa o problema?}{49}{chapter.2}%
+\contentsline {section}{\numberline {2.1}A pergunta vem antes da planilha}{49}{section.2.1}%
+\contentsline {section}{\numberline {2.2}População, amostra e unidade de análise}{51}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Variáveis, tipos e escalas de medida}{52}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Granularidade, chaves e agregações}{53}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Qualidade é adequação ao uso}{55}{section.2.5}%
+\contentsline {section}{\numberline {2.6}O dicionário de dados como contrato de leitura}{56}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Erros plausíveis e como diagnosticá-los}{58}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Um caso completo, da linha ao indicador}{59}{section.2.8}%
+\contentsline {section}{\numberline {2.9}Conferência em código sem terceirizar o raciocínio}{60}{section.2.9}%
+\contentsline {section}{\numberline {2.10}Síntese do encontro e ponte para a estatística}{62}{section.2.10}%
+\contentsline {chapter}{\numberline {3}Centro não é história completa}{64}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Contar antes de resumir}{64}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Frequências transformam valores em distribuição}{65}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Média aritmética: equilíbrio, peso e sensibilidade}{66}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Mediana e moda: posição e repetição}{67}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Quartis e percentis: localizar uma observação}{68}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Caso integrado: salários, pesos e decisões}{69}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Comparar grupos sem ser enganado pelo centro}{70}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Centros ao longo do tempo: tendência não é fotografia}{72}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Reproduzir em Python e conferir o método}{73}{section.3.9}%
+\contentsline {section}{\numberline {3.10}Do número ao texto que apoia decisão}{74}{section.3.10}%
+\contentsline {section}{\numberline {3.11}Interpretação, limites e roteiro das três horas}{75}{section.3.11}%
+\contentsline {chapter}{\numberline {4}Variabilidade, distribuição e incerteza}{77}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Uma mesma média, operações muito diferentes}{77}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Amplitude: um alarme rápido que olha apenas as pontas}{78}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Do desvio à variância: a conta inteira à mão}{80}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Desvio-padrão e IQR para previsibilidade}{81}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Distribuição: forma, cauda, assimetria e mistura}{82}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Ausência é dado sobre o processo de geração}{84}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Outlier é uma pergunta, não uma ordem de exclusão}{86}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Código como verificação}{87}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Caso integrado: relatório justificável}{89}{section.4.9}%
+\contentsline {section}{\numberline {4.10}Fechamento: um protocolo para não esconder a incerteza}{91}{section.4.10}%
+\contentsline {chapter}{\numberline {5}Da fonte ao visual}{92}{chapter.5}%
+\contentsline {section}{\numberline {5.1}A pergunta vem antes da fonte}{92}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Sistemas fonte e ingestão preservável}{94}{section.5.2}%
+\contentsline {section}{\numberline {5.3}SOR, SOT e SPEC: responsabilidades separadas}{95}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Armazenamento é consequência do acesso}{97}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Grão, chaves e cardinalidade antes do join}{98}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Modelagem dimensional para explorar sem duplicar}{99}{section.5.6}%
+\contentsline {section}{\numberline {5.7}SQL e pandas depois do desenho}{100}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Qualidade distribuída por camada}{102}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Catálogo, linhagem e camada semântica}{103}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Do modelo ao dashboard com acesso seguro}{105}{section.5.10}%
+\contentsline {section}{\numberline {5.11}Fechamento: da divergência à contestação}{106}{section.5.11}%
+\contentsline {chapter}{\numberline {6}Gráficos, escalas e percepção}{107}{chapter.6}%
+\contentsline {section}{\numberline {6.1}O mesmo resultado, duas histórias visuais}{107}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Comparação: posição e comprimento antes do enfeite}{108}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Tendência: tempo, continuidade e contexto}{109}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Distribuição: enxergar o que a média esconde}{110}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Relação: padrões, grupos e o limite da causalidade}{111}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Composição: partes, totais e denominadores}{111}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Escalas, eixos e normalização}{112}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Cor, contraste e acessibilidade}{113}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Múltiplos painéis, facetas e comparações justas}{114}{section.6.9}%
+\contentsline {section}{\numberline {6.10}Incerteza: não desenhar estimativas como certezas}{115}{section.6.10}%
+\contentsline {section}{\numberline {6.11}Redesenho guiado e implementação reprodutível}{116}{section.6.11}%
+\contentsline {section}{\numberline {6.12}Roteiro de decisão e fechamento}{117}{section.6.12}%
+\contentsline {chapter}{\numberline {7}Cor, acessibilidade e layout}{119}{chapter.7}%
+\contentsline {section}{\numberline {7.1}O alerta estava no painel, mas ninguém o viu}{119}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Cor é um canal de dados, não uma camada de maquiagem}{120}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Contraste e acessibilidade são requisitos de qualidade}{121}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Gestalt: como o leitor transforma objetos em estrutura}{122}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Hierarquia visual: decidir o que será percebido primeiro}{123}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Carga cognitiva e contexto}{124}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Grid, zonas e distribuição de um dashboard decisório}{125}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Interação: cada clique muda o argumento}{126}{section.7.8}%
+\contentsline {section}{\numberline {7.9}Redesenho guiado}{127}{section.7.9}%
+\contentsline {section}{\numberline {7.10}Testes de relance e auditoria}{128}{section.7.10}%
+\contentsline {section}{\numberline {7.11}Síntese do encontro e ponte para a narrativa}{129}{section.7.11}%
+\contentsline {chapter}{\numberline {8}Da exploração à história verificável}{131}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Muitos gráficos corretos e nenhuma decisão}{131}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Começar pelo público e pela decisão}{132}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Big Idea: uma frase que pode ser contestada}{133}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Problema, evidência e decisão formam uma cadeia}{134}{section.8.4}%
+\contentsline {section}{\numberline {8.5}A integração da Unidade I aparece dentro da história}{135}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Storyboard: ordenar a descoberta antes da ferramenta}{136}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Anotação e ordem de leitura reduzem ambiguidade}{137}{section.8.7}%
+\contentsline {section}{\numberline {8.8}Incerteza, causalidade e ética na narrativa}{138}{section.8.8}%
+\contentsline {section}{\numberline {8.9}Caso integrado: da tabela à recomendação verificável}{140}{section.8.9}%
+\contentsline {section}{\numberline {8.10}Leitura crítica em contextos do ENADE}{141}{section.8.10}%
+\contentsline {section}{\numberline {8.11}Fechamento da Unidade I e ponte para a IA aplicada}{142}{section.8.11}%

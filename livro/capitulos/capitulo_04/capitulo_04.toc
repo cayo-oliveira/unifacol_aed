@@ -1,0 +1,12 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {4}Variabilidade, distribuição e incerteza}{3}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Uma mesma média, operações muito diferentes}{3}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Amplitude: um alarme rápido que olha apenas as pontas}{4}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Do desvio à variância: a conta inteira à mão}{6}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Desvio-padrão e IQR para previsibilidade}{7}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Distribuição: forma, cauda, assimetria e mistura}{8}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Ausência é dado sobre o processo de geração}{10}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Outlier é uma pergunta, não uma ordem de exclusão}{12}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Código como verificação}{13}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Caso integrado: relatório justificável}{15}{section.4.9}%
+\contentsline {section}{\numberline {4.10}Fechamento: um protocolo para não esconder a incerteza}{17}{section.4.10}%

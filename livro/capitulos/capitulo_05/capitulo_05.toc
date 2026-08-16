@@ -1,0 +1,13 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {5}Da fonte ao visual}{3}{chapter.5}%
+\contentsline {section}{\numberline {5.1}A pergunta vem antes da fonte}{3}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Sistemas fonte e ingestão preservável}{5}{section.5.2}%
+\contentsline {section}{\numberline {5.3}SOR, SOT e SPEC: responsabilidades separadas}{6}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Armazenamento é consequência do acesso}{8}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Grão, chaves e cardinalidade antes do join}{9}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Modelagem dimensional para explorar sem duplicar}{10}{section.5.6}%
+\contentsline {section}{\numberline {5.7}SQL e pandas depois do desenho}{11}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Qualidade distribuída por camada}{13}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Catálogo, linhagem e camada semântica}{14}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Do modelo ao dashboard com acesso seguro}{16}{section.5.10}%
+\contentsline {section}{\numberline {5.11}Fechamento: da divergência à contestação}{17}{section.5.11}%

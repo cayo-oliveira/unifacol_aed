@@ -1,0 +1,14 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {6}Gráficos, escalas e percepção}{3}{chapter.6}%
+\contentsline {section}{\numberline {6.1}O mesmo resultado, duas histórias visuais}{3}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Comparação: posição e comprimento antes do enfeite}{4}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Tendência: tempo, continuidade e contexto}{5}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Distribuição: enxergar o que a média esconde}{6}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Relação: padrões, grupos e o limite da causalidade}{7}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Composição: partes, totais e denominadores}{7}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Escalas, eixos e normalização}{8}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Cor, contraste e acessibilidade}{9}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Múltiplos painéis, facetas e comparações justas}{10}{section.6.9}%
+\contentsline {section}{\numberline {6.10}Incerteza: não desenhar estimativas como certezas}{11}{section.6.10}%
+\contentsline {section}{\numberline {6.11}Redesenho guiado e implementação reprodutível}{12}{section.6.11}%
+\contentsline {section}{\numberline {6.12}Roteiro de decisão e fechamento}{13}{section.6.12}%
