@@ -1,0 +1,42 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,left=2cm,right=2cm,top=2.2cm,bottom=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\definecolor{disciplinecolor}{HTML}{17365D}
+\definecolor{lightbar}{HTML}{EEF1F4}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=.55em,topsep=.5em}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\small UNIFACOL --- Análise Exploratória de Dados}
+\fancyhead[R]{\small Caderno ENADE --- 2026.2}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\newtcolorbox{DocumentBox}[1][]{colback=white,colframe=gray!60,boxrule=.5pt,arc=1mm,title=#1,colbacktitle=gray!55,coltitle=white,fonttitle=\bfseries,left=3mm,right=3mm,top=2mm,bottom=2mm}
+\newcommand{\ItemHeader}[4]{%
+\Needspace{8\baselineskip}%
+\vspace{.8em}\noindent\colorbox{disciplinecolor}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\color{white}\bfseries Questão #1\hfill #2}}\\[-.1em]
+\textbf{Competência:} #3\\
+\textbf{Suporte:} #4\par}
+\newcommand{\ChamadaEditorial}[1]{\vspace{.35em}{\color{disciplinecolor}\bfseries #1}\par}
+\newcommand{\TextoBase}{\vspace{.25em}\noindent\colorbox{lightbar}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\bfseries TEXTO-BASE}}\par}
+\newcommand{\FonteDidatica}{\par{\small\itshape Fonte: situação e dados elaborados/adaptados para fins didáticos.}\par}
+\newcommand{\Comando}{\par\textbf{COMANDO.} }
+
+
+\usepackage{pgffor}
+\newcommand{\EspacoDiscursiva}{\par\vspace{.7em}\foreach \n in {1,...,13}{\noindent\rule{\textwidth}{0.25pt}\par\vspace{.45em}}}
+\newcommand{\EspacoDiscursivaFinal}{\par\vspace{.7em}\foreach \n in {1,...,10}{\noindent\rule{\textwidth}{0.25pt}\par\vspace{.45em}}}

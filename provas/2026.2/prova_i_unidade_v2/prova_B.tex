@@ -1,0 +1,135 @@
+\documentclass[12pt,a4paper]{article}
+\input{caderno_enade_style.tex}
+\begin{document}
+\begin{center}
+{\Large\bfseries UNIFACOL}\\[2mm]
+{\large Avaliação da I Unidade}\\[1mm]
+{\Large\bfseries VERSÃO B}
+\end{center}
+
+\begin{DocumentBox}[Identificação]
+\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}p{.48\textwidth}@{}}
+Estudante: \hrulefill & Turma: \hrulefill\\[3mm]
+Professor: Cayo Oliveira & Data: \rule{2.7cm}{.2pt}/2026
+\end{tabularx}
+\end{DocumentBox}
+
+\textbf{Instruções.} Esta avaliação contém seis questões objetivas e duas discursivas. Nas objetivas, assinale uma única alternativa. Nas discursivas, apresente raciocínio próprio, articule os conceitos da disciplina e, quando houver cálculo, mostre o desenvolvimento. Respostas sem desenvolvimento podem não receber pontuação integral.
+
+% origem principal: AED-C05-O03 (ímpar), aprofundada
+\ItemHeader{1}{Objetiva}{Declarar grão antes da agregação}{Pedidos e itens}
+\ChamadaEditorial{Arquitetura de dados | Um valor repetido não transforma item em pedido}
+\TextoBase
+Uma tabela de vendas possui uma linha por item de pedido. Entretanto, o campo \texttt{total\_pedido} registra o valor total da compra e é repetido em todas as linhas pertencentes ao mesmo pedido. No recorte abaixo, P101 possui três itens e total de R\$120; P102 possui dois itens e total de R\$80; P103 possui um item e total de R\$120. A solução precisa continuar correta mesmo quando pedidos diferentes possuem coincidentemente o mesmo valor total.
+\FonteDidatica
+\Comando Qual procedimento calcula corretamente a receita correspondente aos três pedidos?
+\begin{enumerate}[label=\Alph*)]
+\item Aplicar \texttt{SUM(DISTINCT total\_pedido)}, obtendo R\$200.
+\item Calcular a média de \texttt{total\_pedido} das linhas e multiplicá-la pela quantidade de itens, obtendo R\$640.
+\item Somar diretamente \texttt{total\_pedido} em todas as linhas de item, obtendo R\$640.
+\item Considerar apenas pedidos com um único item para evitar duplicidade, obtendo R\$120.
+\item Recuperar uma única ocorrência de \texttt{total\_pedido} para cada identificador de pedido e somente depois somar, obtendo R\$320.
+\end{enumerate}
+
+% origem principal: AED-C07-O03 (ímpar), aprofundada
+\ItemHeader{2}{Objetiva}{Distinguir correlação de causalidade}{Engajamento e desempenho acadêmico}
+\ChamadaEditorial{Associação forte não autoriza intervenção causal automática}
+\TextoBase
+Uma instituição analisou dados de 1.200 estudantes e encontrou correlação linear positiva entre o número semanal de acessos à plataforma virtual e a nota final da disciplina, com $r=0{,}78$. A coordenação concluiu que aumentar o número de acessos elevaria as notas e propôs exigir pelo menos 15 acessos semanais. Na exploração dos dados, porém, observou-se que estudantes com maior frequência presencial tendem a acessar mais a plataforma e a entregar mais atividades, e que cursos diferentes possuem simultaneamente médias distintas de acessos e de notas. A correlação de 0,78 foi calculada sobre todos os estudantes agregados.
+\FonteDidatica
+\Comando Considerando somente as evidências apresentadas, selecione a interpretação mais defensável.
+\begin{enumerate}[label=\Alph*)]
+\item Como $r^2\approx0{,}61$, cerca de 61\% das diferenças de notas são explicadas exclusivamente pelo número de acessos, o que é suficiente para justificar a exigência proposta.
+\item A associação linear é forte, mas o resultado agregado não demonstra que aumentar artificialmente os acessos elevará as notas; frequência, atividades, curso e outras variáveis podem atuar como confundidores e precisam ser investigados antes de uma inferência causal.
+\item A presença de possíveis confundidores invalida matematicamente o coeficiente de correlação, de modo que não se pode afirmar sequer que existe associação linear no conjunto analisado.
+\item Aproximadamente 78\% da variação das notas é causada pelos acessos, pois o coeficiente está próximo de 1.
+\item Como a correlação permanece positiva no conjunto completo, diferenças entre cursos e frequência deixam de ser relevantes para a interpretação causal.
+\end{enumerate}
+
+% origem principal: AED-C02-O09 (ímpar), convertida em discursiva
+\ItemHeader{3}{Discursiva}{Interpretar medidas de tendência central}{Preferência de dispositivo}
+\ChamadaEditorial{Estatística descritiva | Quando resumir exige respeitar a natureza da variável}
+\TextoBase
+Em uma pesquisa com 30 estudantes, cada participante informou apenas um dispositivo que utiliza preferencialmente para realizar atividades acadêmicas. Os resultados foram: celular, 12 estudantes; notebook, 12; tablet, 4; desktop, 2. Um analista sugeriu resumir os resultados por média, mediana e moda para apresentar o ``dispositivo central'' da turma.
+\FonteDidatica
+\Comando Discuta a adequação do uso de média, mediana e moda para resumir os resultados apresentados.
+\EspacoDiscursiva
+
+% origem principal: AED-C01-O01 (ímpar), adaptada
+\ItemHeader{4}{Objetiva}{Transformar dor em problema e pergunta analítica}{Processo acadêmico}
+\ChamadaEditorial{Do pedido por dashboard à pergunta que sustenta uma decisão}
+\TextoBase
+Uma instituição percebeu que o processo de ajuste de matrícula está consumindo cada vez mais tempo da secretaria. No último semestre, 35\% das solicitações precisaram retornar ao estudante por documentação incompleta ou inconsistência de cadastro. O tempo entre a abertura e a conclusão também aumentou, e parte da equipe passou a dedicar várias horas semanais ao retrabalho. A direção solicitou inicialmente ``um dashboard para acompanhar os ajustes de matrícula'', mas ainda não definiu qual decisão pretende tomar a partir dele.
+\FonteDidatica
+\Comando Selecione a formulação que melhor transforma a dor observada em uma pergunta analítica orientada a uma decisão verificável.
+\begin{enumerate}[label=\Alph*)]
+\item A implantação de um novo sistema eliminará definitivamente os atrasos e as inconsistências encontrados no processo?
+\item Qual é o tempo médio de conclusão das solicitações registradas no sistema no semestre atual?
+\item Quantas solicitações foram abertas, concluídas e devolvidas aos estudantes durante o semestre?
+\item Entre as solicitações de ajuste de matrícula da graduação no semestre atual, quais etapas e tipos de pendência concentram maior tempo de processamento e retrabalho, de modo a indicar qual etapa do fluxo deve ser priorizada para intervenção?
+\item Quais informações devem aparecer em um dashboard para que a direção acompanhe os ajustes de matrícula?
+\end{enumerate}
+
+% origem principal: AED-C06-O09 (ímpar), aprofundada
+\ItemHeader{5}{Objetiva}{Organizar storytelling para decisão}{Apresentação executiva}
+\ChamadaEditorial{Narrativa analítica | A ferramenta não deve ser o enredo}
+\TextoBase
+Uma apresentação será realizada para a diretoria com o objetivo de decidir se um novo modelo de atendimento deve ser ampliado para outras unidades. A versão inicial começa explicando a ferramenta utilizada, percorre diversos gráficos exploratórios e somente ao final informa que o piloto reduziu o tempo de espera. Também existem limitações relevantes quanto ao período observado e ao número de unidades participantes.
+\FonteDidatica
+\Comando Selecione a sequência narrativa mais adequada para apoiar a decisão sem esconder as limitações da evidência.
+\begin{enumerate}[label=\Alph*)]
+\item Problema decisório $\rightarrow$ contexto $\rightarrow$ evidência $\rightarrow$ recomendação $\rightarrow$ limitação.
+\item Contexto $\rightarrow$ problema decisório $\rightarrow$ evidência $\rightarrow$ recomendação $\rightarrow$ limitação.
+\item Contexto $\rightarrow$ problema decisório $\rightarrow$ evidência $\rightarrow$ limitação $\rightarrow$ recomendação condicionada.
+\item Contexto $\rightarrow$ evidência $\rightarrow$ problema decisório $\rightarrow$ limitação $\rightarrow$ recomendação.
+\item Contexto $\rightarrow$ problema decisório $\rightarrow$ limitação $\rightarrow$ recomendação $\rightarrow$ evidência.
+\end{enumerate}
+
+% origem principal: AED-C04-O03 (ímpar), aprofundada
+\ItemHeader{6}{Objetiva}{Interpretar pontos percentuais e variação relativa}{Indicador mensal}
+\ChamadaEditorial{Leitura crítica | O mesmo par de percentuais pode gerar narrativas diferentes}
+\TextoBase
+Um indicador de cumprimento de prazo passou de 79\% para 81\% entre dois meses consecutivos. O relatório original utilizou barras com eixo vertical iniciado em 78,5\%, ampliando visualmente a diferença. A revisão precisa informar corretamente tanto a diferença em pontos percentuais quanto a variação relativa em relação ao resultado anterior, sem exagerar o efeito gráfico.
+\FonteDidatica
+\Comando Selecione a revisão que preserva a magnitude dos dados e apresenta os dois cálculos corretamente.
+\begin{enumerate}[label=\Alph*)]
+\item Utilizar barras iniciadas em zero e informar aumento de aproximadamente 2,53 pontos percentuais, equivalente a 2\% de aumento relativo.
+\item Manter o eixo iniciado em 78,5\% e informar aumento de 2 pontos percentuais, equivalente a aproximadamente 2,53\% de aumento relativo.
+\item Utilizar pontos sem escala explícita e informar aumento de 2 pontos percentuais, equivalente a aproximadamente 102,53\% de aumento relativo.
+\item Utilizar barras iniciadas em zero ou pontos com escala explícita e informar aumento de 2 pontos percentuais, equivalente a aproximadamente 2,53\% de aumento relativo.
+\item Utilizar barras iniciadas em zero e informar aumento de 2\%, equivalente a 2 pontos percentuais.
+\end{enumerate}
+
+% origem principal: AED-C08-D11 (ímpar), ampliada e sem roteiro de resposta
+\ItemHeader{7}{Discursiva}{Integrar a AED de ponta a ponta}{Caso profissional integrado}
+\ChamadaEditorial{Da dor à decisão | O dashboard é consequência do processo analítico}
+\TextoBase
+Uma organização percebeu aumento nas reclamações de clientes e suspeita que parte do problema esteja relacionada ao tempo necessário para concluir os atendimentos. A diretoria solicita um dashboard que permita compreender o cenário e decidir quais ações devem ser priorizadas. Os dados disponíveis estão distribuídos em registros de atendimentos, clientes, canais, equipes, datas, status, motivos das solicitações e pesquisas de satisfação. As fontes possuem diferentes níveis de granularidade, valores ausentes, registros duplicados, categorias inconsistentes e atualizações em ritmos distintos. Além disso, áreas diferentes usam definições parcialmente divergentes para alguns indicadores, e a direção deseja receber uma recomendação ao final da análise.
+\FonteDidatica
+\Comando Descreva, de forma estruturada e justificada, como você conduziria a Análise Exploratória de Dados de ponta a ponta nesse caso, desde a situação inicial até o dashboard, o insight e a decisão.
+\EspacoDiscursivaFinal
+
+% origem semelhante: AED-C02-O06; adaptação da atividade realizada em sala
+\ItemHeader{8}{Objetiva}{Calcular percentil com interpolação}{Tempos de atendimento}
+\ChamadaEditorial{Indicador de cauda | O percentil depende da posição e da interpolação correta}
+\TextoBase
+Durante uma atividade de auditoria de tempos de atendimento, foram registrados, em minutos, os valores ordenados
+\[
+2,\;4,\;5,\;6,\;7,\;8,\;10,\;12,\;14.
+\]
+Na checagem da base, o registro de 7 minutos foi identificado como uma execução de homologação e, conforme regra de inclusão definida antes da análise, não integra a população analítica. Assim, o cálculo deve usar os oito tempos válidos restantes. Para o relatório, a equipe adotou a convenção de posição
+\[
+L=\frac{k}{100}(n+1)
+\]
+e interpolação linear quando $L$ não for inteiro.
+\FonteDidatica
+\Comando Qual é o percentil 60 ($P_{60}$) dos tempos válidos?
+\begin{enumerate}[label=\Alph*)]
+\item 5,4 minutos.
+\item 7,4 minutos.
+\item 8,8 minutos.
+\item 8,0 minutos.
+\item 88 minutos.
+\end{enumerate}
+
+\end{document}

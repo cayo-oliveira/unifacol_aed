@@ -1,0 +1,41 @@
+instrumento,id,capitulo,tipo,competencia,suporte,dificuldade_score,posicao_A,gabarito_A,posicao_B,gabarito_B,permutacao_B
+prova_i_unidade,AED-C01-O01-ADP,1,O,Transformar dor em problema e pergunta analítica,Processo acadêmico,4.8,1,C,4,D,"A→B, B→E, C→D, D→A, E→C"
+prova_i_unidade,AED-C02-O09-ADP,2,D,"Interpretar média, mediana e moda conforme tipo de variável",Preferência de dispositivo,5.4,2,—,3,—,—
+prova_i_unidade,AULA-P60-C02-O06-ADP,2,O,Calcular percentil com interpolação linear,Tempos de atendimento,6.2,3,A,8,C,"A→C, B→E, C→A, D→D, E→B"
+prova_i_unidade,AED-C07-O03-ADP,7,O,Distinguir correlação de causalidade e reconhecer confundimento,Engajamento e desempenho acadêmico,6.4,4,B,2,B,"A→D, B→B, C→E, D→C, E→A"
+prova_i_unidade,AED-C04-O03-ADP,4,O,Interpretar pontos percentuais e variação relativa sem distorção visual,Indicador mensal,5.7,5,A,6,D,"A→D, B→B, C→E, D→A, E→C"
+prova_i_unidade,AED-C05-O03-ADP,5,O,Declarar grão antes da agregação,Pedidos e itens,6.0,6,C,1,E,"A→C, B→A, C→E, D→B, E→D"
+prova_i_unidade,AED-C06-O09-ADP,6,O,Organizar storytelling orientado à decisão,Apresentação executiva,5.5,7,B,5,C,"A→D, B→C, C→A, D→E, E→B"
+prova_i_unidade,AED-C08-D11-ADP,8,D,Integrar a AED de ponta a ponta,Caso profissional integrado,7.2,8,—,7,—,—
+prova_ii_unidade,AED-C09-O03,9,O,validação,Situação profissional e suporte quantitativo,1.9,1,D,4,E,"C→A, B→B, A→C, E→D, D→E"
+prova_ii_unidade,AED-C10-D13,10,D,Integrar evidências e justificar decisão,Caso profissional do capítulo,4.421,2,—,3,—,—
+prova_ii_unidade,AED-C14-O05,14,O,Distinguir alucinação de desatualização,Política revogada,2.05,3,B,1,B,"E→A, B→B, D→C, A→D, C→E"
+prova_ii_unidade,AED-C11-D13,11,D,Desenhar arquitetura híbrida,BI corporativo e Streamlit,2.607,4,—,8,—,—
+prova_ii_unidade,AED-C12-O07,12,O,Garantir saída estruturada,Gráfico sugerido pelo Llama,1.8,5,B,5,B,"D→A, B→B, E→C, C→D, A→E"
+prova_ii_unidade,AED-C11-O03,11,O,Distinguir modelo semântico de visualização,Dois totais para a mesma receita,2.086,6,D,6,A,"D→A, B→B, C→C, E→D, A→E"
+prova_ii_unidade,AED-C10-O01,10,O,semântica,Situação profissional e suporte quantitativo,2.757,7,C,7,D,"E→A, D→B, A→C, C→D, B→E"
+prova_ii_unidade,AED-C13-O01,13,O,Distinguir responsabilidades agentic,Relatório mensal recorrente,1.971,8,B,2,A,"B→A, A→B, C→C, E→D, D→E"
+segunda_chamada,AED-C11-D11,11,D,Projetar matriz de comparação governada,Seleção institucional,3.643,1,—,7,—,—
+segunda_chamada,AED-C10-O09,10,O,recusa,Situação profissional e suporte quantitativo,2.636,2,A,2,B,"E→A, A→B, D→C, B→D, C→E"
+segunda_chamada,AED-C07-O09,7,O,recomendação,Situação profissional e suporte quantitativo,2.329,3,A,3,C,"E→A, D→B, A→C, C→D, B→E"
+segunda_chamada,AED-C13-O09,13,O,Aplicar recusa segura,Pergunta sem evidência autorizada,2.657,4,B,6,C,"D→A, E→B, B→C, A→D, C→E"
+segunda_chamada,AED-C07-D11,7,D,Integrar evidências e justificar decisão,Caso profissional do capítulo,4.814,5,—,4,—,—
+segunda_chamada,AED-C02-O07,2,O,Distinguir variância populacional e amostral,Equipamentos,6.371,6,A,5,C,"E→A, D→B, A→C, C→D, B→E"
+segunda_chamada,AED-C03-O03,3,O,Calcular união sem dupla contagem,Eventos em um dado,3.829,7,B,8,B,"E→A, B→B, A→C, D→D, C→E"
+segunda_chamada,AED-C11-O01,11,O,Selecionar ferramenta pela fronteira de governança,Consulta executiva multifuente,3.129,8,C,1,E,"A→A, E→B, B→C, D→D, C→E"
+final,AED-C09-O09,9,O,alucinação,Situação profissional e suporte quantitativo,1.186,1,A,8,B,"C→A, A→B, E→C, D→D, B→E"
+final,AED-C05-O07,5,O,Aplicar linhagem e impacto,Mudança de regra,1.657,2,B,1,D,"A→A, E→B, D→C, B→D, C→E"
+final,AED-C14-D15,14,D,Responder a contestação e corrigir o sistema,Decisão baseada em número errado,1.736,3,—,6,—,—
+final,AED-C03-D15,3,D,Escolher distribuição,Planejamento operacional,1.171,4,—,3,—,—
+final,AED-C02-O05,2,O,Aplicar média ponderada,Notas com pesos,1.371,5,B,7,C,"D→A, A→B, B→C, E→D, C→E"
+final,AED-C08-O05,8,O,visual,Situação profissional e suporte quantitativo,1.314,6,E,5,D,"B→A, A→B, D→C, E→D, C→E"
+final,AED-C12-O05,12,O,Gerenciar estado e reexecução,Duplo envio no Streamlit,1.829,7,B,4,C,"E→A, A→B, B→C, C→D, D→E"
+final,AED-C13-O05,13,O,Escolher memória apropriada,Correção de preferência e regra,1.886,8,B,2,C,"A→A, E→B, B→C, C→D, D→E"
+simulado,AED-C01-O07,1,O,"Distinguir dado, informação, insight e decisão",Incidente de estoque,1.586,1,B,7,A,"B→A, D→B, E→C, A→D, C→E"
+simulado,AED-C11-O07,11,O,Calcular capacidade e custo por resposta útil,Teste de carga,8.907,2,A,4,B,"E→A, A→B, B→C, D→D, C→E"
+simulado,AED-C12-D15,12,D,Especificar teste de atualização,Troca do modelo local,2.057,3,—,2,—,—
+simulado,AED-C07-O01,7,O,grão,Situação profissional e suporte quantitativo,3.707,4,C,8,B,"A→A, C→B, E→C, B→D, D→E"
+simulado,AED-C09-O05,9,O,contexto,Situação profissional e suporte quantitativo,1.329,5,E,3,E,"D→A, A→B, B→C, C→D, E→E"
+simulado,AED-C12-O03,12,O,Impedir execução arbitrária,Pergunta analítica em linguagem natural,1.986,6,C,6,B,"A→A, C→B, B→C, E→D, D→E"
+simulado,AED-C05-O09,5,O,Aplicar minimização por consumo,SPEC de gestão,2.6,7,B,1,A,"B→A, C→B, A→C, E→D, D→E"
+simulado,AED-C01-D11,1,D,Construir cadeia analítica verificável,Caso de evasão,2.071,8,—,5,—,—
