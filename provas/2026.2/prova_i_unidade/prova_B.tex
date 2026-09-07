@@ -87,27 +87,30 @@ A central suspeita que chamados urgentes retornem com maior frequência. A audit
   \item Os eventos seriam mutuamente exclusivos porque a interseção é positiva; uma interseção positiva demonstra justamente que podem ocorrer juntos.
 \end{enumerate}
 
-% origem: AED-C08-O09
-\ItemHeader{5}{Objetiva}{decisão}{Situação profissional e suporte quantitativo}
+% origem: AED-C03-O10
+\ItemHeader{5}{Objetiva}{Calcular correlação de Pearson}{Tabela de somas centradas}
 
-\ChamadaEditorial{Decisão responsável | Pontualidade não pode compensar risco de acidente}
+\ChamadaEditorial{Pares de estudo e nota | Associação não é causalidade}
 \TextoBase
 
-O novo acordo operacional melhorou a pontualidade ao mesmo tempo que elevou acidentes e jornadas. A direção declarou segurança como restrição, e não como indicador que possa ser compensado por uma média favorável.
-
-
-Reduzir a janela prometida elevou o indicador de pontualidade, mas também aumentou acidentes relatados e jornadas prolongadas. A direção não autorizou compensar segurança por desempenho. A decisão precisa tratar qualidade e risco como restrições conjuntas, não como média.
+Em cinco pares de horas de estudo e nota, a tabela de desvios produziu
+\[
+\sum (x_i-\bar x)(y_i-\bar y)=16,\qquad
+\sum(x_i-\bar x)^2=10,\qquad
+\sum(y_i-\bar y)^2=36.
+\]
+Os pares foram preservados por estudante e o gráfico sugere tendência aproximadamente linear. A equipe quer padronizar a variação conjunta, sem convertê-la em causalidade.
 
 \FonteDidatica
 
-\Comando Selecione a decisão que usa pontualidade e segurança como critérios não compensatórios e verificáveis.
+\Comando A correlação é
 
 \begin{enumerate}[label=\Alph*)]
-  \item formular decisão multicritério com limite de segurança não compensável por média. O limite de segurança impede que melhora média de pontualidade compense acidentes e jornadas excessivas.
-  \item ocultar efeito adverso. Ocultar o efeito adverso elimina evidência material e impede governança do risco.
-  \item escolher a métrica mais fácil. Facilidade de mensuração não torna uma métrica adequada à consequência operacional.
-  \item tirar média de acidentes e tempo. Acidentes e tempo possuem significados e unidades diferentes; sua média não representa decisão responsável.
-  \item otimizar somente pontualidade. Otimizar apenas pontualidade viola explicitamente a restrição definida pela direção.
+  \item $16/5=3{,}2$, correlação acima de um.
+  \item $\sqrt{16/360}\approx0{,}211$.
+  \item $16/(4\times4)=1$, relação causal perfeita.
+  \item $16/\sqrt{10\times36}\approx0{,}843$, associação linear positiva forte.
+  \item $16/(10+36)\approx0{,}348$, associação fraca.
 \end{enumerate}
 
 % origem: AED-C01-O09

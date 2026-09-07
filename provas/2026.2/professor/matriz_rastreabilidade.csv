@@ -1,5 +1,5 @@
 instrumento,id,capitulo,tipo,competencia,suporte,dificuldade_score,posicao_A,gabarito_A,posicao_B,gabarito_B,permutacao_B
-prova_i_unidade,AED-C08-O09,8,O,decisão,Situação profissional e suporte quantitativo,2.65,1,A,5,A,"A→A, D→B, E→C, C→D, B→E"
+prova_i_unidade,AED-C03-O10,3,O,Calcular correlação de Pearson,Tabela de somas centradas,2.65,1,A,5,D,"A→D, B→E, C→A, D→B, E→C"
 prova_i_unidade,AED-C03-O05,3,O,Testar independência,Urgência e reabertura,2.786,2,C,4,C,"E→A, A→B, C→C, B→D, D→E"
 prova_i_unidade,AED-C05-O03,5,O,Declarar grão,Tabela de pedidos,1.686,3,B,1,E,"A→A, D→B, C→C, E→D, B→E"
 prova_i_unidade,AED-C04-O03,4,O,Evitar distorção de eixo,Variação mensal,2.257,4,B,8,E,"A→A, E→B, C→C, D→D, B→E"

@@ -921,8 +921,8 @@ Underfull \hbox (badness 10000) in alignment at lines 17--17
 [1
 
 ]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
-8.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 7
+1.
  (t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -934,4 +934,4 @@ Package microtype Info: Loading generic protrusion settings for font family
 Package rerunfilecheck Info: File `prova_A.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
-Output written on prova_A.xdv (6 pages, 50376 bytes).
+Output written on prova_A.xdv (6 pages, 49708 bytes).
