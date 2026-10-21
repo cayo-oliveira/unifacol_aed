@@ -1,8 +1,8 @@
-# Capítulo 13 — Quando um agente vira equipe
+# Capítulo 13 — RAG agentic, GraphRAG e BI agentic
 
-- Data: 12/11/2026 · Unidade II · 180 minutos; encontro sujeito à EXPOFACOL.
-- Resultados: distinguir LLM, agente, ferramenta, skill, memória e multiagente; decompor responsabilidades; observar execução, custo e falhas; definir fallback.
-- Storytelling: reconstituir Phebe como responsabilidades separadas sem esconder decisões entre agentes.
-- Desenvolvimento: (1) agente; (2) ferramentas; (3) estado/memória; (4) orquestração; (5) multiagente; (6) SQL/estatística/visual; (7) observabilidade; (8) custo; (9) segurança/recusa; (10) síntese.
-- Fontes: Phebe, analytics agentic governado e materiais agentic do skill.
-- Evidência: diagrama com entradas, saídas, permissões, logs e condição de parada.
+- Data editorial: material prévio ao encontro de 29/10/2026 e retomada em 19/11/2026 · Unidade II. 12/11 é semana da EXPOFACOL, sem encontro regular previsto.
+- Resultados: diferenciar RAG lexical/vetorial/híbrido e GraphRAG; selecionar recuperação, consulta ou cálculo por tipo de pergunta; desenhar planejamento, ferramentas, evidências e condições de parada de um fluxo agentic.
+- Storytelling: uma pergunta comparativa conecta definições, relações entre entidades e fatos agregados sem confundir recuperação com cálculo.
+- Desenvolvimento: capítulo de referência; leitura orientada dos fundamentos antes do cenário 3, em 29/10; síntese de mecanismos e exemplo de grafo nesse encontro; retomada de gates e parada agentic no cenário 5, em 19/11. Não representa aula ministrada em 12/11.
+- Fontes: Edge et al. (2024), Lewis et al. (2020), Phebe e analytics agentic governado.
+- Evidência: diagrama com entradas, saídas, permissões, fonte/vigência, logs e condição de parada.

@@ -4,32 +4,18 @@ Uma secretaria analisa evasão em cursos técnicos. A base reúne matrícula, fr
 
 \subsection{Questões objetivas}
 
+% Novo item público: AED-C07-O01-S1
 \ItemHeader{1}{Objetiva}{grão}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-A tabela deveria ter uma linha por estudante-semestre, mas transferências criam duas linhas para a mesma pessoa. Como a taxa de evasão usa matrículas elegíveis no denominador, a duplicação altera contagem e perfil do grupo. A secretaria precisa corrigir o grão antes de agregar. O parecer acadêmico informa que a transferência não equivale a uma segunda exposição ao risco: ela muda o vínculo administrativo dentro do mesmo semestre. A trilha de reconciliação deve conservar os dois registros de origem, selecionar o estado válido e provar unicidade na tabela analítica. O relatório será auditado por curso e turno, portanto uma exclusão aleatória poderia alterar justamente os estratos menores. A regra deverá usar chave composta, vigência e estado acadêmico, registrar conflitos e interromper a publicação quando mais de uma linha permanecer elegível para a mesma chave. Só depois desse teste o numerador de evasão e o denominador de estudantes expostos poderão ser agregados sob a mesma definição.
-
-Essa definição institucional vigente também deve constar da linhagem publicada.
-
+\TextoBase Uma empresa de energia recebe leituras horárias de medidores. A tabela analítica deveria conter uma linha por medidor, intervalo e versão válida, mas reenvios da rede criam duplicatas com o mesmo identificador de evento. A tarifa varia por horário, de modo que somar leituras repetidas altera consumo e cobrança. Antes de calcular indicadores, a equipe precisa preservar os eventos de origem e resolver reenvios de forma rastreável.
 \FonteDidatica
-
-\Comando Selecione a ação que restaura uma linha por estudante-semestre e protege numerador e denominador.
-
+\Comando Selecione o procedimento que restabelece o grão sem descartar eventos legítimos.
 \begin{enumerate}[label=\Alph*)]
-
-\item somar todas as linhas porque representam eventos reais
-
-\item remover aleatoriamente uma duplicata
-
-\item definir chave estudante-semestre, reconciliar transferências e testar unicidade antes da taxa
-
-\item agregar por curso antes de investigar
-
-\item usar a média das taxas publicadas
-
+\item apagar todas as linhas com o mesmo valor de consumo, mesmo que pertençam a medidores diferentes.
+\item somar os reenvios para conservar cada transmissão recebida.
+\item definir chave do evento, identificar reenvio idempotente, manter proveniência e testar unicidade antes da agregação por medidor e intervalo.
+\item agregar por região antes de conferir os identificadores individuais.
+\item calcular a média das cobranças já publicadas e usar esse valor como consumo.
 \end{enumerate}
-
 \ItemHeader{2}{Objetiva}{taxa}{Situação profissional e suporte quantitativo}
 
 \TextoBase
@@ -204,30 +190,18 @@ No mesmo período, o turno noturno registrou 48 evasões em 240 elegíveis; o di
 
 \end{enumerate}
 
+% Novo item público: AED-C07-O09-S1
 \ItemHeader{9}{Objetiva}{recomendação}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-Um campus adotou intervenção de permanência no mesmo mês em que o calendário acadêmico mudou; os demais não adotaram. A evasão caiu no campus participante. A secretaria precisa decidir o próximo passo sem atribuir toda a mudança à intervenção por simples comparação antes/depois.
-
+\TextoBase Uma rede de bibliotecas testa horários estendidos em quatro unidades selecionadas por adesão voluntária. Nos primeiros dois meses, a frequência aumentou; no mesmo período, houve férias escolares e campanhas locais. Outras unidades não aderiram e possuem perfil de público diferente. A direção quer decidir se estende o piloto.
 \FonteDidatica
-
-\Comando Selecione o desenho de continuidade que gera evidência comparável antes de uma expansão definitiva.
-
+\Comando A continuidade que produz evidência comparável antes de uma expansão é
 \begin{enumerate}[label=\Alph*)]
-
-\item recomendar piloto ampliado com comparação e métricas prévias, não expansão causal definitiva
-
-\item expandir imediatamente por correlação temporal
-
-\item cancelar porque não há ensaio perfeito
-
-\item ocultar mudança de calendário
-
-\item comparar apenas antes/depois
-
+\item ampliar imediatamente para toda a rede, pois a frequência cresceu após a mudança.
+\item interromper o piloto, pois nenhum estudo observacional informa decisões.
+\item definir previamente frequência, custo e cobertura; comparar unidades e períodos com ajuste de calendário e diferenças iniciais, mantendo a conclusão como associativa.
+\item retirar férias e campanhas do relatório sem registrar como foram tratadas.
+\item comparar somente o maior mês do piloto com o menor mês anterior.
 \end{enumerate}
-
 \ItemHeader{10}{Objetiva}{rastreabilidade}{Situação profissional e suporte quantitativo}
 
 \TextoBase
@@ -254,16 +228,11 @@ A diretoria exige que cada taxa de evasão apresentada hoje possa ser refeita se
 
 \subsection{Questões discursivas}
 
+% Novo item público: AED-C07-D11-S1
 \ItemHeader{11}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
-
-\TextoBase
-
-Uma base de evasão deveria possuir uma linha por estudante-semestre, mas transferências duplicam matrículas, frequência apresenta falhas por campus e regras mudaram durante o período. A recomendação final será usada para priorizar atendimento e precisa sobreviver a auditoria.
-
+\TextoBase Uma companhia de água precisa monitorar interrupções. Leituras vêm de sensores, ordens de serviço do sistema operacional e cadastro de bairros; cada fonte tem identificadores e frequências distintos. O painel final deve mostrar horas de interrupção por bairro e mês, com fonte, atualização e regra de cálculo reproduzíveis.
 \FonteDidatica
-
-\Comando Desenhe, em até 15 linhas, o fluxo da fonte à recomendação. Inclua teste de grão, ausência e domínio, transformação versionada, visual apropriado, reconciliação e evidência necessária para auditoria.
-
+\Comando Desenhe o fluxo da captura à publicação. Defina grão e chaves, transformação e responsabilidades das camadas de origem, integração e consumo; inclua testes de qualidade, reconciliação, linhagem e controle de acesso antes da liberação.
 \ItemHeader{12}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
 
 \TextoBase
@@ -274,16 +243,11 @@ No mesmo período, o curso A registrou 30 evasões em 200 elegíveis e B, 18 em 
 
 \Comando Calcule as quatro taxas, as diferenças em pontos percentuais e as razões A/B e noturno/diurno. Recomende uma prioridade provisória, distinguindo volume, risco relativo e limite causal.
 
+% Novo item público: AED-C07-D13-S1
 \ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
-
-\TextoBase
-
-Um painel público permite filtrar evasão por curso, turno e faixa etária. Em alguns recortes restam três ou quatro estudantes, e servidores locais conhecem a composição das turmas. A instituição precisa informar desempenho sem revelar situações individuais nem ampliar a finalidade original.
-
+\TextoBase Um painel de mobilidade mostra viagens por zona e horário. A versão pública permite filtros sucessivos; em algumas combinações, restam uma ou duas pessoas, e a equipe teme reidentificação por cruzamento com horários conhecidos. O serviço precisa conservar utilidade para planejamento sem publicar trajetórias individuais.
 \FonteDidatica
-
-\Comando Proponha uma política para células pequenas com limiar ou agregação justificada, finalidade, perfis de acesso, retenção e comunicação do risco residual. Inclua uma forma de testar reidentificação.
-
+\Comando Proponha uma política de publicação e teste em até 15 linhas. Inclua unidade de agregação, tratamento de células pequenas, controle dos filtros, finalidade, retenção e como verificar o risco residual.
 \ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
 
 \TextoBase

@@ -7,17 +7,72 @@ GenBI combina interpretação, semântica, consulta, cálculo, visualização, n
 
 Este capítulo aplica competências da Unidade I: distribuição, denominador, escala gráfica, acessibilidade, causalidade, arquitetura, storytelling e governança. O LLM fica dentro de uma análise exploratória, e cada conclusão precisa ser reproduzida por código ou fonte verificável.
 
+\section{GenBI e Agentic BI: delegar etapas sem delegar responsabilidade}
+
+Generative BI usa modelos generativos para facilitar perguntas, cálculos, visuais ou narrativas sobre dados; os recursos concretos variam entre plataformas. BI agentic descreve sistemas que planejam tarefas em várias etapas e selecionam ferramentas, fontes ou consultas para completar uma investigação. A fronteira não é o nome exibido na interface: observamos quantas decisões o sistema toma, que ferramentas pode acionar e como a pessoa acompanha e interrompe o fluxo.
+
+Um agente analítico recebe uma meta, cria ou recebe um plano, consulta ferramentas e revisa resultados antes de formular uma resposta. A ferramenta de SQL deve impor semântica, acesso e limites. A ferramenta de recuperação deve filtrar vigência e permissão. A visualização recebe campos permitidos e escolhas coerentes com a pergunta. O LLM pode coordenar e narrar, mas cálculo e autorização permanecem em componentes verificáveis.
+
+Considere por que a taxa de permanência caiu?. O sistema pode consultar definição e versão da métrica, comparar períodos, decompor por curso e campus, conferir a mudança do calendário e devolver hipóteses alternativas. O agente não pode concluir causa só porque uma variável se moveu junto com a taxa. Se a equipe não possui desenho causal, a resposta descreve padrões e recomenda uma análise seguinte, deixando explícito que não identificou causa.
+
+O fluxo precisa de estado explícito: pedido original, intenção resolvida, filtros, plano, ferramentas disponíveis, resultados, evidências, orçamento e próxima ação. Cada etapa tem condição de parada. A investigação termina quando responde à pergunta, quando as fontes discordam, quando falta acesso, quando não há evidência suficiente, quando o limite de custo chega ou quando é necessário pedir decisão humana. Repetir consultas até surgir uma narrativa plausível não é validação.
+
+Uma implantação madura registra traces com identificador de execução, ferramenta, parâmetros validados, versão semântica, fonte e resultado minimizado. Avaliação separa sucesso de execução, correção da consulta, qualidade da evidência, adequação do visual, fidelidade da narrativa e cumprimento de política. Essa decomposição mostra se a versão agentic melhora o baseline de consulta simples e se o ganho compensa latência, custo e variabilidade adicionais.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{p{2.6cm}Y Y}
+\toprule
+Etapa delegada & Controle no software & Pergunta para auditoria \\
+\midrule
+Planejar & esquema de etapas e orçamento & O plano responde à intenção aprovada? \\
+Recuperar & fonte, acesso e vigência & Os trechos são atuais e autorizados? \\
+Consultar & métrica, parâmetros e limite & O grão e o denominador estão corretos? \\
+Narrar & IDs de evidência e schema & Cada alegação retorna ao resultado? \\
+Agir & aprovação e idempotência & Quem autorizou o efeito externo? \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+O grau de automação pode ser descrito por quem escolhe o plano, executa a consulta, revisa o resultado e decide a ação. Em BI assistido, pessoa controla a maior parte das etapas; em conversa, o sistema traduz pedido e pode gerar visual; em BI agentic, um orquestrador divide a tarefa e chama ferramentas. As categorias se sobrepõem comercialmente, então documentamos capacidades observadas, não inferimos autonomia pelo nome.
+
+A delegação deve ser granular. Podemos delegar tradução da pergunta, busca de definições ou redação de resumo sem delegar autorização, cálculo final ou decisão institucional. Cada tarefa delegada define entrada, saída, validação, limite, proprietário e caminho de falha. A tabela deste capítulo relaciona etapas e controles para mostrar que automação responsável não é um único interruptor ligado ou desligado.
+
+Considere uma investigação em que o agente percebe que falta período. Ele deve solicitar esclarecimento antes de consultar. Depois que o período é definido, pode recuperar a métrica vigente, calcular comparação e sugerir visual. Se as fontes discordarem ou o grupo for pequeno, encerra com ressalva ou encaminha. A decisão de apoio fica sob responsabilidade de pessoas e políticas, mesmo quando várias etapas são automatizadas.
+
+A avaliação agentic inclui caminho, não apenas resposta final. Duas execuções podem chegar ao mesmo número, mas uma pode usar fonte desatualizada ou consultar usuário sem permissão. Traces ajudam a observar escolhas e custos; verificações de política determinísticas bloqueiam ações proibidas. O avaliador examina se o plano foi proporcional à pergunta e se o sistema soube parar.
+
+O orçamento de investigação limita etapas, tokens, consultas, duração e custo. Um pedido de comparação simples não precisa de cinco subagentes e dezenas de buscas. Se o orçamento termina, a resposta informa o que foi verificado e o que falta. Esse comportamento é mais confiável que continuar até encontrar narrativa plausível ou terminar por erro silencioso.
+
+O responsável de produto define quais perguntas a experiência suporta e quais devem ser recusadas. Proprietário do domínio define métricas; engenharia controla ferramentas e identidade; segurança avalia exposição; analistas revisam interpretação. Responsabilidade é distribuída entre funções humanas com mecanismos de escalonamento, não atribuída ao modelo ou ao resultado automático.
+
+A fronteira do sistema inclui feedback e mudanças. Usuários podem contestar uma definição, mas o agente não atualiza o catálogo automaticamente. Uma proposta abre processo de revisão com owner, evidência e nova versão; depois a suíte retida roda. Assim, aprendizagem do produto não converte uma preferência local em regra global sem controle.
+
 \section{Desenhar um conjunto de avaliação representativo}
 
 O conjunto contém perguntas literais, paráfrases, ambiguidade, recusa, comparação temporal, grupo pequeno, perfil sem permissão, dado ausente, consulta sem resposta e pedido causal. Cada caso registra usuário sintético, fonte, definição, período, resultado de referência, visual aceitável e risco.
 
-Uma paráfrase não basta para cobrir diversidade. Se cem perguntas repetem ``total do período'', o teste não mede composição, anomalia, incerteza, acesso ou recusa. Estratificação dos casos permite estimar onde o produto falha e evita que exemplos simples dominem a média.
+Uma paráfrase não basta para cobrir diversidade. Se cem perguntas repetem total do período, o teste não mede composição, anomalia, incerteza, acesso ou recusa. Estratificação dos casos permite estimar onde o produto falha e evita que exemplos simples dominem a média.
 
 O gabarito é independente do sistema avaliado e revisado por especialista de domínio. Cálculos de referência são reproduzíveis; julgamentos visuais usam rubrica; alegações textuais são ligadas a evidência. Um LLM julgador pode apoiar triagem, mas sua concordância é medida contra revisão humana.
 
 Conjunto de desenvolvimento ajuda a ajustar prompts; conjunto retido mede mudança. Um teste em produção acompanha distribuição e incidentes, sem substituir controles offline. Quando resposta de teste é usada repetidamente para ajustar, ela deixa de ser independente.
 
 O catálogo de casos tem proprietário e data de revisão. Mudança curricular, definição de métrica ou política de acesso exige atualização do conjunto. Casos desatualizados são arquivados com justificativa, sem apagar histórico de avaliação.
+
+Cada caso de avaliação especifica pergunta, persona, dados, fonte vigente, contrato semântico, resultado de referência, forma visual aceita, risco e resposta esperada. Alguns casos têm várias respostas válidas de apresentação, mas compartilham invariantes: métrica, filtros, denominador e suporte. Esse registro evita que avaliadores decidam depois do teste o que deveria ter acontecido.
+
+A cobertura cruza tipo de pergunta e condição operacional. Por exemplo, uma comparação temporal pode ser clara ou ambígua, ter fonte disponível ou faltante, ser autorizada ou negada e envolver grupo grande ou pequeno. Uma matriz de cenários revela combinações não testadas. O desenho usa dados sintéticos representativos e não expõe registros reais em material didático ou serviço externo.
+
+O gabarito quantitativo vem de implementação independente e revisão manual de casos pequenos. Para taxa, guarda numerador e denominador; para mudança, diferencia pontos percentuais de variação relativa; para ordenação, trata empate. Referência construída pelo mesmo prompt ou código que está sendo avaliado pode compartilhar o mesmo erro e oferece falso senso de validação.
+
+A divisão treino, desenvolvimento e conjunto retido evita ajustar o prompt repetidamente ao mesmo exemplo e chamar isso de generalização. Casos retidos devem permanecer desconhecidos durante iteração e representar classes de risco. Quando o conjunto é pequeno, reportamos contagens e limitações e usamos revisão humana mais ampla em vez de apresentar métricas com precisão aparente.
+
+A avaliação humana usa instruções e exemplos de calibração. Dois revisores classificam suporte, coerência, visual, recusa e risco; discordâncias são reconciliadas e registradas. LLM-as-judge pode priorizar revisão ou detectar formato inválido, mas concordância com avaliadores não prova correção. Auditoria humana amostral continua necessária, especialmente para casos de alto impacto.
+
+Uma métrica composta pode ocultar falhas críticas. Uma média geral de 92% não permite lançar se ocorreu vazamento, erro causal grave ou consulta não autorizada. Definimos gates não compensatórios para privacidade, autorização e segurança, e limiares por domínio para correção e evidência. Itens bloqueadores são reportados como contagens e exemplos, não diluídos em pontuação.
+
+A suíte evolui com incidentes, mudanças de fonte e contestações. Um caso novo entra com origem, diagnóstico, comportamento esperado e responsável pela revisão. A equipe evita inserir dado pessoal ao reproduzir bug; transforma-o em cenário sintético isomórfico. O ciclo de avaliação é contínuo e versionado, não uma certificação única antes da primeira implantação.
 
 \section{Medir o funil analítico com denominadores corretos}
 
@@ -52,7 +107,21 @@ print("Sucesso ponta a ponta:", round(taxa_final * 100, 1), "%")
 
 O código presume contagens acumuladas e monotônicas. Se cada estágio usa outra população ou amostra, não podemos aplicar a conta sem reconciliar identificadores. A equipe confere logs e cobertura antes de apresentar taxas.
 
-Quando a contagem aumenta ou diminui inesperadamente entre etapas, primeiro reconciliamos o que significa ``caso'' e se houve amostragem, repetição ou retry. Uma taxa acima de 100% não é arredondada para parecer plausível; denuncia denominadores incompatíveis.
+Quando a contagem aumenta ou diminui inesperadamente entre etapas, primeiro reconciliamos o que significa caso e se houve amostragem, repetição ou retry. Uma taxa acima de 100% não é arredondada para parecer plausível; denuncia denominadores incompatíveis.
+
+O funil precisa definir unidade de análise: pergunta, sessão ou etapa. Uma sessão pode conter três perguntas; medir perguntas por sessão e depois chamar o resultado de taxa de perguntas bem-sucedidas mistura unidades. Definimos identificador, população elegível, inclusão de retries e tratamento de cancelamentos antes de calcular taxa. O painel guarda contagens junto aos percentuais para possibilitar auditoria.
+
+No exemplo, recebemos 500 solicitações e 500 são autorizadas; 460 intenções corretas, 420 consultas corretas, 390 cálculos corretos e 360 respostas com evidência suficiente. As conversões condicionais são 460/500 = 92%, 420/460 = 91,3%, 390/420 = 92,9% e 360/390 = 92,3%. O sucesso ponta a ponta é 360/500 = 72%; multiplicar taxas arredondadas pode gerar pequena diferença por arredondamento.
+
+As taxas condicionais localizam perdas, mas podem subir enquanto o sistema piora para a população original. Se uma política elimina as perguntas difíceis no estágio de autorização, as etapas posteriores parecem melhores. Por isso, reportamos cobertura e recusa correta junto do sucesso, estratificados por tipo de pedido e perfil permitido. Uma recusa apropriada não é falha do sistema, mas muda o denominador de consultas elegíveis.
+
+Intervalos de confiança ajudam a comunicar incerteza de métricas de qualidade em amostras. Uma taxa de 9/10 é 90%, mas a amostra pequena não autoriza afirmar desempenho estável. O relatório inclui número absoluto, período e método de intervalo quando pertinente; diferenças entre versões são interpretadas com tamanho do conjunto e variabilidade, não apenas casas decimais.
+
+O funil separa indicadores técnicos e de valor. Latência, custo e erro de API descrevem operação; correção, evidência e utilidade descrevem resultado analítico; aceitação ou ação tomada exigem interpretação do contexto. Uma resposta aceita pode estar errada e uma resposta contestada pode revelar definição semântica faltante. Portanto, comportamento do usuário é sinal, não gabarito automático.
+
+Segmentamos resultados por pergunta direta, ambígua, multi-hop, causal, pequena amostra e acesso. Uma média alta pode esconder que perguntas multi-hop falham sistematicamente. Segmentação permite priorizar melhoria e limitar escopo: o produto pode ser confiável para consulta de catálogo e ainda não para investigação agentic ampla.
+
+O código de métricas precisa lidar com zero denominador e etapas não observadas. Se não houve perguntas de um tipo naquela semana, taxa não é zero; é indefinida ou ausente. Se o log falhou, não interpretamos evento ausente como sucesso. Dicionário de eventos e monitoramento da própria instrumentação são parte da qualidade do painel de avaliação.
 
 \section{Auditar consulta, estatística e visual separadamente}
 
@@ -62,9 +131,23 @@ O visual é avaliado por correspondência à pergunta, escala, rótulos, ordena�
 
 Storytelling recebe rubrica: pergunta respondida, dado ligado à afirmação, limite explícito, linguagem não causal quando apropriado, ação proporcional e caminho de contestação. Revisores marcam frases específicas em vez de dar apenas impressão geral.
 
-O dashboard de avaliação apresenta erro por camada e segmento. A pessoa identifica se precisa corrigir prompt, definição, consulta, cálculo, visual ou integração. Se tudo vira uma pontuação de ``qualidade do agente'', a equipe não sabe qual componente melhorar.
+O dashboard de avaliação apresenta erro por camada e segmento. A pessoa identifica se precisa corrigir prompt, definição, consulta, cálculo, visual ou integração. Se tudo vira uma pontuação de qualidade do agente, a equipe não sabe qual componente melhorar.
 
 Casos críticos aparecem ao lado das médias com identificadores sintéticos e fonte de referência. A revisão visual compara estado inicial e correção aplicada, permitindo observar se escala ou legenda alterou percepção sem mudar dados.
+
+A auditoria de consulta compara intenção normalizada e plano com esquema, relações, filtros, período e autorização. Revisores verificam se a consulta preserva o grão, usa chaves adequadas e trata nulos e duplicatas. SQL sintaticamente válido é apenas condição de execução; a consulta deve implementar a métrica definida e excluir somente registros autorizados pela regra.
+
+A auditoria estatística recalcula um subconjunto independente. Para taxa, verifica contagens e fração; para comparação, confirma períodos e diferença; para média, define unidade de ponderação. Propriedades automatizadas detectam taxa fora de [0,1], denominador menor que aprovados, valores impossíveis e total inconsistente. Essas invariantes não substituem revisão semântica, mas encontram defeitos objetivos rapidamente.
+
+A auditoria visual compara pergunta, marca, canal, escala, ordenação, rótulos, denominador e acessibilidade. Um gráfico pode usar números corretos e ainda induzir interpretação falsa. Revisores recebem a pergunta antes de ver o gráfico e descrevem que comparação a figura sugere; diferenças entre essa leitura e intenção revelam problemas de design.
+
+A auditoria narrativa liga cada frase a evidência. Dividimos resposta em alegações e classificamos suporte direto, suporte parcial, inferência, hipótese ou sem suporte. Verificamos linguagem causal, omissões de população, datas e ressalvas. Fluência gramatical não pontua como precisão, embora clareza e concisão sejam critérios de comunicação após evidência validada.
+
+Erros simultâneos são diagnosticados por origem provável e confirmação. Métrica errada aponta para catálogo ou intenção; junção duplicada, para modelo e consulta; número correto com texto incorreto, para geração ou validação; gráfico desatualizado, para estado/cache; exposição, para autorização e arquitetura. O registro inclui responsável e teste de regressão para que o mesmo defeito não reapareça com outra pergunta.
+
+O painel de auditoria mostra cada dimensão lado a lado e permite abrir exemplos. Uma média de exatidão não deve apagar falhas críticas. Heatmap por tipo de pergunta e camada mostra concentração de erro, enquanto uma lista de casos exemplares mantém contexto. Cada visual inclui denominador, período, versão de modelo e definição semântica.
+
+Uma implantação pode usar avaliação automática para cada versão e revisão humana para amostra e incidentes. Mudança de modelo, prompt, catálogo, consulta ou visual requer regressão em casos relevantes. Um gate só passa se limiares técnicos e bloqueadores de segurança forem atendidos; exceções têm owner, prazo, mitigação e registro explícito.
 
 \section{Segurança, privacidade, custo e latência como gates}
 
@@ -105,6 +188,20 @@ Com esse exemplo, A passa e B falha em evidência apesar da correção superior.
 
 Logs guardam versão, trace, resultado da validação, duração e estado com minimização. Conteúdo completo é retido somente quando finalidade e política autorizam. A equipe desenha pausa, rollback, comunicação e reprocessamento para incidente.
 
+Gates críticos são avaliados em ordem. Primeiro verificamos exposição, acesso e comportamento proibido; depois correção e sustentação; em seguida qualidade visual, latência e custo. Um vazamento não pode ser compensado por uma resposta elegante. Limites são definidos por caso de uso e aprovados por responsáveis antes de observar a versão candidata, reduzindo ajuste oportunista da régua.
+
+Minimização começa na extração, não apenas no prompt. A consulta retorna agregados necessários, remove identificadores diretos e evita cruzamentos desnecessários. O adaptador só recebe esse pacote; logs guardam metadados mínimos e política de retenção; traces de erro não capturam chave nem conteúdo sensível. Cada fornecedor e ambiente tem avaliação de retenção e uso compatível com o contexto institucional.
+
+Prompt injection pode vir de pergunta, documento recuperado ou resultado de ferramenta. Defesa combina separação entre instruções e dados, allowlist de ferramentas, validação de argumentos, limites de consulta e revisão de saída. Não existe frase no prompt que, sozinha, impeça comportamento adversarial. A equipe testa ataques representativos e garante que permissões permanecem no backend.
+
+Custo inclui tokens de entrada e saída, embeddings, consultas, reranking, retries e observabilidade. Relatamos custo por pergunta e distribuição, não só média mensal. Um agente com várias chamadas pode multiplicar gasto; cache pode reduzir chamadas, mas precisa respeitar identidade e versão. Uma rota sem LLM para estatística simples pode melhorar eficiência sem prejudicar o usuário.
+
+Latência é composta por preparação, recuperação, execução, geração e renderização. p50 mostra experiência típica; p95 mostra cauda; timeout e abandono também importam. O painel mostra tempos por etapa para localizar atraso. Uma resposta rápida com cálculo não verificado não atende o objetivo; otimização preserva controles e não elimina validação silenciosamente.
+
+A disponibilidade inclui falhas do provedor, indisponibilidade de fonte, limite de taxa e erro interno. O produto define fallback, retry com backoff, circuit breaker e mensagem ao usuário. Como app didático, podemos manter a EDA funcionando e desabilitar narrativa quando serviço externo cai. Para uma implantação real, responsável operacional precisa saber quais funcionalidades permanecem e qual risco existe durante degradação.
+
+A decisão de lançamento especifica escopo, usuários, dados, controles, métricas de monitoramento, canal de contestação e condição de rollback. Um piloto restrito pode revelar uso inesperado; revisão periódica verifica mudanças de distribuição, definição e fornecedor. Quando gate falha, versão não avança até correção ou decisão documentada de limitar finalidade.
+
 \section{Visualizar resultados e contar uma história auditável}
 
 O painel final separa funil, correção, risco, custo, latência e exemplos. Cada cartão tem unidade, período e denominador. Um gráfico mostra sucesso por classe de pergunta e uma tabela abre falhas representativas sem publicar dado pessoal.
@@ -122,11 +219,25 @@ O painel final separa funil, correção, risco, custo, latência e exemplos. Cad
 
 A figura distribui indicadores em quatro domínios e liga todos a casos reproduzíveis. O público não precisa acreditar numa nota agregada: pode abrir amostra, examinar suporte, entender filtro e ver por que uma versão foi aprovada ou bloqueada.
 
-Uma narrativa para liderança pode dizer: ``A versão A atende aos gates no conjunto controlado; B tem maior correção média, mas ainda falha em evidência. Não recomendamos B até corrigir a recuperação e repetir o teste retido''. A recomendação comunica ação e condição de revisão.
+Uma narrativa para liderança pode dizer: A versão A atende aos gates no conjunto controlado; B tem maior correção média, mas ainda falha em evidência. Não recomendamos B até corrigir a recuperação e repetir o teste retido. A recomendação comunica ação e condição de revisão.
 
 O painel identifica versão de cada métrica e modelo, período de avaliação e ambiente. Um leitor consegue filtrar por tipo de consulta sem mudar silenciosamente o denominador. A exportação mantém legenda, fonte e nota de limitações.
 
 Na apresentação, a squad conduz a audiência por pergunta, descoberta, evidência e ação recomendada. Primeiro revela o contraste entre correção e evidência; depois abre um caso que falhou e explica o gate; por fim, delimita a decisão operacional. O storytelling organiza a investigação sem esconder incerteza nem transformar correlação em causalidade.
+
+O painel separa desempenho de qualidade e risco. Um funil representa transições; barras ou pontos com intervalos mostram correção por classe de pergunta; cartões apresentam custo e p95; uma tabela abre casos críticos. Não juntamos escalas incompatíveis em um único número. A hierarquia visual deixa claro o que é bloqueador e o que é otimização, e oferece detalhes sob demanda.
+
+Cada cartão indica numerador, denominador, unidade, período, versão avaliada e população. Correção 92% sem 46/50 e sem classes de pergunta é difícil de interpretar. O painel oferece filtros que recalculam contagens e mantém conjunto retido separado do desenvolvimento. Se filtro muda, exportação, título e notas de versão também mudam.
+
+A história executiva pode ser: A versão candidata melhorou consulta direta, mas falha em perguntas com definição ambígua; ainda não recomendamos ampliar escopo. A figura mostra métricas e exemplos que sustentam essa mensagem. O parágrafo distingue evidência observada, risco, limite e decisão, e não transforma a avaliação do protótipo em alegação geral de mercado.
+
+Um caso ilustrativo pode mostrar que duas versões têm correção geral 90%, mas perfis distintos: A acerta perguntas diretas e erra recusas; B preserva recusas e falha em período incompleto. Escolha depende da distribuição e gravidade. O relatório mostra ambas as classes e explicita se uma falha é bloqueadora, em vez de declarar empate por média.
+
+A apresentação inclui limites do conjunto: cobertura de idiomas, classes, fontes, perfis de usuário, quantidade de avaliações humanas e alterações de versão. Não chamar teste sintético de validação institucional. Uma narrativa auditável informa o que ainda não foi testado e propõe próximo estudo, preservando credibilidade e espaço para melhoria.
+
+A acessibilidade do painel importa para quem decide. Contraste, rótulos, navegação, texto alternativo e tabela equivalente permitem leitura além da cor ou hover. Um resumo textual descreve padrões principais, mas cita onde abrir valores. Toda visualização precisa funcionar em apresentação projetada e exportação impressa sem perder unidade e caveats.
+
+O artefato final liga história e fonte. Cada afirmação remete a ID do caso ou componente do relatório; cada tabela aponta para execução; cada gráfico traz versão do conjunto. O leitor pode seguir a trilha da decisão até o dado sem confiar apenas em prosa do agente. Essa é a diferença entre um storytelling convincente e um storytelling auditável.
 
 \section{Simulado e fechamento das unidades}
 
@@ -140,6 +251,70 @@ Cada aluno entrega uma frase de Big Idea e indica o gráfico que melhor a susten
 
 A avaliação individual observa também se o estudante consegue reproduzir um cálculo sem o modelo, identificar uma falha de SQL, propor teste retido e explicar quando recusar resposta. A equipe registra a contribuição e o aprendizado, mas não usa dado pessoal para inferir competência além da atividade observada.
 
+\section{Exemplo integrado: da pergunta ao gate de lançamento}
+
+A avaliação final usa um caso didático de taxa por curso em dois períodos. A referência contém quatro cursos, contagens de elegíveis e aprovados, definição de métrica e calendário. Cada solicitação é emparelhada com identidade permitida, pergunta esperada, resultado calculado manualmente e comportamento visual. O conjunto inclui uma pergunta direta, uma ambígua, uma causal, uma com grupo pequeno e uma com período incompleto.
+
+Para a pergunta direta, Alfa tem 72/100 = 72% e depois 80/100 = 80%, diferença de +8 pontos percentuais. Beta tem 9/10 = 90% e 10/10 = 100%, diferença de +10 pontos. Embora Beta tenha a maior diferença absoluta, sua base pequena torna a taxa instável; uma resposta correta relata ambos os fatos e qualifica o denominador. A análise não conclui que Beta melhorou mais em sentido causal.
+
+A pergunta qual curso teve maior melhora? pode significar maior aumento em pontos percentuais ou maior aumento relativo. Para Alfa, mudança relativa é (0,80-0,72)/0,72 = 11,1%; para Beta, (1,00-0,90)/0,90 = 11,1%. Neste exemplo, rankings empatam em relativo, mas não em pontos. A interface deve declarar qual definição usa ou perguntar ao usuário; essa distinção é um caso de teste de intenção e não pode ser deixada ao título gerado.
+
+Uma regra de grupo pequeno suprime Beta em uma visão pública, enquanto a conta interna permanece disponível a um perfil autorizado. A prova verifica que texto, gráfico, tooltip, tabela e exportação não revelem o valor suprimido. Autorização e privacidade são gates absolutos; uma taxa alta de acerto em outros itens não compensa esse vazamento.
+
+A avaliação compara saída do modelo com referência e registra camadas: interpretação, plano, execução, numerador, denominador, visual, texto e política. Se consulta está correta, mas redação diz 10% em lugar de 10 pontos percentuais, a falha está na narrativa/unidade. Se o título está correto, mas filtro inclui apenas um período, o problema é plano ou estado de interface. Classificar a camada determina correção adequada.
+
+Uma decisão de lançamento exige limiares anunciados antes do teste. Por exemplo, nenhuma ocorrência de acesso indevido, ao menos 90% de evidência sustentada no conjunto retido, no máximo 5% de erros analíticos graves e p95 abaixo do limite de experiência definido. Esses números são ilustrativos; uma organização estabelece seus próprios limiares por risco. O princípio é que critérios bloqueadores não sejam compensados por média.
+
+O relatório final descreve o que passou, falhou, não foi testado, qual população de perguntas cobre e que mitigação é necessária. Se uma pergunta causal falha, o produto pode limitar escopo a descrição; se fontes desatualizadas aparecem, corrigimos indexação e ownership; se custo excede orçamento, reduzimos chamadas. Um gate produz decisão executável e plano de revisão, não um selo genérico de IA confiável.
+
+A monitoria pós-lançamento observa distribuição de tipos de pergunta, falhas, latência, custo, recusas, contestações e atualização semântica. Uma mudança de modelo ou catálogo dispara regressão. Uma ocorrência crítica pode desligar apenas narrativa e preservar dashboard determinístico; essa capacidade de fallback é parte do plano de operação e precisa ser exercitada antes de incidente.
+
 \begin{SummaryBox}
 GenBI é avaliada como cadeia analítica. A resposta só é confiável quando intenção, métrica, consulta, cálculo, evidência, visual, segurança e operação se alinham; uma média não compensa falha crítica e todo insight precisa ser reproduzível e contestável.
 \end{SummaryBox}
+
+
+
+O fechamento recupera competências da Unidade I sem repetir conteúdo como lista. A equipe usa estatística para verificar denominadores e dispersão, probabilidade para discutir variação, associação para evitar causalidade, dataviz para avaliar percepção, arquitetura de dados para rastrear fonte e storytelling para comunicar limite. Cada fundamento reaparece como condição de qualidade para uma resposta de LLM aplicada à AED.
+
+Um cenário integrador começa com uma pergunta em linguagem natural sobre mudança em indicador, uma tabela agregada e um documento de definição. O estudante seleciona mecanismo de recuperação, formula consulta, calcula comparação, escolhe gráfico e redige insight. Em cada etapa, justifica decisão e identifica uma condição que faria parar. O cenário permite avaliar raciocínio ponta a ponta sem exigir infraestrutura de produção.
+
+A avaliação da Unidade II é intencionalmente acessível e focaliza os conceitos praticados: selecionar métrica e ferramenta apropriadas, reconhecer limite causal, rastrear evidência e explicar uma proteção básica. A segunda chamada integra conteúdos das duas unidades e requer análise mais complexa; a prova final mantém dificuldade baixa e cobre o semestre. Itens devem continuar rastreáveis ao caderno e alinhados ao que foi ensinado.
+
+Na defesa oral, cada estudante responde a uma variação do próprio cenário: período muda, população muda, fonte está desatualizada ou evidência não existe. A resposta vale pela capacidade de recalcular, perguntar ou recusar, não por repetir texto do modelo. Essa variação favorece autoria e verifica que o aluno entende arquitetura e conceitos.
+
+O projeto fecha com retrospectiva: qual hipótese de arquitetura foi confirmada, qual ferramenta falhou, qual validação detectou erro e que mudança faria na próxima versão. O relatório identifica contribuição individual e decisão de equipe. Dados sintéticos ou públicos autorizados permanecem; nenhum material de avaliação publica chave, dado identificável ou resposta reservada.
+
+A unidade deixa uma arquitetura didática reutilizável: pergunta, semântica, fonte, consulta, cálculo, visual, evidência, narrativa e governança. Em uma organização, cada componente precisaria de observabilidade, controle de acesso e responsabilidade operacional; em aula, a versão mínima mostra os mesmos limites com menor escala. O protótipo ensina fundamento transferível, não promete substituição de analista.
+
+A próxima pergunta profissional é como sustentar decisões em mudança: manter catálogo atualizado, avaliar modelos e fornecedores, observar falhas e retirar uma função quando risco excede benefício. Assim, a trilha termina sem transformar LLM em autoridade. O analista continua formulando pergunta, examinando dado, escolhendo representação e respondendo por como a evidência é usada.
+
+A diferença relativa compara mudança com o valor inicial. Para Alfa, aumento de 8 pontos sobre 72% corresponde a 8/72 = 11,1%; para Beta, 10 pontos sobre 90% também é 11,1%. O cálculo mostra por que a frase maior melhora requer definição: ranking por pontos absolutos e ranking relativo podem divergir em outros dados. O sistema expõe a operação selecionada.
+
+A figura de avaliação usa cores e formas redundantes: aprovado e bloqueado têm rótulos e símbolos, não apenas verde e vermelho. Um gráfico de pontos compara versões por classe e inclui contagens. A tabela abre resultado de referência e candidato. Visualização ajuda localizar regressão, mas não substitui a leitura do caso.
+
+A pergunta ambígua recebe uma clarificação que nomeia alternativas: Você quer maior taxa atual, maior diferença em pontos percentuais ou maior variação relativa?. A escolha fica no contrato e na resposta. Essa intervenção evita que o sistema trate palavra vaga como métrica universal e oferece um caso positivo para medir qualidade de esclarecimento.
+
+A pergunta causal produz recusa qualificada: os dados mostram associação temporal, mas não identificam causa; posso comparar grupos e listar hipóteses para investigação. Avaliamos se a recusa oferece próximo passo útil e não se limita a bloqueio genérico. A resposta sustenta confiança ao dizer o que é possível e o que falta.
+
+No caso de período incompleto, a regra de avaliação espera que sistema detecte cobertura desigual. Pode mostrar resultado parcial com aviso ou pedir confirmação de comparação até a data equivalente. O gabarito lista ambas as respostas como aceitáveis se filtros e caveat estiverem explícitos; a flexibilidade de apresentação não flexibiliza cálculo ou verdade.
+
+Um teste de regressão pode ser escrito como dado de entrada, pergunta e invariantes: numerador menor ou igual ao denominador, taxa no intervalo, diferença em pontos igual à subtração e nenhum campo suprimido em artefato público. Casos humanos avaliam clareza da narrativa e utilidade do próximo passo. Cada teste tem proprietário e versão.
+
+A revisão de incidente percorre logs minimizados e reproduz cenário sintético equivalente. Não se copia uma linha pessoal para o caderno de testes. A análise identifica causa e controle ausente, corrige pipeline e adiciona regressão. Esse processo transforma falha concreta em melhoria sem perpetuar exposição.
+
+A decisão de continuar pode ser limitada: liberar apenas perguntas diretas com métrica certificada, mantendo agentes multi-hop desligados. Escopo restrito é uma decisão válida e verificável; a versão amplia-se quando cobertura e gates passam. O relatório define o que o produto não suporta para que ausência de capacidade não seja interpretada como promessa.
+
+Depois do piloto, revisamos resultados com usuário final, proprietário semântico, segurança e operação. Contestações sobre definição atualizam catálogo; erros de interação atualizam interface; mudança de modelo exige repetir testes. A qualidade é um ciclo com responsáveis, orçamento e decisão de rollback, não uma propriedade permanente atribuída ao modelo.
+
+\bigskip
+\noindent\textbf{Referências para avaliação e governança}
+
+\begingroup\small
+\begin{itemize}
+\item NIST. \emph{Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile}. NIST AI 600-1, 2024. \url{https://doi.org/10.6028/NIST.AI.600-1}.
+\item OpenAI. \emph{Evaluation best practices}. Documentação oficial: \url{https://platform.openai.com/docs/guides/evaluation-best-practices}.
+\item Google Cloud. \emph{Conversational Analytics overview}. Documentação oficial: \url{https://docs.cloud.google.com/looker/docs/conversational-analytics-overview}.
+\item Microsoft. \emph{Fabric data agents}. Documentação oficial: \url{https://learn.microsoft.com/en-us/fabric/data-science/how-to-create-data-agent}.
+\end{itemize}
+\endgroup

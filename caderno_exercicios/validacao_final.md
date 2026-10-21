@@ -1,35 +1,34 @@
 # Validação final — Caderno ENADE AED v2
 
-Data: 2026-08-12. Escopo: pacote temporário; nenhum repositório foi editado.
+Data de revisão: 2026-10-21. Escopo: integração do caderno público, reserva de questões e materiais da Unidade II.
 
-## Estrutura preservada
+## Integridade do banco
 
-- 14 capítulos aprovados por `validate_workbook.py`.
-- 210 itens: 140 objetivos e 70 discursivos.
-- Cada capítulo contém exatamente 15 itens, sendo 10 objetivos e 5 discursivos.
-- Respostas públicas somente para os itens pares; gabaritos integrais permanecem em `professor/`.
-- IDs, competências, procedimentos matemáticos e respostas conceituais preservados conforme `manifesto_preservacao.md`.
+- 14 capítulos, 210 posições públicas: 140 objetivas e 70 discursivas (15 por capítulo: 10+5).
+- 40 IDs ímpares únicos permanecem no banco reservado e nos cinco instrumentos (8 por instrumento).
+- Os 40 itens reservados foram substituídos nos mesmos números por itens públicos distintos `-S1`; nenhum ID reservado original aparece nos arquivos públicos de capítulo.
+- Respostas do estudante permanecem somente nos itens pares 2, 4, 6, 8, 10, 12 e 14.
+- Respostas e justificativas dos substitutos estão nos três gabaritos privados; mapas de correspondência por faixa estão nos arquivos `substituicoes_reservados_*.md`.
 
-## Auditoria de riqueza
+## Validadores e PDFs
 
-O script canônico `audit_workbook_richness.py` aprovou 14 de 14 capítulos. Médias de palavras dos textos-base por capítulo: C1 46,5; C2 55,3; C3 51,8; C4 45,3; C5 51,3; C6 45,1; C7 45,5; C8 45,1; C9 45,6; C10 45,5; C11 58,3; C12 48,3; C13 47,2; C14 45,0. Todos os capítulos apresentam ao menos dois tipos de suporte detectáveis e fonte em seus 15 itens.
+Em 21/10/2026:
 
-A busca literal não encontrou `VozTexto`, comandos mecânicos do tipo “Use obrigatoriamente o Quadro/Figura/Tabela” nem os trechos de boilerplate editorial previamente identificados. Vozes de memorando, parecer, auditoria, incidente, reunião e caso profissional aparecem organicamente nos textos-base.
-
-## Compilação e inspeção
-
-- `tectonic main.tex`: compilação concluída sem mensagem de Overfull, Missing character, erro ou fatal.
-- PDF: 114 páginas, A4, 350.896 bytes e 33.025 palavras extraídas.
-- Inspeção visual ampla anterior: páginas 1, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96 e 114.
-- Inspeção visual final após os últimos ajustes: páginas 1, 67, 75 e 114, cobrindo sumário, Capítulos 9 e 10 e respostas finais.
-- Resultado visual: identidade consistente, tabelas e diagramas legíveis, alternativas alinhadas, fontes presentes, sem cortes, sobreposição ou conteúdo editorial exposto ao estudante.
+- `validate_workbook.py caderno_exercicios/capitulos`: aprovado, 14/14 capítulos.
+- `validate_generated_exams.py --repo . --u1 1-8 --u2 9-14`: aprovado, 5 instrumentos, 10 versões, 40 IDs únicos e Final ≤ Segunda Chamada.
+- Auditoria de integridade adicional: 40/40 IDs do manifesto têm substituto `-S1` único; nenhum ID reservado original aparece nas fontes públicas; os 15 itens e a resposta de pares foram preservados em cada capítulo.
+- Tectonic compilou `main.tex` com o bundle local. PDF A4 de 114 páginas, sem `Overfull`, erro LaTeX, controle indefinido ou caractere ausente no log.
+- Gabarito privado dos Capítulos 11–14 compilado em PDF A4 de 10 páginas. Cenários dos estudantes: 2 páginas; chave docente refeita para quatro situações e compilada em 3 páginas A4. Logs sem `Overfull` ou erros; a chave docente tem avisos `Underfull` localizados em alinhamento/parágrafo, sem corte visual na amostra conferida.
+- Inspeção visual amostral: abertura dos Capítulos 9 e 10; os quatro pedidos, tabelas e avaliação no PDF dos estudantes; cálculos e código de referência nas três páginas da chave docente. Conteúdo legível, sem cortes visíveis.
+- A dinâmica foi reduzida e clarificada para quatro alunos: um cenário simples por aluno, planejamento de 10–15 minutos no encontro, implementação em casa e apresentação na aula seguinte. Mapeamento 15→22/10, 22→29/10, 29/10→05/11 e 05→19/11 (12/11 EXPOFACOL).
+- `git diff --check`: aprovado após restaurar o log gerado da compilação do livro.
 
 ## Artefatos
 
-- `main.tex` e `main.pdf`.
-- `caderno_enade_style.tex`.
-- `capitulos/`: 14 capítulos.
-- `professor/`: três blocos de gabarito privado e instruções de vínculo.
-- `manifesto_preservacao.md`.
-- `auditoria_oficial/`: extrações consultadas dos documentos oficiais.
-- `inspecao/` e `inspecao_final/`: amostras rasterizadas da inspeção.
+- `main.tex` e `main.pdf` — caderno público compilado.
+- `Caderno de Exercícios.pdf` — cópia de distribuição.
+- `capitulos/` — 14 capítulos; `professor/` — gabaritos privados.
+- `manifesto_preservacao.md` e três mapas de substituição.
+- `caderno_atividades/dinamicas_ii_unidade/` — cenários dos estudantes e chave docente em PDFs separados.
+
+Limite da auditoria: o script opcional `audit_workbook_richness.py` mencionado em uma validação histórica de agosto não existe mais neste checkout; a estrutura, integridade, compilação e inspeção visual foram conferidas pelos meios listados acima.

@@ -1,4 +1,4 @@
-\chapter{Ecossistemas de BI com copilotos e agentes}
+\chapter{Ecossistemas de GenBI e BI agentic}
 \chaptermark{BI conversacional e agentic}
 
 Na sala de reunião, a mesma pergunta de AED recebe um gráfico no Tableau, uma consulta no Power BI e uma resposta textual de um agente. O problema não é decidir qual marca parece mais inteligente: é avaliar se cada sistema preserva a definição de métrica, aplica acesso, mostra evidência, permite contestação e sustenta a decisão.
@@ -6,6 +6,49 @@ Na sala de reunião, a mesma pergunta de AED recebe um gráfico no Tableau, uma 
 Copiloto, analytics conversacional e BI agentic descrevem experiências e responsabilidades diferentes. Um copiloto sugere ou executa operações sob controle da pessoa; análise conversacional traduz pergunta e entrega resultados; um sistema agentic pode planejar etapas e delegar ferramentas. Produtos podem misturar os padrões, por isso classificamos comportamentos observados e não slogans.
 
 Este encontro usa o caso dos cursos, frequência e aprovação para comparar ferramenta visual, serviço gerenciado e protótipo Python. A pergunta permanece fixa para que a comparação seja justa. Cada alternativa precisa revelar denominador, filtros, versão semântica, identidade, visual e trilha.
+
+\section{O que já existe no mercado e como comparar sem cair no marketing}
+
+Em 21 de outubro de 2026, o mercado oferece desde copilotos dentro de ferramentas de painel até experiências conversacionais e agentes conectados a modelos semânticos. Microsoft documenta Copilot e Fabric data agents; Tableau distingue seu ecossistema tradicional de Tableau Next, com Tableau Semantics e Agentforce Tableau; a AWS apresenta Amazon Quick e recursos de Generative BI, enquanto algumas páginas ainda usam o nome legado QuickSight; Google oferece Conversational Analytics em Looker, fundamentado no LookML; Databricks apresenta AI/BI com Genie Agents, antes chamados Genie Spaces. Nomes, licenças e status de preview mudam e devem ser verificados no momento de uma demonstração.
+
+Esses produtos não são intercambiáveis só porque aceitam perguntas em linguagem natural. Alguns se apoiam em semântica administrada, outros conectam diferentes fontes ou executam fluxos de análise; a interface pode produzir resumo, tabela ou visual, e as permissões têm escopos diferentes. A comparação começa perguntando quais fontes são suportadas, como o modelo identifica a métrica, sob qual identidade a consulta roda e se o usuário consegue ver consulta, filtro e atualização.
+
+Para uma sala de aula, não precisamos de uma conta paga em cada fornecedor. Podemos comparar a documentação oficial, analisar demonstrações públicas e reproduzir a competência central em pandas/Streamlit com dados sintéticos. O objetivo é compreender a arquitetura e os critérios, não prometer disponibilidade local, preço, licença ou recurso de preview que dependam do tenant e da região.
+
+O quadro organiza uma matriz de capacidades por camada: preparação/modelagem; camada semântica; pergunta conversacional; execução analítica; visualização; agente e ações; governança; avaliação/observabilidade. Marquem documentado, observado em teste, não verificado ou não suportado; evitem transformar marketing em evidência de funcionamento no caso da turma.
+
+Uma comparação justa usa a mesma pergunta, definição, período, usuário e conjunto de dados em cada caminho. O teste contém caso rotineiro, ambiguidade, falta de permissão, regra desatualizada e pergunta sem suporte. A equipe não avalia apenas se a primeira resposta parece boa: confere cálculo, fidelidade semântica, fonte, comportamento de recusa, latência e custo quando a informação está disponível.
+
+\begin{center}
+\small\begin{tabularx}{\textwidth}{p{2.8cm}p{5.0cm}X}
+\toprule
+Ecossistema & Elementos a investigar & Evidência de aprendizado \\
+\midrule
+Microsoft & Power BI/Fabric, modelo semântico, data agents & esquema, permissões, consulta e versão \\
+Salesforce & Tableau tradicional, Tableau Next, Tableau Semantics & fronteira de produto, agente e semântica \\
+AWS & Amazon Quick, Generative BI e Topics & contexto, permissões e disponibilidade regional \\
+Google Cloud & Looker, LookML, Conversational Analytics & definição governada e consultas geradas \\
+Databricks & AI/BI, Genie Agents e contexto de dados & instruções, benchmarks e consultas \\
+Python aberto & pandas, Streamlit e API/modelo local & responsabilidade explícita da aplicação \\
+\bottomrule
+\end{tabularx}\normalsize
+\end{center}
+
+As fontes oficiais consultadas e as páginas de comparação estão no final do capítulo. Uma captura de tela envelhece rapidamente, então a turma aprende uma pergunta mais durável: que papel esta camada assume, que contrato consome e como eu provo que fez o que prometeu?. A próxima dinâmica aplica os critérios ao projeto storyteller.
+
+Uma forma honesta de ler a oferta de mercado é separar capacidade documentada, disponibilidade no tenant e resultado medido pela equipe. Documentação informa o que o fornecedor declara suportar; configuração revela quais fontes e identidades estão habilitadas; teste controlado mostra se a pergunta do curso é respondida com a definição esperada. Nenhuma dessas evidências substitui as outras, e o material de marketing não comprova desempenho para nossos dados.
+
+Um agente conectado a um modelo semântico recebe vantagens e limites. Medidas, relações e sinônimos podem estar definidos antes da conversa, reduzindo ambiguidades; porém, métricas mal modeladas continuam erradas e sinônimos locais podem conflitar. A equipe precisa verificar como a plataforma trata medidas certificadas, hierarquias, datas, campos ocultos e versões. Se não for possível inspecionar a definição usada, a resposta pode estar correta por acaso e ainda não ser auditável.
+
+Em 21 de outubro de 2026, Microsoft Fabric data agents, Tableau Next/Agentforce Tableau, Amazon Quick Generative BI, Looker Conversational Analytics e Databricks Genie Agents ilustram abordagens comerciais diferentes. A página da AWS intitulada Generative BI with Quick Sight descreve uma experiência anterior e aponta para a experiência atual de chat em Amazon Quick, com consultas em linguagem natural, fluxos agentic e Topics multidataset como camada semântica. A documentação Databricks chama o produto configurável para usuários de Genie Agents e registra Genie Spaces como nome anterior. Essa fotografia é temporal: nomes, capacidades, disponibilidade regional, planos e estados de preview podem mudar. Para cada uma, registramos a data da página oficial e fazemos uma nova verificação antes de qualquer recomendação de compra ou apresentação a estudantes.
+
+Uma comparação de mercado não precisa virar uma lista de slogans. Podemos classificar produtos por onde executam consulta, que artefato semântico usam, como integram autorização, se exibem SQL ou plano, se produzem gráficos, se chamam ferramentas e como registram auditoria. Itens não documentados ficam marcados como não verificados, e não como inexistentes. Essa distinção preserva rigor e impede inferência sobre um produto a partir de uma demonstração limitada.
+
+O custo de uma solução inclui mais que licença: modelagem, integração, administração, controle de acesso, treinamento, revisão de respostas, observabilidade e saída do fornecedor. Um protótipo aberto também tem custo de hospedagem, manutenção, segurança, prompt e serviço. A comparação inclui custo total de propriedade para o cenário, em vez de comparar somente preço de assinatura com custo zero de código próprio.
+
+Para a aula, a equipe usa fonte sintética e documentos públicos. Não precisa criar contas de fornecedores nem compartilhar dados reais. Os estudantes recebem cartões com capacidades documentadas e cenários; devem propor qual pergunta cada recurso resolve, quais controles ainda precisam ser configurados e que teste demonstraria a alegação. Isso constrói alfabetização de produto sem confundir acesso a uma interface com domínio de arquitetura.
+
+A pergunta de fechamento da seção é operacional: se a ferramenta desaparecesse amanhã, qual definição, consulta, política e evidência ainda seriam propriedade da instituição? As respostas orientam portabilidade e resiliência. Um catálogo semântico exportável, consultas versionadas e testes retidos reduzem dependência e tornam a plataforma um componente substituível no desenho maior.
 
 \section{Definir critérios antes de comparar plataformas}
 
@@ -19,13 +62,27 @@ O contraexemplo é comparar apenas a qualidade de uma resposta em uma pergunta p
 
 A rubrica ainda pergunta se o usuário consegue editar a interpretação antes de executar, recuperar o visual e abrir a definição da métrica. Esses elementos influenciam confiança e contestação, não apenas conveniência. A ferramenta que não expõe a hipótese pode ser inadequada mesmo se produzir um resultado correto.
 
+A matriz de avaliação transforma parece inteligente em critérios observáveis. Para cada pergunta, anotamos intenção esperada, métrica, filtros, população, consulta ou resultado de referência, formato visual aceitável, política de acesso e comportamento de recusa. A equipe define antes do teste o que considera correto; caso contrário, pode adaptar o gabarito ao sistema que deseja aprovar.
+
+Uma suíte pequena, mas variada, contém pergunta direta, paráfrase, ambiguidade material, métrica inexistente, período incompleto, usuário sem permissão, grupo pequeno e pergunta causal. Cada classe expõe uma falha distinta. O caso de sucesso comum mede eficiência; os casos adversariais mostram limites de semântica, acesso e recusa. A amostra deve representar a distribuição de uso, mas inclui riscos raros que a média de tráfego esconderia.
+
+A execução pareada mantém dados, usuário, período, definição e prompt equivalente entre plataformas. Guardamos versão do modelo e configuração, horário, consulta gerada, tempo, custo conhecido, resposta e avaliação. Se uma plataforma usa cache ou sessão, limpamos ou registramos esse estado. Sem controle de condições, uma diferença pode vir do filtro ou atualização e ser atribuída incorretamente ao modelo.
+
+A rubrica separa exatidão semântica, correção de consulta, cálculo, evidência, visual, linguagem, segurança e experiência. Cada item tem escala com âncoras e exemplos. Um sistema pode acertar a taxa, mas omitir denominador; outro pode apresentar gráfico acessível, mas usar população errada. Notas por dimensão mostram onde a arquitetura ajuda ou falha e evitam um ranking opaco de plataformas.
+
+Quando avaliadores discordam, registramos a razão e refinamos a definição do critério. Um LLM avaliador pode ajudar a organizar comentários ou sinalizar sentenças sem suporte, mas não deve ser o único juiz de precisão numérica, privacidade ou causalidade. Em amostras de texto, medimos concordância com avaliação humana e examinamos erros do próprio juiz para evitar automatizar uma régua ainda instável.
+
+Mudanças de versão exigem regressão. Se o fornecedor altera modelo, semântica ou integração, executamos novamente o conjunto de desenvolvimento e o retido. Uma versão não passa só porque o diálogo ficou mais fluido; deve manter critérios críticos e melhorar os objetivos definidos. Quando há regressão em caso raro, a equipe decide se a alteração bloqueia lançamento, requer mitigação ou precisa de revisão humana adicional.
+
+O relatório traz numeradores, denominadores e exemplos, não somente percentuais. Se 18 de 20 respostas quantitativas estão corretas, mostramos 18/20 e examinamos as duas falhas. Uma confiança sem amostra pode esconder fragilidade; faixas de incerteza para indicadores de qualidade ajudam a evitar declarar uma melhoria baseada em diferença mínima e poucos casos.
+
 \section{Reproduzir a mesma EDA em dois caminhos}
 
 Uma trilha usa dashboard de BI; outra usa pandas e matplotlib. Ambas partem de tabela sintética com período, curso, total elegível e aprovados. A comparação observa se o gráfico representa a mesma proporção e se controles de período alteram título, cálculo e rótulos juntos.
 
 O dado de demonstração é pequeno, portanto a conclusão é técnica, não sobre desempenho educacional. Em ambiente real, a equipe avalia coortes, ausências, mudanças de currículo, duplicatas e limiar mínimo de publicação. Não expõe linhas individuais em dashboard de gestão.
 
-\textbf{Código da squad — painel comparável com taxa e denominador}
+\textbf{Código da squad --- painel comparável com taxa e denominador}
 \begin{verbatim}
 # Importa pandas para definir uma tabela agregada e reproduzível.
 import pandas as pd
@@ -45,7 +102,7 @@ ax = pivot.plot(kind="bar", ylim=(0, 1), color=["#4C78A8", "#F58518"])
 # Informa unidade e denominador no eixo.
 ax.set_ylabel("Aprovados / matrículas elegíveis")
 # Descreve o período sem afirmar que houve efeito causal.
-ax.set_title("Taxa agregada por curso e período — dado sintético")
+ax.set_title("Taxa agregada por curso e período --- dado sintético")
 # Ajusta espaço para legenda, rótulos e exportação.
 plt.tight_layout()
 # Mostra o gráfico para revisão de leitura e acessibilidade.
@@ -55,6 +112,20 @@ plt.show()
 Se duas ferramentas produzem resultados distintos, não escolhemos a que parece mais convincente. Conferimos período, grão, filtros, definição, atualização e tratamento de ausências. O SQL ou cálculo equivalente precisa ser comparado em amostra controlada.
 
 O gráfico é acompanhado por tabela com numerador e denominador. Isso torna visível que taxas iguais podem ter suporte amostral diferente. Se o painel esconder contagens, um usuário pode interpretar 75% de quatro registros como tão estável quanto 75% de quatrocentos.
+
+Antes de comparar a interface, verificamos o esquema e a linhagem. O caminho em ferramenta visual e o caminho em Python consomem uma mesma tabela curada ou transformações equivalentes, têm chave de versão e documentam filtros. Se os pipelines divergem, o experimento está comparando duas preparações de dados, não duas experiências de BI. A igualdade do ponto de partida é uma condição de validade do ensaio.
+
+O resumo numérico tem de preservar o estimando. Considere 80/100 matrículas aprovadas em um curso e 9/10 em outro. Um painel pode exibir taxas por curso de 80% e 90%, enquanto um cartão geral mostra 89/110 = 80,9%. Se outro sistema calcula média dos dois cursos, exibe 85%. A comparação não deve chamar isso de erro sem perguntar qual agregação foi definida; precisa localizar a diferença no contrato semântico.
+
+O teste inclui navegação e filtros, mas verifica também a consulta resultante. Se a pessoa escolhe 2026.2 e o título muda, o numerador e denominador precisam usar o mesmo período. O caminho próprio salva plano e código; a plataforma gerenciada pode expor SQL, log ou detalhe da pergunta. Quando não existe transparência suficiente, a limitação entra no relatório e pode pesar na decisão para usos de maior risco.
+
+Uma métrica certificada requer proprietário, definição, calendário de atualização, política de nulos e casos de validação. A equipe escolhe exemplos cuja resposta já foi conferida à mão. Depois compara subtotal, total e resultado agrupado, pois erros de junção às vezes preservam uma taxa em um caso e falham em outro. Os testes devem variar cardinalidade, dados ausentes e combinações de categorias.
+
+A visualização também tem critérios comuns. Fixamos título, escala, unidade e grupos, e avaliamos se os dois caminhos entregam a mesma tarefa perceptiva. Um gráfico automático pode preferir uma forma diferente; isso é aceitável se responde à pergunta e é interpretável. Um gráfico bonito que omite a base ou mistura total e taxa falha mesmo que sua aparência pareça profissional.
+
+Para explorar capacidade de acompanhamento, fazemos uma sequência de duas ou três perguntas dependentes. A plataforma deve manter métrica e período quando a pessoa pede e no semestre anterior?, mas perguntar quando melhor muda para outra medida. Registramos estado herdado e mecanismo de correção. O estudante identifica se a memória da conversa é útil ou se introduz filtros invisíveis e resultados difíceis de reproduzir.
+
+O teste final tenta provocar inconsistência: altera o filtro depois da geração da narrativa, pede decomposição em grupo não autorizado e consulta uma dimensão que não existe. O comportamento esperado é recalcular, esclarecer ou negar. A comparação reconhece valor de experiência conversacional somente se filtros, cálculo, segurança e rastreabilidade permanecem coerentes.
 
 \section{Governança, semântica e acesso no BI conversacional}
 
@@ -68,9 +139,23 @@ Uma camada agentic pode criar plano de exploração e chamar várias ferramentas
 
 Testes de autorização usam perfis sintéticos e verificam tabela, gráfico, exportação, cache e resumo textual. Proteger somente o endpoint principal não basta se uma cópia em cache ou exportação ainda expõe linhas. A matriz documenta quais funcionalidades foram efetivamente examinadas.
 
+Uma camada semântica define nomes de negócio, fórmulas, relações, granularidade, hierarquias e regras temporais. Por exemplo, matrículas elegíveis pode excluir cancelamentos anteriores ao início do período, enquanto aprovação depende de resultado final. Cada termo tem owner, data de vigência, fonte, descrição, sinônimos aceitos e casos de teste. Esse catálogo orienta pessoas e máquinas e permite discutir mudanças sem esconder a regra dentro de um prompt.
+
+O versionamento é essencial para reproduzir respostas históricas. Se a definição de elegibilidade muda em agosto, uma pergunta de julho deve informar qual versão utilizou e se foi reprocessada. O modelo semântico pode manter versões de métrica, mas aplicação, cache e log precisam carregá-las até a resposta. Sem versão, uma resposta antiga pode parecer contradizer a atual sem que ninguém perceba que a regra mudou.
+
+A autorização deve seguir identidade confiável, papel e finalidade. O frontend não pode declarar que o usuário é gestor e passar um rótulo ao modelo; o backend obtém a identidade autenticada, deriva permissões e aplica políticas ao banco e à recuperação de documentos. Consultas de linguagem natural atravessam os mesmos controles que consultas tradicionais e precisam negar acesso sem confirmar valores sensíveis.
+
+Segurança por linha e coluna pode ser aplicada no warehouse, semantic model ou serviço de domínio. Cada abordagem possui trade-offs; o critério é que todos os caminhos consumam o controle e que filtros não possam ser removidos pela geração. O time testa com contas de perfis distintos e verifica tanto resultado quanto metadados, downloads, cache e logs para descobrir canais indiretos de exposição.
+
+Uma política de grupos pequenos pode exigir supressão. Porém, duas consultas complementares podem permitir inferir o valor escondido: primeiro o total, depois todos menos um grupo. O catálogo precisa declarar regras contra diferenciação e ataques por consultas sucessivas, como limite de consultas, agrupamento mínimo ou ruído aprovado quando aplicável. A resposta conversacional é parte da superfície de consulta e deve obedecer a mesma política.
+
+A recuperação documental também usa autorização e vigência. Um texto antigo, um documento de outra unidade ou um arquivo com instruções adversariais pode contaminar contexto. Cada segmento recuperado carrega URI, versão, data, permissão e escore; a aplicação filtra acesso antes de enviar ao modelo e marca conteúdo como dado, nunca como instrução de sistema.
+
+Governança define responsabilidade por resposta. Product owner escolhe casos de uso e risco aceitável; proprietário dos dados certifica fonte e métrica; segurança revisa acesso e segredo; equipe de software mantém adaptadores e monitoramento; analista verifica narrativa e limitações. O agente não pode ser nomeado como responsável. A organização precisa saber a quem encaminhar contestação e quem pode interromper a função.
+
 \section{Storytelling e decisão proporcional}
 
-O narrador começa pela pergunta executiva, mostra a evidência e declara o limite. Exemplo: ``no recorte sintético, a taxa agregada mudou de 75% para 70% em um curso; a diferença pede análise de coorte, não prova que a mudança curricular causou queda''. O gráfico contextualiza; tabela e fonte permitem auditoria.
+O narrador começa pela pergunta executiva, mostra a evidência e declara o limite. Exemplo: no recorte sintético, a taxa agregada mudou de 75% para 70% em um curso; a diferença pede análise de coorte, não prova que a mudança curricular causou queda. O gráfico contextualiza; tabela e fonte permitem auditoria.
 
 O LLM pode propor título e resumo, mas o painel injeta estatísticas calculadas localmente e valida nomes de campos. Uma frase que afirma crescimento precisa de comparação temporal; uma recomendação precisa ser marcada como hipótese e ligada a objetivo e custo.
 
@@ -80,18 +165,102 @@ Cada grupo produz duas versões da narrativa, uma concisa e outra explicativa, s
 
 O artefato é matriz comparativa, gráfico reproduzível, trace mínimo e recomendação condicionada à evidência. A conclusão inclui uma alternativa de implementação e o que seria necessário medir antes de decisão real.
 
+A história começa com público e decisão. Um analista de permanência, um coordenador de curso e um estudante podem usar a mesma base, mas têm permissões e perguntas diferentes. O resumo deve declarar para quem foi produzido, qual recorte está ativo e que decisão pode apoiar. Sem esse contexto, a LLM pode fornecer uma narrativa genericamente convincente e inadequada à pessoa que a recebe.
+
+A Big Idea deve caber em uma frase testável e apontar para um visual que a sustenta. No recorte sintético, a taxa do curso A foi maior, mas os grupos são pequenos; compare coortes antes de priorizar apoio reúne observação, ressalva e ação seguinte. Se o visual não mostra as duas taxas e os denominadores, a frase não pode ser defendida; revisamos mensagem ou selecionamos outra evidência.
+
+Título, anotação e ordem das visões guiam atenção. O título pode anunciar uma observação, mas deve evitar causalidade e universalidade. Uma anotação explica um evento confirmado por fonte; uma hipótese aparece como questão. Essa diferença é especialmente importante em dashboards automáticos, nos quais a pessoa pode confundir prosa pronta com avaliação institucional aprovada.
+
+A narrativa também representa incerteza e qualidade de dados. Pode declarar que o período ainda está incompleto, que 8% das matrículas não têm situação final e que a comparação usa apenas cursos com cobertura compatível. Omitir esses fatos deixa o texto mais fluido, mas diminui a qualidade analítica. O componente de geração recebe tais limitações como campos estruturados, não depende de o modelo deduzi-las.
+
+O visual precisa atender a leitura rápida e à inspeção. Uma visão principal destaca comparação; uma tabela acessível dá valores exatos; detalhes permitem abrir definição, filtros, fonte e hora de atualização. Esse desenho suporta públicos diferentes sem criar versões numéricas conflitantes. Cada exportação preserva contexto e evidência para que uma imagem enviada em reunião não se torne um resultado sem linhagem.
+
+Uma recomendação explicita ação, responsável e critério de acompanhamento, se o sistema estiver autorizado a recomendá-la. Em cenários sensíveis, a saída é um próximo teste ou encaminhamento, não intervenção individual. A decisão final fica com profissionais responsáveis, que consideram contexto que os dados não contêm. Esse limite não reduz utilidade; impede que resumo estatístico vire política automática sem justificativa.
+
+Storytelling termina com possibilidade de contestação. O usuário pode abrir a conta, questionar a definição ou alterar filtros; a aplicação registra a revisão e recalcula todas as peças. Feedback como o denominador deveria excluir matrículas canceladas vira proposta para o proprietário da métrica, não edição improvisada da resposta. A narrativa confiável é revisável e ligada a um processo de governança.
+
 \section{Roteiro de três horas e próximos passos}
 
-19h–19h25: definimos pergunta, contrato de métrica e critérios de plataforma. 19h25–20h: comparamos formas de interação e modelamos o recorte. 20h–20h30: reproduzimos o gráfico e verificamos acesso; a chamada ocorre às 20h30.
+19h--19h25: definimos pergunta, contrato de métrica e critérios de plataforma. 19h25--20h: comparamos formas de interação e modelamos o recorte. 20h--20h30: reproduzimos o gráfico e verificamos acesso; a chamada ocorre às 20h30.
 
-20h30–21h: revisamos semântica e tentamos casos adversariais. 21h–21h35: cada equipe constrói narrativa e Big Idea. 21h35–22h: uma equipe contesta outra, conferindo versão, fonte, denominador e filtro.
+20h30--21h: revisamos semântica e tentamos casos adversariais. 21h--21h35: cada equipe constrói narrativa e Big Idea. 21h35--22h: uma equipe contesta outra, conferindo versão, fonte, denominador e filtro.
 
-A próxima aula transforma a arquitetura comparada em aplicação própria. Streamlit expõe estado, cache, conexão e visual; o Llama local ou API ficará atrás de um adaptador que recebe apenas agregados ou contexto permitido.
+A próxima aula transforma a arquitetura comparada em aplicação própria. Streamlit expõe estado, cache, conexão e visual; a API da OpenAI ou uma alternativa local ficará atrás de um adaptador que recebe apenas agregados ou contexto permitido.
 
 O produto da noite é uma tabela de critérios preenchida com evidências e um painel de comparação. A equipe registra a decisão arquitetural recomendada e a condição de mudança, por exemplo volume maior, requisito de residência ou capacidade de auditoria insuficiente.
 
 No encerramento, estudantes distinguem qualidade de experiência e qualidade de análise: conversa fluida pode coexistir com métrica errada. A decisão de ferramenta só é defensável quando o fluxo inteiro, do dado ao gráfico e à contestação, atende ao caso.
 
+\section{Estudo de caso: comparar respostas sob condições equivalentes}
+
+Para testar duas experiências, montamos um cenário sintético com cinco cursos, dois períodos, contagem de matrículas elegíveis, aprovações e regra semântica versionada. A pergunta é quais cursos melhoraram mais em taxa de aprovação de 2026.1 para 2026.2?. Antes de abrir qualquer interface, a equipe registra a intenção: diferença em pontos percentuais por curso, período letivo completo e mesma regra de elegibilidade. A resposta de referência vem de uma consulta revisada e de uma tabela independente.
+
+O conjunto de teste inclui uma pergunta que omite o ano, uma dimensão sem permissão, um curso com grupo abaixo do limiar, um documento com definição antiga e uma paráfrase. Para a pergunta ambígua, a resposta esperada é pedir esclarecimento; para a dimensão proibida, negar sem revelar valores; para a versão antiga, usar a vigente e declarar vigência. Essa cobertura avalia semântica e controle, não somente se a plataforma consegue produzir um gráfico.
+
+A execução segue um roteiro pareado. Um operador fornece a mesma pergunta em cada produto, com a mesma identidade de teste, catálogo, filtro e atualização. Outro operador registra resposta, consulta/artefato disponível, visual, tempo e evidências. A equipe não inclui instruções extras em um produto para ajudá-lo, nem compara saída de painel construído manualmente com conversa de outro ambiente sem declarar essa diferença.
+
+Considere um resultado de referência: curso Alfa passa de 72/100 = 72% para 80/100 = 80%, ou +8 pontos percentuais; curso Beta passa de 9/10 = 90% para 10/10 = 100%, ou +10 pontos. O ranking por taxa atual colocaria Beta acima, mas a pergunta sobre maior melhora aponta Beta por diferença absoluta; a instabilidade e o tamanho pequeno devem aparecer. Um sistema que ordena pela taxa final respondeu outra pergunta.
+
+O relatório mostra uma linha por teste e colunas para intenção, métrica, resultado, evidência, comportamento de acesso, visual e latência. A falha fica descrita no nível observável: usou taxa final em vez de variação, não a IA é ruim. Esse diagnóstico aponta se a equipe precisa ajustar semântica, consulta, interface ou linguagem do pedido.
+
+Um resultado de mercado é provisório e contextual. Se um produto não expõe consulta, podemos conferir totais e comportamento, mas marcamos a inspeção de implementação como limitada. Se um recurso estiver em preview, registramos que estabilidade e suporte podem mudar. A recomendação escolhe com base em requisitos e incerteza conhecida, não em uma pontuação absoluta entre fornecedores.
+
+O segundo ciclo muda o conjunto de dados e retém algumas perguntas. Se a classificação de capacidades permanece igual apenas na primeira pergunta, a comparação foi memorizada ou ajustada a um caso específico. A equipe registra versão do fornecedor e repete testes críticos após mudanças. Esse procedimento torna a decisão de adoção revisável e liga a aula de mercado ao capítulo de avaliação final.
+
+Uma plataforma também pode exigir um catálogo semanticamente preparado antes de oferecer respostas de qualidade. Esse trabalho de modelagem integra o custo e a governança, mesmo se for executado por outra equipe. O teste compara não apenas a resposta, mas o esforço necessário para publicar e manter métrica, relações, vocabulário e permissões.
+
+Ao apresentar resultados, os estudantes distinguem recurso disponível de recurso usado corretamente no caso. Uma página oficial pode confirmar existência de uma capacidade; somente teste configurado demonstra seu comportamento sob nossas perguntas. Essa linguagem cuidadosa é parte da alfabetização tecnológica e impede recomendações de produto além das evidências obtidas.
+
+
+
+Na apresentação, a turma usa uma ficha padronizada: requisito, evidência disponível, lacuna, risco e pergunta para demonstração. Essa ficha distingue documentação promocional, documentação técnica e observação experimental. Um requisito crítico sem evidência não recebe nota média; fica como pendência que impede recomendação para aquele uso.
+
+A mesma matriz serve para uma solução própria. A equipe verifica se o dashboard pode ser mantido por pessoas disponíveis, se o catálogo semântico tem owner, se o fornecedor permite exportar dados e definições e se existe plano de contingência. O quadro de comparação ajuda a discutir responsabilidade de longo prazo além da experiência de primeira resposta.
+
+Uma decisão híbrida pode reservar BI gerenciado para exploração certificada e usar app próprio para narrativa didática, mantendo warehouse e regras como fonte comum. Essa proposta só é boa quando identidade, linhagem, custos e fronteiras de dado são claros. A arquitetura deixa explícito qual sistema é fonte de verdade e qual componente apenas apresenta ou explica.
+
 \begin{SummaryBox}
 Comparar BI com copiloto e agentes exige avaliar responsabilidades observáveis, não marcas. Reproduzimos a mesma EDA, verificamos semântica e permissão, e só então comunicamos uma decisão proporcional aos dados.
 \end{SummaryBox}
+
+
+
+Na primeira metade da aula, os grupos constroem uma ficha comparativa com critérios e evidências por plataforma. Uma equipe representa BI tradicional, outra copiloto conversacional, uma terceira agente conectado à semântica e uma quarta solução própria. Cada grupo precisa declarar o que consultou, o que observou e o que ficou sem verificação; os papéis evitam que a discussão se transforme em propaganda de marca.
+
+O exercício central mantém o mesmo conjunto sintético, pergunta, período e definição. Os estudantes desenham execução em quadro: identidade, pergunta, semântica, ferramenta, consulta, resultado, visual e trace. Depois usam uma IA para propor riscos ou arquitetura alternativa e marcam quais propostas sobrevivem a uma checagem contra critérios e fontes oficiais. Essa prática incorpora IA como interlocutora crítica, não como autoridade.
+
+Depois da chamada, cada equipe executa ou simula três casos: pergunta direta, ambiguidade que exige esclarecimento e tentativa de acesso a informação não autorizada. O registro contém resposta esperada, resultado, falha e evidência. O professor compara grupos e mostra que uma recusa apropriada é um comportamento de qualidade, não uma experiência quebrada.
+
+A contribuição individual pode valer pontos quando o aluno apresenta uma decisão justificável, identifica uma limitação ou corrige uma premissa do grupo. A avaliação segue a política descrita no plano da unidade e usa rubrica anunciada: qualidade da evidência, explicação de trade-off, correção semântica e defesa oral. Não premiamos um sistema apenas por usar mais ferramentas ou produzir resposta mais longa.
+
+O produto da noite é uma recomendação arquitetural: plataforma gerenciada, solução própria ou composição híbrida para um caso específico. A recomendação inclui requisitos, recursos verificados, lacunas, custo de operação, controle e condição de revisão. Um grupo pode concluir que ainda faltam dados de avaliação e que nenhuma alternativa está pronta, desde que explique o teste que falta.
+
+A preparação para o Capítulo 12 preserva o contrato de métrica e move a turma para uma implementação pequena. As equipes passam do quadro a um aplicativo Streamlit com cálculo local, gráfico e narrativa opcional; as capacidades observadas em plataformas servem como lista de requisitos e controles que o protótipo deve reproduzir em escala didática.
+
+O fechamento individual pede que cada estudante complete três frases: a pergunta que a ferramenta resolve é..., a evidência de que resolveu é... e o controle que ainda preciso verificar é.... A resposta reduz conceitos de mercado a decisões técnicas verificáveis e dá ao professor uma leitura rápida de entendimento antes de começar o desenvolvimento.
+
+O avaliador mantém cópia assinada do conjunto e definição, registra data e configurações e evita executar atualização de fonte no meio da comparação. Se a plataforma não oferece exportação, a equipe captura evidência permitida e anota limitação de inspeção. Os dados são sintéticos para não misturar avaliação de produto com autorização institucional.
+
+A equipe também observa resultados inesperados positivos. Uma plataforma pode revelar que a pergunta do teste é impossível porque o catálogo não define melhorou; pedir esclarecimento é comportamento correto. O avaliador marca essa resposta como sucesso de intenção, ainda que não haja número final, e verifica se a pergunta de retorno é específica e útil.
+
+Um protocolo de revisão reduz viés de marca: avaliadores recebem resposta sem identificar fornecedor sempre que possível e usam a mesma rubrica. A interpretação ainda pode revelar estilo, mas a cegueira parcial ajuda a separar preferência de interface e julgamento sobre suporte analítico. Divergências são registradas para aperfeiçoar definições de critério.
+
+Na discussão, os grupos explicam qual característica depende de configuração e qual vem do produto. Segurança por linha pode existir na plataforma e estar mal configurada; um SQL visível pode ser útil mas não validar métrica; um catálogo semântico pode reduzir ambiguidade sem resolver qualidade dos dados. Essa distinção leva a perguntas concretas para a equipe responsável.
+
+O documento final contém resumo executivo, escopo, ambiente, casos, métricas, falhas e recomendação. Links para documentação oficial são datados e acompanhados da capacidade que sustentam. As evidências não se transformam em ranking universal, pois outro tenant, licença, dado ou perfil pode alterar comportamento.
+
+Uma decisão de compra ou integração ainda precisa de piloto com responsável técnico, owner de dados e usuário final. A aula entrega critérios e desenho de avaliação, não aprovação institucional. A equipe define condições para avançar, como prova de identidade, compatibilidade semântica, exportação e suporte a contestação.
+
+Esse estudo conecta mercado à construção seguinte: o protótipo próprio servirá como baseline simples e demonstração de controle. Se uma plataforma agrega mais valor, seus critérios tornam-se requisitos; se algo não é verificável, protótipo ou piloto pode revelar como construir a evidência faltante.
+
+\clearpage
+\bigskip
+\noindent\textbf{Documentação oficial consultada em 21 out. 2026}
+
+\begingroup\small
+\href{https://learn.microsoft.com/en-us/fabric/data-science/how-to-create-data-agent}{Microsoft Fabric data agents}.\par
+\href{https://help.tableau.com/current/tableau-next/en-us/tableau\_next\_tableau\_product\_overview.htm}{Tableau Next e Tableau Semantics}.\par
+\href{https://docs.aws.amazon.com/quick/latest/userguide/quicksight-gen-bi.html}{Amazon Quick: Generative BI with Quick Sight (página da experiência anterior)}; a documentação atual de chat e Topics multidataset fica em \href{https://docs.aws.amazon.com/quick/latest/userguide/generative-bi-get-started.html}{Generative BI in Amazon Quick}.\par
+\href{https://docs.cloud.google.com/looker/docs/conversational-analytics-overview}{Looker Conversational Analytics}.\par
+\href{https://docs.databricks.com/aws/en/ai-bi}{Databricks AI/BI}; \href{https://docs.databricks.com/aws/en/genie-agents/concepts}{Genie Agents (antes Genie Spaces)}.
+\endgroup

@@ -20,12 +20,18 @@
 \Comando A associação correta é
 \begin{enumerate}[label=\Alph*)]\item SOR é consumo; SOT é fonte transacional; SPEC é cópia irrestrita.\item SOR registra a fonte de autoridade; SOT integra/padroniza; SPEC publica projeção adequada ao consumidor.\item SOR e bronze são obrigatoriamente sinônimos em toda arquitetura.\item SOT elimina reconciliação, pois toda transformação é verdadeira.\item SPEC deve expor todas as colunas para permitir exploração livre.\end{enumerate}
 
+% Novo item público: AED-C05-O03-S1
 \ItemHeader{3}{Objetiva}{Declarar grão}{Tabela de pedidos}
-\TextoBase Uma tabela possui uma linha por item do pedido, porém o campo \texttt{total\_pedido} é repetido em cada item. Um pedido de R\$100 com três itens aparece em três linhas. Um dashboard somou a coluna e publicou R\$300, embora o evento econômico continue sendo um único pedido de R\$100.
+\TextoBase Uma tabela de faturamento possui uma linha por item vendido e inclui $pedido\_id$, $item\_id$ e $valor\_item$. A dimensão de clientes possui uma linha por cliente, mas o sistema de atendimento tem várias ocorrências por cliente. A equipe precisa publicar receita por região e número de clientes atendidos, sem inflar nenhuma medida ao combinar as fontes.
 \FonteDidatica
-\Comando Para calcular receita sem triplicar,
-\begin{enumerate}[label=\Alph*)]\item somar \texttt{total\_pedido} nas linhas de item.\item agregar uma vez por pedido ou usar valor do item conforme contrato, declarando o grão antes do cálculo.\item tirar média dos totais e multiplicar pela quantidade de itens.\item remover pedidos com mais de um item.\item contar linhas como pedidos porque cada linha possui identificador.\end{enumerate}
-
+\Comando A estratégia de modelagem e agregação mais segura é
+\begin{enumerate}[label=\Alph*)]
+\item juntar as três tabelas no grão de ocorrência e somar receita e linhas resultantes.
+\item definir o grão de cada fato, agregar receita no grão item/pedido e clientes distintos no grão cliente, relacionando resultados por dimensões conformadas.
+\item contar cada linha de faturamento como um cliente, pois todas possuem pedido associado.
+\item remover duplicatas idênticas das tabelas e somar os valores sem examinar cardinalidade.
+\item multiplicar o valor de cada item pelo número de ocorrências de atendimento para preservar histórico.
+\end{enumerate}
 \ItemHeader{4}{Objetiva}{Diagnosticar explosão de join}{Clientes e contatos}
 \TextoBase A dimensão contém 1.000 clientes, uma linha por cliente, e o histórico possui 2.400 contatos, várias linhas por cliente. Após uma junção, a saída tem 2.500 linhas: há contatos sem correspondência e clientes sem contato. Antes de agregar atributos do cliente, a equipe precisa declarar o grão desejado e medir a cardinalidade.
 \FonteDidatica
@@ -46,13 +52,18 @@
 \begin{enumerate}[label=\Alph*)]\item R\$85.000 e conferir $100.000-8.000-7.000=85.000$.\item R\$99.985 e conferir quantidade de colunas.\item R\$108.000 e somar cancelamentos como receita.\item R\$92.000 e ignorar descontos.\item R\$100.000 e validar apenas que o dashboard abriu.
 \end{enumerate}
 
+% Novo item público: AED-C05-O07-S1
 \ItemHeader{7}{Objetiva}{Aplicar linhagem e impacto}{Mudança de regra}
-\TextoBase O comitê propõe mudar ``cliente ativo'' de compra nos últimos 90 dias para compra nos últimos 60 dias. O indicador alimenta três painéis, uma campanha automática e um modelo. A alteração pode mudar contagens e decisões mesmo que nenhuma linha bruta seja modificada, exigindo análise de impacto antes da vigência.
+\TextoBase Um painel executivo usa a métrica ``receita líquida'' calculada como faturamento menos descontos. Uma nova regra aprovada passa a subtrair também devoluções a partir de 1º de julho; relatórios históricos já publicados continuam sendo usados em comparações anuais. A mudança altera valores passados se for aplicada retroativamente.
 \FonteDidatica
-\Comando Antes de publicar, a equipe deve
-\begin{enumerate}[label=\Alph*)]\item alterar a SQL e aguardar reclamações.\item usar linhagem para identificar consumidores, versionar regra e vigência, comparar impacto e comunicar migração.\item atualizar somente o painel executivo por ser mais visível.\item manter o mesmo nome sem registrar a quebra semântica.\item recalcular apenas dados futuros e misturar definições na mesma série.
+\Comando Para manter interpretação e comparabilidade, a equipe deve
+\begin{enumerate}[label=\Alph*)]
+\item sobrescrever a fórmula e recalcular silenciosamente todo o histórico.
+\item versionar a definição e sua vigência, avaliar impactos, preservar a série anterior identificada e comunicar a quebra ou reprocessamento.
+\item manter o nome da métrica e adicionar devoluções apenas para alguns painéis.
+\item editar manualmente os resultados de julho sem atualizar linhagem ou consumidores.
+\item trocar o banco de dados, pois a mudança de definição é um problema de armazenamento.
 \end{enumerate}
-
 \ItemHeader{8}{Objetiva}{Distinguir qualidade técnica e semântica}{Taxa de aprovação}
 \TextoBase Uma coluna de taxa possui valores entre 0 e 100, sem nulos nem falhas de tipo. Durante uma reconciliação, descobre-se que uma área calculou aprovados sobre matriculados e outra aprovados sobre avaliados. Os dois resultados passam nos testes técnicos, mas representam populações de referência distintas.
 \FonteDidatica
@@ -60,13 +71,18 @@
 \begin{enumerate}[label=\Alph*)]\item qualidade garantida porque faixa e completude passaram.\item problema semântico: numeradores podem coincidir, mas denominadores representam populações diferentes; o contrato deve ser unificado ou nomeado.\item erro de tipo, resolvido convertendo percentual em texto.\item duplicidade de chave, resolvida por distinct.\item atraso de carga, resolvido aumentando frequência.
 \end{enumerate}
 
+% Novo item público: AED-C05-O09-S1
 \ItemHeader{9}{Objetiva}{Aplicar minimização por consumo}{SPEC de gestão}
-\TextoBase A fonte acadêmica contém CPF, nome, curso, frequência e nota por matrícula. A SPEC executiva necessita apenas de taxas agregadas por curso e período; casos individuais são usados em acompanhamento pedagógico restrito. A publicação deve atender finalidade e acesso sem replicar identificadores ``para eventual uso futuro''.
+\TextoBase Uma equipe prepara uma base executiva de vendas por mês e região. A fonte operacional contém nome, telefone e endereço de clientes, mas a pergunta autorizada requer apenas totais regionais. O público executivo não precisa identificar pessoas, e grupos com menos de cinco clientes podem ser reconhecíveis por combinação de filtros.
 \FonteDidatica
-\Comando A publicação coerente é
-\begin{enumerate}[label=\Alph*)]\item incluir CPF para permitir futuras perguntas.\item publicar agregados necessários na SPEC executiva e manter detalhe identificado apenas onde finalidade e acesso o justificam.\item aplicar hash no CPF e publicar todos os demais detalhes, pois hash elimina qualquer risco.\item copiar a SOR inteira e ocultar colunas na cor do painel.\item remover curso e período, porque agregação impede decisão.
+\Comando A projeção adequada para consumo é
+\begin{enumerate}[label=\Alph*)]
+\item publicar todas as colunas pessoais com hash de nome, pois a transformação garante anonimato.
+\item disponibilizar agregados necessários, remover identificadores e aplicar supressão ou controle de consultas para grupos pequenos.
+\item copiar a fonte integral para a camada de consumo e esconder campos na interface.
+\item conservar os dados pessoais indefinidamente para responder a perguntas futuras ainda não definidas.
+\item retirar também região e mês, pois qualquer agregação pode permitir uma decisão comercial.
 \end{enumerate}
-
 \ItemHeader{10}{Objetiva}{Selecionar arquitetura para reprocessamento}{Correção de parser}
 \TextoBase Durante duas semanas, um parser da camada prata interpretou dia e mês de forma invertida. A camada bronze preservou arquivos originais imutáveis e metadados de ingestão; ouros e SPEC derivadas receberam datas incorretas. A correção precisa reproduzir a transformação e identificar todos os consumidores impactados.
 \FonteDidatica

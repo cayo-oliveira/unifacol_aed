@@ -1,28 +1,22 @@
 # Manifesto de preservação old → new — AED ENADE v2
 
-Origem: `/Users/cayofel/Documents/GitHub/unifacol_aed/caderno_exercicios/capitulos`. Destino: `/tmp/aed_caderno_enade_v2/capitulos`.
+Origem integrada: fontes do caderno em `caderno_exercicios/capitulos/`; banco reservado: `provas/2026.2/banco_reservado/itens_selecionados.tex`; seleção e IDs: `provas/2026.2/professor/manifesto_selecao.json`.
 
-O mapeamento é determinístico e unitário: cada ID `AED-CNN-OXX` ou `AED-CNN-DXX` permanece no mesmo capítulo e número. Não houve criação, remoção, reserva ou transporte de item. Foram preservados tipo, competência, objeto, procedimento matemático e resposta conceitual; mudaram apenas contexto, suporte, fonte, explicitação de restrições e, pontualmente, paralelismo textual.
+O banco de trabalho contém 14 capítulos e 210 posições públicas, com 10 objetivas e 5 discursivas por capítulo. A seleção reservada usa 40 IDs ímpares: 8 para cada um dos instrumentos Prova I, Prova II, Segunda Chamada, Final e Simulado. Os itens selecionados foram preservados integralmente no banco reservado e removidos dos respectivos enunciados públicos. Cada posição recebeu novo cenário e ID privado `-S1`, mantendo número, tipo e competência ampla. Os substitutos não são itens de prova.
 
-| Faixa old | Faixa new | Itens | Estrutura | Estado |
-|---|---|---:|---|---|
-| AED-C01-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C02-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C03-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C04-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C05-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C06-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C07-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C08-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C09-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C10-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C11-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C12-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C13-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
-| AED-C14-O01…O10 / D11…D15 | mesmos IDs | 15 | 10 O + 5 D | preservado |
+| Capítulos | Itens reservados | Substitutos públicos | Mapa e gabarito privado |
+|---|---:|---:|---|
+| 1–5 | 14 | 14 | `substituicoes_reservados_cap01_05.md`; `professor/gabarito_caps_01_05.md` |
+| 6–10 | 12 | 12 | `substituicoes_reservados_cap06_10.md`; `professor/gabarito_caps_06_10.md` |
+| 11–14 | 14 | 14 | `substituicoes_reservados_cap11_14.md`; `professor/gabarito_caps_11_14.tex` |
+| **Total** | **40** | **40** | IDs originais permanecem no banco reservado e nas provas |
 
-Total old: 210. Total new: 210. Objetivas: 140. Discursivas: 70. Respostas públicas: somente 2, 4, 6, 8, 10, 12 e 14 de cada capítulo. Os três gabaritos privados foram copiados para `professor/` e permanecem vinculados aos mesmos IDs.
+As posições, tipos e competências curriculares permanecem estáveis; enunciados, dados e gabaritos dos substitutos são distintos. Os três mapas documentam ID reservado → substituto, resposta e diferença do cenário. Gabaritos privados completos permanecem em `professor/`; o público recebe explicações somente nos itens pares 2, 4, 6, 8, 10, 12 e 14.
 
 ## Restrições que invalidam distratores
 
-O diagnóstico privado preservado deve ser lido com a restrição explícita no cenário. As famílias usadas são: denominador ou grão incorreto; média que oculta cauda; correlação tratada como causalidade; acesso ou finalidade violados; vigência/fonte ausente; custo, latência ou memória acima do gate; execução sintática sem correção semântica; ausência confundida com zero; visual incompatível com pergunta ou acessibilidade; e efeito externo sem autorização/idempotência. Uma opção potencialmente válida em outro contexto é inválida aqui quando viola a restrição registrada no texto-base.
+O diagnóstico privado deve relacionar cada opção à restrição concreta do cenário. As famílias recorrentes incluem grão/denominador, média que esconde cauda, correlação versus causalidade, acesso/finalidade, vigência/proveniência, custo/latência, correção semântica, ausência versus zero, visual/acessibilidade e efeitos externos sem autorização/idempotência. Uma opção válida em outro contexto pode ser inválida aqui quando viola uma premissa explícita.
+
+## Verificação de integridade
+
+Antes de publicar o pacote, conferir que os 40 IDs do manifesto coincidem com o banco reservado, não aparecem nos arquivos públicos e cada um possui um substituto `-S1` no mesmo número. Conferir também 15 itens por capítulo, respostas públicas apenas pares, versões A/B e a compilação do PDF público. O resultado atualizado está em `validacao_final.md`.

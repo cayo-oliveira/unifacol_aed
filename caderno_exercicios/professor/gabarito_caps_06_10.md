@@ -1,6 +1,6 @@
 # Gabarito privado integral — AED — Capítulos 6–10
 
-Não publicar. Nenhum item foi reservado para prova nesta etapa.
+Não publicar. Os IDs originais selecionados para instrumentos permanecem reservados; as chaves `-S1` abaixo correspondem aos substitutos públicos.
 
 ## Capítulo 6 — Dashboard, storytelling e decisão
 
@@ -101,3 +101,34 @@ Não publicar. Nenhum item foi reservado para prova nesta etapa.
 | AED-C10-D13 | Padrão criterial | Cumprir cada produto solicitado: Defina catálogo mínimo de métrica com fórmula, grão, dimensões, filtros, owner, versão e testes. Aceitar caminho equivalente quando cálculos, premissas, evidência, limite e decisão forem coerentes. |
 | AED-C10-D14 | Padrão criterial | Cumprir cada produto solicitado: Crie protocolo de avaliação Text-to-SQL/NL2Vis com execução, correção semântica, autorização e adequação visual. Aceitar caminho equivalente quando cálculos, premissas, evidência, limite e decisão forem coerentes. |
 | AED-C10-D15 | Padrão criterial | Cumprir cada produto solicitado: Analise incidente de vazamento regional: contenção, evidência, propagação de política, testes e comunicação. Aceitar caminho equivalente quando cálculos, premissas, evidência, limite e decisão forem coerentes. |
+
+## Substituições públicas S1 — Capítulos 6–10
+
+Os IDs originais listados na matriz de seleção permanecem reservados nos instrumentos. As entradas abaixo corrigem o gabarito do caderno para os novos itens públicos `-S1`.
+
+### Capítulo 6
+
+- **AED-C06-O09-S1 — B.** A sequência contextualiza a decisão, apresenta tendência e capacidade, declara a cobertura incompleta e recomenda monitoramento proporcional. A omite ausências e salta para expansão; C seleciona o máximo e inventa crise; D afirma causalidade pelo feriado; E abandona a organização narrativa.
+
+### Capítulo 7
+
+- **AED-C07-O01-S1 — C.** A chave do evento e a idempotência separam reenvios de eventos distintos; proveniência preserva a fonte e o teste de unicidade valida o grão antes da agregação. A apaga eventos legítimos iguais; B soma reenvios; D agrega antes do diagnóstico; E usa cobrança publicada sem reconstruir consumo.
+- **AED-C07-O09-S1 — C.** Frequência, custo e cobertura devem ser definidos antes; comparação deve considerar diferenças iniciais e calendário, limitando a conclusão associativa. A generaliza sem comparação; B descarta evidência observacional útil; D oculta confundidores; E seleciona extremos e períodos não comparáveis.
+- **AED-C07-D11-S1.** Até 2,0 pontos: identifica fontes SOR (sensores, ordens, cadastro) e suas chaves/frequências (0,4); define grão de evento/interrupção e dimensões temporais/territoriais (0,4); descreve integração padronizada e projeção de consumo (0,4); inclui testes de duplicidade, completude, reconciliação e cálculo de duração (0,4); inclui linhagem, atualização e acesso por finalidade (0,4). Aceitar arquiteturas equivalentes com rastreabilidade e controles.
+- **AED-C07-D13-S1.** Até 2,0 pontos: finalidade de planejamento e agregação mínima por zona/período (0,4); limiar/supressão ou combinação de células pequenas (0,4); restrição de filtros e proteção contra consultas repetidas/diferenciais (0,4); retenção limitada e controle de acesso (0,4); teste de reidentificação com cenários de cruzamento e resposta à falha (0,4). Aceitar alternativa técnica justificada que preserve utilidade e reduza risco.
+
+### Capítulo 8
+
+- **AED-C08-O05-S1 — C.** Separar contagem e taxa conserva unidades; denominador permite comparação entre bairros com volumes distintos; escala ordenada e redundância textual/simbólica sustentam leitura em cinza. A mantém mistura e dependência da cor; B remove orientação; D não atende à comparação quantitativa; E seleciona máximo sem normalizar exposição.
+
+### Capítulo 9
+
+- **AED-C09-O03-S1 — A.** A variação relativa é $(4{,}2-4{,}0)/4{,}0=0{,}05=5\%$. A média aumentou 0,2 ponto na escala; a aplicação deve corrigir a narrativa e verificar se a amostra é comparável. B aceita resposta sem validação; C confunde diferença absoluta com relativa; D inverte a ordem; E divide por uma contagem que não compõe a fórmula.
+- **AED-C09-O05-S1 — A.** Entrada: $6.000\times5.000=30$ milhões de tokens, custo $30\times R\$0{,}80=R\$24$. Saída: 6 milhões, custo $6\times R\$2=R\$12$. Total variável mensal: R\$36. B troca tarifas; C e E misturam volumes e valores; D aplica tarifa de saída a cada chamada em vez de por milhão.
+- **AED-C09-O09-S1 — C.** A referência não existe e a base não sustenta causalidade. Deve-se exigir artefato verificável, recalcular proporção com denominador explícito e restringir a afirmação à associação ou abster-se. A confia na forma da citação; B conserva causalidade; D fabrica proveniência; E altera geração sem reparar falta de evidência.
+
+### Capítulo 10
+
+- **AED-C10-O01-S1 — C.** O catálogo define métrica, grão e competência; agregação deve ocorrer sobre transações líquidas sem somar valor de sessão repetido por ingresso. A duplica sessões; B decide por semelhança lexical; D delega fórmula ao modelo; E renomeia receita bruta.
+- **AED-C10-O09-S1 — C.** Dados agregados não sustentam classificação individual e faltam rótulo, modelo validado e autorização. A e E expõem ou inferem dados individuais; B inventa rótulo; D usa proxy sem validação. A oferta agregada responde com utilidade dentro do escopo disponível.
+- **AED-C10-D13-S1.** Até 2,0 pontos: fórmula com evento inicial/final e unidade (0,4); grão e população elegível (0,3); filtros/exclusões e tratamento de transferência (0,3); responsável, versão e vigência (0,3); testes com casos de referência e limites aceitáveis (0,4); enquanto houver definições divergentes, perguntar qual contrato se aplica e não executar silenciosamente (0,3). Aceitar catálogo equivalente se reproduzível e governado.

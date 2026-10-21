@@ -4,32 +4,18 @@ Um grupo varejista permite perguntas em linguagem natural sobre vendas. O agente
 
 \subsection{Questões objetivas}
 
+% Novo item público: AED-C10-O01-S1
 \ItemHeader{1}{Objetiva}{semântica}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-A métrica ``receita líquida'' possui contrato oficial que exclui cancelamentos e impostos, com vigência e responsável. O usuário não conhece a fórmula e pede apenas ``receita''. O agente precisa resolver a intenção pela camada semântica, não inventar cálculo a partir de nomes de colunas. O catálogo registra ainda moeda, data de competência e dimensão de canal permitida. Como o relatório será comparado ao fechamento financeiro, uma soma sintaticamente válida sobre coluna homônima seria rejeitada mesmo que produzisse um número plausível. O pedido abrange apenas lojas ativas no Nordeste e o segundo trimestre; esses filtros também pertencem ao plano semântico e devem aparecer na explicação. Antes da execução, o agente precisa mostrar qual métrica governada, quais dimensões e qual janela temporal resolveu, permitindo que o analista confirme a interpretação.
-
-Essa confirmação deve ocorrer antes do fechamento financeiro.
-
+\TextoBase Uma rede de cinemas publica ``receita por sessão''. O catálogo define receita líquida como valor recebido menos estornos, no grão de transação, com competência na data do pagamento. O esquema contém também \texttt{valor\_bruto} por ingresso e \texttt{valor\_sessao} repetido em cada ingresso. A consulta será usada para comparar semanas e deve respeitar a definição certificada.
 \FonteDidatica
-
-\Comando Para responder sem criar uma definição paralela de receita, o agente deve
-
+\Comando Para evitar uma métrica paralela ou soma duplicada, o agente deve
 \begin{enumerate}[label=\Alph*)]
-
-\item pedir ao LLM que invente a fórmula
-
-\item somar toda coluna receita
-
-\item resolver a expressão pela métrica governada, não pela soma inferida de uma coluna homônima
-
-\item usar a maior medida
-
-\item duplicar definição em cada prompt
-
+\item somar \texttt{valor\_sessao} em todas as linhas de ingresso.
+\item escolher a coluna cujo nome mais se aproxima da pergunta e documentar depois.
+\item resolver a expressão no catálogo, agregar transações no grão definido e apresentar período, filtros e fórmula para confirmação.
+\item pedir ao modelo para combinar as três colunas até o resultado parecer plausível.
+\item calcular receita bruta por sessão e renomear o resultado como líquida.
 \end{enumerate}
-
 \ItemHeader{2}{Objetiva}{fanout}{Situação profissional e suporte quantitativo}
 
 \TextoBase
@@ -204,30 +190,18 @@ As vendas foram 100 em janeiro, 120 em fevereiro e 90 em março, na mesma unidad
 
 \end{enumerate}
 
+% Novo item público: AED-C10-O09-S1
 \ItemHeader{9}{Objetiva}{recusa}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-A pergunta ``qual cliente fraudará amanhã?'' não possui rótulo, modelo validado nem base individual autorizada. Produzir uma lista nominal criaria inferência de alto impacto sem evidência. O agente deve recusar de forma útil e oferecer análise agregada permitida.
-
+\TextoBase Um gerente pergunta ``quais pacientes têm maior chance de complicação no próximo mês?''. O sistema possui somente totais agregados por especialidade e período; não há rótulos de complicação, modelo preditivo validado nem autorização para análise individual. Há, porém, dados públicos de volume e tempo médio de espera por especialidade.
 \FonteDidatica
-
-\Comando Qual resposta do agente é compatível com as evidências e com o risco da solicitação?
-
+\Comando A resposta compatível com evidência e autorização é
 \begin{enumerate}[label=\Alph*)]
-
-\item recusar inferência e explicar dados/competência ausentes, sem fabricar SQL
-
-\item gerar ranking por gasto
-
-\item usar receita como fraude
-
-\item retornar todos os clientes
-
-\item criar rótulo no prompt
-
+\item gerar uma lista nominal com base no maior volume por especialidade.
+\item criar rótulo de complicação no prompt e ordenar os pacientes.
+\item explicar que a previsão individual não é sustentada nem autorizada e oferecer análise agregada de volume/espera, sem fabricar consulta individual.
+\item usar tempo de espera como probabilidade de complicação, sem validação adicional.
+\item retornar os dados de pacientes de todas as unidades para que o gerente decida.
 \end{enumerate}
-
 \ItemHeader{10}{Objetiva}{contrato}{Situação profissional e suporte quantitativo}
 
 \TextoBase
@@ -274,16 +248,11 @@ Em uma auditoria, os pedidos P1 e P2 valem R\$100 e R\$200 e aparecem, após a j
 
 \Comando Calcule a soma inflada, a soma correta e o fator de inflação; calcule também a taxa correta. Descreva a consulta conceitual no grão de pedido e duas validações automáticas que barrariam os resultados errados.
 
+% Novo item público: AED-C10-D13-S1
 \ItemHeader{13}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
-
-\TextoBase
-
-As áreas comercial e financeira usam o nome ``receita líquida'', porém uma exclui apenas cancelamentos e a outra também exclui impostos. O agente responde de formas diferentes conforme as colunas disponíveis, sem informar versão, responsável ou grão da definição.
-
+\TextoBase Um hospital possui um catálogo de indicadores usado por analistas e por um assistente de linguagem natural. A métrica ``tempo até atendimento'' pode ser calculada desde a chegada ou desde a triagem; os serviços também diferem sobre incluir casos transferidos. Sem contrato explícito, consultas válidas produzem números incompatíveis.
 \FonteDidatica
-
-\Comando Proponha uma entrada de catálogo para ``receita líquida'' contendo fórmula, grão, dimensões permitidas, filtros, responsável, vigência, versão e três testes. Explique como o agente deve tratar a ambiguidade entre as duas definições.
-
+\Comando Especifique uma entrada mínima de catálogo que torne a métrica reproduzível e explique como o agente deve agir enquanto as definições não forem resolvidas. Inclua fórmula, grão, população, eventos inicial/final, filtros, responsável, vigência/versão e testes de referência.
 \ItemHeader{14}{Discursiva}{Integrar evidências e justificar decisão}{Caso profissional do capítulo}
 
 \TextoBase

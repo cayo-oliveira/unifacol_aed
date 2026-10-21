@@ -32,18 +32,18 @@ A equipe reserva a margem para variação de tokenização e precisa selecionar 
 \item 19 blocos, dividindo a janela total diretamente por 420.
 \end{enumerate}
 
-\ItemHeader{3}{Objetiva}{Impedir execução arbitrária}{Pergunta analítica em linguagem natural}
+% ID substituto público: AED-C12-O03-S1
+\ItemHeader{3}{Objetiva}{Limitar execução de consultas geradas}{Assistente sobre banco operacional}
 \TextoBase
-Para responder perguntas sobre um DataFrame, a equipe considera permitir que o Llama gere Python e execute qualquer código no processo do Streamlit, que também possui credenciais do banco e acesso à rede.
-A pergunta pode conter texto malicioso na planilha; validação de intenção não substitui lista permitida de operações e isolamento da execução.
+Um assistente recebe perguntas de gestores e pode gerar SQL. O processo da aplicação possui credencial de escrita e acesso a várias bases; erro de geração pode alterar tabelas ou consultar dados fora do escopo. As métricas publicadas precisam ser rastreáveis.
 \FonteDidatica
-\Comando A alternativa inicial mais segura e verificável é
+\Comando Selecione o controle inicial que limita efeitos e mantém a consulta verificável.
 \begin{enumerate}[label=\Alph*)]
-\item executar o código gerado e revisar apenas se ocorrer erro.
-\item ocultar as credenciais no prompt, mantendo-as disponíveis ao processo executor.
-\item oferecer ferramentas analíticas permitidas com parâmetros validados; se código livre for indispensável, isolá-lo em sandbox sem segredo, rede ou escrita ampla.
-\item pedir ao modelo uma promessa textual de que não acessará arquivos.
-\item usar temperatura zero como fronteira de segurança para a execução.
+\item Pedir ao modelo que prometa não gerar comandos de escrita e executar qualquer consulta.
+\item Esconder a senha no prompt, mantendo a credencial ampla no processo.
+\item Usar conexão somente leitura, operações permitidas, parâmetros validados e escopo autorizado antes de executar, registrando a consulta aprovada.
+\item Conferir permissões somente se a resposta expuser uma coluna indevida.
+\item Fixar temperatura em zero e considerar impossível uma consulta destrutiva.
 \end{enumerate}
 
 \ItemHeader{4}{Objetiva}{Calcular efeito de cache}{Inferências repetidas}
@@ -60,18 +60,18 @@ O cache só é elegível quando pergunta, versão da fonte, identidade e filtros
 \item 150 inferências e R\$12,00.
 \end{enumerate}
 
-\ItemHeader{5}{Objetiva}{Gerenciar estado e reexecução}{Duplo envio no Streamlit}
+% ID substituto público: AED-C12-O05-S1
+\ItemHeader{5}{Objetiva}{Controlar reenvio e estado da aplicação}{Relatório após timeout}
 \TextoBase
-Ao alterar um filtro, o Streamlit reexecuta o script. O protótipo dispara novamente uma inferência cara e grava duas decisões idênticas. Não há chave que relacione pergunta, dados e versão do modelo.
-O incidente ocorre quando a interface reexecuta o script; a correção deve impedir duplicidade sem perder o histórico visível ao usuário.
+Um usuário solicita um relatório. A chamada demora, a página indica timeout e ele clica novamente; a primeira execução conclui e grava o artefato alguns segundos depois. O sistema publica dois relatórios e não identifica se pertencem à mesma solicitação.
 \FonteDidatica
-\Comando A correção adequada é
+\Comando Selecione a correção que evita duplicação e preserva o acompanhamento da solicitação.
 \begin{enumerate}[label=\Alph*)]
-\item desativar todos os widgets após a primeira execução da sessão.
-\item usar estado de sessão, formulário para submissão explícita, chave idempotente e cache versionado pelos insumos relevantes.
-\item guardar apenas a última resposta em variável global compartilhada por usuários.
-\item aumentar o timeout para que as duas chamadas terminem na mesma ordem.
-\item remover os logs duplicados sem impedir o efeito repetido.
+\item Aumentar timeout e descartar relatórios que terminem fora da ordem esperada.
+\item Registrar chave idempotente, manter estado de execução/conclusão e reutilizar cache somente quando dados e versões coincidirem.
+\item Guardar a resposta mais recente em variável global compartilhada.
+\item Remover logs duplicados sem alterar como execuções são iniciadas.
+\item Desabilitar a aplicação permanentemente após o primeiro timeout.
 \end{enumerate}
 
 \ItemHeader{6}{Objetiva}{Compor orçamento de latência}{Pipeline analítico síncrono}
@@ -88,18 +88,18 @@ O SLA cobre a resposta completa, portanto otimizar apenas geração pode deixar 
 \item 5,0 s, pois as etapas podem ser ignoradas no orçamento do modelo.
 \end{enumerate}
 
-\ItemHeader{7}{Objetiva}{Garantir saída estruturada}{Gráfico sugerido pelo Llama}
+% ID substituto público: AED-C12-O07-S1
+\ItemHeader{7}{Objetiva}{Validar estrutura de anotação gerada}{Anomalia em série temporal}
 \TextoBase
-O modelo deve sugerir tipo de gráfico, campos e justificativa. Em testes, produz nomes de colunas inexistentes e ocasionalmente inclui código. A interface espera um objeto estruturado.
-A especificação do gráfico será consumida por componente separado, exigindo campos permitidos, tipos verificáveis e rejeição de propriedades inesperadas.
+Um modelo devolve JSON com período, indicador, direção da anomalia e justificativa. Em testes, inventa indicadores, usa datas fora do conjunto consultado e inclui campos que acionam comandos na interface. A anotação será renderizada automaticamente.
 \FonteDidatica
-\Comando O fluxo de validação deve
+\Comando Selecione o fluxo que permite consumir a anotação sem confiar apenas na validade sintática do JSON.
 \begin{enumerate}[label=\Alph*)]
-\item aceitar qualquer JSON sintaticamente válido e renderizar os campos recebidos.
-\item validar esquema, lista permitida de gráficos, existência e tipos das colunas; rejeitar ou reparar de modo controlado antes de renderizar.
-\item extrair nomes por expressão regular e executar eventual código junto da visualização.
-\item inserir todas as colunas do DataFrame no prompt até o modelo parar de errar.
-\item remover justificativa e validação para diminuir tokens.
+\item Validar esquema e tipos, limitar indicador/direção a valores permitidos, conferir período contra os dados e rejeitar campos desconhecidos antes de renderizar.
+\item Renderizar qualquer JSON válido e ignorar campos que causarem erro visual.
+\item Converter o objeto em código executável para o modelo controlar a interface.
+\item Enviar todas as tabelas ao modelo até ele deixar de inventar datas.
+\item Remover validação para reduzir o tempo de resposta.
 \end{enumerate}
 
 \ItemHeader{8}{Objetiva}{Interpretar funil de aplicação}{Teste com 500 perguntas}
@@ -182,12 +182,12 @@ O custo semanal total foi R\$253,80, e a meta exige pelo menos 75\% de sucesso �
 \FonteDidatica
 \Comando Calcule as taxas condicionais de cada transição, o sucesso útil ponta a ponta e o custo por resposta útil. Compare com os gates e indique a etapa prioritária para análise de erros.
 
-\ItemHeader{15}{Discursiva}{Especificar teste de atualização}{Troca do modelo local}
+% ID substituto público: AED-C12-D15-S1
+\ItemHeader{15}{Discursiva}{Definir migração controlada de modelo analítico}{Retirada de modelo hospedado}
 \TextoBase
-A equipe quer substituir Llama Q4 por uma versão nova e alterar simultaneamente prompt, parser e cache. O sistema atende perguntas numéricas, comparações e narrativas.
-A atualização só poderá substituir a versão atual se passar casos funcionais, adversariais, de segurança e de regressão com configuração registrada.
+O fornecedor retirará uma versão de modelo usada para perguntas numéricas e sugestões de gráficos. A equipe deve selecionar substituta em três semanas. Parser, catálogo semântico e interface permanecerão iguais; ainda não há evidência de que a nova versão preserve comportamento ou custo.
 \FonteDidatica
-\Comando Proponha protocolo com baseline congelado, conjunto estratificado, versões, ablações, testes sintáticos e semânticos, cálculos de referência, latência, memória, custo, segurança, execução paralela, canário e rollback.
+\Comando Em até 15 linhas, proponha protocolo de seleção e entrada em produção. Inclua baseline e casos representativos, registro de versões, testes numéricos/semânticos e de acesso, medição de latência/custo, execução paralela, canário e condição de rollback.
 
 \newpage
 \subsection{Respostas explicadas das questões pares}

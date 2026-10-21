@@ -23,24 +23,36 @@
 \Comando A chance de ao menos uma falha é
 \begin{enumerate}[label=\Alph*)]\item $1-0{,}9^5\approx0{,}4095$.\item $0{,}1^5=0{,}00001$.\item $5\times0{,}1=0{,}5$ exatamente.\item $0{,}9^5\approx0{,}5905$.\item $1-0{,}1^5\approx0{,}99999$.\end{enumerate}
 
+% Novo item público: AED-C03-O03-S1
 \ItemHeader{3}{Objetiva}{Calcular união sem dupla contagem}{Eventos em um dado}
-\TextoBase Na validação de uma regra de eventos, utiliza-se um dado honesto com seis resultados equiprováveis. Define-se $A=\{2,4,6\}$, resultado par, e $B=\{5,6\}$, resultado maior que quatro. O resultado 6 pertence aos dois eventos, portanto a probabilidade da união precisa evitar dupla contagem.
+\TextoBase Em um serviço digital, 18% das sessões geram erro de autenticação, 12% geram erro de pagamento e 5% apresentam os dois erros na mesma sessão. Considere uma sessão sorteada da população definida. A equipe quer estimar a chance de ocorrer pelo menos um dos dois incidentes sem contar duas vezes as sessões com ambos.
 \FonteDidatica
-\Comando $P(A\cup B)$ é
-\begin{enumerate}[label=\Alph*)]\item $3/6+2/6=5/6$.\item $(3+2-1)/6=4/6$.\item $1/6$, pois somente 6 pertence aos dois.\item $6/6$, pois união inclui o espaço inteiro.\item $2/3-1/2=1/6$.\end{enumerate}
-
+\Comando A probabilidade de erro de autenticação ou de pagamento é
+\begin{enumerate}[label=\Alph*)]
+\item $0{,}18+0{,}12=0{,}30$.
+\item $0{,}18+0{,}12-0{,}05=0{,}25$.
+\item $0{,}05$, pois somente a interseção pertence à união.
+\item $0{,}18\times0{,}12=0{,}0216$.
+\item $1-(1-0{,}18)(1-0{,}12)=0{,}2784$, assumindo independência sem evidência.
+\end{enumerate}
 \ItemHeader{4}{Objetiva}{Interpretar condicional}{Tabela de atraso}
 \TextoBase Em uma noite comparável, 24 estudantes declararam trabalhar durante o dia e 12 deles chegaram atrasados; entre 16 que não trabalham, 4 atrasaram. A coordenação quer comparar a chance de atraso dentro de cada condição de trabalho, preservando os denominadores dos grupos e sem transformar diferença observada em prova causal.
 \FonteDidatica
 \Comando A leitura correta é
 \begin{enumerate}[label=\Alph*)]\item $P(A\mid T)=12/24=50\%$ e $P(A\mid T^c)=4/16=25\%$.\item $P(A\mid T)=12/40=30\%$ e $P(T\mid A)=50\%$.\item $P(A\mid T)=24/12=200\%$.\item $P(A)=12/24$, pois a condição não muda o universo.\item trabalhar causa atraso porque as probabilidades condicionais diferem.\end{enumerate}
 
+% Novo item público: AED-C03-O05-S1
 \ItemHeader{5}{Objetiva}{Testar independência}{Urgência e reabertura}
-\TextoBase Em uma central, $U$ representa chamado urgente e $R$ representa reabertura. Para o período e a população definidos, $P(U)=0{,}20$, $P(R)=0{,}14$ e $P(U\cap R)=0{,}06$. A equipe precisa verificar se conhecer urgência altera a chance de reabertura usando o critério do produto, sem confundir independência com exclusão mútua.
+\TextoBase Em uma amostra de chamados, 40% foram resolvidos no primeiro contato, 30% foram reabertos e 18% satisfizeram simultaneamente as duas condições. A equipe avalia se os eventos $F$ (resolução no primeiro contato) e $R$ (reabertura) são independentes na população representada.
 \FonteDidatica
-\Comando Os eventos
-\begin{enumerate}[label=\Alph*)]\item são independentes porque $0{,}06<0{,}14$.\item são independentes porque urgência e reabertura são categorias distintas.\item não são independentes, pois $0{,}20\times0{,}14=0{,}028\neq0{,}06$.\item são mutuamente exclusivos, pois sua interseção é positiva.\item são complementares, pois as probabilidades somam 0,34.\end{enumerate}
-
+\Comando A conclusão sustentada pelo critério de independência é
+\begin{enumerate}[label=\Alph*)]
+\item independentes, pois $P(F)+P(R)=0{,}70$.
+\item independentes, pois $P(F\cap R)=0{,}40\times0{,}30=0{,}12$.
+\item dependentes, pois $P(F\cap R)=0{,}18$ difere de $P(F)P(R)=0{,}12$.
+\item mutuamente exclusivos, pois a interseção é menor que cada evento.
+\item complementares, pois a soma das probabilidades é inferior a 1.
+\end{enumerate}
 \ItemHeader{6}{Objetiva}{Calcular esperança}{Resultado financeiro}
 \TextoBase Uma automação aplicada repetidamente gera economia de R\$20 quando conclui corretamente, com probabilidade 0,7, e custo adicional de R\$10 quando exige retrabalho, com probabilidade 0,3. Os dois resultados esgotam o modelo. A gerência quer o valor médio de longo prazo por ocorrência, reconhecendo que esse valor pode não ser um resultado individual possível.
 \FonteDidatica
@@ -65,13 +77,18 @@
 \Comando A interpretação correta é
 \begin{enumerate}[label=\Alph*)]\item $z=(60-50)/5=2$, dois desvios acima da média.\item $z=60/50=1{,}2$, 20\% acima em unidades padronizadas.\item $z=(50-60)/5=-2$, dois desvios acima.\item $z=10$, pois se usa apenas a diferença.\item o caso tem probabilidade zero e deve ser excluído.\end{enumerate}
 
+% Novo item público: AED-C03-O10-S1
 \ItemHeader{10}{Objetiva}{Calcular correlação de Pearson}{Tabela de somas centradas}
-\TextoBase Em cinco pares de horas de estudo e nota, a tabela de desvios produziu $\sum (x_i-\bar x)(y_i-\bar y)=16$, $\sum(x_i-\bar x)^2=10$ e $\sum(y_i-\bar y)^2=36$. Os pares foram preservados por estudante e o gráfico sugere tendência aproximadamente linear. A equipe quer padronizar a variação conjunta, sem convertê-la em causalidade.
+\TextoBase Uma equipe compara horas de treinamento $X$ e produtividade $Y$ em seis unidades. Após centralizar os valores, obteve $\sum (x_i-\bar{x})(y_i-\bar{y})=30$, $\sum(x_i-\bar{x})^2=25$ e $\sum(y_i-\bar{y})^2=100$. O diagrama de dispersão sugere uma tendência aproximadamente linear, mas o estudo é observacional.
 \FonteDidatica
-\Comando A correlação é
-\begin{enumerate}[label=\Alph*)]\item $16/\sqrt{10\times36}\approx0{,}843$, associação linear positiva forte.\item $16/(10+36)\approx0{,}348$, associação fraca.\item $16/5=3{,}2$, correlação acima de um.\item $\sqrt{16/360}\approx0{,}211$.\item $16/(4\times4)=1$, relação causal perfeita.\end{enumerate}
-
-\subsection{Questões discursivas}
+\Comando O coeficiente de correlação de Pearson e sua interpretação são
+\begin{enumerate}[label=\Alph*)]
+\item $30/\sqrt{25\cdot100}=0{,}60$, associação linear positiva moderada a forte, sem conclusão causal.
+\item $30/(25+100)=0{,}24$, associação positiva fraca, pois os quadrados devem ser somados.
+\item $30/6=5$, correlação positiva de cinco unidades.
+\item $\sqrt{30/2500}\approx0{,}11$, associação quase nula.
+\item $30/(5\cdot10)=0{,}60$, portanto o treinamento causou aumento de produtividade.
+\end{enumerate}
 \ItemHeader{11}{Discursiva}{Construir árvore de probabilidade}{Triagem de chamados}
 \TextoBase Em uma central, 20\% dos chamados são urgentes. Entre os urgentes, 30\% são reabertos; entre os não urgentes, 10\% são reabertos. A gestão precisa reconstruir os quatro caminhos possíveis, obter a taxa total de reabertura e calcular a composição dos reabertos antes de discutir associação.
 \FonteDidatica
@@ -96,11 +113,11 @@ Cada par pertence à mesma pessoa e será tratado como amostra. A equipe quer ab
 \FonteDidatica
 \Comando Calcule médias, tabela de desvios, covariância amostral, DPs e Pearson; interprete direção, força, ponto influente e limite causal.
 
+% Novo item público: AED-C03-D15-S1
 \ItemHeader{15}{Discursiva}{Escolher distribuição}{Planejamento operacional}
-\TextoBase Uma equipe modelará quatro fenômenos: número de falhas em lote fixo sob condições estáveis; sucesso de uma única tentativa; instante de chegada em janela projetada sem preferência; e erro de medição aproximadamente simétrico produzido por muitos efeitos pequenos. A escolha da distribuição deverá decorrer do mecanismo e indicar o parâmetro e a premissa que pode falhar.
+\TextoBase Uma equipe de operações precisa selecionar modelos probabilísticos para quatro variáveis: (i) número de falhas em 12 tentativas independentes com chance estável de falha; (ii) resultado de sucesso/fracasso em uma única tentativa; (iii) instante de chegada equiprovável em uma janela de 0 a 30 minutos; e (iv) erro de medição contínuo, aproximadamente simétrico em torno de zero por muitos efeitos pequenos.
 \FonteDidatica
-\Comando Associe Bernoulli, binomial, uniforme ou normal a cada caso, explicando parâmetros, condições e uma razão que poderia invalidar cada escolha.
-
+\Comando Associe um modelo adequado a cada variável e declare seus parâmetros principais. Para cada associação, indique uma premissa que precisa ser verificada e explique por que o modelo representa o mecanismo descrito.
 \newpage\subsection{Respostas explicadas das questões pares}
 \paragraph{Questão 2 — resposta A.} Em cada tentativa, não falhar tem probabilidade $1-0{,}1=0{,}9$. Sob independência, nenhuma falha nas cinco tem probabilidade $0{,}9^5=0{,}59049$. ``Ao menos uma'' é o complemento: $1-0{,}59049=0{,}40951$, aproximadamente $40{,}95\%$. Somar $5\times0{,}1$ não é exato porque os eventos de falha podem ocorrer em mais de uma tentativa.
 

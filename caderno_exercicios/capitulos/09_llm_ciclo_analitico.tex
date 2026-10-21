@@ -60,30 +60,18 @@ resposta & 2.000\\ system e esquema & 3.000\\ histórico & 5.000\\\bottomrule
 
 \end{enumerate}
 
+% Novo item público: AED-C09-O03-S1
 \ItemHeader{3}{Objetiva}{validação}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-O assistant afirma queda de 18\%, mas a tabela de referência contém 120 antes e 110 depois. A resposta será enviada à diretoria. Antes, a aplicação precisa recalcular a variação relativa e tratar a frase do modelo como hipótese sujeita à fonte.
-
+\TextoBase Uma análise de satisfação apresenta 250 respostas no início do trimestre e 225 no fim. A narrativa automática afirma aumento de 12%, mas a tabela de referência contém médias 4,0 e 4,2 numa escala de 1 a 5. A equipe precisa recalcular a variação relativa da média e decidir se a frase pode ser publicada.
 \FonteDidatica
-
-\Comando Recalcule a variação observada e selecione a ação de validação antes da publicação.
-
+\Comando A variação e a ação corretas são
 \begin{enumerate}[label=\Alph*)]
-
-\item aceitar 18\% por ser resposta do modelo
-
-\item trocar system por user
-
-\item aumentar contexto sem conferir
-
-\item recalcular: queda de 8,33\%; bloquear ou corrigir resposta e registrar divergência
-
-\item reduzir temperatura e publicar
-
+\item aumento de 5\%; corrigir a afirmação, verificar comparabilidade da amostra e registrar a divergência antes de publicar.
+\item aumento de 12\%; aceitar porque a resposta foi gerada com contexto suficiente.
+\item aumento de 0,2\%; chamá-lo de variação relativa sem converter pela média inicial.
+\item queda de 5\%; inverter a ordem dos períodos e publicar.
+\item aumento de 20\%; dividir a média final pelo tamanho da amostra inicial.
 \end{enumerate}
-
 \ItemHeader{4}{Objetiva}{custo}{Situação profissional e suporte quantitativo}
 
 \TextoBase
@@ -108,30 +96,18 @@ Cada chamada usa 8 mil tokens de entrada e 2 mil de saída. As tarifas são R\$1
 
 \end{enumerate}
 
+% Novo item público: AED-C09-O05-S1
 \ItemHeader{5}{Objetiva}{contexto}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-O histórico recuperado contém uma regra revogada e um dado atual, sem vigência visível. Se ambos forem enviados, o modelo pode produzir resposta fluente baseada na política antiga. O contexto precisa privilegiar fonte vigente e preservar proveniência.
-
+\TextoBase Um serviço processa 6.000 solicitações mensais. Cada chamada ao modelo consome em média 5.000 tokens de entrada e 1.000 de saída. A tarifa é R\$0,80 por milhão de tokens de entrada e R\$2,00 por milhão de tokens de saída. A equipe quer estimar o custo variável mensal sem incluir infraestrutura fixa.
 \FonteDidatica
-
-\Comando Selecione a estratégia de contexto que remove regra revogada sem perder vigência e proveniência.
-
+\Comando Os custos de entrada, saída e total são, respectivamente,
 \begin{enumerate}[label=\Alph*)]
-
-\item enviar tudo porque mais contexto sempre melhora
-
-\item deixar o assistant decidir autoridade
-
-\item repetir regra antiga
-
-\item usar user para sobrescrever segurança
-
-\item selecionar/versionar contexto, marcar proveniência e excluir ou rotular conteúdo revogado
-
+\item R\$24,00; R\$12,00; R\$36,00.
+\item R\$12,00; R\$24,00; R\$36,00.
+\item R\$4.800,00; R\$12.000,00; R\$16.800,00.
+\item R\$24,00; R\$2,00; R\$26,00.
+\item R\$30,00; R\$12,00; R\$42,00.
 \end{enumerate}
-
 \ItemHeader{6}{Objetiva}{retry}{Situação profissional e suporte quantitativo}
 
 \TextoBase
@@ -204,30 +180,18 @@ As etapas sequenciais têm p95: autenticação 0,2 s, busca 0,9 s, fila 1,4 s, m
 
 \end{enumerate}
 
+% Novo item público: AED-C09-O09-S1
 \ItemHeader{9}{Objetiva}{alucinação}{Situação profissional e suporte quantitativo}
-
-\TextoBase
-
-A resposta cita uma tabela inexistente, embora a redação seja coerente e os números pareçam plausíveis. Não há artefato que sustente a afirmação. Antes de publicar, a equipe precisa exigir fonte verificável ou recusar a conclusão.
-
+\TextoBase Um relatório sobre falhas de equipamentos apresenta a afirmação ``o compressor C-17 causou 40% das paradas'', acompanhada da referência `Relatório técnico, tabela 8`. A busca no repositório não encontra esse documento, e a tabela de dados agregados informa somente associação entre equipamento e parada, sem desenho causal.
 \FonteDidatica
-
-\Comando Selecione a resposta operacional compatível com uma citação sem fonte existente.
-
+\Comando A resposta operacional adequada é
 \begin{enumerate}[label=\Alph*)]
-
-\item exigir referência válida e sustentação de cada alegação; caso contrário, abster-se
-
-\item aceitar pela coerência
-
-\item aumentar criatividade
-
-\item ocultar a citação
-
-\item treinar imediatamente com a resposta
-
+\item manter a frase, pois a referência está formatada como citação.
+\item remover apenas a referência e conservar a afirmação causal.
+\item exigir fonte existente e recalcular a proporção com denominador definido; reformular como associação ou abster-se da causalidade não sustentada.
+\item pedir ao modelo que escreva uma referência mais convincente.
+\item aumentar a temperatura para obter explicações alternativas e escolher a mais provável.
 \end{enumerate}
-
 \ItemHeader{10}{Objetiva}{governança}{Situação profissional e suporte quantitativo}
 
 \TextoBase

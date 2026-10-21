@@ -1,8 +1,8 @@
-# Capítulo 12 — Dashboard como aplicação: Streamlit + Llama
+# Capítulo 12 — Dashboard como aplicação: Streamlit + API de LLM
 
 - Data: 05/11/2026 · Unidade II · 180 minutos.
-- Resultados: estruturar aplicação Streamlit, estado, cache e conexões; integrar modelo Llama gratuito/local; exigir saída estruturada e validação; publicar com segurança.
+- Resultados: estruturar aplicação Streamlit, estado, cache e conexões; integrar API OpenAI por backend/segredo; exigir saída estruturada e validação; comparar com alternativa local Llama sem pressupor gratuidade universal.
 - Storytelling: transformar um notebook que “funciona na máquina” em análise reproduzível e contestável.
-- Desenvolvimento: (1) arquitetura da aplicação; (2) ambiente/dados; (3) componentes; (4) estado/cache; (5) chamada ao Llama; (6) saída estruturada; (7) gráfico; (8) validação/fallback; (9) publicação; (10) síntese.
+- Desenvolvimento: desafio participativo; arquitetura da aplicação; ambiente/dados; domínio e adaptador de modelo; estado/cache; chamada à Responses API; saída estruturada; gráfico e evidências; validação/fallback; segurança de segredo; entrega incremental.
 - Fontes 2026.1: notebooks, datasets, protótipos HTML e `auto_eda_demo.py` preservados.
 - Evidência: protótipo que mostra resposta, consulta/cálculo, visual, fonte e limite.

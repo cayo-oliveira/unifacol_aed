@@ -39,24 +39,36 @@ tempo de deslocamento & minutos, com medição contínua\\\bottomrule
 \Comando A média e a mediana são, respectivamente,
 \begin{enumerate}[label=\Alph*)]\item 23,5 e 27.\item 27 e 23,5.\item 24 e 25.\item 27 e 25.\item 216 e 23,5.\end{enumerate}
 
+% Novo item público: AED-C02-O05-S1
 \ItemHeader{5}{Objetiva}{Aplicar média ponderada}{Notas com pesos}
-\TextoBase O plano de avaliação atribui peso 2 a uma atividade prática e peso 8 à prova da unidade. Um estudante obteve, respectivamente, notas 9 e 6. O sistema precisa consolidar a nota respeitando a contribuição definida para cada componente, e não tratar as duas observações como igualmente representativas.
+\TextoBase Uma disciplina avalia cada estudante por um relatório (peso 30\%) e um projeto (peso 70\%). Uma estudante obteve 8,0 no relatório e 6,0 no projeto. A coordenação deseja publicar um único resultado que respeite os pesos definidos no plano.
 \FonteDidatica
-\Comando A média que respeita os pesos é
-\begin{enumerate}[label=\Alph*)]\item $(9+6)/2=7{,}5$.\item $(2\times9+8\times6)/10=6{,}6$.\item $(2+8)/(9+6)=0{,}67$.\item $(9+6)/10=1{,}5$.\item $(8\times9+2\times6)/10=8{,}4$.\end{enumerate}
-
+\Comando A nota ponderada correta é
+\begin{enumerate}[label=\Alph*)]
+\item $(8+6)/2=7{,}0$, pois há duas avaliações.
+\item $0{,}30(8)+0{,}70(6)=6{,}6$.
+\item $(8+6)/(0{,}30+0{,}70)=14{,}0$.
+\item $0{,}70(8)+0{,}30(6)=7{,}4$.
+\item $8/0{,}30+6/0{,}70\approx35{,}24$.
+\end{enumerate}
 \ItemHeader{6}{Objetiva}{Calcular quartis e IQR}{Distribuição ordenada}
 \TextoBase Para resumir oito tempos já ordenados, $2,4,5,7,8,10,12,14$, a equipe declarou previamente a convenção de calcular a mediana geral e as medianas das metades de mesmo tamanho. O objetivo é obter os três quartis e a largura ocupada pela metade central, mantendo a mesma convenção em todo o relatório.
 \FonteDidatica
 \Comando Os valores $Q_1$, $Q_2$, $Q_3$ e IQR são
 \begin{enumerate}[label=\Alph*)]\item 4,5; 7,5; 11; 6,5.\item 4; 7; 10; 6.\item 5; 8; 12; 7.\item 4,5; 8; 11; 7,5.\item 2; 7,5; 14; 12.\end{enumerate}
 
+% Novo item público: AED-C02-O07-S1
 \ItemHeader{7}{Objetiva}{Distinguir variância populacional e amostral}{Equipamentos}
-\TextoBase Um laboratório registrou as idades $2,4,4,6$ anos de quatro equipamentos. A média é 4 e a soma dos desvios quadráticos é 8. Em um relatório, os quatro equipamentos constituem toda a sala; em outro, são tratados como amostra de equipamentos da rede. A escolha do divisor deve acompanhar essas duas finalidades.
+\TextoBase Um laboratório mede o tempo de processamento de todos os 5 lotes produzidos em um turno: 2, 4, 6, 8 e 10 minutos. A média é 6 minutos e a soma dos quadrados dos desvios em relação à média é 40. O relatório descreve aquele turno completo, sem pretender estimar outros turnos.
 \FonteDidatica
-\Comando Se forem população e, alternativamente, amostra, as variâncias são
-\begin{enumerate}[label=\Alph*)]\item $8/4=2$ e $8/3\approx2{,}67$.\item $8/3$ e $8/4$, porque amostras usam divisor maior.\item $8/2=4$ em ambos os casos.\item $\sqrt8$ e $\sqrt3$.\item 0 e 8, porque os desvios somam zero.\end{enumerate}
-
+\Comando A variância descritiva desses cinco lotes é
+\begin{enumerate}[label=\Alph*)]
+\item $40/5=8$ minutos quadrados, pois o conjunto inclui toda a população do turno.
+\item $40/4=10$ minutos quadrados, pois todo conjunto deve usar $n-1$.
+\item $\sqrt{40/5}=\sqrt8$ minutos, que é a variância.
+\item $40/(5-2)=13{,}33$ minutos quadrados, pois há cinco observações.
+\item zero, porque os desvios em torno da média se cancelam.
+\end{enumerate}
 \ItemHeader{8}{Objetiva}{Interpretar desvio-padrão e CV}{Comparação de processos}
 \TextoBase Dois serviços executam tarefas de escalas diferentes. O processo A tem tempo médio de 50 ms e desvio-padrão de 5 ms; B tem média de 10 ms e desvio de 2 ms. A gestão quer distinguir qual apresenta maior oscilação na unidade original e qual varia mais em relação ao próprio centro; ambas as médias são positivas e possuem zero significativo.
 \FonteDidatica
@@ -86,11 +98,11 @@ tempo de deslocamento & minutos, com medição contínua\\\bottomrule
 \FonteDidatica
 \Comando Calcule média, mediana, moda, $Q_1$, $Q_3$, IQR, cercas e amplitude. Compare centro e dispersão e indique a investigação sugerida pelo resultado.
 
+% Novo item público: AED-C02-D13-S1
 \ItemHeader{13}{Discursiva}{Explicar o divisor amostral}{Amostra de equipamentos}
-\TextoBase Uma equipe calculou os desvios dos valores $2,4,4,6$ em torno da média 4 e encontrou soma quadrática 8. Parte do relatório descreve exatamente essas quatro unidades; outra parte pretende usar as quatro como amostra de uma população maior. Os analistas discutem dividir por 4 ou por 3 e precisam justificar a escolha, não apenas citar uma regra.
+\TextoBase Uma fábrica registrou o peso de todas as 8 embalagens produzidas em um lote: 98, 99, 100, 100, 101, 102, 100, 100 gramas. O relatório pretende descrever esse lote específico e comparar sua dispersão com o limite operacional de 2 gramas; não estima a variabilidade de lotes futuros.
 \FonteDidatica
-\Comando Explique quando cada divisor é apropriado, mostre os dois resultados e justifique $n-1$ pela estimação da média e pelo grau de liberdade.
-
+\Comando Calcule a variância populacional e interprete-a em relação ao propósito. Apresente média, soma dos quadrados dos desvios e divisor escolhido. Explique por que a variância amostral seria outra quantidade e quando ela seria apropriada.
 \ItemHeader{14}{Discursiva}{Comparar variabilidade relativa}{Indicadores operacionais}
 \TextoBase Dois processos medidos na mesma família de unidade possuem escalas positivas com zero significativo. A apresenta média 80 e desvio-padrão 8; B, média 20 e desvio 4. A direção quer comparar dispersão absoluta e relativa, evitando concluir apenas pelo maior desvio em unidades.
 \FonteDidatica

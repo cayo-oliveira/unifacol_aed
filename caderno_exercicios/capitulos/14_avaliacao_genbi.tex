@@ -60,18 +60,18 @@ Foram observados 40 erros leves de R\$20, doze relevantes de R\$500 e dois crít
 \item R\$10.520, usando a média simples dos custos unitários.
 \end{enumerate}
 
-\ItemHeader{5}{Objetiva}{Distinguir alucinação de desatualização}{Política revogada}
+% ID substituto público: AED-C14-O05-S1
+\ItemHeader{5}{Objetiva}{Diagnosticar resposta baseada em fonte fora de vigência}{Procedimento de reembolso}
 \TextoBase
-O recuperador trouxe uma política revogada, marcada como versão vigente por erro de metadado. O modelo citou fielmente o trecho e não inventou conteúdo, mas a decisão contrariou a norma atual.
-A resposta usou corretamente um documento que deixou de valer; a avaliação deve separar recuperação desatualizada de conteúdo sem sustentação.
+Um recuperador localiza procedimento de reembolso de 2023 e o classifica como atual. O texto citado existe e foi reproduzido fielmente, mas houve atualização no ano seguinte. O índice não contém campo de vigência e a resposta orientou uma solicitação recente.
 \FonteDidatica
-\Comando A classificação mais precisa é
+\Comando Selecione o diagnóstico mais preciso e a correção inicial.
 \begin{enumerate}[label=\Alph*)]
-\item alucinação textual exclusiva, porque toda resposta incorreta é alucinação.
-\item falha de vigência/proveniência na recuperação; fidelidade ao contexto não garantiu correção atual.
-\item falha exclusiva de estilo, resolvida com prompt mais formal.
-\item sucesso, porque a citação existe.
-\item falha de custo, porque versões antigas usam mais tokens.
+\item É necessariamente invenção textual; basta pedir citação mais longa.
+\item A resposta está correta porque o documento citado existe.
+\item É somente problema de tom; um prompt formal corrige a recomendação.
+\item Há falha de vigência/proveniência na recuperação; indexar versão e período efetivo e recuperar a regra aplicável.
+\item A falha decorre do custo; reduzir tokens preserva a decisão.
 \end{enumerate}
 
 \ItemHeader{6}{Objetiva}{Interpretar percentis de latência}{Duas configurações}
@@ -183,12 +183,12 @@ Na versão X, custos técnico, numérico e de decisão indevida precisam ser som
 \FonteDidatica
 \Comando Calcule custo técnico, custo esperado dos dois tipos de erro e total mensal para X e Y. Compare e explique por que a decisão ainda precisa de intervalos, cauda de impacto e gate de privacidade.
 
-\ItemHeader{15}{Discursiva}{Responder a contestação e corrigir o sistema}{Decisão baseada em número errado}
+% ID substituto público: AED-C14-D15-S1
+\ItemHeader{15}{Discursiva}{Responder a incidente de recomendação analítica}{Escala de plantão inadequada}
 \TextoBase
-Um relatório GenBI levou a reduzir estoque. Depois, descobriu-se que o snapshot tinha atraso de dois dias e o trace não registrava versão. Houve perda operacional, mas a extensão ainda está em apuração.
-A recomendação equivocada já afetou clientes; correção técnica deve ocorrer junto com contenção, comunicação, reparação e prevenção de recorrência.
+Um assistente recomendou reduzir a equipe de plantão com base em série agrupada pela data UTC, embora a operação use o dia local. A recomendação foi aplicada por uma noite e aumentaram os chamados sem resposta. O trace não guardou versão da transformação nem fuso considerado; ainda não se sabe quantos relatórios reutilizaram o cálculo.
 \FonteDidatica
-\Comando Proponha contenção, correção da decisão, preservação de evidências, comunicação de fatos e hipóteses, reconstrução, compensação/encaminhamento, correção de versionamento e gates para retorno.
+\Comando Em até 15 linhas, proponha contenção, correção da escala, preservação e reconstrução das evidências, comunicação separando fatos de hipóteses, apuração de impacto e controles técnicos para retorno gradual. Inclua gate verificável antes de reativar a recomendação.
 
 \newpage
 \subsection{Respostas explicadas das questões pares}

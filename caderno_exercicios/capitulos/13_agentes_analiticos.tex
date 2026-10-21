@@ -4,18 +4,18 @@ Os itens distinguem LLM, ferramenta, skill, memória e coordenação. Um agente 
 
 \subsection{Questões objetivas}
 
-\ItemHeader{1}{Objetiva}{Distinguir responsabilidades agentic}{Relatório mensal recorrente}
+% ID substituto público: AED-C13-O01-S1
+\ItemHeader{1}{Objetiva}{Separar agente, modelo e ferramenta}{Assistente de compras recorrentes}
 \TextoBase
-Um fluxo recebe a solicitação, consulta métricas, compara o mês anterior, produz narrativa e pede aprovação humana. A equipe chama de ``agente'' tanto o modelo quanto uma função SQL e um manual de procedimento.
-O relatório alimenta decisões de estoque, e cada etapa deve possuir entrada, saída, permissão e condição de parada verificáveis.
+Uma aplicação recebe pergunta sobre compras, consulta endpoint SQL de leitura, calcula variações e redige nota para revisão humana. O manual define a comparação de períodos; o LLM interpreta a pergunta e auxilia a redação. A equipe chama cada componente de agente.
 \FonteDidatica
-\Comando A descrição tecnicamente adequada é
+\Comando Selecione a descrição que distingue adequadamente os componentes.
 \begin{enumerate}[label=\Alph*)]
-\item o LLM é a ferramenta, o SQL é o agente e o manual é a memória episódica.
-\item o agente coordena estado e decisões; SQL é ferramenta; o manual pode constituir skill ou playbook; o LLM apoia interpretação.
-\item todo componente é um agente porque participa do mesmo fluxo.
-\item a memória decide o próximo passo e o agente apenas armazena texto.
-\item a skill executa diretamente qualquer ação e torna permissões desnecessárias.
+\item O SQL é o modelo; o manual é ferramenta executável; agente é apenas a resposta final.
+\item O manual concede acesso e substitui validação de identidade.
+\item Toda função chamada é agente, mesmo sem coordenação ou estado.
+\item O agente coordena estado e passos; LLM interpreta/redige; SQL é ferramenta; manual pode orientar skill ou playbook.
+\item A memória executa consultas enquanto o agente guarda histórico sem controles.
 \end{enumerate}
 
 \ItemHeader{2}{Objetiva}{Calcular confiabilidade composta}{Pipeline de três etapas}
@@ -60,18 +60,18 @@ Cada tentativa custa R\$0,12 e 1,4 segundo; há ainda 0,6 segundo fixo, orçamen
 \item 5, dividindo o limite de tempo pela parte fixa.
 \end{enumerate}
 
-\ItemHeader{5}{Objetiva}{Escolher memória apropriada}{Correção de preferência e regra}
+% ID substituto público: AED-C13-O05-S1
+\ItemHeader{5}{Objetiva}{Separar preferência de política persistente}{Resumo semanal para gestores}
 \TextoBase
-Um usuário prefere gráficos em barras; a política corporativa determina que valores inferiores a cinco sejam suprimidos. O protótipo grava ambas as informações como lembranças livres produzidas pelo modelo.
-A preferência de formato pertence ao usuário, mas uma política revogada não pode persistir como memória nem ser reintroduzida pelo histórico.
+Uma gestora prefere resumos em tabela. A instituição exige que registros detalhados sejam retidos por no máximo 30 dias. O agente armazena ambas as informações em memória conversacional sem origem, validade ou autoridade da regra de retenção.
 \FonteDidatica
-\Comando O redesenho adequado é
+\Comando Selecione o tratamento adequado para as duas informações.
 \begin{enumerate}[label=\Alph*)]
-\item armazenar preferência e política juntas em memória conversacional sem versão.
-\item tratar preferência como dado de perfil revogável e política como regra governada, versionada e aplicada fora da memória livre.
-\item converter a política em mensagem do usuário para que possa ser substituída em cada conversa.
-\item descartar a preferência e manter somente o histórico integral indefinidamente.
-\item permitir que o agente escolha qual regra lembrar conforme a tarefa.
+\item Manter preferência e limite institucional juntos no histórico integral.
+\item Guardar preferência como configuração revogável da usuária e aplicar retenção por política institucional versionada, fora da memória livre.
+\item Permitir que a gestora substitua o limite institucional em conversa.
+\item Descartar a preferência e conservar dados analíticos indefinidamente.
+\item Deixar o agente decidir em cada tarefa se o limite continua vigente.
 \end{enumerate}
 
 \ItemHeader{6}{Objetiva}{Dimensionar revisão humana}{Fila de HITL}
@@ -116,18 +116,18 @@ Os contadores representam etapas encadeadas; mudar denominadores entre elas esco
 \item 4\%; 6\%; 4\%; 22\%.
 \end{enumerate}
 
-\ItemHeader{9}{Objetiva}{Aplicar recusa segura}{Pergunta sem evidência autorizada}
+% ID substituto público: AED-C13-O09-S1
+\ItemHeader{9}{Objetiva}{Abster-se de previsão sem evidência apropriada}{Atraso por fornecedor}
 \TextoBase
-O usuário pede previsão de demissões por pessoa. O agente tem apenas dados agregados autorizados, e a política proíbe inferência individual. Uma ferramenta de busca não encontra fonte adicional.
-A resposta será usada em decisão de crédito; ausência de fonte autorizada exige abstenção útil, sem fabricar aproximação nem executar ferramenta privilegiada.
+A diretoria solicita lista de fornecedores que atrasarão pedidos no próximo mês. O sistema possui taxas anuais agregadas por setor, sem histórico por fornecedor, definição de atraso ou modelo validado. A lista seria usada para aplicar penalidades contratuais.
 \FonteDidatica
-\Comando O comportamento correto é
+\Comando Selecione a resposta que respeita os limites da evidência e oferece um próximo passo útil.
 \begin{enumerate}[label=\Alph*)]
-\item estimar indivíduos a partir da média da unidade e omitir a incerteza.
-\item recusar a inferência individual, explicar a restrição e oferecer análise agregada autorizada ou encaminhamento humano.
-\item pedir ao modelo que invente dados sintéticos com nomes reais.
-\item executar várias buscas até alguma resposta parecer confiante.
-\item guardar a pergunta na memória e responder depois sem nova autorização.
+\item Atribuir a cada fornecedor a taxa média do setor como previsão individual.
+\item Inventar classificação preliminar para o gerente corrigir depois.
+\item Recusar ranking individual, explicar dados e validações faltantes e oferecer análise agregada ou plano de avaliação autorizado.
+\item Repetir buscas até uma taxa anual parecer conclusiva.
+\item Memorizar o pedido e aplicar penalidades quando o modelo responder com confiança.
 \end{enumerate}
 
 \ItemHeader{10}{Objetiva}{Aplicar gate de implantação agentic}{Comparação de versões}

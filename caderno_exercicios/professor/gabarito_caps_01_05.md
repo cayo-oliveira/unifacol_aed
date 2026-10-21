@@ -1,6 +1,6 @@
 # Gabarito privado integral — AED — Capítulos 01–05
 
-Uso do professor. Todos os itens estão com visibilidade **público/candidato**; os ímpares são elegíveis para futuro banco reservado, mas **nenhum foi reservado**. Fonte de todos os cenários: elaboração didática. Dificuldade predominante 2/3, com aplicação e análise. Evidência: respectivos Capítulos 1–5 da trilha AED 2026.2.
+Uso do professor. Os IDs originais selecionados no manifesto docente estão reservados para instrumentos; os itens públicos correspondentes foram substituídos pelos novos IDs `-S1`, com gabarito nesta edição privada. Os demais itens mantêm seu estado anterior. Fonte dos cenários: elaboração didática. Evidência: respectivos Capítulos 1–5 da trilha AED 2026.2.
 
 ## Capítulo 1 — fundamentos, cadeia analítica e BI
 
@@ -122,3 +122,36 @@ Uso do professor. Todos os itens estão com visibilidade **público/candidato**;
 - Objetivas ímpares O01, O03, O05, O07 e O09 e discursivas ímpares D11, D13 e D15 de cada capítulo: **candidatas elegíveis**, ainda públicas e não reservadas.
 - Itens pares possuem solução pública e não podem ser usados em prova.
 - Antes de reservar qualquer item, realizar segunda resolução independente, estratificar por competência e substituir o item no caderno público.
+
+## Substituições públicas S1 — itens ímpares reservados
+
+Os IDs originais abaixo permanecem reservados nos instrumentos já derivados. As soluções a seguir correspondem exclusivamente às novas questões públicas identificadas com sufixo `-S1` nos fontes dos capítulos.
+
+### Capítulo 1
+
+- **AED-C01-O09-S1 — B.** Comparação válida exige examinar margem, volume e cancelamentos, usar período equivalente e algum comparador adequado. A atribui causalidade sem controle; C troca resultado por proxy; D seleciona casos pelo resultado; E confunde média com efeito.
+- **AED-C01-O07-S1 — B.** A sequência é registros como dados, taxa como informação resumida, padrão contextualizado como insight e ação monitorada como decisão. A troca as categorias; C embaralha a cadeia; D confunde visualização com produção de insight; E reduz dado a ação.
+- **AED-C01-D11-S1.** Até 2,0 pontos: pergunta define crianças/população elegível, período e decisão de revisão por unidade (0,4); valida datas, duplicidades, cobertura e regras de dose (0,4); agrega por unidade sem expor nomes e propõe visual comparável com denominador (0,4); identifica dois riscos entre dados incompletos, viés de cobertura, privacidade ou falsa classificação (0,4); explicita encaminhamento e validação pela equipe antes de qualquer contato (0,4). Aceitar fluxos equivalentes que respeitem finalidade e minimização.
+
+### Capítulo 2
+
+- **AED-C02-O05-S1 — B.** Média ponderada: $0{,}30(8)+0{,}70(6)=2{,}4+4{,}2=6{,}6$. A usa média simples; C soma notas e divide pela soma de pesos sem ponderar produtos; D troca os pesos; E divide notas pelos pesos.
+- **AED-C02-O07-S1 — A.** O lote inteiro é a população de interesse; variância populacional é $40/5=8$ minutos quadrados. B usa divisor amostral sem objetivo de estimação; C calcula desvio-padrão, não variância; D usa divisor inadequado; E confunde soma dos desvios assinados com soma dos quadrados.
+- **AED-C02-D13-S1.** Até 2,0 pontos: média $100$ g (0,3); quadrados dos desvios $4+1+0+0+1+4=10$ g² (0,5); variância populacional $10/8=1{,}25$ g² (0,4); interpretação de dispersão do lote e comparação coerente com limite em gramas, reconhecendo que variância está em g² (0,4); diferença para amostral $10/7\approx1{,}43$ g² e uso para estimar variabilidade de lotes futuros (0,4). Aceitar arredondamento coerente.
+
+### Capítulo 3
+
+- **AED-C03-O03-S1 — B.** Pela inclusão-exclusão, $P(A\cup B)=0{,}18+0{,}12-0{,}05=0{,}25$. A conta a interseção duas vezes; C responde a interseção; D supõe independência não fornecida; E aplica fórmula de independência e ainda obtém valor incompatível.
+- **AED-C03-O05-S1 — C.** Independência exige $P(F\cap R)=P(F)P(R)$. O produto é $0{,}40(0{,}30)=0{,}12$, diferente de $0{,}18$; portanto há dependência na população representada. A soma não testa independência; B contradiz os valores; D interpreta interseção positiva ao contrário; E confunde eventos complementares.
+- **AED-C03-O10-S1 — A.** $r=30/\sqrt{25\cdot100}=30/50=0{,}60$. O sinal é positivo e a magnitude indica associação linear moderada a forte; o desenho observacional não prova causalidade. B soma denominadores; C não padroniza; D usa fórmula inexistente; E acerta o valor mas conclui causalidade.
+- **AED-C03-D15-S1.** Até 2,0 pontos: (i) binomial, $n=12$, parâmetro $p$ de falha, com tentativas independentes e probabilidade constante (0,5); (ii) Bernoulli, parâmetro $p$ de sucesso em uma tentativa (0,4); (iii) uniforme contínua em $[0,30]$, densidade constante na janela (0,5); (iv) normal, média próxima de zero e desvio-padrão estimado, justificando aproximação por efeitos pequenos e simetria (0,4); indica pelo menos uma premissa verificável por caso (0,2). Aceitar convenções equivalentes se ligadas ao mecanismo.
+
+### Capítulo 4
+
+- **AED-C04-O03-S1 — B.** O eixo truncado exagera visualmente a diferença. Para barras, começar em zero preserva proporção; pontos podem usar escala explicitada. A diferença absoluta é $5{,}5-4{,}0=1{,}5$ ponto percentual. A mantém distorção; C remove denominador; D adiciona dimensão sem significado; E impede leitura quantitativa.
+
+### Capítulo 5
+
+- **AED-C05-O03-S1 — B.** As fontes têm grãos diferentes. Receita deve ser agregada a partir do fato de itens/pedidos conforme seu contrato; clientes atendidos devem ser contados distintamente no grão cliente. Dimensões conformadas conectam os resultados sem multiplicar medidas. A duplica receita por ocorrências; C confunde itens e clientes; D remove duplicidade sem provar que ela existe; E multiplica receita por frequência de atendimento.
+- **AED-C05-O07-S1 — B.** A nova definição precisa de versão e vigência explícitas. A quebra histórica deve ser comunicada ou reprocessada de forma identificada; a série anterior permanece rastreável. A altera histórico sem transparência; C cria definições conflitantes; D muda resultados sem linhagem; E confunde semântica com armazenamento.
+- **AED-C05-O09-S1 — B.** A projeção deve incluir somente agregados necessários e prevenir reidentificação por grupos pequenos, por supressão ou controles de consulta. A hash não garante anonimização; C exposição na interface não é controle de acesso; D viola minimização e retenção; E remove dimensões úteis sem necessidade.

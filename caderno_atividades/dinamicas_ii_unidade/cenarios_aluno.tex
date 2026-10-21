@@ -1,0 +1,97 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{geometry,tabularx,booktabs,xcolor}
+\usepackage[most]{tcolorbox}
+\geometry{margin=1.7cm}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\definecolor{aedblue}{HTML}{17365D}
+\definecolor{aedorange}{HTML}{D97925}
+\newtcolorbox{cenario}[1]{colback=blue!3,colframe=aedblue,title={#1},fonttitle=\bfseries,boxsep=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,before skip=5pt,after skip=5pt}
+\newtcolorbox{pedido}{colback=orange!5,colframe=aedorange,title={Pedido para o aluno responsável},fonttitle=\bfseries,boxsep=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,before skip=5pt,after skip=5pt}
+\title{AED com LLM --- quatro cenários, quatro implementações}
+\author{UNIFACOL --- Análise Exploratória de Dados}
+\date{2026.2}
+\begin{document}
+\maketitle
+
+\section*{O que vocês vão fazer}
+Somos quatro alunos e teremos quatro cenários diferentes. Em cada encontro, uma pessoa fica responsável pelo cenário da semana. Todos ajudam a desenhar a solução durante 10--15 minutos; o responsável registra o desenho no quadro. Em casa, essa pessoa implementa uma versão pequena em Python ou Streamlit e apresenta o código no encontro seguinte. Os outros três fazem perguntas e testam uma situação-limite. Os nomes podem ser preenchidos pelo professor nos campos abaixo.
+
+\textbf{Pedido comum.} Para o cenário que receber, entregue: (1) a pergunta analítica e para quem ela importa; (2) quais colunas e qual grão serão usados; (3) o cálculo que o programa fará; (4) onde a LLM entra e o que ela não pode decidir; (5) um gráfico ou uma resposta textual com evidência; (6) um teste que poderia revelar erro. No quadro, desenhe a solução em 10--15 minutos. Para a aula seguinte, traga o código executável, um exemplo de saída e uma explicação de até cinco minutos.
+
+Use somente os dados pequenos e fictícios apresentados aqui. Não precisa criar login, banco de dados, deploy nem interface sofisticada. Pode começar por um script Python; use Streamlit apenas quando o cenário pedir uma tela. Não coloque chave de API no código. O professor pode fornecer acesso para a demonstração do terceiro cenário; a chave fica em variável de ambiente local. Se a chamada à IA não estiver disponível, demonstre a mesma interface com uma resposta simulada identificada como tal.
+
+\textbf{Ciclo e responsável:} cenário 1, 15/10, aluno(a) 1 \rule{3cm}{0.4pt} $\rightarrow$ código em 22/10; cenário 2, 22/10, aluno(a) 2 \rule{3cm}{0.4pt} $\rightarrow$ código em 29/10; cenário 3, 29/10, aluno(a) 3 \rule{3cm}{0.4pt} $\rightarrow$ código em 05/11; cenário 4, 05/11, aluno(a) 4 \rule{3cm}{0.4pt} $\rightarrow$ código em 19/11. Em 12/11 não há encontro regular por causa da EXPOFACOL.
+
+\begin{cenario}{Cenário 1 --- Cantina: transformar registros em uma história simples}
+Uma cantina quer saber qual produto gerou mais receita nas duas semanas abaixo. Cada linha representa um produto em uma semana. Os dados são fictícios.
+
+\begin{center}\small
+\begin{tabular}{l l r r}\toprule
+Semana & Produto & Unidades & Preço unitário (R\$) \\\midrule
+1 & Sanduíche & 10 & 8 \\
+1 & Suco & 20 & 4 \\
+1 & Fruta & 8 & 3 \\
+2 & Sanduíche & 12 & 8 \\
+2 & Suco & 15 & 4 \\
+2 & Fruta & 10 & 3 \\\bottomrule
+\end{tabular}
+\end{center}
+\end{cenario}
+\begin{pedido}
+Calcule receita como unidades $\times$ preço; some por produto; faça um gráfico de barras e escreva duas frases: qual produto teve maior receita e o que os dados não permitem concluir. No quadro, compare o fluxo antigo (Python calcula e uma regra fixa gera o relatório) com o atual (a pessoa pode perguntar em linguagem natural, mas o cálculo continua reproduzível). Para casa, implemente o cálculo, o gráfico e uma pergunta de teste com resposta conhecida.
+\end{pedido}
+
+\begin{cenario}{Cenário 2 --- Loja: ``qual semana foi melhor?''}
+Uma pequena loja registrou os totais semanais abaixo. ``Melhor'' pode significar maior faturamento ou maior valor médio por pedido. Os dados são fictícios.
+
+\begin{center}\small
+\begin{tabular}{l r r}\toprule
+Semana & Faturamento (R\$) & Pedidos \\\midrule
+A & 1.000 & 50 \\
+B & 1.200 & 80 \\
+C & 1.050 & 35 \\\bottomrule
+\end{tabular}
+\end{center}
+\end{cenario}
+\begin{pedido}
+Antes de responder, calcule o valor médio por pedido e decidam se o sistema deve pedir esclarecimento sobre a palavra ``melhor''. No quadro, registrem as definições de faturamento e valor médio por pedido, o grão (semana) e o plano de cálculo. Para casa, implementem as duas métricas e uma resposta que pergunte qual critério usar quando a pergunta for ambígua. Não deixem a LLM inventar uma definição.
+\end{pedido}
+
+\begin{cenario}{Cenário 3 --- Cafeteria: LLM narra resultados com evidências}
+O gerente quer uma frase automática sobre o movimento. O programa já calculou os totais; a LLM receberá apenas este resumo agregado:
+
+\begin{center}\small
+\begin{tabular}{l r r r}\toprule
+Semana & Receita (R\$) & Pedidos & Valor médio/pedido (R\$) \\\midrule
+1 & 1.000 & 50 & 20 \\
+2 & 1.200 & 80 & 15 \\\bottomrule
+\end{tabular}
+\end{center}
+\end{cenario}
+\begin{pedido}
+No quadro, separem o cálculo do texto gerado. Identifiquem uma afirmação apoiada pelos números, uma conclusão que seria exagerada e a evidência a citar. Para casa, implementem um pequeno programa que monta esse resumo, pede uma narrativa de no máximo três frases e mostra os valores junto da resposta. A LLM não deve calcular os totais nem afirmar por que as vendas mudaram. Cada afirmação numérica precisa apontar para uma evidência presente no resumo.
+\end{pedido}
+
+\begin{cenario}{Cenário 4 --- Perguntas sobre vendas: responder, esclarecer ou parar}
+Um painel contém apenas os dados agregados abaixo. O gerente faz três perguntas: (A) ``Qual semana teve maior faturamento?''; (B) ``Qual semana foi melhor?''; (C) ``Por que o faturamento mudou?''. Não há dados de preço, campanha, estoque ou comportamento do cliente.
+\begin{center}\small
+\begin{tabular}{l r r}\toprule
+Semana & Faturamento (R\$) & Pedidos \\\midrule
+A & 1.000 & 50 \\
+B & 1.200 & 80 \\
+C & 1.050 & 35 \\\bottomrule
+\end{tabular}
+\end{center}
+\end{cenario}
+\begin{pedido}
+No quadro, classifiquem cada pergunta: responder com cálculo, pedir esclarecimento ou dizer que os dados não sustentam a resposta. Definam duas funções permitidas pelo programa e uma regra de parada. Para casa, implementem um fluxo pequeno que calcula a resposta de A, pede critério em B e não inventa causa para C. Testem as três perguntas e mostrem o resultado na aula seguinte. Uma LLM pode ajudar a interpretar a pergunta, mas só pode acionar as funções que vocês autorizaram.
+\end{pedido}
+
+\section*{Como a atividade será avaliada}
+Cada aluno é responsável por um cenário e pode obter até 0,25 ponto: desenho e métrica coerentes (0,05), código executável e simples (0,10), teste e evidência (0,05), apresentação e resposta às perguntas dos colegas (0,05). Os quatro cenários somam 1,0 ponto. No simulado ENADE da Unidade II, os outros 2,0 pontos são: protótipo integrado com trilha de evidências (1,0) e defesa individual de uma pergunta contextualizada (1,0). A nota não depende de usar um provedor pago ou de produzir uma tela bonita. Os colegas participam como revisores e registram uma pergunta ou teste para cada apresentação.
+
+\end{document}
