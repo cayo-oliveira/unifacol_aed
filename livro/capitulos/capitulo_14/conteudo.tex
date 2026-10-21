@@ -1,0 +1,145 @@
+\chapter{Avaliar GenBI: correção, evidência e decisão}
+\chaptermark{Avaliação de GenBI}
+
+No teste final, dois sistemas respondem que a aprovação aumentou. O primeiro executa SQL válido, mas conta avaliações em vez de matrículas; o segundo calcula taxa correta, mas usa escala gráfica que exagera a diferença e escreve que uma política causou a mudança. Ambos parecem convincentes. A turma precisa avaliar cada camada e decidir qual pode apoiar uma ação.
+
+GenBI combina interpretação, semântica, consulta, cálculo, visualização, narrativa e, por vezes, agente. Uma nota média não localiza erro. A avaliação separa intenção, validade da consulta, correção do cálculo, suporte da evidência, adequação visual, segurança, latência e custo.
+
+Este capítulo aplica competências da Unidade I: distribuição, denominador, escala gráfica, acessibilidade, causalidade, arquitetura, storytelling e governança. O LLM fica dentro de uma análise exploratória, e cada conclusão precisa ser reproduzida por código ou fonte verificável.
+
+\section{Desenhar um conjunto de avaliação representativo}
+
+O conjunto contém perguntas literais, paráfrases, ambiguidade, recusa, comparação temporal, grupo pequeno, perfil sem permissão, dado ausente, consulta sem resposta e pedido causal. Cada caso registra usuário sintético, fonte, definição, período, resultado de referência, visual aceitável e risco.
+
+Uma paráfrase não basta para cobrir diversidade. Se cem perguntas repetem ``total do período'', o teste não mede composição, anomalia, incerteza, acesso ou recusa. Estratificação dos casos permite estimar onde o produto falha e evita que exemplos simples dominem a média.
+
+O gabarito é independente do sistema avaliado e revisado por especialista de domínio. Cálculos de referência são reproduzíveis; julgamentos visuais usam rubrica; alegações textuais são ligadas a evidência. Um LLM julgador pode apoiar triagem, mas sua concordância é medida contra revisão humana.
+
+Conjunto de desenvolvimento ajuda a ajustar prompts; conjunto retido mede mudança. Um teste em produção acompanha distribuição e incidentes, sem substituir controles offline. Quando resposta de teste é usada repetidamente para ajustar, ela deixa de ser independente.
+
+O catálogo de casos tem proprietário e data de revisão. Mudança curricular, definição de métrica ou política de acesso exige atualização do conjunto. Casos desatualizados são arquivados com justificativa, sem apagar histórico de avaliação.
+
+\section{Medir o funil analítico com denominadores corretos}
+
+O funil registra perguntas recebidas, autorizadas, interpretadas, consultas aprovadas, cálculos corretos, evidências exibidas e decisões aceitas. A taxa de cada etapa usa denominador declarado; sucesso ponta a ponta divide casos que passaram tudo pelo total elegível.
+
+Se 500 perguntas foram autorizadas, 460 interpretadas corretamente, 420 geraram consulta correta, 390 produziram número correto e 360 mostraram evidência suficiente, as conversões condicionais são 92%, 91,3%, 92,9% e 92,3%; sucesso final sobre 500 é 72%. A equipe preserva numeradores junto ao percentual.
+
+\textbf{Código da squad --- taxas do funil com denominador explícito}
+\begin{verbatim}
+# Registra contagens acumuladas observadas no conjunto sintético.
+contagens = {
+    "recebidas": 500, "autorizadas": 500, "intencao": 460,
+    "consulta": 420, "calculo": 390, "evidencia": 360,
+}
+# Define a ordem das etapas que compõem o funil de análise.
+etapas = ["autorizadas", "intencao", "consulta", "calculo", "evidencia"]
+# Usa todas as entradas como denominador da primeira transição.
+anterior = contagens["recebidas"]
+# Percorre cada etapa na ordem definida pelo protocolo.
+for etapa in etapas:
+    # Calcula a conversão condicional da etapa atual.
+    taxa = contagens[etapa] / anterior
+    # Exibe valor, denominador e percentual para auditoria.
+    print(etapa, contagens[etapa], anterior, round(taxa * 100, 1))
+    # Usa a contagem atual como denominador da próxima etapa.
+    anterior = contagens[etapa]
+# Calcula sucesso final sobre todas as entradas iniciais.
+taxa_final = contagens["evidencia"] / contagens["recebidas"]
+# Apresenta a taxa final como percentual arredondado para leitura humana.
+print("Sucesso ponta a ponta:", round(taxa_final * 100, 1), "%")
+\end{verbatim}
+
+O código presume contagens acumuladas e monotônicas. Se cada estágio usa outra população ou amostra, não podemos aplicar a conta sem reconciliar identificadores. A equipe confere logs e cobertura antes de apresentar taxas.
+
+Quando a contagem aumenta ou diminui inesperadamente entre etapas, primeiro reconciliamos o que significa ``caso'' e se houve amostragem, repetição ou retry. Uma taxa acima de 100% não é arredondada para parecer plausível; denuncia denominadores incompatíveis.
+
+\section{Auditar consulta, estatística e visual separadamente}
+
+Consulta válida não é consulta correta. Revisores comparam SQL à métrica, filtros, grão, datas e joins aprovados. Resultado é conferido com referência determinística e propriedades como taxa entre zero e um, total coerente e contagem sem duplicidade.
+
+O visual é avaliado por correspondência à pergunta, escala, rótulos, ordenação, contraste, incerteza e acessibilidade. Uma coluna truncada pode transformar diferença pequena em grande impressão. Gráfico não deve ocultar denominador ou alterar limites sem anotação.
+
+Storytelling recebe rubrica: pergunta respondida, dado ligado à afirmação, limite explícito, linguagem não causal quando apropriado, ação proporcional e caminho de contestação. Revisores marcam frases específicas em vez de dar apenas impressão geral.
+
+O dashboard de avaliação apresenta erro por camada e segmento. A pessoa identifica se precisa corrigir prompt, definição, consulta, cálculo, visual ou integração. Se tudo vira uma pontuação de ``qualidade do agente'', a equipe não sabe qual componente melhorar.
+
+Casos críticos aparecem ao lado das médias com identificadores sintéticos e fonte de referência. A revisão visual compara estado inicial e correção aplicada, permitindo observar se escala ou legenda alterou percepção sem mudar dados.
+
+\section{Segurança, privacidade, custo e latência como gates}
+
+Risco de privacidade não é compensado por correção maior. Uma exposição de dado restrito bloqueia a versão. Outros gates definem correção, evidência, p95, custo e recusa. Os limites dependem da decisão e do risco, e recebem aprovação explícita.
+
+Percentis contam a experiência de cauda. Média de dois segundos pode coexistir com p95 de dez segundos. Custo considera entrada, saída, cache, retries e proporção de chamadas. Agentes adicionam passos; instrumentação mede tempo e custo por ferramenta.
+
+\textbf{Código da squad --- gates não compensatórios para versões}
+\begin{verbatim}
+# Declara critérios mínimos antes de inspecionar versões candidatas.
+gates = {"correcao": 0.85, "evidencia": 0.90, "p95": 6.0, "custo": 0.25}
+# Registra medições fictícias obtidas no mesmo conjunto de avaliação.
+versoes = [
+    {"id": "A", "correcao": .88, "evidencia": .92,
+     "p95": 5.5, "custo": .24, "vazamento": 0},
+    {"id": "B", "correcao": .91, "evidencia": .89,
+     "p95": 5.1, "custo": .23, "vazamento": 0},
+]
+# Seleciona somente opções que passam por todos os gates simultaneamente.
+aprovadas = []
+# Avalia cada gate de forma independente e conserva apenas aprovados.
+for versao in versoes:
+    passa = (
+        versao["correcao"] >= gates["correcao"]
+        and versao["evidencia"] >= gates["evidencia"]
+        and versao["p95"] <= gates["p95"]
+        and versao["custo"] <= gates["custo"]
+        and versao["vazamento"] == 0
+    )
+    # Adiciona a versão somente quando nenhum gate crítico falha.
+    if passa:
+        aprovadas.append(versao)
+# Mostra IDs aprovados sem compensar falha com uma média.
+print([v["id"] for v in aprovadas])
+\end{verbatim}
+
+Com esse exemplo, A passa e B falha em evidência apesar da correção superior. Um sistema com vazamento seria reprovado mesmo se outras medidas fossem excelentes. A regra é decisão de governança, não propriedade matemática da média.
+
+Logs guardam versão, trace, resultado da validação, duração e estado com minimização. Conteúdo completo é retido somente quando finalidade e política autorizam. A equipe desenha pausa, rollback, comunicação e reprocessamento para incidente.
+
+\section{Visualizar resultados e contar uma história auditável}
+
+O painel final separa funil, correção, risco, custo, latência e exemplos. Cada cartão tem unidade, período e denominador. Um gráfico mostra sucesso por classe de pergunta e uma tabela abre falhas representativas sem publicar dado pessoal.
+
+\begin{center}
+\begin{tikzpicture}[node distance=5mm, every node/.style={draw,rounded corners,align=center,font=\small}, card/.style={minimum width=3.4cm,minimum height=1.2cm}]
+\node[card] (a) {Correção e evidência\\por tipo de pergunta};
+\node[card,right=of a] (b) {Funil: intenção\\até resposta sustentada};
+\node[card,below=of a] (c) {Risco: privacidade,\\acesso e recusa};
+\node[card,right=of c] (d) {Custo e latência\\p50 / p95 / p99};
+\node[card,below=of c,minimum width=7cm] (e) {Casos auditáveis: consulta, visual, fonte, versão e decisão};
+\draw[->] (a)--(e); \draw[->] (b)--(e); \draw[->] (c)--(e); \draw[->] (d)--(e);
+\end{tikzpicture}
+\end{center}
+
+A figura distribui indicadores em quatro domínios e liga todos a casos reproduzíveis. O público não precisa acreditar numa nota agregada: pode abrir amostra, examinar suporte, entender filtro e ver por que uma versão foi aprovada ou bloqueada.
+
+Uma narrativa para liderança pode dizer: ``A versão A atende aos gates no conjunto controlado; B tem maior correção média, mas ainda falha em evidência. Não recomendamos B até corrigir a recuperação e repetir o teste retido''. A recomendação comunica ação e condição de revisão.
+
+O painel identifica versão de cada métrica e modelo, período de avaliação e ambiente. Um leitor consegue filtrar por tipo de consulta sem mudar silenciosamente o denominador. A exportação mantém legenda, fonte e nota de limitações.
+
+Na apresentação, a squad conduz a audiência por pergunta, descoberta, evidência e ação recomendada. Primeiro revela o contraste entre correção e evidência; depois abre um caso que falhou e explica o gate; por fim, delimita a decisão operacional. O storytelling organiza a investigação sem esconder incerteza nem transformar correlação em causalidade.
+
+\section{Simulado e fechamento das unidades}
+
+O simulado pede que a squad escolha método, calcule indicador, leia gráfico e defenda limite. Os exercícios praticam conceitos relacionados em cenários e valores próprios; este capítulo não reproduz itens reservados nem gabarito literal.
+
+No fechamento, os estudantes conectam estatística descritiva, probabilidade, associação, gráfico, arquitetura de dados, storytelling, LLM, Text-to-SQL, agentes e avaliação. AED continua responsável por tornar pergunta e evidência visíveis mesmo quando linguagem natural facilita consulta.
+
+O artefato é painel sintético de avaliação, relatório com exemplos, checklist de gate, decisão e plano de próximo teste. A equipe declara o que está pronto para laboratório, o que exige revisão institucional e o que não deve ser implantado.
+
+Cada aluno entrega uma frase de Big Idea e indica o gráfico que melhor a sustenta. A frase é revisada contra denominador, incerteza e perfil de audiência; se a evidência não sustenta a mensagem, narrativa e visualização são refeitas.
+
+A avaliação individual observa também se o estudante consegue reproduzir um cálculo sem o modelo, identificar uma falha de SQL, propor teste retido e explicar quando recusar resposta. A equipe registra a contribuição e o aprendizado, mas não usa dado pessoal para inferir competência além da atividade observada.
+
+\begin{SummaryBox}
+GenBI é avaliada como cadeia analítica. A resposta só é confiável quando intenção, métrica, consulta, cálculo, evidência, visual, segurança e operação se alinham; uma média não compensa falha crítica e todo insight precisa ser reproduzível e contestável.
+\end{SummaryBox}

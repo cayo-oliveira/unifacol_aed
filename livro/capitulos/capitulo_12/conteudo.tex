@@ -1,0 +1,125 @@
+\chapter{Dashboard analítico com Streamlit e Llama}
+\chaptermark{Streamlit e Llama na AED}
+
+O notebook da aula responde à pergunta, mas um colega não consegue reproduzir filtros, ver versão da fonte nem distinguir texto gerado de estatística calculada. A equipe transforma a análise em uma aplicação: carrega dados, filtra, calcula, desenha gráfico e usa LLM apenas para explicar resultados aprovados.
+
+Streamlit permite construir interface Python para exploração e dashboard. O rerun do script exige atenção a estado e efeitos repetidos; cache exige chave que inclua os dados; conexão com modelo deve ficar no servidor e não no navegador. A aplicação é pequena, mas já possui camadas e riscos de sistema.
+
+O fluxo é: entrada e identidade, seleção segura de dados, resumo agregado, função analítica determinística, visualização, geração textual opcional, validação e resposta. O modelo nunca recebe a planilha integral se o insight puder ser explicado com estatísticas agregadas e dados minimizados.
+
+O cenário de aula compara taxa de aprovação por curso e período, mantendo amostras pequenas visíveis. A squad constrói um dashboard em que pergunta, gráfico e narrativa compartilham filtro e atualização. Depois avalia o que muda quando o provedor é uma API ou um modelo Llama local.
+
+\section{Separar interface, domínio, dados e adaptador LLM}
+
+A interface apresenta controles e resultados, mas não concentra regras de cálculo. Um módulo de domínio calcula métricas, um repositório lê arquivos ou banco, um adaptador chama modelo e um serviço coordena validação. Essa divisão permite testar cálculo sem abrir interface e trocar fornecedor sem reescrever a EDA.
+
+O DataFrame possui regras de acesso próprias. Em aplicação didática carregamos CSV sintético; em ambiente real identificamos fonte, proprietário, período, grão e campos sensíveis. A coluna que não participa da pergunta não entra no prompt ou no trace.
+
+Adaptador responde a um contrato interno: recebe pergunta e resumo aprovado, devolve rascunho associado à versão e ao modelo. API hospedada e runtime local compartilham contrato, mas diferem em infraestrutura, privacidade, disponibilidade e manutenção. O cliente não assume que local significa automaticamente seguro.
+
+Um mock permite construir e testar interface antes de configurar provedor. O mock não mede qualidade de geração; ele valida transições, estado sem evidência, resposta inválida e rota de erro. Avaliação com modelo real ocorre somente com autorização e conjunto permitido.
+
+Os testes unitários ficam no serviço de domínio e validam agregação e proporções. Testes de integração cobrem leitura de arquivo e fluxo de interface. Essa separação ajuda o estudante a descobrir se um erro veio de cálculo, estado de tela, transporte ou geração.
+
+\section{Construir o painel com gráfico e denominador explícito}
+
+O gráfico é gerado a partir de função analítica reproduzível. Filtros modificam recorte, tabela, título e resumo; não podem atualizar apenas o texto. O dashboard mostra tamanho do grupo e intervalo de tempo junto à taxa, para evitar que o número pareça universal.
+
+\textbf{Código da squad — aplicação Streamlit com análise local}
+\begin{verbatim}
+# Importa Streamlit para montar controles e componentes da aplicação.
+import streamlit as st
+# Importa pandas para carregar, filtrar e agregar dados tabulares.
+import pandas as pd
+# Importa matplotlib para criar uma visualização local controlada.
+import matplotlib.pyplot as plt
+# Define título e contexto para quem abrir a aplicação.
+st.title("Painel de apoio acadêmico — dados sintéticos")
+# Cria uma tabela pequena e fictícia para o exercício.
+dados = pd.DataFrame({"curso": ["SI", "SI", "ADS", "ADS"],
+                      "periodo": ["2026.1", "2026.2", "2026.1", "2026.2"],
+                      "matriculas": [80, 90, 60, 70],
+                      "aprovados": [60, 63, 42, 49]})
+# Apresenta filtro cujas opções vêm da própria tabela.
+periodo = st.selectbox("Período", sorted(dados["periodo"].unique()))
+# Seleciona o subconjunto correspondente ao filtro informado.
+recorte = dados.loc[dados["periodo"].eq(periodo)].copy()
+# Calcula proporção usando numerador e denominador visíveis.
+recorte["taxa"] = recorte["aprovados"] / recorte["matriculas"]
+# Exibe contagens para evitar interpretação sem suporte amostral.
+st.dataframe(recorte[["curso", "aprovados", "matriculas", "taxa"]])
+# Cria gráfico de comparação para os cursos no período escolhido.
+fig, ax = plt.subplots()
+# Desenha barras com taxa, não com volume bruto.
+ax.bar(recorte["curso"], recorte["taxa"], color="#2463A6")
+# Rotula a unidade e explicita o recorte temporal.
+ax.set_ylabel("Aprovados / matrículas")
+# Informa no título que o dado é sintético.
+ax.set_title(f"Taxa observada em {periodo} — sintético")
+# Apresenta o gráfico ao lado da tabela de suporte.
+st.pyplot(fig)
+\end{verbatim}
+
+O app acima é executável com dependências instaladas e demonstra filtros e gráficos, não autenticação institucional. Um sistema real valida schema ao carregar, trata ausência, registra atualização e restringe linha por identidade no backend.
+
+Uma squad adiciona comparação com o período anterior e um alerta de grupo pequeno. Em vez de esconder curso sem base suficiente, o componente mostra ``dados insuficientes'' e não solicita ao LLM que complete valor ausente.
+
+O grupo muda o período e confere se texto e visual mudam juntos. Depois compara uma taxa com denominador distinto. Se a diferença for grande, as equipes apresentam contagens, não apenas a altura das barras, e investigam composição por coorte.
+
+\section{Gerar narrativa com contexto mínimo e validação}
+
+Antes de chamar o modelo, a aplicação calcula resumo com métricas, filtros, data e avisos de tamanho. O LLM recebe um contrato de linguagem: descrever associação, não afirmar causa; não criar número; citar qual recorte recebeu; e apontar quando a amostra é pequena.
+
+O texto continua sendo rascunho. Um validador confere se os números mencionados existem no resumo, se período confere, se há fonte e se frases de causalidade não extrapolam. Regras automáticas detectam parte dos defeitos; revisão humana é necessária em narrativa relevante.
+
+\textbf{Código da squad — adaptador mock e verificação de número}
+\begin{verbatim}
+# Calcula um resumo agregado que não contém identificadores pessoais.
+resumo = {"periodo": periodo, "cursos": recorte["curso"].tolist(),
+          "taxas": recorte["taxa"].round(3).tolist(),
+          "n": recorte["matriculas"].tolist()}
+# Define adaptador de demonstração que funciona sem serviço externo.
+def gerar_narrativa_mock(resumo_aprovado):
+    # Constrói rascunho apenas com informação do resumo fornecido.
+    return f"No período {resumo_aprovado['periodo']}, compare as taxas por curso; verifique os denominadores antes de decidir."
+# Gera texto no modo local controlado.
+rascunho = gerar_narrativa_mock(resumo)
+# Exige que o período que aparece no rascunho esteja no resumo.
+assert resumo["periodo"] in rascunho
+# Marca a saída como narrativa candidata, não insight confirmado.
+st.caption("Rascunho automatizado; valide números e contexto antes de compartilhar.")
+# Exibe o texto sem ocultar seu estado de revisão.
+st.write(rascunho)
+\end{verbatim}
+
+Uma conexão real a OpenAI ou servidor local de Llama substitui o adaptador, não o cálculo. A chave fica no servidor; conteúdo transmitido é minimizado; nome e versão do modelo são registrados. Modelo local requer atualização, monitoração, capacidade de hardware e revisão da licença específica.
+
+O contraexemplo é pedir ao LLM para recalcular a proporção a partir de uma tabela extensa e aceitar o número produzido. Cálculo fica em pandas ou SQL testado; linguagem natural pode resumir a evidência já calculada. Essa divisão reduz erro aritmético e torna resultado reproduzível.
+
+\section{Estado, cache e falhas de rerun}
+
+Streamlit reexecuta o script após interação. Uma chamada ao LLM no nível global pode ocorrer novamente ao mover um filtro, gerar custo e duplicar logs. Um botão de envio, chave de idempotência e estado de sessão controlam a ação; cache só é aplicado quando saída pode ser compartilhada com segurança.
+
+Cache inclui hash da fonte, filtros, métrica, prompt e versão de modelo. Se qualquer insumo muda, a resposta é invalidada. Não guardar saída sensível em cache global sem escopo de usuário. A equipe testa dois perfis e diferentes períodos para detectar reutilização cruzada.
+
+Timeout, limite de taxa, serviço offline e JSON inválido produzem estados visíveis. O painel mantém gráficos determinísticos mesmo quando narrativa falha, mostra fonte e não inventa explicação substituta. A experiência degradada é planejada.
+
+O time calcula quantas chamadas um usuário pode disparar e define limite de tamanho, repetição e volume por período. Um cache compartilhado é revisto quanto à identidade; cache de sessão pessoal não pode ser reutilizado como dado global.
+
+Um teste de caos didático desliga o adaptador durante uma interação. Os estudantes verificam que painel mantém gráfico e informa indisponibilidade textual, sem apagar filtro ou duplicar cobrança. A recuperação é registrada no log mínimo.
+
+\section{Roteiro da aula e decisão de publicação}
+
+19h–19h25: desenhamos arquitetura e pastas; 19h25–20h: construímos filtro, resumo e gráfico; 20h–20h30: testamos mudanças de estado e definimos contrato de narrativa.
+
+20h30–21h: conectamos mock e validador; 21h–21h25: grupos comparam opção local e API segundo dados, qualidade, custo e suporte; 21h25–21h50: testam timeout, amostra pequena e filtro divergente; 21h50–22h: demonstram dashboard e decisão.
+
+O resultado entregue inclui aplicação, requirements, CSV sintético, resumo de dados, gráfico, mock, testes e desenho de implantação. Se houver API ou Llama real, a extensão exige chave externa aprovada ou ambiente local autorizado; o material funciona sem isso.
+
+Publicar requer autenticação, HTTPS, política de dados, restrições de uso, limites de chamadas e plano de atualização. Um protótipo da aula fica em ambiente de demonstração com dados fictícios.
+
+Cada squad finaliza com uma decisão de publicação: somente notebook, aplicação local ou piloto restrito. A justificativa relaciona risco, público, dado e operação. Nenhum grupo usa dados pessoais reais sem autorização e revisão apropriada.
+
+\begin{SummaryBox}
+Streamlit integra interface, EDA e narrativa, mas arquitetura continua necessária. O cálculo e o visual são determinísticos; o LLM produz um rascunho contextual; validação e revisão definem o que pode ser compartilhado.
+\end{SummaryBox}

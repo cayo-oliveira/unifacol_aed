@@ -1,0 +1,97 @@
+\chapter{Ecossistemas de BI com copilotos e agentes}
+\chaptermark{BI conversacional e agentic}
+
+Na sala de reunião, a mesma pergunta de AED recebe um gráfico no Tableau, uma consulta no Power BI e uma resposta textual de um agente. O problema não é decidir qual marca parece mais inteligente: é avaliar se cada sistema preserva a definição de métrica, aplica acesso, mostra evidência, permite contestação e sustenta a decisão.
+
+Copiloto, analytics conversacional e BI agentic descrevem experiências e responsabilidades diferentes. Um copiloto sugere ou executa operações sob controle da pessoa; análise conversacional traduz pergunta e entrega resultados; um sistema agentic pode planejar etapas e delegar ferramentas. Produtos podem misturar os padrões, por isso classificamos comportamentos observados e não slogans.
+
+Este encontro usa o caso dos cursos, frequência e aprovação para comparar ferramenta visual, serviço gerenciado e protótipo Python. A pergunta permanece fixa para que a comparação seja justa. Cada alternativa precisa revelar denominador, filtros, versão semântica, identidade, visual e trilha.
+
+\section{Definir critérios antes de comparar plataformas}
+
+A equipe cria uma matriz com fonte de dados, camada semântica, controle de acesso, execução de consulta, recomendação de visual, exportação, auditabilidade, custo, latência e manutenção. Cada critério tem evidência verificável: documentação, teste prático, log ou contrato; uma demonstração comercial isolada não comprova operação sob políticas reais.
+
+Uma plataforma pode ter interface acessível e semântica fraca; outra pode apresentar consulta auditável e exigir maior implementação. A decisão considera competências locais, integração com identidade, atualização e custo total. Não existe vencedor independente de finalidade, risco, escala e contexto institucional.
+
+BI visual tradicional permite construir dashboards com controle humano detalhado. Copilotos aceleram cálculos e visuais. Analytics conversacional reduz barreira de linguagem. BI agentic coordena exploração. São graus de assistência, não maturidade garantida nem substituto de governança.
+
+O contraexemplo é comparar apenas a qualidade de uma resposta em uma pergunta preparada pelo fornecedor. Um benchmark interno inclui pergunta ambígua, acesso negado, fonte desatualizada, grupo pequeno e caso sem resposta. Os alunos mantêm os mesmos usuários, definições e dados nas alternativas.
+
+A rubrica ainda pergunta se o usuário consegue editar a interpretação antes de executar, recuperar o visual e abrir a definição da métrica. Esses elementos influenciam confiança e contestação, não apenas conveniência. A ferramenta que não expõe a hipótese pode ser inadequada mesmo se produzir um resultado correto.
+
+\section{Reproduzir a mesma EDA em dois caminhos}
+
+Uma trilha usa dashboard de BI; outra usa pandas e matplotlib. Ambas partem de tabela sintética com período, curso, total elegível e aprovados. A comparação observa se o gráfico representa a mesma proporção e se controles de período alteram título, cálculo e rótulos juntos.
+
+O dado de demonstração é pequeno, portanto a conclusão é técnica, não sobre desempenho educacional. Em ambiente real, a equipe avalia coortes, ausências, mudanças de currículo, duplicatas e limiar mínimo de publicação. Não expõe linhas individuais em dashboard de gestão.
+
+\textbf{Código da squad — painel comparável com taxa e denominador}
+\begin{verbatim}
+# Importa pandas para definir uma tabela agregada e reproduzível.
+import pandas as pd
+# Importa matplotlib para criar gráfico que pode ser inspecionado.
+import matplotlib.pyplot as plt
+# Cria observações sintéticas agregadas por curso e período.
+base = pd.DataFrame({"curso": ["SI", "SI", "ADS", "ADS"],
+                     "periodo": ["2026.1", "2026.2", "2026.1", "2026.2"],
+                     "elegiveis": [80, 90, 60, 70],
+                     "aprovados": [60, 63, 42, 49]})
+# Calcula taxa com denominador explícito em cada linha.
+base["taxa"] = base["aprovados"] / base["elegiveis"]
+# Converte a tabela para facilitar comparação lado a lado.
+pivot = base.pivot(index="curso", columns="periodo", values="taxa")
+# Desenha duas barras por curso e mantém escala de zero a um.
+ax = pivot.plot(kind="bar", ylim=(0, 1), color=["#4C78A8", "#F58518"])
+# Informa unidade e denominador no eixo.
+ax.set_ylabel("Aprovados / matrículas elegíveis")
+# Descreve o período sem afirmar que houve efeito causal.
+ax.set_title("Taxa agregada por curso e período — dado sintético")
+# Ajusta espaço para legenda, rótulos e exportação.
+plt.tight_layout()
+# Mostra o gráfico para revisão de leitura e acessibilidade.
+plt.show()
+\end{verbatim}
+
+Se duas ferramentas produzem resultados distintos, não escolhemos a que parece mais convincente. Conferimos período, grão, filtros, definição, atualização e tratamento de ausências. O SQL ou cálculo equivalente precisa ser comparado em amostra controlada.
+
+O gráfico é acompanhado por tabela com numerador e denominador. Isso torna visível que taxas iguais podem ter suporte amostral diferente. Se o painel esconder contagens, um usuário pode interpretar 75% de quatro registros como tão estável quanto 75% de quatrocentos.
+
+\section{Governança, semântica e acesso no BI conversacional}
+
+Camada semântica centraliza métricas, sinônimos, relações, regras temporais e dimensões autorizadas. Ela reduz divergência, mas não decide sozinha finalidade, acesso ou qualidade. Owners revisam definição e versionam mudanças; sistemas consumidores identificam a versão usada.
+
+Row-level security restringe linhas conforme identidade. A consulta deve receber o perfil confiável do backend, não um filtro de usuário editável. Cache inclui identidade, política, métrica, período e versão; sem isso, resposta válida para uma pessoa pode vazar para outra.
+
+O grupo testa igualdade entre dashboard e resposta conversacional com casos preparados, depois tenta trocar a identidade ou remover filtro. Uma consulta correta para gestor não é automaticamente permitida para estudante. A mensagem de acesso negado também deve evitar confirmar informação restrita.
+
+Uma camada agentic pode criar plano de exploração e chamar várias ferramentas. Cada chamada é traçada e limitada. A equipe observa retries, custo, tempo e estado. Se o sistema altera filtros sem atualizar a consulta exibida, a pessoa precisa enxergar a discrepância antes de agir.
+
+Testes de autorização usam perfis sintéticos e verificam tabela, gráfico, exportação, cache e resumo textual. Proteger somente o endpoint principal não basta se uma cópia em cache ou exportação ainda expõe linhas. A matriz documenta quais funcionalidades foram efetivamente examinadas.
+
+\section{Storytelling e decisão proporcional}
+
+O narrador começa pela pergunta executiva, mostra a evidência e declara o limite. Exemplo: ``no recorte sintético, a taxa agregada mudou de 75% para 70% em um curso; a diferença pede análise de coorte, não prova que a mudança curricular causou queda''. O gráfico contextualiza; tabela e fonte permitem auditoria.
+
+O LLM pode propor título e resumo, mas o painel injeta estatísticas calculadas localmente e valida nomes de campos. Uma frase que afirma crescimento precisa de comparação temporal; uma recomendação precisa ser marcada como hipótese e ligada a objetivo e custo.
+
+As equipes constroem a Big Idea, escolhem audiência, visual, anotação, ação e pergunta de contestação. Outro grupo muda o filtro para verificar se texto e gráfico se atualizam juntos. Se não, o storytelling fica preso a um estado anterior e deve ser bloqueado.
+
+Cada grupo produz duas versões da narrativa, uma concisa e outra explicativa, sem alterar números ou certeza. A revisão por pares identifica inferência causal indevida, omissão de denominador ou recomendação incompatível com o objetivo.
+
+O artefato é matriz comparativa, gráfico reproduzível, trace mínimo e recomendação condicionada à evidência. A conclusão inclui uma alternativa de implementação e o que seria necessário medir antes de decisão real.
+
+\section{Roteiro de três horas e próximos passos}
+
+19h–19h25: definimos pergunta, contrato de métrica e critérios de plataforma. 19h25–20h: comparamos formas de interação e modelamos o recorte. 20h–20h30: reproduzimos o gráfico e verificamos acesso; a chamada ocorre às 20h30.
+
+20h30–21h: revisamos semântica e tentamos casos adversariais. 21h–21h35: cada equipe constrói narrativa e Big Idea. 21h35–22h: uma equipe contesta outra, conferindo versão, fonte, denominador e filtro.
+
+A próxima aula transforma a arquitetura comparada em aplicação própria. Streamlit expõe estado, cache, conexão e visual; o Llama local ou API ficará atrás de um adaptador que recebe apenas agregados ou contexto permitido.
+
+O produto da noite é uma tabela de critérios preenchida com evidências e um painel de comparação. A equipe registra a decisão arquitetural recomendada e a condição de mudança, por exemplo volume maior, requisito de residência ou capacidade de auditoria insuficiente.
+
+No encerramento, estudantes distinguem qualidade de experiência e qualidade de análise: conversa fluida pode coexistir com métrica errada. A decisão de ferramenta só é defensável quando o fluxo inteiro, do dado ao gráfico e à contestação, atende ao caso.
+
+\begin{SummaryBox}
+Comparar BI com copiloto e agentes exige avaliar responsabilidades observáveis, não marcas. Reproduzimos a mesma EDA, verificamos semântica e permissão, e só então comunicamos uma decisão proporcional aos dados.
+\end{SummaryBox}

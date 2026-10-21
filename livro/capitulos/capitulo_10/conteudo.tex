@@ -1,0 +1,142 @@
+\chapter{Text-to-SQL e NL2Vis: da pergunta ao gráfico auditável}
+\chaptermark{Text-to-SQL e NL2Vis}
+
+A coordenação pergunta: ``quais cursos estão com desempenho melhor?'' A frase parece clara até a equipe descobrir que ``melhor'' pode ser aprovação, média, evolução, equidade ou persistência; período e denominador também não foram definidos. Um LLM pode produzir SQL e um gráfico atraentes, mas a primeira responsabilidade é converter a pergunta em contrato analítico.
+
+Text-to-SQL traduz linguagem natural em consulta; NL2Vis propõe visualização. As duas tarefas compartilham a interpretação da pergunta, mas possuem erros diferentes. SQL válido pode usar métrica errada; um gráfico esteticamente correto pode ocultar período, amostra ou incerteza. Por isso, a trilha mantém intenção, métrica, consulta, resultado e visual conectados.
+
+O caso de aula usa um conjunto sintético de resultados estudantis com curso, período, frequência, nota e situação. Nenhum resultado deve ser interpretado como diagnóstico de pessoas reais. A equipe compara aprovação por curso, depois questiona se a média esconde grupos pequenos e se a comparação é justa.
+
+Em três horas, passamos de pergunta ambígua a especificação, catálogo de campos, plano de consulta seguro, agregação independente, gráfico e narrativa. O modelo pode sugerir cada etapa, mas os alunos verificam campo, filtro, denominador e significado antes de apresentar uma conclusão.
+
+\section{Desambiguar intenção, métrica e população}
+
+Uma pergunta analítica é decomposta em entidade, medida, dimensão, período, filtro, comparação e decisão. ``Desempenho melhor'' não é métrica; ``taxa de aprovação por curso no período X'' já explicita parte do contrato, embora ainda exija definição do que conta como aprovação e do denominador elegível.
+
+A turma escreve duas interpretações legítimas e prevê como a decisão mudaria. Se a gestão quer oferecer tutoria, taxa de reprovação e tendência podem ser úteis; se quer avaliar currículo, precisa considerar coorte, carga e oferta. A pergunta do usuário não determina sozinha o construto.
+
+O LLM recebe glossário governado, tipos e definições necessárias. Não recebe CPF, nome ou coluna irrelevante. Um catálogo semântico apresenta nomes amigáveis e mapeia para colunas reais, unidades, grão e regra de agregação. Esse contrato reduz erro de ligação entre expressão e esquema.
+
+O contraexemplo é aceitar ``média por curso'' sem saber se cada linha é estudante, matrícula ou avaliação. Uma junção pode duplicar registros e inflar denominador. Antes de agrupar, a equipe verifica grão, chave, duplicidade e política para dados ausentes.
+
+Uma interface boa devolve uma pergunta de esclarecimento curta e apresenta duas opções com consequências distintas. A pessoa confirma população e período antes de executar; a escolha fica registrada no plano, tornando a análise reproduzível e contestável.
+
+\section{Construir plano analítico antes de SQL}
+
+Antes de escrever consulta, a squad representa a intenção em um plano simples: métrica aprovada, dimensão, período, filtros, população, agregação, política de privacidade e visual pretendido. Essa camada intermediária permite inspecionar a interpretação antes de executar código.
+
+O modelo pode preencher uma proposta JSON, mas o backend valida nomes contra uma allowlist, tipo de dado, operador permitido e limite de linhas. Campos desconhecidos são rejeitados; não são corrigidos silenciosamente para outra variável. Valores entram como parâmetros, não como concatenação livre.
+
+\textbf{Código da squad — plano allowlisted para uma agregação}
+\begin{verbatim}
+# Define somente dimensões e métricas aprovadas pela coordenação.
+dimensoes = {"curso": "course", "periodo": "term"}
+# Mantém um catálogo explícito de medidas analíticas autorizadas.
+metricas = {"taxa_aprovacao": "passed", "nota_media": "score"}
+# Recebe uma proposta estrutural, não SQL livre do modelo.
+plano = {
+    "dimensao": "curso",
+    "metrica": "taxa_aprovacao",
+    "periodo": "2026.1",
+}
+# Interrompe o fluxo quando a dimensão não consta no catálogo.
+assert plano["dimensao"] in dimensoes
+# Interrompe o fluxo quando a métrica não foi aprovada.
+assert plano["metrica"] in metricas
+# Mostra a interpretação antes de gerar consulta ou visual.
+print("Plano aceito para revisão:", plano)
+\end{verbatim}
+
+Esse protótipo verifica nomes, não autorização completa ou correção semântica. A equipe adiciona autenticação no servidor, valida período e aplica limiar mínimo de grupo. Em produção, SQL pode ser gerado a partir do plano com biblioteca conhecida ou selecionado entre consultas revisadas.
+
+O plano também funciona como explicação acessível à pessoa usuária. A interface apresenta ``taxa de aprovação por curso no período 2026.1'' para confirmação ou correção antes da execução. Essa etapa diminui risco de resolver com precisão uma pergunta diferente da pretendida.
+
+\section{Executar uma EDA independente e produzir o gráfico}
+
+Uma vez aprovado o plano, o conjunto é filtrado e agregado com código determinístico. O gráfico resulta de tabela já conferida, não de um código livre que o LLM executa. A turma compara contagens e proporções antes de escolher um visual.
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=0.9cm]
+\draw[->] (0,0)--(7,0) node[right]{Curso};
+\draw[->] (0,0)--(0,4.4) node[above]{Taxa de aprovação};
+\foreach \y/\lab in {0/0,1/0{,}25,2/0{,}50,3/0{,}75,4/1{,}00} {
+  \draw[gray!30] (0,\y)--(6.5,\y);
+  \node[left] at (0,\y) {\small \lab};
+}
+\fill[blue!65] (1,0) rectangle (2,3.0);
+\fill[orange!75] (2.2,0) rectangle (3.2,2.8);
+\fill[blue!65] (4,0) rectangle (5,2.8);
+\fill[orange!75] (5.2,0) rectangle (6.2,2.8);
+\node[below] at (2.1,0) {SI};
+\node[below] at (5.1,0) {ADS};
+\fill[blue!65] (3.9,4.0) rectangle (4.2,4.2);
+\node[right] at (4.2,4.1) {2026.1};
+\fill[orange!75] (5.0,4.0) rectangle (5.3,4.2);
+\node[right] at (5.3,4.1) {2026.2};
+\end{tikzpicture}
+\end{center}
+
+O esboço mostra duas comparações próximas e reforça que o denominador deve acompanhar a barra. No exemplo visual, pequenas diferenças podem não ser estáveis; não colocamos ordenação dramática nem anotação causal. A saída do código e este desenho devem concordar antes da comunicação.
+
+\textbf{Código da squad — tabela, denominador e barras com intervalo}
+\begin{verbatim}
+# Importa pandas para resumir o conjunto sintético em uma tabela.
+import pandas as pd
+# Importa matplotlib para gerar um visual reproduzível.
+import matplotlib.pyplot as plt
+# Cria observações sintéticas; cada linha representa uma matrícula.
+dados = pd.DataFrame({"curso": ["SI", "SI", "ADS", "ADS", "SI", "ADS"],
+                      "aprovado": [1, 0, 1, 1, 1, 0],
+                      "periodo": ["2026.1"] * 6})
+# Filtra o período definido no plano analítico.
+recorte = dados.loc[dados["periodo"].eq("2026.1")].copy()
+# Calcula total elegível e aprovações por curso.
+resumo = (
+    recorte.groupby("curso")["aprovado"]
+    .agg(["sum", "count", "mean"])
+)
+# Exibe numerador e denominador antes da interpretação.
+print(resumo)
+# Cria barras para comparar proporções, não volume bruto.
+ax = resumo["mean"].plot(kind="bar", color="#2463A6", ylim=(0, 1))
+# Rotula a medida e o universo temporal de forma explícita.
+ax.set_ylabel("Proporção aprovada entre matrículas do período")
+# Nomeia o gráfico sem declarar causalidade.
+ax.set_title("Aprovação observada por curso - dado sintético")
+# Ajusta margens para preservar rótulos na exportação.
+plt.tight_layout()
+# Exibe o visual para revisão de forma e dados.
+plt.show()
+\end{verbatim}
+
+Com amostra tão pequena, as proporções são instáveis. A visualização é um exemplo de código e não uma conclusão institucional. Em um dataset real, incluiríamos intervalo de incerteza, distribuição por coorte e tamanho mínimo antes de comparar ou expor grupos.
+
+O painel informa filtros, data, fonte, definição e atualização. Se a pessoa alterar o período, a tabela e gráfico são recalculados pela mesma consulta identificada. Um texto gerado sem vínculo a esses parâmetros pode sobreviver a uma mudança de filtro e ficar incorreto.
+
+\section{Recomendar visual e construir narrativa sem exagero}
+
+NL2Vis escolhe codificação de acordo com a pergunta. Comparar categorias pede barras ordenadas; tendência temporal pede linha; distribuição de notas pode usar histograma ou boxplot; relação entre presença e resultado pode usar dispersão, com cautela quanto à associação. O modelo pode propor, mas o analista explica por que o canal visual serve à tarefa.
+
+Storytelling começa pela evidência: público, contexto, observação, limite e ação possível. ``Curso X tem o maior valor'' não autoriza dizer que o curso causa o desempenho. A equipe substitui linguagem causal por descrição associativa e apresenta o tamanho da amostra.
+
+Uma boa Big Idea pode ser: ``neste recorte sintético, a diferença observada merece ser verificada por coorte antes de orientar apoio''. O visual mostra a comparação; a tabela oferece denominadores; a nota explica que seis matrículas não sustentam uma decisão real.
+
+O contraexemplo usa eixo truncado e remove grupo pequeno para criar sensação de grande diferença. Outra falha é ordenar categorias alfabeticamente quando a pergunta é ranking. A revisão olha escala, rótulos, contraste, incerteza, legenda e acessibilidade.
+
+Também conferimos paleta para daltônicos, texto alternativo e navegação por teclado. Uma recomendação de gráfico deve preservar leitura em tela pequena e impressão; se o público não consegue interpretar, a análise ainda não está pronta para comunicação.
+
+\section{Roteiro de 180 minutos e evidência de aprendizagem}
+
+19h--19h25: grupos esclarecem pergunta e escrevem contrato de métrica. 19h25--19h50: inspecionam esquema, grão e ausências. 19h50--20h20: montam plano semântico e analisam SQL proposto. 20h20--20h30: verificam denominador e registram dúvida antes da chamada.
+
+20h30--21h: executam agregação determinística e conferem tabela. 21h--21h25: escolhem gráfico e visualizam recorte. 21h25--21h45: redigem narrativa com limite e recomendação condicional. 21h45--22h: outra equipe altera período e tenta reproduzir o resultado.
+
+O artefato contém pergunta, plano, consulta ou código, tabela, gráfico, fonte, versão, denominador e texto final revisado. A avaliação exige rastreabilidade entre todos os elementos. Se o estudante não consegue refazer a conta, a resposta do modelo não é evidência suficiente.
+
+Na revisão final, a squad mostra qual suposição foi descartada e qual dado adicional solicitaria antes de uma decisão real. A aula encerra com uma recomendação condicional e um teste seguinte, não com uma conclusão geral sobre estudantes ou cursos.
+
+O Capítulo 11 compara plataformas de BI e ambientes de execução. A mesma definição de métrica será usada para avaliar copilotos e agentes, sem deixar interface de fornecedor ocultar acesso, semântica e trilha de auditoria.
+
+\begin{SummaryBox}
+Text-to-SQL e NL2Vis aceleram tradução, mas não definem a pergunta nem validam significado. A cadeia segura é contrato analítico, plano permitido, cálculo reproduzível, visual escolhido por tarefa e storytelling proporcional à evidência.
+\end{SummaryBox}

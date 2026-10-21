@@ -20,6 +20,7 @@ Ler [planejamento-e-diario.md](references/planejamento-e-diario.md) sempre que c
 Ler [apresentacoes-cientificas.md](references/apresentacoes-cientificas.md) sempre que planejar ou produzir o caderno de atividades das quatro apresentações da Unidade I.
 Ler [revisao-preservadora-enade.md](references/revisao-preservadora-enade.md) ao aprofundar um caderno existente sem trocar as questões.
 Ler [capitulo-progressivo.md](references/capitulo-progressivo.md) antes de criar ou revisar capítulos conceituais, matemáticos, de regressão, classificação, métricas, redes neurais ou LLMs.
+Ler [revisao-profunda-capitulos.md](references/revisao-profunda-capitulos.md) quando o pedido exigir refazer, aprofundar, elevar ao padrão de capítulos-modelo ou revisar vários capítulos. Esse modo inclui auditoria multiagente, paridade pedagógica, integração segura das competências avaliadas e uma segunda verificação após a compilação.
 
 ## Modo excepcional Grazi — leitura autoral
 

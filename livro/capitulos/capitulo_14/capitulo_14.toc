@@ -1,0 +1,8 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {14}Avaliar GenBI: correção, evidência e decisão}{3}{chapter.14}%
+\contentsline {section}{\numberline {14.1}Desenhar um conjunto de avaliação representativo}{3}{section.14.1}%
+\contentsline {section}{\numberline {14.2}Medir o funil analítico com denominadores corretos}{4}{section.14.2}%
+\contentsline {section}{\numberline {14.3}Auditar consulta, estatística e visual separadamente}{5}{section.14.3}%
+\contentsline {section}{\numberline {14.4}Segurança, privacidade, custo e latência como gates}{5}{section.14.4}%
+\contentsline {section}{\numberline {14.5}Visualizar resultados e contar uma história auditável}{6}{section.14.5}%
+\contentsline {section}{\numberline {14.6}Simulado e fechamento das unidades}{7}{section.14.6}%

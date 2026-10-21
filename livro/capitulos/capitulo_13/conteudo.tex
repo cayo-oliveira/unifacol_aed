@@ -1,0 +1,87 @@
+\chapter{Agentes analíticos: várias etapas, uma decisão contestável}
+\chaptermark{Agentes analíticos em AED}
+
+Na sequência do dashboard, a coordenação pede investigação: ``por que a taxa mudou?'' A pergunta pode exigir conferir período, composição de cursos, ausências e distribuição de notas. Um agente analítico pode propor etapas e chamar ferramentas, mas não transforma associação em causa nem substitui decisão da equipe.
+
+Phebe e estudos de BI agentic mostram fluxos em que planejamento, SQL, visualização e recomendação são responsabilidades separáveis. Nossa prática reconstrói essa arquitetura em escala didática e com dados sintéticos. O agente terá apenas busca, agregação e geração de gráfico; não acessará dados individuais nem alterará sistemas acadêmicos.
+
+Este encontro coincide com a janela institucional da EXPOFACOL. Se a programação permitir observação de protótipos ou projetos, os estudantes podem aplicar uma ficha de análise sem supor que exista demonstração específica de IA. Se não houver oportunidade adequada, o caso de apoio acadêmico oferece laboratório alternativo completo.
+
+O fio da AED continua visível: pergunta, distribuição, comparação, gráfico, narrativa, limitação e ação. Cada ferramenta precisa devolver tabela, visual ou evidência que a equipe consiga verificar independentemente.
+
+\section{Distinguir ferramenta, agente, skill e workflow analítico}
+
+Ferramenta executa operação definida, como filtrar tabela, calcular quantis ou desenhar gráfico. Skill reúne instruções e recursos reutilizáveis. Workflow fixa etapas e transições. Agente seleciona próximos passos com apoio de modelo entre opções autorizadas. A composição muda controle e variabilidade, não a responsabilidade por resultado.
+
+Para a pergunta ``por que a aprovação caiu?'', o sistema pode selecionar decomposição por curso e período, mas não deve inventar causa. Uma análise descritiva compara distribuições e composição; inferência causal exige desenho, variáveis de confusão e premissas que não cabem em uma frase automática.
+
+O plano estruturado possui pergunta, período, medidas, dimensões, filtros e ferramentas permitidas. O validador verifica colunas, agregações, limiar mínimo e orçamento antes de executar. Se há ambiguidade que muda a decisão, o agente pergunta ao usuário em vez de adivinhar.
+
+O contraexemplo é encadear agentes ``pesquisador, estatístico e narrador'' sem dizer quais dados cada um recebe ou quem valida o número. Multiagente pode multiplicar custo, latência e erros. Primeiro criamos contrato claro e medimos se etapas distintas melhoram cobertura ou revisão.
+
+A equipe desenha também o caminho sem modelo: regras de filtro, agregação, gráfico e revisão. Esse baseline mostra qual benefício uma etapa generativa precisa entregar e impede que a arquitetura se torne complexa apenas por novidade.
+
+\section{Construir uma investigação com ferramentas limitadas}
+
+O agente pode chamar \texttt{\detokenize{resumir_dados}}, \texttt{\detokenize{comparar_periodos}} e \texttt{\detokenize{plotar_distribuicao}}. Não recebe função \texttt{\detokenize{executar_codigo_arbitrario}}. As funções conhecidas recebem argumentos validados, retornam valores e logs de versão. A interface mostra qual pergunta analítica foi executada.
+
+\textbf{Código da squad — plano agentic restrito para EDA}
+\begin{verbatim}
+# Define ferramentas analíticas implementadas e testáveis pela equipe.
+ferramentas = {"resumir", "comparar_periodos", "plotar_distribuicao"}
+# Recebe plano candidato produzido a partir da pergunta em linguagem natural.
+plano = {"etapas": ["resumir", "comparar_periodos", "plotar_distribuicao"],
+         "periodos": ["2026.1", "2026.2"], "granularidade": "curso"}
+# Confirma que cada etapa está na lista de ferramentas autorizadas.
+assert all(etapa in ferramentas for etapa in plano["etapas"])
+# Impede análise em granularidade individual neste produto.
+assert plano["granularidade"] in {"curso", "periodo"}
+# Registra o plano para revisão antes de consumir dados.
+print("Plano aprovado para execução controlada:", plano)
+\end{verbatim}
+
+O exemplo verifica allowlist e granularidade, não autenticação real nem validade científica do plano. Uma pessoa revisa se a comparação responde à pergunta. O resultado pode apontar mudança por curso, mas não chamá-la de causa sem evidência apropriada.
+
+As ferramentas devolvem objetos tipados e identificadores de execução, não somente prosa. Um validador exige colunas autorizadas, formato de figura e limite de observações. Uma chamada inválida encerra com erro explícito em vez de executar instrução textual.
+
+Depois da execução, o sistema devolve tabela de mudanças, gráfico facetado e metadados de filtro. O LLM redige resumo usando esses artefatos agregados. A squad testa se cada número do texto aparece no resumo e se a fonte da tabela é rastreável.
+
+\section{Visualização, storytelling e explicação das diferenças}
+
+Uma comparação temporal apresenta pontos ou linhas com intervalos e contagens. Uma distribuição de notas por curso pode usar boxplot; contagem de aprovação pede barras; mudança de composição requer proporções e denominadores. Um gráfico selecionado automaticamente precisa vir com justificativa e possibilidade de troca.
+
+O storytelling organiza observação antes de hipótese. ``A proporção caiu de 0,75 para 0,70 no recorte sintético'' é observação; ``mudou por menor frequência'' é hipótese; verificar a relação exige análise; atribuir causalidade requer outro desenho. O painel colore esses estados diferentes.
+
+O LLM pode sugerir explicações alternativas: calendário, seleção da coorte, dados ausentes, escala de avaliação, mudança de cadastro. Cada hipótese recebe evidência necessária e indicador que poderia refutá-la. A lista não é resultado confirmado e não deve ser apresentada como diagnóstico.
+
+O grupo constrói slide com pergunta, gráfico, Big Idea, limite e próximo teste. Outro grupo tenta reproduzir visual e testar uma interpretação diferente. A resposta precisa sobreviver a essa contestação sem depender da fluência do narrador.
+
+A anotação descreve comparação e incerteza sem sobrecarregar a figura. Paleta acessível e tabela de apoio tornam a leitura inclusiva. O grupo explica quais usuários precisam dessa evidência e qual ação ela não autoriza.
+
+\section{Observação responsável na EXPOFACOL}
+
+Caso a programação institucional ofereça exposição adequada, cada aluno registra o que foi observado e o que não foi possível verificar: origem de dados, consentimento, limite do sistema, fontes, visualização, intervenção humana e riscos. Não coleta dados pessoais nem registra telas restritas sem autorização.
+
+Uma demonstração é evidência de que um fluxo foi exibido, não de desempenho geral. O relatório distingue relato, observação direta, documento e teste independente. Se a aplicação mostra um gráfico, mas não denominador, anotamos essa lacuna sem afirmar que o cálculo está errado.
+
+As perguntas aos expositores respeitam tempo e propriedade intelectual: que tipo de dado entra? Como a pessoa confere a fonte? Como o sistema responde quando não sabe? Que tarefa continua humana? A resposta pode ficar desconhecida; isso é registro válido.
+
+Sem observação pertinente, a equipe realiza o mesmo exercício no conjunto sintético em sala ou como leitura. O evento permanece institucional e a aula segue a programação aprovada; esta seção fornece instrumento, não inventa obrigação de participação técnica.
+
+Uma síntese coletiva agrega temas observados sem identificar pessoas ou projetos não públicos. Divergências são mantidas como observações distintas, e os estudantes evitam generalizar de uma demonstração para um setor inteiro.
+
+\section{Roteiro de investigação e entrega da squad}
+
+O artefato contém plano, ferramentas e escopos, tabela reproduzível, gráfico, narrativa anotada, trace sintético e lista de hipóteses. Os estudantes declaram versão dos dados, filtros e denominador, identificando se texto veio de mock ou modelo real.
+
+A análise final não pode produzir recomendação individual, sanção, diagnóstico ou previsão de capacidade. Uma decisão de apoio precisa de governança, validação, participação de responsáveis e revisão de efeitos sobre grupos. A unidade observacional e a finalidade são discutidas antes do deploy.
+
+Os grupos revisam riscos de tool injection e prompt injection: dados recuperados podem conter instruções, ferramenta pode retornar texto adversarial e o modelo pode pedir capacidade fora do escopo. Allowlist, validação e isolamento permanecem sob controle da aplicação.
+
+O Capítulo 14 fecha a unidade avaliando correção analítica, visual, evidência, segurança e custo em conjunto. A métrica de sucesso será uma decisão contestável e reproduzível, não a quantidade de agentes ou gráficos produzidos.
+
+A avaliação do artefato observa rastreabilidade, correção descritiva, escolha visual, linguagem calibrada, recusa apropriada e transparência. A equipe apresenta uma hipótese, uma evidência e uma limitação, protegendo privacidade de qualquer pessoa representada pelos dados.
+
+\begin{SummaryBox}
+Agente analítico organiza investigação, mas não prova causa nem decide legitimidade. A AED continua sendo a cadeia de pergunta, dados, cálculo, visual, narrativa e crítica; o agente atua dentro de ferramentas e limites testados.
+\end{SummaryBox}
